@@ -1,7 +1,7 @@
 import { Container, BaseInput } from './styles';
 
-const Input = ({ label, name, ...rest }) => (
-    <Container>
+const Input = ({ variant, label, name, ...rest }) => (
+    <Container variant = {variant}>
         {label && <label htmlFor={name}>{label}</label>}
         <BaseInput 
             id={name}

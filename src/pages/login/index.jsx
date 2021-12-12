@@ -12,8 +12,8 @@ const LoginPage = () => (
             </GreetingsContainer>
 
             <InputContainer>
-                <Input label="CPF" name="CPF" placeholder="Números do cpf" />
-                <Input label="Senha" name="Senha" placeholder="********" />
+                <Input variant="default" label="CPF" name="CPF" placeholder="Números do cpf" />
+                <Input variant="default" label="Senha" name="Senha" placeholder="********" />
             </InputContainer>
 
            <Link href="/senha">esqueceu sua senha?</Link>

@@ -7,8 +7,6 @@ export const Container = styled.div`
     min-width: 300px;
     max-width: 1920px;
 
-    min-height: 568px;
-
     display: grid;
     grid-template-columns: 41% 59%;
     align-items: center;
