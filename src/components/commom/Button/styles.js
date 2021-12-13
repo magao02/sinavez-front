@@ -57,7 +57,33 @@ function getStyleByVariant(variant) {
                 &:hover {
                     filter: brightness(80%);
                 }
+            `;   
+        }
+        case 'password': {
+            return css`
+                width: 100%;
+                border: none;
+                border-radius: 2.4rem;
+        
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                padding: 1.2rem;
+
+                margin-top: 5.6rem;
+                margin-bottom: 2.4rem;
+
+
+
+                font-size: 1.4rem;
+                color: ${theme.colors.white};
+                background-color: ${theme.colors.red};
+
+                &:hover {
+                    filter: brightness(80%);
+                }
             `;
         }
     }
-}
+};
