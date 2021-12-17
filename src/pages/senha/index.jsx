@@ -14,7 +14,7 @@ const PasswordRecovery = () => (
                     <Title>Esqueceu sua senha?</Title>
                     <Subtitle>Por favor, digite seu endereço de e-mail que você usou durante a criação da sua conta. Nós mandaremos instruções para redefinir sua senha.</Subtitle>
                 </Greetings>
-                <Input label="E-MAIL"></Input>
+                <Input label="E-MAIL" required></Input>
                 <Button variant="password">Enviar</Button>
             </PasswordSection>
             <DecorativeSection>

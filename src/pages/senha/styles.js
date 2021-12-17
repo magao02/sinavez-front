@@ -15,7 +15,6 @@ export const ContentSection = styled.section`
     background-color: ${theme.colors.white};
     margin: 7.0rem 13.9rem 7.0rem 13.9rem;
 
-
     border-radius: 2.4rem;
 
     display: grid;
@@ -41,7 +40,7 @@ export const Greetings = styled.div`
     justify-content: center;
     align-items: center;
 
-    gap: 1.3rem;
+    gap: 2rem;
     padding-bottom: 4.2rem;
 `;
 
@@ -51,7 +50,9 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.p`
     font-size: 1rem;
-    opacity: 0.4;
+    line-height: 2.4rem;
+    text-align: center;
+    opacity: 0.9;
 `;
 
 export const DecorativeSection = styled.section`
