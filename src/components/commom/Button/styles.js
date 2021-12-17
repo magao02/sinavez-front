@@ -6,7 +6,6 @@ export const Container = styled.button`
     ${(props) => getStyleByVariant(props.variant)};
 `;
 
-
 function getStyleByVariant(variant) {
     switch(variant) {
         case 'default': {
@@ -32,7 +31,6 @@ function getStyleByVariant(variant) {
                     filter: brightness(80%);
                 }
             `;
-          
         };
 
         case 'signup': {
@@ -59,6 +57,7 @@ function getStyleByVariant(variant) {
                 }
             `;   
         }
+
         case 'password': {
             return css`
                 width: 100%;
@@ -73,8 +72,6 @@ function getStyleByVariant(variant) {
 
                 margin-top: 5.6rem;
                 margin-bottom: 2.4rem;
-
-
 
                 font-size: 1.4rem;
                 color: ${theme.colors.white};
