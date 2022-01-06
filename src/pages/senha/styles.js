@@ -7,7 +7,6 @@ export const Container = styled.div`
     background-color: ${theme.colors.blue.heavy};
 
     display: flex;
-
 `;
 
 export const ContentSection = styled.section`
@@ -23,9 +22,12 @@ export const ContentSection = styled.section`
     display: grid;
     grid-template-columns: 60% 40%;
 
-
     @media (max-width: 1300px) {
         grid-template-columns: 70% 30%;
+    }
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
     }
 
     @media (max-width: 768px) {
@@ -35,7 +37,6 @@ export const ContentSection = styled.section`
 
         border-radius: 0;
     }
-
 `;
 
 export const PasswordSection = styled.section`
@@ -58,7 +59,6 @@ export const PasswordSection = styled.section`
     @media (max-width: 768px) {
         padding: 0 5.2rem 0 5.2rem;
     }
-
 `;
 
 export const Greetings = styled.div`
@@ -80,8 +80,8 @@ export const Title = styled.h1`
     }
 `;
 
-export const Subtitle = styled.p`
-    font-size: 1rem;
+export const Subtitle = styled.h5`
+    font-weight: normal;
     line-height: 2.4rem;
     text-align: center;
     opacity: 0.9;
@@ -100,7 +100,7 @@ export const DecorativeSection = styled.section`
     border-top-right-radius: 2.4rem;
     border-bottom-right-radius: 2.4rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         display: none;
     }
 `;
