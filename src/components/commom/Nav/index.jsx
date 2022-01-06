@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import SinavezLogo from '../../../assets/logo_picture.svg';
-import UserPicture from '../../../assets/default_user_picture.svg';
+
+import RoundImage from '../RoundImage';
+
 
 import { NavBar, UserFeaturesLeft, UserFeaturesRight, ImageContainer  } from './styles';
 
@@ -14,9 +16,7 @@ const Navigation = ({}) => (
         </UserFeaturesLeft>
         <UserFeaturesRight>
             <a>Sair</a>
-            <ImageContainer>
-                <Image src={UserPicture} />
-            </ImageContainer>
+            <RoundImage></RoundImage>
         </UserFeaturesRight>
     </NavBar>
 );
