@@ -21,7 +21,7 @@ export const Container = styled.div`
         grid-template-columns: 55% 45%;
     };
 
-    @media (max-width: 414px) {
+    @media (max-width: 768px) {
         grid-template-columns: 1fr;
         height: 100vh;
     };
@@ -41,23 +41,6 @@ export const LoginSection = styled.section`
 
     @media (max-width: 1024px) {
         padding: 5.0rem 10.4rem;
-    };
-
-    @media (max-width: 414px) {
-        padding: 5.0rem 10.4rem;
-    };
-
-    @media (max-width: 375px) {
-        padding: 5.0rem 10.4rem;
-    };
-
-    @media (max-width: 360px) {
-        padding: 5.0rem 10.4rem;
-    };
-
-    @media (max-width: 320px) {
-        padding: 5.0rem 10.4rem;
-    };
 `;
 
 export const Center = styled.section`
