@@ -4,9 +4,6 @@ import theme from '../../styles/theme';
 export const Container = styled.div`
     width: 100vw;
 
-    min-width: 300px;
-    max-width: 1920px;
-
     display: grid;
     grid-template-columns: 41% 59%;
     align-items: center;
@@ -17,11 +14,16 @@ export const Container = styled.div`
     }
 
     @media (max-width: 1920px) {
-        grid-template-columns: 43% 57%;
+        grid-template-columns: 45% 55%;
     };
 
     @media (max-width: 1024px) {
+        grid-template-columns: 55% 45%;
+    };
+
+    @media (max-width: 414px) {
         grid-template-columns: 1fr;
+        height: 100vh;
     };
 `;
 
@@ -38,8 +40,24 @@ export const LoginSection = styled.section`
     background-color: ${theme.colors.white};
 
     @media (max-width: 1024px) {
-        padding: 9.6rem 25.4rem 1.3rem 25.4rem;
-    }
+        padding: 5.0rem 10.4rem;
+    };
+
+    @media (max-width: 414px) {
+        padding: 5.0rem 10.4rem;
+    };
+
+    @media (max-width: 375px) {
+        padding: 5.0rem 10.4rem;
+    };
+
+    @media (max-width: 360px) {
+        padding: 5.0rem 10.4rem;
+    };
+
+    @media (max-width: 320px) {
+        padding: 5.0rem 10.4rem;
+    };
 `;
 
 export const Center = styled.section`
@@ -56,9 +74,7 @@ export const Center = styled.section`
         font-weight: bold;
         color: ${theme.colors.red}
     }
-
 `;
-
 
 export const DecorativeSection = styled.section`
     width: 100%;
@@ -74,19 +90,16 @@ export const DecorativeSection = styled.section`
         display: none;
     }
 
-    @media (max-width: 2566px) {
-        width: 100vw;
+    @media (max-width: 2560px) {
         height: 100vh;
-    }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 776px) {
         display: none;
     }
 `;
 
 export const Title = styled.h1`
     font-size: 4.4rem;
-
 `;
 
 export const SubTitle = styled.p`
@@ -98,9 +111,13 @@ export const GreetingsContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 
     padding-bottom: 5.6rem;
 
+    @media (max-width: 1920px) {
+        gap: 0.8rem;
+    };
 `;
 
 export const InputContainer = styled.div`
@@ -115,6 +132,9 @@ export const InputContainer = styled.div`
 
     padding-bottom: 0.8rem;
 
+    @media (max-width: 320px) {
+        padding-bottom: 1.5rem;
+    };
 `;
 
 export const Link = styled.a`
