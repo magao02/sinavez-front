@@ -1,6 +1,6 @@
 import { Container, MainContent, InputForm, InputContainer } from './styles';
 
-import Navigation from '../../components/commom/Navigation';
+import Navigation from '../../components/commom/Nav';
 import Input from '../../components/commom/Input';
 import Select from '../../components/commom/Select';
 import MultiInput from '../../components/commom/MultiInput';
@@ -8,7 +8,7 @@ import Button from '../../components/commom/Button';
 
 const SignUpPage = () => (
     <Container>
-        <Navigation></Navigation>
+        <Navigation variant="singup" />
         <MainContent>
             <InputForm>
                 <InputContainer>
