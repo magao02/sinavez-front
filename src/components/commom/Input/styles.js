@@ -43,6 +43,7 @@ function getStyleByVariant(variant) {
                 justify-content: center;
                 align-items: center;
                 width: 100%;
+                gap: 0.8rem;
                 }
 
                 label {
