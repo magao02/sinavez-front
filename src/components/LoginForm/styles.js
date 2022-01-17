@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.form`
     width: 100%;
 
     display: flex;

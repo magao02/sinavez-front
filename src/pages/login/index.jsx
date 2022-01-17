@@ -1,3 +1,6 @@
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
+
 import {
   Container,
   LoginSection,
@@ -11,14 +14,19 @@ import {
 
 import LoginForm from '../../components/LoginForm';
 
-const LoginPage = () => (
+const LoginPage = () => {
+  const router = useRouter();
+
+  const loginFormRef = useRef(null);
+
+  return(
   <Container>
     <LoginSection>
       <GreetingsContainer>
         <Title>Login</Title>
         <SubTitle>Seja bem-vindo de volta!</SubTitle>
       </GreetingsContainer>
-      <LoginForm />
+      <LoginForm ref={loginFormRef} />
       <Center>
         <span>Não possui uma conta?</span>
         <Link href="/cadastro">Criar Conta</Link>
@@ -27,6 +35,7 @@ const LoginPage = () => (
 
     <DecorativeSection></DecorativeSection>
   </Container>
-);
+  )
+};
 
 export default LoginPage;

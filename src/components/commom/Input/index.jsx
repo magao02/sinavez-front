@@ -1,15 +1,62 @@
-import { Container, BaseInput } from './styles';
+import { useState, forwardRef, useCallback, useImperativeHandle } from "react";
+import { Container, BaseInput } from "./styles";
 
-const Input = ({ variant, label, name, type, ...rest }) => (
-    <Container variant = {variant}>
-        {label && <label htmlFor={name}>{label}</label>}
+const Input = ({ variant, label, name, initialValue, validate, onChange, ...rest }, ref) => {
+    const [value, setValue] = useState(initialValue);
+    const [alertMessage, setAlertMessage] = useState(null);
+
+    const executeValidation = useCallback(
+        async (valueToValidate) => {
+            if (!validate) return true;
+
+            try {
+            await validate(valueToValidate);
+            setAlertMessage(null);
+            return true;
+            } catch (validationError) {
+                setAlertMessage(validationError.message);
+                return false;
+            }
+        },
+        [validate],
+    );
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            value,
+            isValid: !alertMessage,
+            validate: () => executeValidation(value),
+            clear: () => setValue(''),
+        }),
+        [value, executeValidation, alertMessage]
+    )
+
+    const handleChange = useCallback((event) => {
+        setValue(event.target.value);
+        onChange?.(event);
+    },
+    [onChange],
+    );
+
+    return(
+    <Container variant={variant}>
+        <div>
+            {label && <label htmlFor={name}>{label}</label>}
+            {alertMessage && <span>{alertMessage}</span>}
+        </div>
+
         <BaseInput 
-            id={name}
-            name={name}
-            type={type}
-            {...rest}
+        id={name} 
+        name={name} 
+        value={value}
+        onChange={handleChange}
+        ref={ref}
+        error={alertMessage}
+        {...rest} 
         />
     </Container>
-);
+    )
+};
 
-export default Input;
+export default forwardRef(Input);

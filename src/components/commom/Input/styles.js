@@ -18,7 +18,21 @@ function getStyleByVariant(variant) {
                     color: ${theme.colors.dark.heavy};
                     font-weight: 400;
                     padding-bottom: 1.6rem;
-                        }
+                }
+
+                div {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+
+                    span {
+                        font-weight: bold;
+                        color: ${theme.colors.red}
+                    }
+                    span::after {
+                        content: '.';
+                    }
+                }
                 `;
             }
 
@@ -29,6 +43,7 @@ function getStyleByVariant(variant) {
                 justify-content: center;
                 align-items: center;
                 width: 100%;
+                }
 
                 label {
                     color: ${theme.colors.dark.heavy};
