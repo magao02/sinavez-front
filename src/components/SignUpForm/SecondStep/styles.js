@@ -10,17 +10,18 @@ export const Container = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  width: 20%;
+  align-self: center;
+  width: 80%;
 `;
 
 export const InputForm = styled.form`
-  width: 100%;
+  width: 80%;
 
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
-  gap: 5.6rem;
-  padding: 10.4em 24.9rem 5rem 24.9rem;
+  gap: 2.4rem;
+  padding: 8em 1rem 0rem 1rem;
 
 `;
 
@@ -28,6 +29,6 @@ export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5.4rem;
-  width: 80%;
+  width: 100%;
 `;
 

@@ -21,16 +21,15 @@ const LoginForm = () => {
   })
 
   const validateCpf = useCallback(async (cpf) => {
-    await validation.requireCpfField(cpf, 11)
+    await validation.testCpf(cpf)
   }, [])
 
   const validatePassword = useCallback(async (password) => {
-    await validation.requirePasswordField(password, 8)
+    await validation.testPassword(password, 8)
   }, [])
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-    console.log(cpfRef.current.value, passwordRef.current.value);
     
     const isValidSubmit = await allFieldsAreValid();
     console.log(isValidSubmit)
@@ -42,7 +41,6 @@ const LoginForm = () => {
         variant="default"
         label="CPF"
         name="cpf"
-        type="number"
         placeholder="Números do cpf"
         ref={cpfRef}
         validate={validateCpf}
@@ -55,7 +53,6 @@ const LoginForm = () => {
         placeholder="********"
         ref={passwordRef}
         validate={validatePassword}
-        required
       />
 
       <Link href="/senha">esqueceu sua senha?</Link>
