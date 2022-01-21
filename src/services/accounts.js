@@ -5,7 +5,7 @@ export async function signUp(userValue) {
   return requisition
 }
 
-export async function signUp(userValue) {
+export async function login(userValue) {
   const requisition = await api.post('/signIn', userValue);
   return requisition;
 }

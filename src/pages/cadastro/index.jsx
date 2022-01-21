@@ -11,7 +11,7 @@ import SignUpFormFirst from "../../components/SignUpForm/FirstStep";
 import SignUpFormSecond from "../../components/SignUpForm/SecondStep";
 
 const SignUpPage = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [collectedData, setCollectedData] = useState({});
 
   const router = useRouter();
@@ -34,6 +34,7 @@ const SignUpPage = () => {
   const handleErrorOnSubmit = useCallback(async (error) => {
     console.log(error.response.data.message)
   })
+  
   const handleSubmit = useCallback(async (data) => {
     console.log(data);
     try {
