@@ -11,7 +11,7 @@ import SignUpFormFirst from "../../components/SignUpForm/FirstStep";
 import SignUpFormSecond from "../../components/SignUpForm/SecondStep";
 
 const SignUpPage = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [collectedData, setCollectedData] = useState({});
 
   const router = useRouter();
@@ -39,7 +39,7 @@ const SignUpPage = () => {
     console.log(data);
     try {
       const signUp = await service.signUp(data);
-      console.log(signUp.data.message);
+      alert(signUp.data.message)
       router.push("/login");
     } catch (error) {
       await handleErrorOnSubmit(error)
