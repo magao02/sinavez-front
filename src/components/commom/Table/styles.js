@@ -14,7 +14,7 @@ export const Container = styled.div`
   gap: 3.2rem;
 `;
 
-export const TableContainer = styled.div`
+export const TableContainer = styled.table`
   width: 100%;
   display: flex;
   flex-direction: column;

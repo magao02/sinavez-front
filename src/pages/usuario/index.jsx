@@ -39,13 +39,17 @@ const UserData = () => {
 
   const handleUserData = useCallback(async () => {
     const responseData = await getUserData();
+    console.log(responseData)
     setValue(responseData);
     setIsLoaded(true);
   });
 
   useEffect(() => {
+    if (!authContext.auth) {
+      router.push("/login")
+      return;
+    }
     handleUserData();
-    console.log(value);
   }, []);
 
   return (

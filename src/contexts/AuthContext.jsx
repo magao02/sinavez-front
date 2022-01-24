@@ -1,6 +1,10 @@
 import { createContext, useState, useContext } from "react";
 
-import { saveToLocalStorage, readFromLocalStorage } from "../utils/local";
+import {
+  saveToLocalStorage,
+  readFromLocalStorage,
+  removeFromLocalStorage,
+} from "../utils/local";
 
 export const AuthContext = createContext({});
 
@@ -15,19 +19,31 @@ export const useAuth = () => {
 export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(readFromLocalStorage("token"));
   const [urlUser, setUrlUser] = useState(readFromLocalStorage("urlUser"));
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState(readFromLocalStorage("auth"));
 
   const handleLoginToken = (recivedData) => {
     const { auth, token, urlUser } = recivedData;
     saveToLocalStorage("token", token);
     saveToLocalStorage("urlUser", urlUser);
+    saveToLocalStorage("auth", auth);
     setToken(token);
     setUrlUser(urlUser);
     setAuth(auth);
   };
 
+  const cleanInfos = () => {
+    removeFromLocalStorage("token");
+    removeFromLocalStorage("urlUser");
+    removeFromLocalStorage("auth");
+    setToken(undefined);
+    setUrlUser(undefined);
+    setAuth(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ handleLoginToken, token, urlUser, auth }}>
+    <AuthContext.Provider
+      value={{ handleLoginToken, token, urlUser, auth, cleanInfos }}
+    >
       {children}
     </AuthContext.Provider>
   );

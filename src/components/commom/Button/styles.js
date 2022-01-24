@@ -82,5 +82,32 @@ function getStyleByVariant(variant) {
                 }
             `;
         }
+        case 'image': {
+            return css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+
+            background: transparent;
+            `;
+        }
+        case 'nav': {
+            return css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+
+            background: transparent;
+
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: ${theme.colors.white};
+
+            text-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0 , 0.25);
+            `;
+        }
     }
 };

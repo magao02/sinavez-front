@@ -13,7 +13,7 @@ export function readFromLocalStorage(key) {
   return window.localStorage.getItem(key);
 }
 
-export function removeTokenFromLocalStorage(key) {
+export function removeFromLocalStorage(key) {
   if (!localStorageIsAvailable) return;
   window.localStorage.removeItem(key);
 }

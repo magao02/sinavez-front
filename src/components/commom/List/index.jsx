@@ -17,10 +17,10 @@ function ListVariant({ variant, data }) {
         <Container>
           <Image src={UserIcon} />
           <p>{data.nome}</p>
-          <p>{data.aniversario}</p>
+          <p>{data.nascimento}</p>
           <p>{data.cpf}</p>
           <p>{data.rg}</p>
-          <p>{data.dataEmissao}</p>
+          <p>{data.emissao}</p>
           <Image src={EditIcon} />
           <Image src={DeleteIcon} />
         </Container>

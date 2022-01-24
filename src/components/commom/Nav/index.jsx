@@ -1,18 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useRouter } from "next/router";
+
+import { useAuth } from '../../../contexts/AuthContext';
+
+import * as services from '../../../services/accounts';
+
+import Button from '../Button';
+
 import SinavezLogo from '../../../assets/logo_picture.svg';
 
-import RoundImage from '../RoundImage';
-
-
-import { NavBar, UserFeaturesLeft, UserFeaturesRight, ImageContainer  } from './styles';
+import { NavBar, UserFeaturesLeft, UserFeaturesRight } from './styles';
 
 const Navigation = (props) => (
     NavVariant(props)
 );
 
 function NavVariant({ variant }) {
+
+    const router = useRouter();
+
+    const authContext = useAuth();
+
+    const logout = () => {
+        services.logout(authContext.token);
+        authContext.cleanInfos();
+        router.push('/login');
+    }
+
     switch(variant) {
         case 'logged': {
             return (<NavBar>
@@ -23,8 +39,7 @@ function NavVariant({ variant }) {
                     <a>Gerar Imposto de Renda</a>
                 </UserFeaturesLeft>
                 <UserFeaturesRight>
-                    <a>Sair</a>
-                    <RoundImage></RoundImage>
+                    <Button variant="nav" onClick={logout}>Sair</Button>
                 </UserFeaturesRight>
             </NavBar>)
         }

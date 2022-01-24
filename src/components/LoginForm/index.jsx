@@ -6,7 +6,7 @@ import * as validation from "../../utils/validation";
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const LoginForm = () => {
+const LoginForm = ({ onValidSubmit }) => {
   const cpfRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -32,7 +32,13 @@ const LoginForm = () => {
     event.preventDefault();
     
     const isValidSubmit = await allFieldsAreValid();
-    console.log(isValidSubmit)
+    
+    if (!isValidSubmit) return;
+
+    const [cpf, password] = [cpfRef, passwordRef].map(
+      inputRef => inputRef.current?.value);
+
+      onValidSubmit( {cpf, password} );
   });
 
   return (

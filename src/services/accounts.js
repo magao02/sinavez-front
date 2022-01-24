@@ -15,3 +15,22 @@ export async function getUserData(urlUser, token) {
   { 'headers': {"authorization": token}});
   return requisition;
 }
+
+export async function addDependent(dependentData, urlUser, token) {
+  const requisition = await api.post('/user/' + urlUser + '/signUpDep', 
+  dependentData, 
+  {'headers': {"authorization": token}});
+  return requisition;
+}
+
+export async function getDependents(urlUser, token) {
+  const requisition = await api.get('/getDependents/' + urlUser, 
+  {'headers': {"authorization": token}});
+  return requisition;
+}
+
+export async function logout(token) {
+  const requisition = await api.get('/signOut', 
+  {'headers': {"authorization": token}});
+  return requisition;
+}

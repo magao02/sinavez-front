@@ -46,7 +46,7 @@ function TableVariant({ title, headers, data, variant }) {
         <TableContainer>
           <TableRow>
             <th>{headers[0]}</th>
-            <td>{data[0]}</td>
+            <td>{data[0]} R$</td>
           </TableRow>
           <TableRow>
             <th>{headers[1]}</th>
