@@ -21,7 +21,7 @@ import {
   ControllerContainer
 } from "./styles";
 
-const UserData = () => {
+const Dependentes = () => {
   const [formUp, setFormUp] = useState(false);
   const [dependents, setDependents] = useState();
 
@@ -90,4 +90,4 @@ const UserData = () => {
   );
 };
 
-export default UserData;
+export default Dependentes;

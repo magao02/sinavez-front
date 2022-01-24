@@ -29,6 +29,12 @@ export async function getDependents(urlUser, token) {
   return requisition;
 }
 
+export async function getAssociados(token) {
+  const requisition = await api.get('/getUsers/', 
+  {'headers': {"authorization": token}});
+  return requisition;
+}
+
 export async function logout(token) {
   const requisition = await api.get('/signOut', 
   {'headers': {"authorization": token}});

@@ -36,7 +36,8 @@ function NavVariant({ variant }) {
                     <Image src={SinavezLogo} />
                     <Link href="/usuario">Meus Dados</Link>
                     <Link href="/dependentes">Meus Dependentes</Link>
-                    <a>Gerar Imposto de Renda</a>
+                    <a>Baixar Imposto de Renda</a>
+                    {authContext.admin  && <Link href="/associados">Listar Associados</Link>}
                 </UserFeaturesLeft>
                 <UserFeaturesRight>
                     <Button variant="nav" onClick={logout}>Sair</Button>

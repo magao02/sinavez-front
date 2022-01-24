@@ -64,3 +64,10 @@ export async function testNumbers(rgValue) {
   .matches(/^\d+$/, validationMessages.onlyNumbers)
   .validate(rgValue);
 }
+
+export async function testNumberImposto(rgValue) {
+  return yup
+  .string()
+  .matches(/^\d+$ || [.]/, validationMessages.onlyNumbers)
+  .validate(rgValue);
+}
