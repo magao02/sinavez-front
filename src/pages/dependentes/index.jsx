@@ -17,7 +17,11 @@ import ListWrapper from "../../components/commom/ListWrapper";
 import SearchBar from "../../components/commom/SearchBar";
 import Button from "../../components/commom/Button";
 
-import { Container, ContentContainer, ControllerContainer } from "./styles";
+import {
+  Container,
+  ContentContainer,
+  ControllerContainer,
+} from "../../styles/dependentesStyles";
 
 const Dependentes = () => {
   const [formUp, setFormUp] = useState(false);
