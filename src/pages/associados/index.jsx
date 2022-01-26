@@ -10,10 +10,13 @@ import * as service from "../../services/accounts";
 
 import Navigation from "../../components/commom/Nav";
 import ListWrapper from "../../components/commom/ListWrapper";
-import SearchBar from "../../components/commom/SearchBar";
 import PdfPage from "../../components/PdfPage";
 
-import { Container, ContentContainer, ControllerContainer } from "./styles";
+import {
+  Container,
+  ContentContainer,
+  ControllerContainer,
+} from "../../styles/associadosStyles";
 
 const Associados = () => {
   const [formUp, setFormUp] = useState(false);
@@ -29,12 +32,17 @@ const Associados = () => {
     adminContext.setAssociado(data);
   };
 
-  const handleErrorAssociados = useCallback(async (error) => {
-    if (
-      error.response.data.message ==
-      "Usuário sem permissão de visualizar os assessores."
-    ) {router.push("/usuario");}
-  }, [router]);
+  const handleErrorAssociados = useCallback(
+    async (error) => {
+      if (
+        error.response.data.message ==
+        "Usuário sem permissão de visualizar os assessores."
+      ) {
+        router.push("/usuario");
+      }
+    },
+    [router]
+  );
 
   const getAssociados = useCallback(async () => {
     try {
@@ -63,8 +71,7 @@ const Associados = () => {
       <Navigation variant="logged" />
       {associados && !formUp && (
         <ContentContainer>
-          <ControllerContainer>
-          </ControllerContainer>
+          <ControllerContainer></ControllerContainer>
           <ListWrapper
             data={associados}
             variant="associados"

@@ -14,7 +14,7 @@ import {
   Link,
   Center,
   DecorativeSection,
-} from "./styles";
+} from "../../styles/loginStyles";
 
 import LoginForm from "../../components/LoginForm";
 

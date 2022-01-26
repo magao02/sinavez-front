@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useState, useEffect, useCallback } from "react";
 
-import { Container, MainContent } from "./styles";
+import { Container, MainContent } from "../../styles/cadastroStyles";
 
 import * as service from "../../services/accounts";
 

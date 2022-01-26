@@ -16,7 +16,7 @@ import {
   UserTitle,
   SubContainer,
   Separator,
-} from "./styles";
+} from "../../styles/usuarioStyles";
 
 const UserData = () => {
   const router = useRouter();
@@ -25,9 +25,9 @@ const UserData = () => {
   const [value, setValue] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const getUserData =  useCallback(async () => {
+  const getUserData = useCallback(async () => {
     try {
-        const responseData = await service.getUserData(
+      const responseData = await service.getUserData(
         authContext.urlUser,
         authContext.token
       );
@@ -45,7 +45,7 @@ const UserData = () => {
 
   useEffect(() => {
     if (!authContext.auth) {
-      router.push("/login")
+      router.push("/login");
       return;
     }
     handleUserData();
@@ -54,59 +54,59 @@ const UserData = () => {
   return (
     <Container>
       <Navigation variant="logged" />
-      { isLoaded &&
-       <ContentContainer>
-        <SubContainer>
-          <UserTitle>
-            <RoundImage />
-            <h1>{value.name}</h1>
-            <Separator />
-          </UserTitle>
-          <Table
-            variant="pessoal"
-            title="Informações Pessoais"
-            headers={[
-              "Nome",
-              "Data de Nascimento",
-              "Data de Afiliação",
-              "RG",
-              "CPF",
-              "Profissão",
-            ]}
-            data={[
-              value.name,
-              value.nascimento,
-              value.dataAfiliacao,
-              value.rg,
-              value.cpf,
-              value.profissao,
-            ]}
-          ></Table>
-        </SubContainer>
-        <SubContainer>
-          <Table
-            variant="contato"
-            title="Informações de Contato"
-            headers={["Email", "Telefone", "Endereço"]}
-            data={[
-              value.email,
-              value.telefone,
-              value.endereco.rua,
-              value.endereco.numero,
-              value.endereco.bairro,
-              value.endereco.complemento,
-            ]}
-          ></Table>
+      {isLoaded && (
+        <ContentContainer>
+          <SubContainer>
+            <UserTitle>
+              <RoundImage />
+              <h1>{value.name}</h1>
+              <Separator />
+            </UserTitle>
+            <Table
+              variant="pessoal"
+              title="Informações Pessoais"
+              headers={[
+                "Nome",
+                "Data de Nascimento",
+                "Data de Afiliação",
+                "RG",
+                "CPF",
+                "Profissão",
+              ]}
+              data={[
+                value.name,
+                value.nascimento,
+                value.dataAfiliacao,
+                value.rg,
+                value.cpf,
+                value.profissao,
+              ]}
+            ></Table>
+          </SubContainer>
+          <SubContainer>
+            <Table
+              variant="contato"
+              title="Informações de Contato"
+              headers={["Email", "Telefone", "Endereço"]}
+              data={[
+                value.email,
+                value.telefone,
+                value.endereco.rua,
+                value.endereco.numero,
+                value.endereco.bairro,
+                value.endereco.complemento,
+              ]}
+            ></Table>
 
-          <Table
-            variant="trabalho"
-            title="Informações de Trabalho"
-            headers={["Salário", "Organização Ou Empresa", "Nº de Inscrição"]}
-            data={[value.salario, value.empresa, value.numInscricao]}
-          ></Table>
-        </SubContainer>
-      </ContentContainer>
-}
+            <Table
+              variant="trabalho"
+              title="Informações de Trabalho"
+              headers={["Salário", "Organização Ou Empresa", "Nº de Inscrição"]}
+              data={[value.salario, value.empresa, value.numInscricao]}
+            ></Table>
+          </SubContainer>
+        </ContentContainer>
+      )}
     </Container>
   );
 };

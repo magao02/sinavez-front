@@ -10,7 +10,7 @@ const ListWrapper = ({ data, variant, toggleForm, remove }) => {
           <ListContainer>
             {data.map((dataEach, index) => (
               <List
-                variant="dependente"
+                variant="associados"
                 data={{
                   name: dataEach.name,
                   nascimento: dataEach.nascimento,
