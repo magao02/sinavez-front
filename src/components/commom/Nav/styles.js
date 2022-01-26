@@ -3,17 +3,10 @@ import theme from '../../../styles/theme';
 
 export const NavBar = styled.nav`
     width: 100%;
-    height: 100%;
-    
     display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 5.6rem;
-
-    padding-left: 2.3rem;
-    
 
     background-color: ${theme.colors.blue.default};
+    padding: 1rem 0;
 
     a {
         text-decoration: none;
@@ -23,4 +16,28 @@ export const NavBar = styled.nav`
 
         text-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0 , 0.25);
     }
+`;
+
+export const UserFeaturesLeft = styled.div`
+    width: 100%;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    padding-left: 2.3rem;
+    gap: 5.6rem;
+
+`;
+
+export const UserFeaturesRight = styled.div`
+    width: 100%;
+
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    padding-right: 3.7rem;
+
+    gap: 5.6rem;
 `;

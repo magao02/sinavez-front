@@ -1,0 +1,80 @@
+import { useRouter } from "next/router";
+
+import { useState, useCallback, useEffect } from "react";
+
+import { useAuth } from "../../contexts/AuthContext";
+
+import { useAdmin } from "../../contexts/AdminContext";
+
+import * as service from "../../services/accounts";
+
+import Navigation from "../../components/commom/Nav";
+import ListWrapper from "../../components/commom/ListWrapper";
+import SearchBar from "../../components/commom/SearchBar";
+import PdfPage from "../../components/PdfPage";
+
+import { Container, ContentContainer, ControllerContainer } from "./styles";
+
+const Associados = () => {
+  const [formUp, setFormUp] = useState(false);
+  const [associados, setAssociados] = useState();
+
+  const router = useRouter();
+
+  const authContext = useAuth();
+  const adminContext = useAdmin();
+
+  const toggleFormUp = (data) => {
+    setFormUp(!formUp);
+    adminContext.setAssociado(data);
+  };
+
+  const handleErrorAssociados = useCallback(async (error) => {
+    if (
+      error.response.data.message ==
+      "Usuário sem permissão de visualizar os assessores."
+    ) {router.push("/usuario");}
+  });
+
+  const getAssociados = useCallback(async () => {
+    try {
+      const associadosResponse = await service.getAssociados(authContext.token);
+      setAssociados(associadosResponse.data);
+    } catch (error) {
+      await handleErrorAssociados(error);
+    }
+  });
+
+  useEffect(() => {
+    if (!authContext.auth) {
+      router.push("/login");
+      return;
+    } else if (!authContext.admin) {
+      router.push("/login");
+      return;
+    } else if (associados !== undefined) {
+      return;
+    }
+    getAssociados();
+  });
+
+  return (
+    <Container>
+      <Navigation variant="logged" />
+      {associados && !formUp && (
+        <ContentContainer>
+          <ControllerContainer>
+          </ControllerContainer>
+          <ListWrapper
+            data={associados}
+            variant="associados"
+            toggleForm={toggleFormUp}
+          />
+        </ContentContainer>
+      )}
+      {formUp && <PdfPage outsideForm={toggleFormUp} />}
+    </Container>
+  );
+};
+
+export default Associados;
