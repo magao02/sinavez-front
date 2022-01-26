@@ -35,13 +35,13 @@ const UserData = () => {
     } catch (error) {
       console.log(error.response.data);
     }
-  });
+  }, [authContext.token, authContext.urlUser]);
 
   const handleUserData = useCallback(async () => {
     const responseData = await getUserData();
     setValue(responseData);
     setIsLoaded(true);
-  });
+  }, [getUserData]);
 
   useEffect(() => {
     if (!authContext.auth) {
@@ -49,7 +49,7 @@ const UserData = () => {
       return;
     }
     handleUserData();
-  }, []);
+  }, [authContext.auth, handleUserData, router]);
 
   return (
     <Container>
