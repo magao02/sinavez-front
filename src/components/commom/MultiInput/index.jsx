@@ -9,13 +9,6 @@ const MultiInput = (props) => MultiInputVariant(props);
 const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
   switch (variant) {
     case "step1": {
-      const [checked, setChecked] = useState(false);
-
-      const handleChangeChecked = () => {
-        setChecked(!checked)
-        console.log(checked)
-      }
-
       return (
         <Container>
           <Input
@@ -49,12 +42,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               placeholder={names[3]}
               ref={refs.numeroRef}
               validate={validation.testNumbers}
-              disable={checked}
             />
-            <CheckBox>
-              {names[4]}
-              <input type="checkbox" ref={refs.semNumeroRef} onChange={handleChangeChecked}/>
-            </CheckBox>
           </InputsContainer>
         </Container>
       );
@@ -94,10 +82,6 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               ref={refs.nacionalidadeRef}
               validate={validation.requiredTextField}
             />
-            <CheckBox>
-              {names[4]}
-              <input type="checkbox" ref={refs.brasileiroRef} />
-            </CheckBox>
           </InputsContainer>
         </Container>
       );

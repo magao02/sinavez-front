@@ -20,54 +20,54 @@ import { NavBar, UserFeaturesLeft, UserFeaturesRight } from "./styles";
 const Navigation = (props) => NavVariant(props);
 
 function NavVariant({ variant }) {
+  const [pdfData, setPdfData] = useState({});
+
+  const router = useRouter();
+
+  const authContext = useAuth();
+
+  const logout = () => {
+    services.logout(authContext.token);
+    authContext.cleanInfos();
+    router.push("/login");
+  };
+
+  const IsAdmin = () => {
+    if (!!authContext.admin) {
+      return(<Link href="associados">Listar Associados</Link>)
+    }
+    else {
+      return(<></>)
+    }
+  };
+
+  const getImposto = useCallback(async () => {
+    try {
+      const responseImposto = await services.getImpostos(
+        authContext.urlUser,
+        authContext.token
+      );
+      return responseImposto.data;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const handleImposto = useCallback(async () => {
+    const responseData = await getImposto();
+    setPdfData(responseData);
+  });
+
+  const startPdf = useCallback(async () => {
+    impostoPdf(pdfData);
+  });
+
+  useEffect(() => {
+    handleImposto();
+  }, []);
+
   switch (variant) {
     case "logged": {
-      const [pdfData, setPdfData] = useState({});
-
-      const router = useRouter();
-
-      const authContext = useAuth();
-
-      const logout = () => {
-        services.logout(authContext.token);
-        authContext.cleanInfos();
-        router.push("/login");
-      };
-
-      const IsAdmin = () => {
-        if (!!authContext.admin) {
-          return(<Link href="associados">Listar Associados</Link>)
-        }
-        else {
-          return(<></>)
-        }
-      };
-
-      const getImposto = useCallback(async () => {
-        try {
-          const responseImposto = await services.getImpostos(
-            authContext.urlUser,
-            authContext.token
-          );
-          return responseImposto.data;
-        } catch (error) {
-          console.log(error);
-        }
-      });
-
-      const handleImposto = useCallback(async () => {
-        const responseData = await getImposto();
-        setPdfData(responseData);
-      });
-
-      const startPdf = useCallback(async () => {
-        impostoPdf(pdfData);
-      });
-
-      useEffect(() => {
-        handleImposto();
-      }, []);
-
       return (
         <NavBar>
           <UserFeaturesLeft>

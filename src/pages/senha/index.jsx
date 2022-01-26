@@ -9,7 +9,7 @@ const PasswordRecovery = () => (
     <Container>
         <ContentSection>
             <PasswordSection>
-                <Image src={SinavezLogo}/>
+                <Image src={SinavezLogo} alt="logo sinavez" />
                 <Greetings>
                     <Title>Esqueceu sua senha?</Title>
                     <Subtitle>Por favor, digite seu endereço de e-mail que você usou durante a criação da sua conta. Nós mandaremos instruções para redefinir sua senha.</Subtitle>

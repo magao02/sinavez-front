@@ -39,7 +39,7 @@ const DependentsForm = ({submitForm, globalMessage}) => {
     ].map((inputRef) => inputRef.current?.value);
 
     submitForm({name, nascimento, cpf, rg, emissao})
-    });
+    }, [allFieldsAreValid, submitForm]);
 
   return (
     <Container>

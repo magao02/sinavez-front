@@ -34,7 +34,7 @@ const Associados = () => {
       error.response.data.message ==
       "Usuário sem permissão de visualizar os assessores."
     ) {router.push("/usuario");}
-  });
+  }, [router]);
 
   const getAssociados = useCallback(async () => {
     try {
@@ -43,7 +43,7 @@ const Associados = () => {
     } catch (error) {
       await handleErrorAssociados(error);
     }
-  });
+  }, [authContext.token, handleErrorAssociados]);
 
   useEffect(() => {
     if (!authContext.auth) {

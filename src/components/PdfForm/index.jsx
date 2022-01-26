@@ -41,7 +41,7 @@ const PdfForm = ({ handleSubmitForm }) => {
     );
 
     return validationResults.every((result) => result === true);
-  });
+  }, []);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -92,7 +92,7 @@ const PdfForm = ({ handleSubmitForm }) => {
       novembro,
       dezembro,
     }});
-  });
+  }, [allFieldsAreValid, handleSubmitForm]);
 
   return (
     <Container onSubmit={handleSubmit}>

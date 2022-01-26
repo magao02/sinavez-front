@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
   const handleErrorOnSubmit = useCallback(async (error) => {
     console.log(error.response.data.message)
-  })
+  }, [])
   
   const handleSubmit = useCallback(async (data) => {
     console.log(data);
@@ -44,7 +44,7 @@ const SignUpPage = () => {
     } catch (error) {
       await handleErrorOnSubmit(error)
     };
-  });
+  }, [router, handleErrorOnSubmit]);
 
   return (
     <Container>

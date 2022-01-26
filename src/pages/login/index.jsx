@@ -28,7 +28,7 @@ const LoginPage = () => {
   const loginAccount = useCallback(async (accountData) => {
     const responseData = await service.login(accountData);
     authContext.handleLoginToken(responseData.data);
-  });
+  }, [authContext]);
 
   const handleValidFormSubmit = useCallback(async ({ cpf, password }) => {
     try {
@@ -38,7 +38,7 @@ const LoginPage = () => {
     } catch (error) {
       setGlobalMessage(error.response.data.message);
     }
-  });
+  }, [loginAccount, router]);
 
   return (
     <Container>

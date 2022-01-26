@@ -18,7 +18,7 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
     );
 
     return validationResults.every((result) => result === true);
-  });
+  }, []);
 
   const validateCpf = useCallback(async (cpf) => {
     await validation.testCpf(cpf);
@@ -40,7 +40,7 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
     );
 
     onValidSubmit({ cpf, password });
-  });
+  }, [allFieldsAreValid, onValidSubmit]);
 
   return (
     <InputContainer onSubmit={handleSubmit}>

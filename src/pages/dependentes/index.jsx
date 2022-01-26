@@ -28,27 +28,35 @@ const Dependentes = () => {
 
   const router = useRouter();
 
-  const toggleFormUp = () => {
+  const toggleFormUp = useCallback(async () => {
     setFormUp(!formUp);
-  };
+  }, [setFormUp, formUp]);
 
   const handleErrorOnDependent = useCallback(async (error) => {
     setGlobalMessage(error.response.data.message);
-  });
+  }, []);
 
-  const handleSubmit = useCallback(async (data) => {
-    try {
-      const addDependentResponse = await service.addDependent(
-        data,
-        authContext.urlUser,
-        authContext.token
-      );
-      alert(addDependentResponse.data.message);
-      toggleFormUp();
-    } catch (error) {
-      await handleErrorOnDependent(error);
-    }
-  });
+  const handleSubmit = useCallback(
+    async (data) => {
+      try {
+        const addDependentResponse = await service.addDependent(
+          data,
+          authContext.urlUser,
+          authContext.token
+        );
+        alert(addDependentResponse.data.message);
+        toggleFormUp();
+      } catch (error) {
+        await handleErrorOnDependent(error);
+      }
+    },
+    [
+      authContext.urlUser,
+      authContext.token,
+      handleErrorOnDependent,
+      toggleFormUp,
+    ]
+  );
 
   const getDependents = useCallback(async () => {
     try {
@@ -61,22 +69,24 @@ const Dependentes = () => {
     } catch (error) {
       await handleErrorOnDependent(error);
     }
-  });
+  }, [authContext.urlUser, authContext.token, handleErrorOnDependent]);
 
-  const dependentRemove = useCallback(async (urlDependent) => {
-    console.log(urlDependent)
-    try {
-    const dependentRemoveResponse = await service.removeDependent(
-      authContext.token,
-      urlDependent,
-    );
-    console.log(dependentRemoveResponse);
-    alert("Dependente Removido, Recarregue a Página!")
-    }
-    catch (error) {
-      console.log(error)
-    }
-  });
+  const dependentRemove = useCallback(
+    async (urlDependent) => {
+      console.log(urlDependent);
+      try {
+        const dependentRemoveResponse = await service.removeDependent(
+          authContext.token,
+          urlDependent
+        );
+        console.log(dependentRemoveResponse);
+        alert("Dependente Removido, Recarregue a Página!");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [authContext.token]
+  );
 
   useEffect(() => {
     if (!authContext.auth) {
@@ -86,7 +96,7 @@ const Dependentes = () => {
       return;
     }
     getDependents();
-  }, []);
+  }, [authContext.auth, router, dependents, getDependents]);
 
   return (
     <Container>
@@ -94,12 +104,12 @@ const Dependentes = () => {
       {formUp && (
         <DependsForm submitForm={handleSubmit} globalMessage={globalMessage} />
       )}
-      {!formUp &&(
+      {!formUp && (
         <ContentContainer>
           <ControllerContainer>
             <SearchBar />
             <Button variant="image" onClick={toggleFormUp}>
-              <Image src={AddButton} />
+              <Image src={AddButton} alt="botão para adicionar dependente" />
             </Button>
           </ControllerContainer>
           <ListWrapper
