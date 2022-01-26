@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }) => {
   const [urlUser, setUrlUser] = useState(readFromLocalStorage("urlUser"));
   const [auth, setAuth] = useState(readFromLocalStorage("auth"));
   const [admin, setAdmin] = useState(readFromLocalStorage("admin"));
+  const [dependent, setDependent] = useState();
 
   const handleLoginToken = (recivedData) => {
     const { auth, token, urlUser, admin } = recivedData;
@@ -47,7 +48,16 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ handleLoginToken, token, urlUser, auth, admin, cleanInfos }}
+      value={{
+        handleLoginToken,
+        token,
+        urlUser,
+        auth,
+        admin,
+        cleanInfos,
+        dependent,
+        setDependent,
+      }}
     >
       {children}
     </AuthContext.Provider>

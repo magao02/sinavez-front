@@ -64,7 +64,7 @@ const SecondStepForm = ({ dataCollector }) => {
 
     if(!isValidSubmit) return;
 
-    const salario = Number(salarioRef.current.value);
+    const salario = Number(salarioRef.current?.value.replace(",", "."));
 
     const [municipio, estado, naturalidade, nacionalidade, numInscricao, 
       dataAfiliacao, formacaoSuperior, instituicaoSuperior, dataFormacao, 

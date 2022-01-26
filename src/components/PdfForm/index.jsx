@@ -6,7 +6,7 @@ import * as validation from "../../utils/validation";
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const PdfForm = ({ onValidSubmit }) => {
+const PdfForm = ({ handleSubmitForm }) => {
   const janRef = useRef();
   const fevRef = useRef();
   const marRef = useRef();
@@ -53,7 +53,7 @@ const PdfForm = ({ onValidSubmit }) => {
     const [
       janeiro,
       fevereiro,
-      março,
+      marco,
       abril,
       maio,
       junho,
@@ -76,12 +76,12 @@ const PdfForm = ({ onValidSubmit }) => {
       outRef,
       novRef,
       dezRef,
-    ].map((inputRef) => inputRef.current?.value);
+    ].map((inputRef) => Number(inputRef.current?.value.replace(",", ".")));
 
-    console.log({
+    handleSubmitForm({impostoDeRenda: {
       janeiro,
       fevereiro,
-      março,
+      marco,
       abril,
       maio,
       junho,
@@ -91,7 +91,7 @@ const PdfForm = ({ onValidSubmit }) => {
       outubro,
       novembro,
       dezembro,
-    });
+    }});
   });
 
   return (

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from '../../styles/theme';
 
 export const Container = styled.div`
   width: 80%;
@@ -41,4 +42,10 @@ export const FormContainer = styled.div`
   align-items: center;
 
   gap: 3.4rem;
+
+  span {
+    color: ${theme.colors.red};
+    text-align: center;
+    font-weight: bold;
+  }
 `;

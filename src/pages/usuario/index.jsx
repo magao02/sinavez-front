@@ -39,7 +39,6 @@ const UserData = () => {
 
   const handleUserData = useCallback(async () => {
     const responseData = await getUserData();
-    console.log(responseData)
     setValue(responseData);
     setIsLoaded(true);
   });

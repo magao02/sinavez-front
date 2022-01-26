@@ -11,19 +11,13 @@ export const Container = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    width: 80%;
+    width: 100%;
     height: 100%;
-
-    margin: 1.9rem 13.9rem;
-
 
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
-    border: 1px solid black;
-    border-radius: 2rem;
 `;
 
 export const ControllerContainer = styled.div`

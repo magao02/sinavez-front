@@ -1,12 +1,12 @@
 import { useCallback, useRef } from "react";
 
-import { InputContainer, Link } from "./styles";
+import { InputContainer, Link, ButtonContainer } from "./styles";
 import * as validation from "../../utils/validation";
 
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const LoginForm = ({ onValidSubmit }) => {
+const LoginForm = ({ onValidSubmit, globalMessage }) => {
   const cpfRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -14,31 +14,32 @@ const LoginForm = ({ onValidSubmit }) => {
     const inputRefs = [cpfRef, passwordRef];
 
     const validationResults = await Promise.all(
-      inputRefs.map((inputRef) => inputRef.current?.validate()),
+      inputRefs.map((inputRef) => inputRef.current?.validate())
     );
 
     return validationResults.every((result) => result === true);
-  })
+  });
 
   const validateCpf = useCallback(async (cpf) => {
-    await validation.testCpf(cpf)
-  }, [])
+    await validation.testCpf(cpf);
+  }, []);
 
   const validatePassword = useCallback(async (password) => {
-    await validation.testPassword(password, 8)
-  }, [])
+    await validation.testPassword(password, 8);
+  }, []);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-    
+
     const isValidSubmit = await allFieldsAreValid();
-    
+
     if (!isValidSubmit) return;
 
     const [cpf, password] = [cpfRef, passwordRef].map(
-      inputRef => inputRef.current?.value);
+      (inputRef) => inputRef.current?.value
+    );
 
-      onValidSubmit( {cpf, password} );
+    onValidSubmit({ cpf, password });
   });
 
   return (
@@ -62,8 +63,10 @@ const LoginForm = ({ onValidSubmit }) => {
       />
 
       <Link href="/senha">esqueceu sua senha?</Link>
-
-      <Button variant="default">Entrar</Button>
+      <ButtonContainer>
+        {globalMessage && <a>{globalMessage}</a>}
+        <Button variant="default">Entrar</Button>
+      </ButtonContainer>
     </InputContainer>
   );
 };

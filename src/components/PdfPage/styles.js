@@ -4,15 +4,13 @@ import theme from '../../styles/theme';
 export const Container = styled.div`
     width: 100vw;
     height: 100vh;
-
+    
     display: grid;
-    grid-template-rows: 11% 89%;
     grid-template-columns: 1fr;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 `;
-
 
 export const MainContent = styled.main`
     width: 100%;
@@ -28,6 +26,8 @@ export const GreetingsContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    gap: 1.2rem;
 `;
 
 export const Title = styled.h1``;

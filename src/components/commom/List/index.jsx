@@ -1,38 +1,50 @@
-import Image from 'next/image';
+import Image from "next/image";
 
-import UserIcon from '../../../assets/user_icon.svg';
-import EditIcon from '../../../assets/edit_icon.svg';
-import DeleteIcon from '../../../assets/remove_icon.svg';
+import { useCallback } from 'react';
 
-import { Container} from './styles'; 
+import UserIcon from "../../../assets/user_icon.svg";
+import DeleteIcon from "../../../assets/remove_icon.svg";
 
-const List = (props) => (
-  ListVariant(props)
-);
+import Button from "../Button";
 
-function ListVariant({ variant, data }) {
-  switch(variant) {
-    case 'dependente': {
+import { Container } from "./styles";
+
+const List = (props) => ListVariant(props);
+
+function ListVariant({ variant, data, toggleFormUp, remove }) {
+  switch (variant) {
+    case "dependente": {
+
+      const removeDependent = () => {
+        remove(data.urlDep)
+      }
+
       return (
         <Container>
           <Image src={UserIcon} />
-          <p>{data.nome}</p>
+          <p>{data.name}</p>
           <p>{data.nascimento}</p>
           <p>{data.cpf}</p>
           <p>{data.rg}</p>
           <p>{data.emissao}</p>
-          <Image src={EditIcon} />
-          <Image src={DeleteIcon} />
+          <Button variant="image" onClick={removeDependent}>
+            <Image src={DeleteIcon} />
+          </Button>
         </Container>
-      )
+      );
     }
-    case 'associados': {
+    case "associados": {
       return (
-      <Container>
-      </Container>
-      )
-    };
-  };
-};
+        <Container>  
+          <p>{data.name}</p>
+          <p>{data.cpf}</p>
+          <Button variant="image" onClick={() => toggleFormUp(data)}>
+            <img src="https://img.icons8.com/office/30/000000/pdf.png" />
+          </Button>
+        </Container>
+      );
+    }
+  }
+}
 
 export default List;

@@ -61,7 +61,7 @@ export async function testNumbers(rgValue) {
   return yup
   .string()
   .required(validationMessages.requiredField)
-  .matches(/^\d+$/, validationMessages.onlyNumbers)
+  .matches(/(?:\.|,|[0-9])*/, validationMessages.onlyNumbers)
   .validate(rgValue);
 }
 

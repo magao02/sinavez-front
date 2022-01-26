@@ -1,58 +1,101 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from "../../../contexts/AuthContext";
 
-import * as services from '../../../services/accounts';
+import { useCallback, useEffect, useState } from "react";
 
-import Button from '../Button';
+import * as services from "../../../services/accounts";
 
-import SinavezLogo from '../../../assets/logo_picture.svg';
+import impostoPdf from "../../../pdf/imposto";
 
-import { NavBar, UserFeaturesLeft, UserFeaturesRight } from './styles';
+import Button from "../Button";
 
-const Navigation = (props) => (
-    NavVariant(props)
-);
+import SinavezLogo from "../../../assets/logo_picture.svg";
+
+import { NavBar, UserFeaturesLeft, UserFeaturesRight } from "./styles";
+
+const Navigation = (props) => NavVariant(props);
 
 function NavVariant({ variant }) {
+  switch (variant) {
+    case "logged": {
+      const [pdfData, setPdfData] = useState({});
 
-    const router = useRouter();
+      const router = useRouter();
 
-    const authContext = useAuth();
+      const authContext = useAuth();
 
-    const logout = () => {
+      const logout = () => {
         services.logout(authContext.token);
         authContext.cleanInfos();
-        router.push('/login');
+        router.push("/login");
+      };
+
+      const IsAdmin = () => {
+        if (!!authContext.admin) {
+          return(<Link href="associados">Listar Associados</Link>)
+        }
+        else {
+          return(<></>)
+        }
+      };
+
+      const getImposto = useCallback(async () => {
+        try {
+          const responseImposto = await services.getImpostos(
+            authContext.urlUser,
+            authContext.token
+          );
+          return responseImposto.data;
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      const handleImposto = useCallback(async () => {
+        const responseData = await getImposto();
+        setPdfData(responseData);
+      });
+
+      const startPdf = useCallback(async () => {
+        impostoPdf(pdfData);
+      });
+
+      useEffect(() => {
+        handleImposto();
+      }, []);
+
+      return (
+        <NavBar>
+          <UserFeaturesLeft>
+            <Image src={SinavezLogo} />
+            <Link href="/usuario">Meus Dados</Link>
+            <Link href="/dependentes">Meus Dependentes</Link>
+            <Button variant="image" onClick={startPdf}>
+              <a>Baixar Imposto de Renda</a>
+            </Button>
+            <IsAdmin />
+          </UserFeaturesLeft>
+          <UserFeaturesRight>
+            <Button variant="nav" onClick={logout}>
+              Sair
+            </Button>
+          </UserFeaturesRight>
+        </NavBar>
+      );
     }
 
-    switch(variant) {
-        case 'logged': {
-            return (<NavBar>
-                <UserFeaturesLeft>
-                    <Image src={SinavezLogo} />
-                    <Link href="/usuario">Meus Dados</Link>
-                    <Link href="/dependentes">Meus Dependentes</Link>
-                    <a>Baixar Imposto de Renda</a>
-                    {authContext.admin  && <Link href="/associados">Listar Associados</Link>}
-                </UserFeaturesLeft>
-                <UserFeaturesRight>
-                    <Button variant="nav" onClick={logout}>Sair</Button>
-                </UserFeaturesRight>
-            </NavBar>)
-        }
-
-        case 'singup': {
-            return (
-                <NavBar>
-                    <Image src={SinavezLogo} />
-                </NavBar>
-            )
-        }
+    case "singup": {
+      return (
+        <NavBar>
+          <Image src={SinavezLogo} />
+        </NavBar>
+      );
     }
+  }
 }
 
 export default Navigation;

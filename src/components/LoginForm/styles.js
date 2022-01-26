@@ -22,3 +22,21 @@ export const Link = styled.a`
     color: ${theme.colors.dark.heavy};
     align-self: flex-end;
 `;
+
+export const ButtonContainer = styled.div`
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 1rem;
+
+    margin-top: 9.6rem;
+    margin-bottom: 2.4rem;
+
+    a {
+        color: ${theme.colors.red};
+        font-weight: bold;
+    }
+`;

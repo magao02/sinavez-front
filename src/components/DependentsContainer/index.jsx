@@ -7,7 +7,7 @@ import Button from "../commom/Button";
 
 import { Container, Header, Form, Title, FormContainer } from "./styles";
 
-const DependentsForm = ({submitForm}) => {
+const DependentsForm = ({submitForm, globalMessage}) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -92,6 +92,7 @@ const DependentsForm = ({submitForm}) => {
             validate={validation.testDate}
           />
           <Button variant="signup">Cadastrar Dependente</Button>
+          {globalMessage && <span>{globalMessage}</span>}
         </FormContainer>
       </Form>
     </Container>

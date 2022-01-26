@@ -20,9 +20,6 @@ function getStyleByVariant(variant) {
 
                 padding: 1.2rem;
 
-                margin-top: 9.6rem;
-                margin-bottom: 2.4rem;
-
                 font-size: 1.4rem;
                 color: ${theme.colors.white};
                 background-color: ${theme.colors.blue.default};

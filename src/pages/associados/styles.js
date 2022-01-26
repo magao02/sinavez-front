@@ -3,7 +3,7 @@ import theme from '../../styles/theme';
 
 export const Container = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background-color: ${theme.colors.white};
 
     display: flex;
@@ -18,6 +18,8 @@ export const ContentContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
+    gap: 1.2rem;
 `;
 
 export const ControllerContainer = styled.div`

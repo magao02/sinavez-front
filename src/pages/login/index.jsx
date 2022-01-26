@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../../contexts/AuthContext";
 
 import * as service from "../../services/accounts";
 
@@ -23,20 +23,20 @@ const LoginPage = () => {
 
   const authContext = useAuth();
 
+  const [globalMessage, setGlobalMessage] = useState();
+
   const loginAccount = useCallback(async (accountData) => {
     const responseData = await service.login(accountData);
-    console.log(responseData.data)
     authContext.handleLoginToken(responseData.data);
   });
 
   const handleValidFormSubmit = useCallback(async ({ cpf, password }) => {
-    console.log({cpf, password})
     try {
       await loginAccount({ cpf, password });
-      alert("Você será redirecionado para sua página")
-      router.push('/usuario');
+      alert("Você será redirecionado para sua página");
+      router.push("/usuario");
     } catch (error) {
-      console.log(error.response.data.message);
+      setGlobalMessage(error.response.data.message);
     }
   });
 
@@ -47,7 +47,10 @@ const LoginPage = () => {
           <Title>Login</Title>
           <SubTitle>Seja bem-vindo de volta!</SubTitle>
         </GreetingsContainer>
-        <LoginForm onValidSubmit={handleValidFormSubmit} />
+        <LoginForm
+          onValidSubmit={handleValidFormSubmit}
+          globalMessage={globalMessage}
+        />
         <Center>
           <span>Não possui uma conta?</span>
           <Link href="/cadastro">Criar Conta</Link>
