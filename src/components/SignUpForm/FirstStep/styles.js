@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../../styles/theme';
 
 export const Container = styled.div`
   width: 100%;
@@ -11,7 +12,19 @@ export const Container = styled.div`
 
 export const ButtonContainer = styled.div`
   align-self: center;
+
   width: 80%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: ${theme.colors.red};
+    font-weight: bold;
+  }
+  
 `;
 
 export const InputForm = styled.form`

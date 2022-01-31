@@ -42,7 +42,7 @@ function getStyleByVariant(variant) {
 
                 padding: 1.2rem;
 
-                margin-top: 8.0rem;
+                margin-top: 1.0rem;
 
                 font-size: 1.4rem;
                 color: ${theme.colors.white};
