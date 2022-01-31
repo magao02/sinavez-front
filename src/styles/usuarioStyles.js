@@ -22,7 +22,6 @@ export const ContentContainer = styled.div`
 
     border: 1px solid black;
     border-radius: 2rem;
-
 `;
 
 export const SubContainer = styled.div`
