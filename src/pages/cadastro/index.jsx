@@ -48,7 +48,7 @@ const SignUpPage = () => {
 
   return (
     <Container>
-      <Navigation variant="singup" />
+      <Navigation variant="signup" />
       <MainContent>
         {step === 1 && <SignUpFormFirst dataCollector={dataCollector}/>}
         {step === 2 && <SignUpFormSecond dataCollector={dataCollector}/>}

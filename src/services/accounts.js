@@ -42,9 +42,11 @@ export async function getDependents(urlUser, token) {
 }
 
 export async function getAssociados(token) {
-  const requisition = await api.get("/getUsers/", {
+  console.log(token);
+  const requisition = await api.get("/getUsers", {
     headers: { authorization: token },
   });
+  console.log("passou")
   return requisition;
 }
 
