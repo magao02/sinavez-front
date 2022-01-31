@@ -14,7 +14,7 @@ import Button from "../../commom/Button";
 import Select from "../../commom/Select";
 import MultiInput from "../../commom/MultiInput";
 
-const FirstStepForm = ({ dataCollector }) => {
+const FirstStepForm = ({ dataCollector, globalMessage }) => {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
@@ -28,21 +28,30 @@ const FirstStepForm = ({ dataCollector }) => {
   const ruaRef = useRef(null);
   const bairroRef = useRef(null);
   const complementoRef = useRef(null);
-  const numeroRef = useRef(' ');
+  const numeroRef = useRef(" ");
 
   const allFieldsAreValid = useCallback(async () => {
-
-    const inputRefs = [nameRef, emailRef, phoneRef, cpfRef, 
-      passwordRef, birthdayRef, filiacaoRef, rgRef, dataEmissaoRef, 
-      ruaRef, bairroRef, complementoRef];
+    const inputRefs = [
+      nameRef,
+      emailRef,
+      phoneRef,
+      cpfRef,
+      passwordRef,
+      birthdayRef,
+      filiacaoRef,
+      rgRef,
+      dataEmissaoRef,
+      ruaRef,
+      bairroRef,
+      complementoRef,
+    ];
 
     const validationResults = await Promise.all(
-      inputRefs.map((inputRef) => inputRef.current?.validate()),
+      inputRefs.map((inputRef) => inputRef.current?.validate())
     );
-    
+
     return validationResults.every((result) => result === true);
-  }
-  );
+  });
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -50,18 +59,66 @@ const FirstStepForm = ({ dataCollector }) => {
 
     if (!isValidSubmit) return;
 
-    const [name, email, password, telefone, nascimento, cpf, rg, emissao,
-    filiacao, profissao, rua, bairro, complemento, numero] = [nameRef, emailRef, passwordRef, phoneRef, 
-      birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef, profissaoRef, 
-      ruaRef, bairroRef, complementoRef, numeroRef].map(
-        (inputRef) => inputRef.current?.value,);
+    const [
+      name,
+      email,
+      password,
+      telefone,
+      nascimento,
+      cpf,
+      rg,
+      emissao,
+      filiacao,
+      profissao,
+      rua,
+      bairro,
+      complemento,
+      numero,
+    ] = [
+      nameRef,
+      emailRef,
+      passwordRef,
+      phoneRef,
+      birthdayRef,
+      cpfRef,
+      rgRef,
+      dataEmissaoRef,
+      filiacaoRef,
+      profissaoRef,
+      ruaRef,
+      bairroRef,
+      complementoRef,
+      numeroRef,
+    ].map((inputRef) => inputRef.current?.value);
 
-      dataCollector({ name, email, password, telefone, nascimento, cpf, rg, emissao,
-      filiacao, profissao, endereco:{rua, bairro, complemento, numero} })
+    dataCollector({
+      name,
+      email,
+      password,
+      telefone,
+      nascimento,
+      cpf,
+      rg,
+      emissao,
+      filiacao,
+      profissao,
+      endereco: { rua, bairro, complemento, numero },
+    });
 
-      console.log({ name, email, password, telefone, nascimento, cpf, rg, emissao,
-        filiacao, profissao, endereco:{rua, bairro, complemento, numero} })
-  })
+    // console.log({
+    //   name,
+    //   email,
+    //   password,
+    //   telefone,
+    //   nascimento,
+    //   cpf,
+    //   rg,
+    //   emissao,
+    //   filiacao,
+    //   profissao,
+    //   endereco: { rua, bairro, complemento, numero },
+    // });
+  });
 
   return (
     <Container>
@@ -102,7 +159,7 @@ const FirstStepForm = ({ dataCollector }) => {
           />
         </InputContainer>
         <InputContainer>
-        <Input
+          <Input
             variant="signup"
             label="Data de Nascimento"
             name="nascimento"
@@ -114,7 +171,7 @@ const FirstStepForm = ({ dataCollector }) => {
             variant="signup"
             label="CPF"
             name="cpf"
-            placeholder="xxx.xxx.xxx-xx"
+            placeholder="Digite os números do seu CPF"
             ref={cpfRef}
             validate={validation.testCpf}
           />
@@ -170,7 +227,10 @@ const FirstStepForm = ({ dataCollector }) => {
             validation={validation}
             variant="step1"
           />
-          <Button variant="signup">Próxima Página</Button>
+          <ButtonContainer>
+            {globalMessage && <span>{globalMessage}</span>}
+            <Button variant="signup">Próxima Página</Button>
+          </ButtonContainer>
         </InputContainer>
       </InputForm>
     </Container>
