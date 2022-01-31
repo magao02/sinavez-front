@@ -20,6 +20,10 @@ export const InputForm = styled.form`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 
+  @media (max-width: 415px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
   gap: 2.4rem;
   padding: 8em 1rem 0rem 1rem;
 
