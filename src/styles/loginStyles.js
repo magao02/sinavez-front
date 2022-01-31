@@ -39,6 +39,9 @@ export const LoginSection = styled.section`
 
     background-color: ${theme.colors.white};
 
+    @media (max-width: 1680px) {
+        height: 100vh;
+
     @media (max-width: 1024px) {
         padding: 5.0rem 10.4rem;
 `;
