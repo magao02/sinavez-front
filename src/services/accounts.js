@@ -10,6 +10,14 @@ export async function login(userValue) {
   return requisition;
 }
 
+export async function setPassword(newPassword, token) {
+  console.log(newPassword);
+  const requisition = await api.put("/setPassword", newPassword, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
 export async function getUserData(urlUser, token) {
   const requisition = await api.get("/user/" + urlUser, {
     headers: { authorization: token },
@@ -27,10 +35,9 @@ export async function addDependent(dependentData, urlUser, token) {
 }
 
 export async function removeDependent(token, dependentUrl) {
-  const requisition = await api.delete(
-    "/deleteDep/" + dependentUrl,
-    { headers : {authorization: token }}
-  );
+  const requisition = await api.delete("/deleteDep/" + dependentUrl, {
+    headers: { authorization: token },
+  });
   return requisition;
 }
 
@@ -46,7 +53,7 @@ export async function getAssociados(token) {
   const requisition = await api.get("/getUsers", {
     headers: { authorization: token },
   });
-  console.log("passou")
+  console.log("passou");
   return requisition;
 }
 
@@ -54,25 +61,27 @@ export async function setImpostoAssociado(urlUser, imposto, token) {
   console.log(imposto);
   const requisition = await api.put(
     "/user/" + urlUser + "/setImpostoDeRenda",
-    imposto, 
-    {headers: { authorization: token }});
-    return requisition;
+    imposto,
+    { headers: { authorization: token } }
+  );
+  return requisition;
 }
 
 export async function setImpostoDependente(urlUser, depUrl, imposto, token) {
   console.log(imposto);
   const requisition = await api.put(
     "/user/" + urlUser + "/setImpostoDeRendaDep/" + depUrl,
-    imposto, 
-    {headers: { authorization: token }});
-    return requisition;
+    imposto,
+    { headers: { authorization: token } }
+  );
+  return requisition;
 }
 
 export async function getImpostos(urlUser, token) {
-  const requisition = await api.get(
-    "getPDF/" + urlUser,
-    {headers: { authorization: token }});
-    return requisition;
+  const requisition = await api.get("getPDF/" + urlUser, {
+    headers: { authorization: token },
+  });
+  return requisition;
 }
 
 export async function logout(token) {
