@@ -68,7 +68,7 @@ const DependentsForm = ({submitForm, globalMessage}) => {
           <Input
             type="text"
             label="CPF"
-            placeholder="xxx.xxx.xxx-xx"
+            placeholder="Digite apenas os números do CPF"
             variant="signup"
             ref={cpfRef}
             validate={validation.testCpf}

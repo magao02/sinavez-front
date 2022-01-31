@@ -171,7 +171,7 @@ const FirstStepForm = ({ dataCollector, globalMessage }) => {
             variant="signup"
             label="CPF"
             name="cpf"
-            placeholder="xxx.xxx.xxx-xx"
+            placeholder="Digite os números do seu CPF"
             ref={cpfRef}
             validate={validation.testCpf}
           />
