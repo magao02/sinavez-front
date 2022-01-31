@@ -1,9 +1,8 @@
 import Image from "next/image";
 
-import { useCallback } from 'react';
-
 import UserIcon from "../../../assets/user_icon.svg";
 import DeleteIcon from "../../../assets/remove_icon.svg";
+import pdfIcon from "../../../assets/pdf_icon.svg";
 
 import Button from "../Button";
 
@@ -14,10 +13,9 @@ const List = (props) => ListVariant(props);
 function ListVariant({ variant, data, toggleFormUp, remove }) {
   switch (variant) {
     case "dependente": {
-
       const removeDependent = () => {
-        remove(data.urlDep)
-      }
+        remove(data.urlDep);
+      };
 
       return (
         <Container>
@@ -35,11 +33,14 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
     }
     case "associados": {
       return (
-        <Container>  
+        <Container>
           <p>{data.name}</p>
           <p>{data.cpf}</p>
           <Button variant="image" onClick={() => toggleFormUp(data)}>
-            <img src="https://img.icons8.com/office/30/000000/pdf.png" />
+            <Image
+              src={pdfIcon}
+              alt="botão para gerar pdf"
+            />
           </Button>
         </Container>
       );
