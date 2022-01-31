@@ -29,23 +29,9 @@ const FirstStepForm = ({ dataCollector }) => {
   const bairroRef = useRef(null);
   const complementoRef = useRef(null);
   const numeroRef = useRef(' ');
-  const semNumeroRef = useRef(false);
 
   const allFieldsAreValid = useCallback(async () => {
 
-    if (semNumeroRef === false) {
-
-    const inputRefs = [nameRef, emailRef, phoneRef, cpfRef, 
-      passwordRef, birthdayRef, filiacaoRef, rgRef, dataEmissaoRef, 
-      ruaRef, bairroRef, complementoRef, numeroRef];
-
-    const validationResults = await Promise.all(
-      inputRefs.map((inputRef) => inputRef.current?.validate()),
-    );
-    
-    return validationResults.every((result) => result === true);
-  }
-  else {
     const inputRefs = [nameRef, emailRef, phoneRef, cpfRef, 
       passwordRef, birthdayRef, filiacaoRef, rgRef, dataEmissaoRef, 
       ruaRef, bairroRef, complementoRef];
@@ -56,7 +42,7 @@ const FirstStepForm = ({ dataCollector }) => {
     
     return validationResults.every((result) => result === true);
   }
-  });
+  );
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -67,7 +53,7 @@ const FirstStepForm = ({ dataCollector }) => {
     const [name, email, password, telefone, nascimento, cpf, rg, emissao,
     filiacao, profissao, rua, bairro, complemento, numero] = [nameRef, emailRef, passwordRef, phoneRef, 
       birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef, profissaoRef, 
-      ruaRef, bairroRef, complementoRef,numeroRef].map(
+      ruaRef, bairroRef, complementoRef, numeroRef].map(
         (inputRef) => inputRef.current?.value,);
 
       dataCollector({ name, email, password, telefone, nascimento, cpf, rg, emissao,
@@ -174,13 +160,12 @@ const FirstStepForm = ({ dataCollector }) => {
           />
           <MultiInput
             label="Endereço"
-            names={["Rua", "Bairro", "Complemento", "Número", "Sem Número"]}
+            names={["Rua", "Bairro", "Complemento", "Número"]}
             refs={{
               ruaRef,
               bairroRef,
               complementoRef,
               numeroRef,
-              semNumeroRef,
             }}
             validation={validation}
             variant="step1"

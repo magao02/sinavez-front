@@ -21,24 +21,16 @@ const Navigation = (props) => NavVariant(props);
 
 function NavVariant({ variant }) {
   const [pdfData, setPdfData] = useState({});
-
-  const router = useRouter();
+  const [admin, setAdmin] = useState();
 
   const authContext = useAuth();
+
+  const router = useRouter();
 
   const logout = () => {
     services.logout(authContext.token);
     authContext.cleanInfos();
     router.push("/login");
-  };
-
-  const IsAdmin = () => {
-    if (!!authContext.admin) {
-      return(<Link href="associados">Listar Associados</Link>)
-    }
-    else {
-      return(<></>)
-    }
   };
 
   const getImposto = useCallback(async () => {
@@ -64,6 +56,7 @@ function NavVariant({ variant }) {
 
   useEffect(() => {
     handleImposto();
+    setAdmin(authContext.admin)
   }, []);
 
   switch (variant) {
@@ -77,7 +70,9 @@ function NavVariant({ variant }) {
             <Button variant="image" onClick={startPdf}>
               <a>Baixar Imposto de Renda</a>
             </Button>
-            <IsAdmin />
+            {admin ? (
+              <Link href="associados">Listar Associados</Link>
+            ) : ""}
           </UserFeaturesLeft>
           <UserFeaturesRight>
             <Button variant="nav" onClick={logout}>
@@ -88,7 +83,7 @@ function NavVariant({ variant }) {
       );
     }
 
-    case "singup": {
+    case "signup": {
       return (
         <NavBar>
           <Image src={SinavezLogo} />
