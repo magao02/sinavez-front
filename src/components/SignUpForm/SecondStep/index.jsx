@@ -29,40 +29,40 @@ const SecondStepForm = ({ dataCollector }) => {
   const empresaRef = useRef();
   const salarioRef = useRef();
 
-  const allFieldsAreValid = useCallback(async () => {
+  // const allFieldsAreValid = useCallback(async () => {
 
-    if (brasileiroRef === false) {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-      nacionalidadeRef, numeroInscricaoRef, 
-      dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef, 
-      dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef, 
-      empresaRef, salarioRef];
+  //   if (brasileiroRef === false) {
+  //     const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
+  //     nacionalidadeRef, numeroInscricaoRef, 
+  //     dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef, 
+  //     dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef, 
+  //     empresaRef, salarioRef];
 
-      const validationResults = await Promise.all(
-        inputRefs.map((inputRef) => inputRef.current?.validate()),
-      )
-      return validationResults.every((result) => result === true);
-    }
+  //     const validationResults = await Promise.all(
+  //       inputRefs.map((inputRef) => inputRef.current?.validate()),
+  //     )
+  //     return validationResults.every((result) => result === true);
+  //   }
 
-    else {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-        numeroInscricaoRef, dataAfiliacaoRef, formacaoSuperiorRef, 
-        instituicaoSuperiorRef, 
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef, 
-        empresaRef, salarioRef];
+  //   else {
+  //     const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
+  //       numeroInscricaoRef, dataAfiliacaoRef, formacaoSuperiorRef, 
+  //       instituicaoSuperiorRef, 
+  //       dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef, 
+  //       empresaRef, salarioRef];
   
-        const validationResults = await Promise.all(
-          inputRefs.map((inputRef) => inputRef.current?.validate()),
-        )
-        return validationResults.every((result) => result === true);
-      }
-  });
+  //       const validationResults = await Promise.all(
+  //         inputRefs.map((inputRef) => inputRef.current?.validate()),
+  //       )
+  //       return validationResults.every((result) => result === true);
+  //     }
+  // });
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-    const isValidSubmit = await allFieldsAreValid();
+    // const isValidSubmit = await allFieldsAreValid();
 
-    if(!isValidSubmit) return;
+    // if(!isValidSubmit) return;
 
     const salario = Number(salarioRef.current?.value.replace(",", "."));
 
@@ -96,7 +96,7 @@ const SecondStepForm = ({ dataCollector }) => {
             ]}
             refs={{cidadeRef, estadoRef, naturalidadeRef, nacionalidadeRef, brasileiroRef}}
             variant="step2"
-            validation={validation}
+            // validation={validation}
           />
           <Input
             variant="signup"
@@ -104,7 +104,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="numInscricao"
             placeholder="Digite o seu número de inscrição"
             ref={numeroInscricaoRef}
-            validate={validation.testNumbers}
+            // validate={validation.testNumbers}
           />
           <Input
             variant="signup"
@@ -112,7 +112,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="dataAfiliacao"
             placeholder="DD/MM/AA"
             ref={dataAfiliacaoRef}
-            validate={validation.testDate}
+            // validate={validation.testDate}
           />
         </InputContainer>
         <InputContainer>
@@ -122,7 +122,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="formacaoSuperior"
             placeholder="Digite o nome do seu curso"
             ref={formacaoSuperiorRef}
-            validate={validation.requiredTextField}
+            // validate={validation.requiredTextField}
           />
           <Input
             variant="signup"
@@ -130,7 +130,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="instituicaoSuperior"
             placeholder="Digite o nome da sua instituição de formação"
             ref={instituicaoSuperiorRef}
-            validate={validation.requiredTextField}
+            // validate={validation.requiredTextField}
           />
           <Input
             variant="signup"
@@ -138,7 +138,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="dataFormacao"
             placeholder="DD/MM/AAAA"
             ref={dataFormacaoRef}
-            validate={validation.testDate}
+            // validate={validation.testDate}
           />
           <Input
             variant="signup"
@@ -146,7 +146,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="numRegistroConselho"
             placeholder="Digite o seu número de registro"
             ref={numRegistroConselhoRef}
-            validate={validation.testNumbers}
+            // validate={validation.testNumbers}
           />
           <Input
             variant="signup"
@@ -154,7 +154,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="dataRegistroConselho"
             placeholder="DD/MM/AAAA"
             ref={dataRegistroConselhoRef}
-            validate={validation.testDate}
+            // validate={validation.testDate}
           />
         </InputContainer>
         <InputContainer>
@@ -164,7 +164,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="empresa"
             placeholder="Digite o nome do Orgão ou Empresa"
             ref={empresaRef}
-            validate={validation.requiredTextField}
+            // validate={validation.requiredTextField}
           />
           <Input
             variant="signup"
@@ -172,7 +172,7 @@ const SecondStepForm = ({ dataCollector }) => {
             name="salario"
             placeholder="Digite apenas o valor sem vírgulas ou pontos"
             ref={salarioRef}
-            validate={validation.testNumbers}
+            // validate={validation.testNumbers}
           />
           <ButtonContainer>
             <Button variant="password">Finalizar Cadastro</Button>

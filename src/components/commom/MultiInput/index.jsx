@@ -17,7 +17,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
             name={names[0]}
             placeholder={names[0]}
             ref={refs.ruaRef}
-            validate={validation.requiredTextField}
+            // validate={validation.requiredTextField}
           />
           <InputsContainer>
             <Input
@@ -25,14 +25,14 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               name={names[1]}
               placeholder={names[1]}
               ref={refs.bairroRef}
-              validate={validation.requiredTextField}
+              // validate={validation.requiredTextField}
             />
             <Input
               variant="signup"
               name={names[2]}
               placeholder={names[2]}
               ref={refs.complementoRef}
-              validate={validation.requiredTextField}
+              // validate={validation.requiredTextField}
             />
           </InputsContainer>
           <InputsContainer>
@@ -41,7 +41,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               name={names[3]}
               placeholder={names[3]}
               ref={refs.numeroRef}
-              validate={validation.testNumbers}
+              // validate={validation.testNumbers}
             />
           </InputsContainer>
         </Container>
@@ -56,7 +56,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
             name={names[0]}
             placeholder={names[0]}
             ref={refs.cidadeRef}
-            validate={validation.requiredTextField}
+            // validate={validation.requiredTextField}
           />
           <InputsContainer>
             <Input
@@ -64,14 +64,14 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               name={names[1]}
               placeholder={names[1]}
               ref={refs.estadoRef}
-              validate={validation.requiredTextField}
+              // validate={validation.requiredTextField}
             />
             <Input
               variant="signup"
               name={names[2]}
               placeholder={names[2]}
               ref={refs.naturalidadeRef}
-              validate={validation.requiredTextField}
+              // validate={validation.requiredTextField}
             />
           </InputsContainer>
           <InputsContainer>
@@ -80,7 +80,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant }) => {
               name={names[3]}
               placeholder={names[3]}
               ref={refs.nacionalidadeRef}
-              validate={validation.requiredTextField}
+              // validate={validation.requiredTextField}
             />
           </InputsContainer>
         </Container>

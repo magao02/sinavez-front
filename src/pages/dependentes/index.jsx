@@ -27,6 +27,7 @@ const Dependentes = () => {
   const [formUp, setFormUp] = useState(false);
   const [dependents, setDependents] = useState();
   const [globalMessage, setGlobalMessage] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const authContext = useAuth();
 
@@ -111,7 +112,10 @@ const Dependentes = () => {
       {!formUp && (
         <ContentContainer>
           <ControllerContainer>
-            <SearchBar />
+            <SearchBar
+              setSearch={setSearchTerm}
+              placeHolder="Digite o nome do Dependente"
+            />
             <Button variant="image" onClick={toggleFormUp}>
               <Image src={AddButton} alt="botão para adicionar dependente" />
             </Button>
@@ -120,6 +124,7 @@ const Dependentes = () => {
             data={dependents}
             variant="dependente"
             remove={dependentRemove}
+            searchTerm={searchTerm}
           />
         </ContentContainer>
       )}

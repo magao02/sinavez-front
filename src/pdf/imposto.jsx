@@ -98,7 +98,7 @@ const impostoPDF = (data) => {
       text: "Tabela Imposto de Renda",
       fontsize: 25,
       bold: true,
-      margin: [15, 20, 50, 8],
+      margin: [15, 150, 50, 8],
       alignment: "center"
     },
     {
@@ -133,6 +133,8 @@ const impostoPDF = (data) => {
   const document = {
     pageSize: "A4",
     pageMargins: [15, 50, 15, 40],
+    pageOrientation: 'landscape',
+    
 
     content: [body],
   };

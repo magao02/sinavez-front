@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 23%;
+  width: 20%;
   
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: center;
-
-  gap: 2.1rem;
+  grid-template-columns: 20% 80%;
 
   border: 1px solid black;
   border-radius: 0.7rem;
@@ -15,6 +13,7 @@ export const Container = styled.div`
   padding: 0.95rem;
 
   input {
+    width: 100%;
     text-decoration: none;
     border: none;
     background-color: transparent;
