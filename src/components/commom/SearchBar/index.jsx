@@ -7,7 +7,7 @@ import Input from "../Input";
 
 import { Container } from "./styles";
 
-const SearchBar = ({ setSearch }) => {
+const SearchBar = ({ setSearch, placeHolder }) => {
 
   const handleChange = (event) => {
     setSearch(event.target.value);
@@ -18,7 +18,7 @@ const SearchBar = ({ setSearch }) => {
       <Image src={SearchIcon} />
       <Input
         name="pesquisa"
-        placeholder="Digite o nome ou CPF do associado"
+        placeholder={placeHolder}
         type="text"
         onChange={handleChange}
       />
