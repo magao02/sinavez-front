@@ -22,7 +22,7 @@ import {
 const Associados = () => {
   const [formUp, setFormUp] = useState(false);
   const [associados, setAssociados] = useState();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const router = useRouter();
 
@@ -74,7 +74,10 @@ const Associados = () => {
       {associados && !formUp && (
         <ContentContainer>
           <ControllerContainer>
-            <SearchBar setSearch={setSearchTerm}/>
+            <SearchBar
+              setSearch={setSearchTerm}
+              placeHolder="Digite o nome ou CPF do associado"
+            />
           </ControllerContainer>
           <ListWrapper
             data={associados}

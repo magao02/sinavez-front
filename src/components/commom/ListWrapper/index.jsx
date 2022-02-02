@@ -40,7 +40,14 @@ const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
       case "dependente": {
         return (
           <ListContainer>
-            {data.map((dataEach, index) => (
+            {data.filter((value) => {
+                if (searchTerm == "") {
+                  return value;
+                }
+                else if (value.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  return value;
+                }}
+                ).map((dataEach, index) => (
               <List
                 variant="dependente"
                 data={{
