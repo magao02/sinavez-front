@@ -8,6 +8,7 @@ import { useAdmin } from "../../contexts/AdminContext";
 
 import * as service from "../../services/accounts";
 
+import SearchBar from "../../components/commom/SearchBar";
 import Navigation from "../../components/commom/Nav";
 import ListWrapper from "../../components/commom/ListWrapper";
 import PdfPage from "../../components/PdfPage";
@@ -21,6 +22,7 @@ import {
 const Associados = () => {
   const [formUp, setFormUp] = useState(false);
   const [associados, setAssociados] = useState();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const router = useRouter();
 
@@ -71,11 +73,14 @@ const Associados = () => {
       <Navigation variant="logged" />
       {associados && !formUp && (
         <ContentContainer>
-          <ControllerContainer></ControllerContainer>
+          <ControllerContainer>
+            <SearchBar setSearch={setSearchTerm}/>
+          </ControllerContainer>
           <ListWrapper
             data={associados}
             variant="associados"
             toggleForm={toggleFormUp}
+            searchTerm={searchTerm}
           />
         </ContentContainer>
       )}

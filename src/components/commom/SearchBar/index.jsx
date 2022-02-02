@@ -1,14 +1,29 @@
-import Image from 'next/image';
-import SearchIcon from '../../../assets/search_icon.svg';
+import { useState, useRef, useImperativeHandle } from "react";
 
+import Image from "next/image";
+import SearchIcon from "../../../assets/search_icon.svg";
 
-import { Container } from './styles';
+import Input from "../Input";
 
-const SearchBar = ({}) => (
-  <Container>
-    <Image src={SearchIcon}/>
-    <input name="pesquisa" placeholder="Nome do dependente" />
-  </Container>
-);
+import { Container } from "./styles";
+
+const SearchBar = ({ setSearch }) => {
+
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  return (
+    <Container>
+      <Image src={SearchIcon} />
+      <Input
+        name="pesquisa"
+        placeholder="Digite o nome ou CPF do associado"
+        type="text"
+        onChange={handleChange}
+      />
+    </Container>
+  );
+};
 
 export default SearchBar;

@@ -2,13 +2,24 @@ import List from "../List";
 
 import { ListContainer } from "./styles";
 
-const ListWrapper = ({ data, variant, toggleForm, remove }) => {
+const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
   if (data !== undefined) {
     switch (variant) {
       case "associados": {
         return (
           <ListContainer>
-            {data.map((dataEach, index) => (
+            {data.filter((value) => {
+              if (searchTerm == "") {
+                return value;
+              }
+              else if (value.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return value;
+              }
+              else if (value.cpf.includes(searchTerm)) {
+                return value;
+              }
+            }
+            ).map((dataEach, index) => (
               <List
                 variant="associados"
                 data={{
