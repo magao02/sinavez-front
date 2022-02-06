@@ -32,6 +32,7 @@ const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
                 }}
                 key={index}
                 toggleFormUp={toggleForm}
+                variant="associados"
               />
             ))}
           </ListContainer>

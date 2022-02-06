@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import UserIcon from "../../../assets/user_icon.svg";
 import DeleteIcon from "../../../assets/remove_icon.svg";
+import EditIcon from "../../../assets/edit_icon.svg";
 import pdfIcon from "../../../assets/pdf_icon.svg";
 
 import Button from "../Button";
@@ -18,7 +19,7 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
       };
 
       return (
-        <Container>
+        <Container variant="dependente">
           <Image src={UserIcon} />
           <p>{data.name}</p>
           <p>{data.nascimento}</p>
@@ -33,13 +34,25 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
     }
     case "associados": {
       return (
-        <Container>
+        <Container variant="associados">
           <p>{data.name}</p>
           <p>{data.cpf}</p>
           <Button variant="image" onClick={() => toggleFormUp(data)}>
             <Image
               src={pdfIcon}
               alt="botão para gerar pdf"
+            />
+          </Button>
+          <Button variant="image">
+            <Image
+              src={EditIcon}
+              alt="botão para editara associado"
+            />
+          </Button>
+          <Button variant="image">
+            <Image
+              src={DeleteIcon}
+              alt="botão para deletar associado"
             />
           </Button>
         </Container>
