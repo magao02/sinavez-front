@@ -24,14 +24,12 @@ const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
                 variant="associados"
                 data={{
                   name: dataEach.name,
-                  nascimento: dataEach.nascimento,
                   cpf: dataEach.cpf,
-                  rg: dataEach.rg,
-                  emissao: dataEach.emissao,
                   urlUser: dataEach.urlUser,
                 }}
                 key={index}
                 toggleFormUp={toggleForm}
+                remove={remove}
                 variant="associados"
               />
             ))}

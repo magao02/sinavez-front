@@ -33,6 +33,9 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
       );
     }
     case "associados": {
+      const removeUser = () => {
+        remove(data.urlUser);
+      };
       return (
         <Container variant="associados">
           <p>{data.name}</p>
@@ -49,7 +52,7 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
               alt="botão para editara associado"
             />
           </Button>
-          <Button variant="image">
+          <Button variant="image" onClick={removeUser}>
             <Image
               src={DeleteIcon}
               alt="botão para deletar associado"

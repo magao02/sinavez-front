@@ -78,14 +78,12 @@ const Dependentes = () => {
 
   const dependentRemove = useCallback(
     async (urlDependent) => {
-      console.log(urlDependent);
       try {
         const dependentRemoveResponse = await service.removeDependent(
           authContext.token,
           urlDependent
         );
-        console.log(dependentRemoveResponse);
-        alert("Dependente Removido, Recarregue a Página!");
+        alert(`${dependentRemoveResponse}, Recarregue a Página!`);
       } catch (error) {
         console.log(error);
       }
