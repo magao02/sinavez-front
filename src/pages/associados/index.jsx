@@ -70,10 +70,25 @@ const Associados = () => {
     [authContext.token]
   );
 
+  const userPromote = useCallback(
+    async (userUrl) => {
+      try {
+        const userPromoteResponse = await service.setAdmin(
+          userUrl,
+          authContext.token
+        );
+        alert(userPromoteResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [authContext.token]
+  );
+
   const editUserData = useCallback(async (userUrl) => {
-    adminContext.setUrlUserEdit(userUrl)
-    router.push("/redefinir")
-  })
+    adminContext.setUrlUserEdit(userUrl);
+    router.push("/redefinir");
+  });
 
   useEffect(() => {
     if (!authContext.auth) {
@@ -106,6 +121,7 @@ const Associados = () => {
             searchTerm={searchTerm}
             remove={userRemove}
             edit={editUserData}
+            promote={userPromote}
           />
         </ContentContainer>
       )}
