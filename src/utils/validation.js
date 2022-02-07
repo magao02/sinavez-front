@@ -18,7 +18,7 @@ export async function requiredTextField(textValue) {
     .validate(textValue);
 }
 
-export async function testCpf(cpfValue) {
+export async function testRequiredCpf(cpfValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
@@ -26,7 +26,14 @@ export async function testCpf(cpfValue) {
     .validate(cpfValue);
 }
 
-export async function testPassword(passwordValue) {
+export async function testCpf(cpfValue) {
+  return yup
+    .string()
+    .matches(/^\d{3}\d{3}\d{3}\d{2}|\s*$/, validationMessages.invalidCPF)
+    .validate(cpfValue);
+}
+
+export async function testRequiredPassword(passwordValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
@@ -34,7 +41,14 @@ export async function testPassword(passwordValue) {
     .validate(passwordValue);
 }
 
-export async function testEmail(emailValue) {
+export async function testPassword(passwordValue) {
+  return yup
+    .string()
+    .matches(/^.{8,}$/, validationMessages.passwordTooShort)
+    .validate(passwordValue);
+}
+
+export async function testRequiredEmail(emailValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
@@ -42,7 +56,14 @@ export async function testEmail(emailValue) {
     .validate(emailValue);
 }
 
-export async function testDate(dateValue) {
+export async function testEmail(emailValue) {
+  return yup
+    .string()
+    .matches(/^\S+@\S+$/, validationMessages.invalidEmail)
+    .validate(emailValue);
+}
+
+export async function testRequiredData(dateValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
@@ -53,7 +74,17 @@ export async function testDate(dateValue) {
     .validate(dateValue);
 }
 
-export async function testPhone(phoneValue) {
+export async function testDate(dateValue) {
+  return yup
+    .string()
+    .matches(
+      /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/,
+      validationMessages.invalidDate
+    )
+    .validate(dateValue);
+}
+
+export async function testRequiredPhone(phoneValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
@@ -61,17 +92,31 @@ export async function testPhone(phoneValue) {
     .validate(phoneValue);
 }
 
-export async function testNumbers(rgValue) {
+export async function testPhone(phoneValue) {
+  return yup
+    .string()
+    .matches(/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, validationMessages.invalidPhone)
+    .validate(phoneValue);
+}
+
+export async function testRequiredNumbers(numberValue) {
   return yup
     .string()
     .required(validationMessages.requiredField)
     .matches(/(?:\.|,|[0-9])*/, validationMessages.onlyNumbers)
-    .validate(rgValue);
+    .validate(numberValue);
 }
 
-export async function testNumberImposto(rgValue) {
+export async function testNumbers(numberValue) {
+  return yup
+    .string()
+    .matches(/(?:\.|,|[0-9])*/, validationMessages.onlyNumbers)
+    .validate(numberValue);
+}
+
+export async function testNumberImposto(numberValue) {
   return yup
     .string()
     .matches(/^\d+$ || [.]/, validationMessages.onlyNumbers)
-    .validate(rgValue);
+    .validate(numberValue);
 }

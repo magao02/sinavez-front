@@ -70,7 +70,7 @@ function NavVariant({ variant }) {
             <Button variant="image" onClick={startPdf}>
               <a>Baixar Imposto de Renda</a>
             </Button>
-            <Link href="/redefinir">Redefinir Senha</Link>
+            <Link href="/redefinir">Redefinir Dados</Link>
             {admin ? (
               <Link href="associados">Listar Associados</Link>
             ) : ""}

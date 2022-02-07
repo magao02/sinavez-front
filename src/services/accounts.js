@@ -11,8 +11,15 @@ export async function login(userValue) {
 }
 
 export async function setPassword(newPassword, token) {
-  console.log(newPassword);
   const requisition = await api.put("/setPassword", newPassword, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
+export async function setData(urlUser, newData, token) {
+  console.log(`/user/${urlUser}/setPerfil`);
+  const requisition = await api.put(`/user/${urlUser}/setPerfil`, newData, {
     headers: { authorization: token },
   });
   return requisition;

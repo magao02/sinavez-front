@@ -7,8 +7,8 @@ import { Container, MainContent } from "../../styles/cadastroStyles";
 import * as service from "../../services/accounts";
 
 import Navigation from "../../components/commom/Nav";
-import SignUpFormFirst from "../../components/SignUpForm/FirstStep";
-import SignUpFormSecond from "../../components/SignUpForm/SecondStep";
+import SignUpFormFirst from "../../components/UserDataForm/FirstStep";
+import SignUpFormSecond from "../../components/UserDataForm/SecondStep";
 
 const SignUpPage = () => {
   const [step, setStep] = useState(1);
@@ -31,10 +31,10 @@ const SignUpPage = () => {
   const stepper = () => {
     setStep(step + 1);
   };
-  
+
   const stepBack = () => {
     setStep(1);
-  }
+  };
 
   const handleErrorOnSubmit = useCallback(async (error) => {
     setGlobalMessage(error.response.data.message);
@@ -63,9 +63,12 @@ const SignUpPage = () => {
           <SignUpFormFirst
             dataCollector={dataCollector}
             globalMessage={globalMessage}
+            variant="signUp"
           />
         )}
-        {step === 2 && <SignUpFormSecond dataCollector={dataCollector} />}
+        {step === 2 && (
+          <SignUpFormSecond dataCollector={dataCollector} variant="signUp" />
+        )}
       </MainContent>
     </Container>
   );
