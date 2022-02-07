@@ -39,37 +39,26 @@ function ListVariant({ variant, data, toggleFormUp, remove, edit, promote }) {
       };
       const editUser = () => {
         edit(data.urlUser);
-      }
+      };
       const promoteUser = () => {
         promote(data.urlUser);
-      }
+      };
       return (
         <Container variant="associados">
           <p>{data.name}</p>
           <p>{data.cpf}</p>
+          <Button variant="associado">Dependente</Button>
           <Button variant="image" onClick={() => toggleFormUp(data)}>
-            <Image
-              src={pdfIcon}
-              alt="botão para gerar pdf"
-            />
+            <Image src={pdfIcon} alt="botão para gerar pdf" />
           </Button>
           <Button variant="image" onClick={editUser}>
-            <Image
-              src={EditIcon}
-              alt="botão para editara associado"
-            />
+            <Image src={EditIcon} alt="botão para editara associado" />
           </Button>
           <Button variant="image" onClick={promoteUser}>
-            <Image
-              src={AdminIcon}
-              alt="botão para promover associado"
-            />
+            <Image src={AdminIcon} alt="botão para promover associado" />
           </Button>
           <Button variant="image" onClick={removeUser}>
-            <Image
-              src={DeleteIcon}
-              alt="botão para deletar associado"
-            />
+            <Image src={DeleteIcon} alt="botão para deletar associado" />
           </Button>
         </Container>
       );
