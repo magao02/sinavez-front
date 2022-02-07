@@ -3,6 +3,7 @@ import Image from "next/image";
 import UserIcon from "../../../assets/user_icon.svg";
 import DeleteIcon from "../../../assets/remove_icon.svg";
 import EditIcon from "../../../assets/edit_icon.svg";
+import AdminIcon from "../../../assets/admin_icon.svg";
 import pdfIcon from "../../../assets/pdf_icon.svg";
 
 import Button from "../Button";
@@ -11,7 +12,7 @@ import { Container } from "./styles";
 
 const List = (props) => ListVariant(props);
 
-function ListVariant({ variant, data, toggleFormUp, remove, edit }) {
+function ListVariant({ variant, data, toggleFormUp, remove, edit, promote }) {
   switch (variant) {
     case "dependente": {
       const removeDependent = () => {
@@ -39,6 +40,9 @@ function ListVariant({ variant, data, toggleFormUp, remove, edit }) {
       const editUser = () => {
         edit(data.urlUser);
       }
+      const promoteUser = () => {
+        promote(data.urlUser);
+      }
       return (
         <Container variant="associados">
           <p>{data.name}</p>
@@ -53,6 +57,12 @@ function ListVariant({ variant, data, toggleFormUp, remove, edit }) {
             <Image
               src={EditIcon}
               alt="botão para editara associado"
+            />
+          </Button>
+          <Button variant="image" onClick={promoteUser}>
+            <Image
+              src={AdminIcon}
+              alt="botão para promover associado"
             />
           </Button>
           <Button variant="image" onClick={removeUser}>
