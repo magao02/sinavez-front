@@ -4,6 +4,8 @@ import { useState, useCallback, useEffect } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
+import { useAdmin } from "../../contexts/AdminContext";
+
 import * as service from "../../services/accounts";
 
 import Navigation from "../../components/commom/Nav";
@@ -20,6 +22,7 @@ const Redefinir = () => {
   const router = useRouter();
 
   const authContext = useAuth();
+  const adminContext = useAdmin();
 
   useEffect(() => {
     if (step === 3) {
@@ -47,14 +50,22 @@ const Redefinir = () => {
 
   const handleSubmit = useCallback(
     async (data) => {
-      console.log(data);
       try {
-        const setData = await service.setData(
-          authContext.urlUser,
-          data,
-          authContext.token
-        );
-        alert(setData.data.message);
+        if (adminContext.urlUserEdit !== undefined) {
+          const setData = await service.setUserData(
+            adminContext.urlUserEdit,
+            data,
+            authContext.token
+          );
+          alert(setData.data.message);
+        } else {
+          const setData = await service.setData(
+            authContext.urlUser,
+            data,
+            authContext.token
+          );
+          alert(setData.data.message);
+        }
         router.push("/usuario");
       } catch (error) {
         await handleErrorOnSubmit(error);

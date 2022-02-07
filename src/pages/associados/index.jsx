@@ -55,6 +55,26 @@ const Associados = () => {
     }
   }, [authContext.token, handleErrorAssociados]);
 
+  const userRemove = useCallback(
+    async (userUrl) => {
+      try {
+        const userRemoveResponse = await service.removeUser(
+          userUrl,
+          authContext.token
+        );
+        alert(`${userRemoveResponse.data.message}, Recarregue a Página!`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [authContext.token]
+  );
+
+  const editUserData = useCallback(async (userUrl) => {
+    adminContext.setUrlUserEdit(userUrl)
+    router.push("/redefinir")
+  })
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -84,6 +104,8 @@ const Associados = () => {
             variant="associados"
             toggleForm={toggleFormUp}
             searchTerm={searchTerm}
+            remove={userRemove}
+            edit={editUserData}
           />
         </ContentContainer>
       )}
