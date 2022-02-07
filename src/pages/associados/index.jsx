@@ -70,6 +70,11 @@ const Associados = () => {
     [authContext.token]
   );
 
+  const editUserData = useCallback(async (userUrl) => {
+    adminContext.setUrlUserEdit(userUrl)
+    router.push("/redefinir")
+  })
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -100,6 +105,7 @@ const Associados = () => {
             toggleForm={toggleFormUp}
             searchTerm={searchTerm}
             remove={userRemove}
+            edit={editUserData}
           />
         </ContentContainer>
       )}

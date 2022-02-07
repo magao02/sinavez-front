@@ -2,7 +2,7 @@ import List from "../List";
 
 import { ListContainer } from "./styles";
 
-const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
+const ListWrapper = ({ data, variant, toggleForm, remove, edit, searchTerm }) => {
   if (data !== undefined) {
     switch (variant) {
       case "associados": {
@@ -31,6 +31,7 @@ const ListWrapper = ({ data, variant, toggleForm, remove, searchTerm }) => {
                 toggleFormUp={toggleForm}
                 remove={remove}
                 variant="associados"
+                edit={edit}
               />
             ))}
           </ListContainer>

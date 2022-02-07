@@ -11,7 +11,7 @@ import { Container } from "./styles";
 
 const List = (props) => ListVariant(props);
 
-function ListVariant({ variant, data, toggleFormUp, remove }) {
+function ListVariant({ variant, data, toggleFormUp, remove, edit }) {
   switch (variant) {
     case "dependente": {
       const removeDependent = () => {
@@ -36,6 +36,9 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
       const removeUser = () => {
         remove(data.urlUser);
       };
+      const editUser = () => {
+        edit(data.urlUser);
+      }
       return (
         <Container variant="associados">
           <p>{data.name}</p>
@@ -46,7 +49,7 @@ function ListVariant({ variant, data, toggleFormUp, remove }) {
               alt="botão para gerar pdf"
             />
           </Button>
-          <Button variant="image">
+          <Button variant="image" onClick={editUser}>
             <Image
               src={EditIcon}
               alt="botão para editara associado"

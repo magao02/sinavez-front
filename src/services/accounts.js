@@ -25,6 +25,14 @@ export async function setData(urlUser, newData, token) {
   return requisition;
 }
 
+export async function setUserData(urlUser, newData, token) {
+  console.log(`/user/${urlUser}/setPerfil`);
+  const requisition = await api.put(`/user/${urlUser}/setUser`, newData, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
 export async function removeUser(userUrl, token) {
   const requisition = await api.delete(`user/${userUrl}/deleteUser`, {
     headers: { authorization: token },
