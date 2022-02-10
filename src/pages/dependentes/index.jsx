@@ -91,6 +91,15 @@ const Dependentes = () => {
     [authContext.token]
   );
 
+  const checkNav = () => {
+    if (authContext.admin == 'true') {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -103,9 +112,13 @@ const Dependentes = () => {
 
   return (
     <Container>
-      <Navigation variant="logged" />
+      <Navigation variant={checkNav()} />
       {formUp && (
-        <DependsForm submitForm={handleSubmit} globalMessage={globalMessage} />
+        <DependsForm
+          submitForm={handleSubmit}
+          globalMessage={globalMessage}
+          variant="default"
+        />
       )}
       {!formUp && (
         <ContentContainer>

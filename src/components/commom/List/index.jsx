@@ -12,7 +12,7 @@ import { Container } from "./styles";
 
 const List = (props) => ListVariant(props);
 
-function ListVariant({ variant, data, toggleFormUp, remove, edit, promote }) {
+function ListVariant({ variant, data, remove, edit, promote, setForm }) {
   switch (variant) {
     case "dependente": {
       const removeDependent = () => {
@@ -34,6 +34,15 @@ function ListVariant({ variant, data, toggleFormUp, remove, edit, promote }) {
       );
     }
     case "associados": {
+      const startPdfForm = () => {
+        setForm("pdf", data);
+      };
+
+      const startDependentPage = () => {
+        console.log("dependente");
+        setForm("dependente", data);
+      };
+
       const removeUser = () => {
         remove(data.urlUser);
       };
@@ -47,8 +56,10 @@ function ListVariant({ variant, data, toggleFormUp, remove, edit, promote }) {
         <Container variant="associados">
           <p>{data.name}</p>
           <p>{data.cpf}</p>
-          <Button variant="associado">Dependente</Button>
-          <Button variant="image" onClick={() => toggleFormUp(data)}>
+          <Button variant="associado" onClick={startDependentPage}>
+            Dependente
+          </Button>
+          <Button variant="image" onClick={startPdfForm}>
             <Image src={pdfIcon} alt="botão para gerar pdf" />
           </Button>
           <Button variant="image" onClick={editUser}>

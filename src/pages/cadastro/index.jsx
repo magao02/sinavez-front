@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 import { useState, useEffect, useCallback } from "react";
 
 import { Container, MainContent } from "../../styles/cadastroStyles";
@@ -15,6 +17,7 @@ const SignUpPage = () => {
   const [collectedData, setCollectedData] = useState({});
   const [globalMessage, setGlobalMessage] = useState();
 
+  const authContext = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -36,6 +39,14 @@ const SignUpPage = () => {
     setStep(1);
   };
 
+  const checkNav = () => {
+    if (authContext.admin == "true") {
+      return "admin";
+    } else {
+      return "signup";
+    }
+  };
+
   const handleErrorOnSubmit = useCallback(async (error) => {
     setGlobalMessage(error.response.data.message);
     stepBack();
@@ -47,7 +58,11 @@ const SignUpPage = () => {
       try {
         const signUp = await service.signUp(data);
         alert(signUp.data.message);
-        router.push("/login");
+        if (authContext.admin == "true") {
+          router.push("/associados");
+        } else {
+          router.push("/login");
+        }
       } catch (error) {
         await handleErrorOnSubmit(error);
       }
@@ -57,7 +72,7 @@ const SignUpPage = () => {
 
   return (
     <Container>
-      <Navigation variant="signup" />
+      <Navigation variant={checkNav()} />
       <MainContent>
         {step === 1 && (
           <SignUpFormFirst

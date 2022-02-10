@@ -22,6 +22,7 @@ const UserData = () => {
   const router = useRouter();
 
   const authContext = useAuth();
+
   const [value, setValue] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -43,6 +44,15 @@ const UserData = () => {
     setIsLoaded(true);
   }, [getUserData]);
 
+  const checkNav = () => {
+    if (authContext.admin == 'true') {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -53,7 +63,7 @@ const UserData = () => {
 
   return (
     <Container>
-      <Navigation variant="logged" />
+      <Navigation variant={checkNav()} />
       {isLoaded && (
         <ContentContainer>
           <SubContainer>
