@@ -44,7 +44,7 @@ const SignUpPage = () => {
       return "admin"
     }
     else {
-      return "logged";
+      return "signup";
     }
   }
 
