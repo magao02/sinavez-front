@@ -18,13 +18,13 @@ export const useAdmin = () => {
 };
 
 export const AdminContextProvider = ({ children }) => {
-  const [associado, setAssociado] = useState();
-  const [urlUserEdit, setUrlUserEdit] = useState();
+  const [associado, setAssociado] = useState()
   const [globalMessage, setGlobalMessage] = useState('');
 
   const authContext = useAuth();
 
-  const createDependentOnUser = useCallback(async (data) => {
+  const createDependentOnUser = useCallback(async (data, urlUserEdit) => {
+    console.log(urlUserEdit);
       try {
         const addDependentResponse = await service.addDependent(
           data,
@@ -45,8 +45,6 @@ export const AdminContextProvider = ({ children }) => {
       value={{
         associado,
         setAssociado,
-        urlUserEdit,
-        setUrlUserEdit,
         globalMessage,
         createDependentOnUser,
       }}

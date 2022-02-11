@@ -28,6 +28,7 @@ const Associados = () => {
   const [form, setForm] = useState(initialForm);
   const [associados, setAssociados] = useState();
   const [searchTerm, setSearchTerm] = useState("");
+  const [urlUserEdit, setUrlUserEdit] = useState();
 
   const router = useRouter();
 
@@ -42,12 +43,12 @@ const Associados = () => {
       });
       adminContext.setAssociado(data);
     } else if (type == "dependente") {
+      adminContext.setAssociado(data);
+     setUrlUserEdit(data.urlUser);
       setForm({
         toggle: true,
         type: { pdf: false, dependente: true },
       })
-      adminContext.setAssociado(data);
-      adminContext.setUrlUserEdit(data.urlUser);
     } else {
       setForm(initialForm);
     }
@@ -156,7 +157,7 @@ const Associados = () => {
       {form.toggle && form.type.pdf && <PdfPage outsideForm={formController} />}
       {form.toggle && form.type.dependente && (
         <ContentContainer>
-          <DependentsContainer variant="admin" />
+          <DependentsContainer variant="admin" url={urlUserEdit}/>
         </ContentContainer>
       )}
     </Container>

@@ -49,7 +49,6 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
       };
 
       const startDependentPage = () => {
-        console.log("dependente");
         setForm("dependente", data);
       };
 

@@ -16,7 +16,7 @@ import {
   FormContainer,
 } from "./styles";
 
-const DependentsForm = ({ submitForm, globalMessage, variant }) => {
+const DependentsForm = ({ submitForm, globalMessage, variant, url }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -57,7 +57,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant }) => {
           cpf,
           rg,
           emissao,
-        });
+        }, url);
         return ;
       }
       submitForm({ name, nascimento, cpf, rg, emissao });
