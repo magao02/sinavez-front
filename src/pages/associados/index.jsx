@@ -110,7 +110,7 @@ const Associados = () => {
   });
 
   const checkNav = () => {
-    if (authContext.admin == 'true') {
+    if (authContext.admin == 'true' || authContext.admin == true) {
       return "admin"
     }
     else {
@@ -137,10 +137,10 @@ const Associados = () => {
       {associados && !form.toggle && (
         <ContentContainer>
           <ControllerContainer>
-            <SearchBar
+            {/* <SearchBar
               setSearch={setSearchTerm}
               placeHolder="Digite o nome ou CPF do associado"
-            />
+            /> */}
           </ControllerContainer>
           <ListWrapper
             data={associados}

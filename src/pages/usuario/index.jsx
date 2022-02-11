@@ -34,6 +34,7 @@ const UserData = () => {
       );
       return responseData.data;
     } catch (error) {
+      console.log(error);
       console.log(error.response.data);
     }
   }, [authContext.token, authContext.urlUser]);
@@ -45,7 +46,7 @@ const UserData = () => {
   }, [getUserData]);
 
   const checkNav = () => {
-    if (authContext.admin == 'true') {
+    if (authContext.admin == 'true' || authContext.admin == true) {
       return "admin"
     }
     else {

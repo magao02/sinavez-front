@@ -92,7 +92,7 @@ const Dependentes = () => {
   );
 
   const checkNav = () => {
-    if (authContext.admin == 'true') {
+    if (authContext.admin == 'true' || authContext.admin == true) {
       return "admin"
     }
     else {

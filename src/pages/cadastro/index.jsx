@@ -40,12 +40,13 @@ const SignUpPage = () => {
   };
 
   const checkNav = () => {
-    if (authContext.admin == "true") {
-      return "admin";
-    } else {
-      return "signup";
+    if (authContext.admin == 'true' || authContext.admin == true) {
+      return "admin"
     }
-  };
+    else {
+      return "logged";
+    }
+  }
 
   const handleErrorOnSubmit = useCallback(async (error) => {
     setGlobalMessage(error.response.data.message);
@@ -58,7 +59,8 @@ const SignUpPage = () => {
       try {
         const signUp = await service.signUp(data);
         alert(signUp.data.message);
-        if (authContext.admin == "true") {
+        console.log(authContext.admin)
+        if (authContext.admin == "true" || authContext.admin == true) {
           router.push("/associados");
         } else {
           router.push("/login");
