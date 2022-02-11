@@ -23,13 +23,12 @@ export const AdminContextProvider = ({ children }) => {
 
   const authContext = useAuth();
 
-  const createDependentOnUser = useCallback(async (data, urlUserEdit) => {
-    console.log(urlUserEdit);
+  const createDependentOnUser = useCallback(async (data, urlUserEdit, token) => {
       try {
         const addDependentResponse = await service.addDependent(
           data,
           urlUserEdit,
-          authContext.token
+          token
         );
         alert(addDependentResponse.data.message);
       } catch (error) {

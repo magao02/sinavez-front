@@ -44,11 +44,11 @@ const Associados = () => {
       adminContext.setAssociado(data);
     } else if (type == "dependente") {
       adminContext.setAssociado(data);
-     setUrlUserEdit(data.urlUser);
+      setUrlUserEdit(data.urlUser);
       setForm({
         toggle: true,
         type: { pdf: false, dependente: true },
-      })
+      });
     } else {
       setForm(initialForm);
     }
@@ -111,13 +111,12 @@ const Associados = () => {
   });
 
   const checkNav = () => {
-    if (authContext.admin == 'true' || authContext.admin == true) {
-      return "admin"
-    }
-    else {
+    if (authContext.admin == "true" || authContext.admin == true) {
+      return "admin";
+    } else {
       return "logged";
     }
-  }
+  };
 
   useEffect(() => {
     if (!authContext.auth) {
@@ -157,7 +156,11 @@ const Associados = () => {
       {form.toggle && form.type.pdf && <PdfPage outsideForm={formController} />}
       {form.toggle && form.type.dependente && (
         <ContentContainer>
-          <DependentsContainer variant="admin" url={urlUserEdit}/>
+          <DependentsContainer
+            variant="admin"
+            url={urlUserEdit}
+            token={authContext.token}
+          />
         </ContentContainer>
       )}
     </Container>
