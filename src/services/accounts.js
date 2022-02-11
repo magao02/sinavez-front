@@ -32,9 +32,10 @@ export async function setUserData(urlUser, newData, token) {
 }
 
 export async function setAdmin(urlUser, token) {
-  const requisition = await api.put(`/user/${urlUser}/setNewUser`, {
-    headers: { authorization: token },
+  const requisition = await api.put(`/user/${urlUser}/setNewAdmin`, {
+    headers: { authorization: jo },
   });
+  console.log(requisition);
   return requisition;
 }
 

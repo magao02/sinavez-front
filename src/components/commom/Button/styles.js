@@ -106,5 +106,20 @@ function getStyleByVariant(variant) {
             text-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0 , 0.25);
             `;
         }
+        case 'associado': {
+            return css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+
+            background: transparent;
+
+            text-decoration: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: ${theme.colors.red};
+            `;
+        }
     }
 };

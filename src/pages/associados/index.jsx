@@ -12,6 +12,7 @@ import SearchBar from "../../components/commom/SearchBar";
 import Navigation from "../../components/commom/Nav";
 import ListWrapper from "../../components/commom/ListWrapper";
 import PdfPage from "../../components/PdfPage";
+import DependentsContainer from "../../components/DependentsContainer";
 
 import {
   Container,
@@ -20,7 +21,11 @@ import {
 } from "../../styles/associadosStyles";
 
 const Associados = () => {
-  const [formUp, setFormUp] = useState(false);
+  const initialForm = {
+    toggle: false,
+    type: { pdf: false, dependente: false },
+  };
+  const [form, setForm] = useState(initialForm);
   const [associados, setAssociados] = useState();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,9 +34,23 @@ const Associados = () => {
   const authContext = useAuth();
   const adminContext = useAdmin();
 
-  const toggleFormUp = (data) => {
-    setFormUp(!formUp);
-    adminContext.setAssociado(data);
+  const formController = (type, data) => {
+    if (type === "pdf") {
+      setForm({
+        toggle: true,
+        type: { pdf: true, dependente: false },
+      });
+      adminContext.setAssociado(data);
+    } else if (type == "dependente") {
+      setForm({
+        toggle: true,
+        type: { pdf: false, dependente: true },
+      })
+      adminContext.setAssociado(data);
+      adminContext.setUrlUserEdit(data.urlUser);
+    } else {
+      setForm(initialForm);
+    }
   };
 
   const handleErrorAssociados = useCallback(
@@ -90,6 +109,15 @@ const Associados = () => {
     router.push("/redefinir");
   });
 
+  const checkNav = () => {
+    if (authContext.admin == 'true' || authContext.admin == true) {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -105,27 +133,32 @@ const Associados = () => {
 
   return (
     <Container>
-      <Navigation variant="logged" />
-      {associados && !formUp && (
+      <Navigation variant={checkNav()} />
+      {associados && !form.toggle && (
         <ContentContainer>
           <ControllerContainer>
-            <SearchBar
+            {/* <SearchBar
               setSearch={setSearchTerm}
               placeHolder="Digite o nome ou CPF do associado"
-            />
+            /> */}
           </ControllerContainer>
           <ListWrapper
             data={associados}
             variant="associados"
-            toggleForm={toggleFormUp}
             searchTerm={searchTerm}
+            setForm={formController}
             remove={userRemove}
             edit={editUserData}
             promote={userPromote}
           />
         </ContentContainer>
       )}
-      {formUp && <PdfPage outsideForm={toggleFormUp} />}
+      {form.toggle && form.type.pdf && <PdfPage outsideForm={formController} />}
+      {form.toggle && form.type.dependente && (
+        <ContentContainer>
+          <DependentsContainer variant="admin" />
+        </ContentContainer>
+      )}
     </Container>
   );
 };

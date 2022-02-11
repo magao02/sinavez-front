@@ -74,9 +74,18 @@ const Redefinir = () => {
     [handleErrorOnSubmit]
   );
 
+  const checkNav = () => {
+    if (authContext.admin == 'true' || authContext.admin == true) {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
+  
   return (
     <Container>
-      <Navigation variant="logged" />
+      <Navigation variant={checkNav()} />
       <MainContent>
         {step === 1 && (
           <SignUpFormFirst

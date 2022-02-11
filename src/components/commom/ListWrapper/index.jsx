@@ -10,6 +10,7 @@ const ListWrapper = ({
   edit,
   promote,
   searchTerm,
+  setForm,
 }) => {
   if (data !== undefined) {
     switch (variant) {
@@ -37,11 +38,11 @@ const ListWrapper = ({
                     urlUser: dataEach.urlUser,
                   }}
                   key={index}
-                  toggleFormUp={toggleForm}
                   remove={remove}
                   variant="associados"
                   edit={edit}
                   promote={promote}
+                  setForm={setForm}
                 />
               ))}
           </ListContainer>
