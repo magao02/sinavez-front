@@ -54,21 +54,43 @@ const impostoPDF = (data) => {
       let temp = [];
       somas[0] += impostoAssociado[i];
       temp.push(meses[i]);
-
-      temp.push(
-        impostoAssociado[i].toLocaleString("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        })
-      );
-      for (let k = 0; k < dependentesArray.length; k++) {
-        somas[k + 1] += dependentesArray[k][i];
+      if (impostoAssociado[i] == null) {
+        let zero = 0;
         temp.push(
-          dependentesArray[k][i].toLocaleString("pt-br", {
+          zero.toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })
         );
+      } 
+      else {
+        temp.push(
+          impostoAssociado[i].toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+          })
+        );
+      }
+      for (let k = 0; k < dependentesArray.length; k++) {
+        somas[k + 1] += dependentesArray[k][i];
+
+        console.log(dependentesArray[k][i]);
+        if (dependentesArray[k][i] === null) {
+          let zero = 0;
+          temp.push(
+            zero.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })
+          );
+        } else {
+          temp.push(
+            dependentesArray[k][i].toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })
+          );
+        }
       }
       finalRows.push(temp);
     }
