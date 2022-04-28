@@ -12,6 +12,7 @@ import SearchBar from "../../components/commom/SearchBar";
 import Navigation from "../../components/commom/Nav";
 import ListWrapper from "../../components/commom/ListWrapper";
 import PdfPage from "../../components/PdfPage";
+import DependentsContainer from "../../components/DependentsContainer";
 
 import {
   Container,
@@ -20,18 +21,37 @@ import {
 } from "../../styles/associadosStyles";
 
 const Associados = () => {
-  const [formUp, setFormUp] = useState(false);
+  const initialForm = {
+    toggle: false,
+    type: { pdf: false, dependente: false },
+  };
+  const [form, setForm] = useState(initialForm);
   const [associados, setAssociados] = useState();
   const [searchTerm, setSearchTerm] = useState("");
+  const [urlUserEdit, setUrlUserEdit] = useState();
 
   const router = useRouter();
 
   const authContext = useAuth();
   const adminContext = useAdmin();
 
-  const toggleFormUp = (data) => {
-    setFormUp(!formUp);
-    adminContext.setAssociado(data);
+  const formController = (type, data) => {
+    if (type === "pdf") {
+      setForm({
+        toggle: true,
+        type: { pdf: true, dependente: false },
+      });
+      adminContext.setAssociado(data);
+    } else if (type == "dependente") {
+      adminContext.setAssociado(data);
+      setUrlUserEdit(data.urlUser);
+      setForm({
+        toggle: true,
+        type: { pdf: false, dependente: true },
+      });
+    } else {
+      setForm(initialForm);
+    }
   };
 
   const handleErrorAssociados = useCallback(
@@ -55,6 +75,49 @@ const Associados = () => {
     }
   }, [authContext.token, handleErrorAssociados]);
 
+  const userRemove = useCallback(
+    async (userUrl) => {
+      try {
+        const userRemoveResponse = await service.removeUser(
+          userUrl,
+          authContext.token
+        );
+        alert(`${userRemoveResponse.data.message}, Recarregue a Página!`);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [authContext.token]
+  );
+
+  const userPromote = useCallback(
+    async (userUrl) => {
+      try {
+        const userPromoteResponse = await service.setAdmin(
+          userUrl,
+          authContext.token
+        );
+        alert(userPromoteResponse);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [authContext.token]
+  );
+
+  const editUserData = useCallback(async (userUrl) => {
+    adminContext.setUrlUserEdit(userUrl);
+    router.push("/redefinir");
+  });
+
+  const checkNav = () => {
+    if (authContext.admin == "true" || authContext.admin == true) {
+      return "admin";
+    } else {
+      return "logged";
+    }
+  };
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -70,24 +133,36 @@ const Associados = () => {
 
   return (
     <Container>
-      <Navigation variant="logged" />
-      {associados && !formUp && (
+      <Navigation variant={checkNav()} />
+      {associados && !form.toggle && (
         <ContentContainer>
           <ControllerContainer>
-            <SearchBar
+            {/* <SearchBar
               setSearch={setSearchTerm}
               placeHolder="Digite o nome ou CPF do associado"
-            />
+            /> */}
           </ControllerContainer>
           <ListWrapper
             data={associados}
             variant="associados"
-            toggleForm={toggleFormUp}
             searchTerm={searchTerm}
+            setForm={formController}
+            remove={userRemove}
+            edit={editUserData}
+            promote={userPromote}
           />
         </ContentContainer>
       )}
-      {formUp && <PdfPage outsideForm={toggleFormUp} />}
+      {form.toggle && form.type.pdf && <PdfPage outsideForm={formController} />}
+      {form.toggle && form.type.dependente && (
+        <ContentContainer>
+          <DependentsContainer
+            variant="admin"
+            url={urlUserEdit}
+            token={authContext.token}
+          />
+        </ContentContainer>
+      )}
     </Container>
   );
 };

@@ -78,20 +78,27 @@ const Dependentes = () => {
 
   const dependentRemove = useCallback(
     async (urlDependent) => {
-      console.log(urlDependent);
       try {
         const dependentRemoveResponse = await service.removeDependent(
           authContext.token,
           urlDependent
         );
-        console.log(dependentRemoveResponse);
-        alert("Dependente Removido, Recarregue a Página!");
+        alert(`${dependentRemoveResponse}, Recarregue a Página!`);
       } catch (error) {
         console.log(error);
       }
     },
     [authContext.token]
   );
+
+  const checkNav = () => {
+    if (authContext.admin == 'true' || authContext.admin == true) {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
 
   useEffect(() => {
     if (!authContext.auth) {
@@ -105,9 +112,13 @@ const Dependentes = () => {
 
   return (
     <Container>
-      <Navigation variant="logged" />
+      <Navigation variant={checkNav()} />
       {formUp && (
-        <DependsForm submitForm={handleSubmit} globalMessage={globalMessage} />
+        <DependsForm
+          submitForm={handleSubmit}
+          globalMessage={globalMessage}
+          variant="default"
+        />
       )}
       {!formUp && (
         <ContentContainer>

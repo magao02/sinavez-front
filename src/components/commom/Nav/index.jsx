@@ -60,6 +60,28 @@ function NavVariant({ variant }) {
   }, []);
 
   switch (variant) {
+    case "admin": {
+      return (
+        <NavBar>
+          <UserFeaturesLeft>
+            <Image src={SinavezLogo} />
+            <Link href="/usuario">Meus Dados</Link>
+            <Link href="/dependentes">Meus Dependentes</Link>
+            <Button variant="image" onClick={startPdf}>
+              <a>Baixar Imposto de Renda</a>
+            </Button>
+            <Link href="/redefinir">Redefinir Dados</Link>
+            <Link href="associados">Listar Associados</Link>
+            <Link href="/cadastro">Cadastrar Novo Membro</Link>
+          </UserFeaturesLeft>
+          <UserFeaturesRight>
+            <Button variant="nav" onClick={logout}>
+              Sair
+            </Button>
+          </UserFeaturesRight>
+        </NavBar>
+      );
+    }
     case "logged": {
       return (
         <NavBar>
@@ -70,10 +92,7 @@ function NavVariant({ variant }) {
             <Button variant="image" onClick={startPdf}>
               <a>Baixar Imposto de Renda</a>
             </Button>
-            <Link href="/redefinir">Redefinir Senha</Link>
-            {admin ? (
-              <Link href="associados">Listar Associados</Link>
-            ) : ""}
+            <Link href="/redefinir">Redefinir Dados</Link>
           </UserFeaturesLeft>
           <UserFeaturesRight>
             <Button variant="nav" onClick={logout}>

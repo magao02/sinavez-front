@@ -11,8 +11,36 @@ export async function login(userValue) {
 }
 
 export async function setPassword(newPassword, token) {
-  console.log(newPassword);
   const requisition = await api.put("/setPassword", newPassword, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
+export async function setData(urlUser, newData, token) {
+  const requisition = await api.put(`/user/${urlUser}/setPerfil`, newData, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
+export async function setUserData(urlUser, newData, token) {
+  const requisition = await api.put(`/user/${urlUser}/setUser`, newData, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
+export async function setAdmin(urlUser, token) {
+  const requisition = await api.put(`/user/${urlUser}/setNewAdmin`, {
+    headers: { authorization: jo },
+  });
+  console.log(requisition);
+  return requisition;
+}
+
+export async function removeUser(userUrl, token) {
+  const requisition = await api.delete(`user/${userUrl}/deleteUser`, {
     headers: { authorization: token },
   });
   return requisition;
@@ -49,16 +77,13 @@ export async function getDependents(urlUser, token) {
 }
 
 export async function getAssociados(token) {
-  console.log(token);
   const requisition = await api.get("/getUsers", {
     headers: { authorization: token },
   });
-  console.log("passou");
   return requisition;
 }
 
 export async function setImpostoAssociado(urlUser, imposto, token) {
-  console.log(imposto);
   const requisition = await api.put(
     "/user/" + urlUser + "/setImpostoDeRenda",
     imposto,
@@ -68,7 +93,6 @@ export async function setImpostoAssociado(urlUser, imposto, token) {
 }
 
 export async function setImpostoDependente(urlUser, depUrl, imposto, token) {
-  console.log(imposto);
   const requisition = await api.put(
     "/user/" + urlUser + "/setImpostoDeRendaDep/" + depUrl,
     imposto,

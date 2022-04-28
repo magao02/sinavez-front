@@ -4,58 +4,100 @@ import { useState, useCallback, useEffect } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
+import { useAdmin } from "../../contexts/AdminContext";
+
 import * as service from "../../services/accounts";
 
 import Navigation from "../../components/commom/Nav";
-import RedefinirForm from "../../components/RedefinirForm";
+import SignUpFormFirst from "../../components/UserDataForm/FirstStep";
+import SignUpFormSecond from "../../components/UserDataForm/SecondStep";
 
-import { Container, ContentContainer } from "../../styles/redefinirStyles";
+import { Container, MainContent } from "../../styles/redefinirStyles";
 
 const Redefinir = () => {
+  const [step, setStep] = useState(1);
+  const [collectedData, setCollectedData] = useState({});
   const [globalMessage, setGlobalMessage] = useState();
 
-  const authContext = useAuth();
   const router = useRouter();
 
-  const setPassword = useCallback(
-    async (passwordData) => {
-      const responseData = await service.setPassword(
-        passwordData,
-        authContext.token
-      );
-      setGlobalMessage(responseData.data.message);
-    },
-    [authContext]
-  );
-
-  const handleValidFormSubmit = useCallback(
-    async ({ cpf, password }) => {
-      try {
-        await setPassword({ cpf, password });
-      } catch (error) {
-        setGlobalMessage(error.response.data.message);
-      }
-    },
-    [setPassword]
-  );
+  const authContext = useAuth();
+  const adminContext = useAdmin();
 
   useEffect(() => {
-    if (!authContext.auth) {
-      router.push("/login");
-      return;
+    if (step === 3) {
+      handleSubmit(collectedData);
     }
-  })
+  });
 
+  const dataCollector = (data) => {
+    setCollectedData({ ...collectedData, ...data });
+    stepper();
+  };
+
+  const stepper = () => {
+    setStep(step + 1);
+  };
+
+  const stepBack = () => {
+    setStep(1);
+  };
+
+  const handleErrorOnSubmit = useCallback(async (error) => {
+    setGlobalMessage(error.response.data.message);
+    stepBack();
+  }, []);
+
+  const handleSubmit = useCallback(
+    async (data) => {
+      try {
+        if (adminContext.urlUserEdit !== undefined) {
+          const setData = await service.setUserData(
+            adminContext.urlUserEdit,
+            data,
+            authContext.token
+          );
+          alert(setData.data.message);
+        } else {
+          const setData = await service.setData(
+            authContext.urlUser,
+            data,
+            authContext.token
+          );
+          alert(setData.data.message);
+        }
+        router.push("/usuario");
+      } catch (error) {
+        await handleErrorOnSubmit(error);
+      }
+    },
+    [handleErrorOnSubmit]
+  );
+
+  const checkNav = () => {
+    if (authContext.admin == 'true' || authContext.admin == true) {
+      return "admin"
+    }
+    else {
+      return "logged";
+    }
+  }
+  
   return (
     <Container>
-      <Navigation variant="logged" />
-      <ContentContainer>
-        <h1>Redefina Sua Senha</h1>
-        <RedefinirForm
-          globalMessage={globalMessage}
-          onValidSubmit={handleValidFormSubmit}
-        />
-      </ContentContainer>
+      <Navigation variant={checkNav()} />
+      <MainContent>
+        {step === 1 && (
+          <SignUpFormFirst
+            dataCollector={dataCollector}
+            globalMessage={globalMessage}
+            variant="editData"
+          />
+        )}
+        {step === 2 && (
+          <SignUpFormSecond dataCollector={dataCollector} variant="editData" />
+        )}
+      </MainContent>
     </Container>
   );
 };
