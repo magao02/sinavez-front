@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Container, InputsContainer, CheckBox } from "./styles.js";
+import { Container, InputsContainer } from "./styles.js";
 
 import Input from "../Input";
 

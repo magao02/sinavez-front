@@ -28,10 +28,20 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
   const ruaRef = useRef(null);
   const bairroRef = useRef(null);
   const complementoRef = useRef(null);
-  const numeroRef = useRef(" ");
+  const numeroRef = useRef(null);
 
   const allFieldsAreValid = useCallback(async () => {
-    const inputRefs = [nameRef, cpfRef];
+    const inputRefs = [
+    nameRef,
+    emailRef,
+    passwordRef,
+    phoneRef,
+    birthdayRef,
+    cpfRef,
+    rgRef,
+    dataEmissaoRef,
+    filiacaoRef,
+  ];
 
     const validationResults = await Promise.all(
       inputRefs.map((inputRef) => inputRef.current?.validate())
@@ -76,6 +86,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
       bairroRef,
       complementoRef,
       numeroRef,
+
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
@@ -91,20 +102,6 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
       profissao,
       endereco: { rua, bairro, complemento, numero },
     });
-
-    // console.log({
-    //   name,
-    //   email,
-    //   password,
-    //   telefone,
-    //   nascimento,
-    //   cpf,
-    //   rg,
-    //   emissao,
-    //   filiacao,
-    //   profissao,
-    //   endereco: { rua, bairro, complemento, numero },
-    // });
   });
 
   switch (variant) {
@@ -127,7 +124,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="email"
                 placeholder="email@domínio.com"
                 ref={emailRef}
-                // validate={validation.testEmail}
+                validate={validation.testRequiredEmail}
               />
               <Input
                 variant="signup"
@@ -136,15 +133,15 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 placeholder="Digite sua senha (8 dígitos)"
                 type="password"
                 ref={passwordRef}
-                // validate={validation.testPassword}
+                validate={validation.testRequiredPassword}
               />
               <Input
                 variant="signup"
                 label="Telefone"
                 name="telefone"
-                placeholder="(**) *****-****"
+                placeholder="***********"
                 ref={phoneRef}
-                // validate={validation.testPhone}
+                validate={validation.testRequiredPhone}
               />
             </InputContainer>
             <InputContainer>
@@ -154,7 +151,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="nascimento"
                 placeholder="DD/MM/AAAA"
                 ref={birthdayRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 variant="signup"
@@ -170,7 +167,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="rg"
                 placeholder="Digite os números do seu RG"
                 ref={rgRef}
-                // validate={validation.testNumbers}
+                validate={validation.testRequiredNumbers}
               />
               <Input
                 variant="signup"
@@ -178,7 +175,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="data_de_emissão"
                 placeholder="DD/MM/AAAA"
                 ref={dataEmissaoRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 variant="signup"
@@ -186,7 +183,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="filiação"
                 placeholder="Digite o(s) nome(s) completo(s)"
                 ref={filiacaoRef}
-                // validate={validation.requiredTextField}
+                validate={validation.requiredTextField}
               />
             </InputContainer>
             <InputContainer>
@@ -213,7 +210,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                   complementoRef,
                   numeroRef,
                 }}
-                // validation={validation}
+                validation={validation}
                 variant="step1"
               />
               <ButtonContainer>
@@ -230,12 +227,13 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
         <Container>
           <InputForm onSubmit={handleSubmit}>
             <InputContainer>
-              <Input
+            <Input
                 variant="signup"
                 label="Nome"
                 name="nome"
                 placeholder="Digite seu nome completo"
                 ref={nameRef}
+                validate={validation.requiredTextField}
               />
               <Input
                 variant="signup"
@@ -243,7 +241,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="email"
                 placeholder="email@domínio.com"
                 ref={emailRef}
-                // validate={validation.testEmail}
+                validate={validation.testRequiredEmail}
               />
               <Input
                 variant="signup"
@@ -252,15 +250,15 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 placeholder="Digite sua senha (8 dígitos)"
                 type="password"
                 ref={passwordRef}
-                // validate={validation.testPassword}
+                validate={validation.testRequiredPassword}
               />
               <Input
                 variant="signup"
                 label="Telefone"
                 name="telefone"
-                placeholder="(**) *****-****"
+                placeholder="***********"
                 ref={phoneRef}
-                // validate={validation.testPhone}
+                validate={validation.testRequiredPhone}
               />
             </InputContainer>
             <InputContainer>
@@ -270,7 +268,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="nascimento"
                 placeholder="DD/MM/AAAA"
                 ref={birthdayRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 variant="signup"
@@ -278,7 +276,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="cpf"
                 placeholder="Digite os números do seu CPF"
                 ref={cpfRef}
-                validate={validation.testCpf}
+                disabled
               />
               <Input
                 variant="signup"
@@ -286,7 +284,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="rg"
                 placeholder="Digite os números do seu RG"
                 ref={rgRef}
-                // validate={validation.testNumbers}
+                validate={validation.testRequiredNumbers}
               />
               <Input
                 variant="signup"
@@ -294,7 +292,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="data_de_emissão"
                 placeholder="DD/MM/AAAA"
                 ref={dataEmissaoRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 variant="signup"
@@ -302,7 +300,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                 name="filiação"
                 placeholder="Digite o(s) nome(s) completo(s)"
                 ref={filiacaoRef}
-                // validate={validation.requiredTextField}
+                validate={validation.requiredTextField}
               />
             </InputContainer>
             <InputContainer>
@@ -329,7 +327,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant }) => {
                   complementoRef,
                   numeroRef,
                 }}
-                // validation={validation}
+                validation={validation}
                 variant="step1"
               />
               <ButtonContainer>
