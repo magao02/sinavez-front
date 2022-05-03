@@ -21,7 +21,7 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
   }, []);
 
   const validateCpf = useCallback(async (cpf) => {
-    await validation.testCpf(cpf);
+    await validation.testRequiredCpf(cpf);
   }, []);
 
   const validatePassword = useCallback(async (password) => {

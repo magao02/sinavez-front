@@ -26,7 +26,12 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
   const adminContext = useAdmin();
 
   const allFieldsAreValid = useCallback(async () => {
-    const inputRefs = [nameRef];
+    const inputRefs = [nameRef, 
+      birthdayRef,
+      cpfRef,
+      rgRef,
+      dataEmissaoRef
+    ];
 
     const validationResults = await Promise.all(
       inputRefs.map((inputRef) => inputRef.current?.validate())
@@ -89,7 +94,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="DD/MM/AAAA"
                 variant="signup"
                 ref={birthdayRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 type="text"
@@ -97,7 +102,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
-                // validate={validation.testCpf}
+                validate={validation.testRequiredCpf}
               />
             </FormContainer>
             <FormContainer>
@@ -107,7 +112,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
-                // validate={validation.testNumbers}
+                validate={validation.testRequiredNumbers}
               />
               <Input
                 type="text"
@@ -115,7 +120,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="DD/MM/AAAA"
                 variant="signup"
                 ref={dataEmissaoRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Button variant="signup">Cadastrar Dependente</Button>
               {globalMessage && <span>{globalMessage}</span>}
@@ -147,7 +152,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="DD/MM/AAAA"
                 variant="signup"
                 ref={birthdayRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Input
                 type="text"
@@ -155,7 +160,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
-                // validate={validation.testCpf}
+                validate={validation.testRequiredCpf}
               />
             </FormContainer>
             <FormContainer>
@@ -165,7 +170,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
-                // validate={validation.testNumbers}
+                validate={validation.testRequiredNumbers}
               />
               <Input
                 type="text"
@@ -173,7 +178,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
                 placeholder="DD/MM/AAAA"
                 variant="signup"
                 ref={dataEmissaoRef}
-                // validate={validation.testDate}
+                validate={validation.testDate}
               />
               <Button variant="signup">Cadastrar Dependente</Button>
               {adminContext.globalMessage && (
