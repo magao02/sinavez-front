@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   ${(props) => getStyleByVariant(props.variant)};
@@ -12,7 +12,7 @@ function getStyleByVariant(variant) {
         height: 7%;
 
         display: grid;
-        grid-template-columns: 35% 30% 7.5% 7.5% 5% 5% 5% 5%;
+        grid-template-columns: 40% 30% 7.5% 7.5% 5% 5% 5%;
         justify-content: center;
         align-items: center;
 

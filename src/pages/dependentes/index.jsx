@@ -92,13 +92,12 @@ const Dependentes = () => {
   );
 
   const checkNav = () => {
-    if (authContext.admin == 'true' || authContext.admin == true) {
-      return "admin"
-    }
-    else {
+    if (authContext.admin == "true" || authContext.admin == true) {
+      return "admin";
+    } else {
       return "logged";
     }
-  }
+  };
 
   useEffect(() => {
     if (!authContext.auth) {

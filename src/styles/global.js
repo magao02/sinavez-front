@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import theme from './theme';
+import theme from "./theme";
 
 const GlobalStyles = createGlobalStyle`
     *,
@@ -38,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     h1 {
-        font-size: 4.4rem;
+        font-size: 4rem;
         color: ${theme.colors.dark.heavy};
     }
 
@@ -59,6 +59,5 @@ const GlobalStyles = createGlobalStyle`
     -moz-appearance: textfield;
     }
 `;
-
 
 export default GlobalStyles;

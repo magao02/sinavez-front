@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 20%;
-  
+
   display: grid;
   align-items: center;
   grid-template-columns: 20% 80%;
@@ -11,6 +11,7 @@ export const Container = styled.div`
   border-radius: 0.7rem;
 
   padding: 0.95rem;
+  min-width: 310px;
 
   input {
     width: 100%;
@@ -18,5 +19,6 @@ export const Container = styled.div`
     border: none;
     background-color: transparent;
     outline: none;
+    padding: 0;
   }
 `;

@@ -137,10 +137,10 @@ const Associados = () => {
       {associados && !form.toggle && (
         <ContentContainer>
           <ControllerContainer>
-            {/* <SearchBar
+            <SearchBar
               setSearch={setSearchTerm}
               placeHolder="Digite o nome ou CPF do associado"
-            /> */}
+            />
           </ControllerContainer>
           <ListWrapper
             data={associados}
