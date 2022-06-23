@@ -80,8 +80,8 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
         console.log(data);
       });
 
-      const generatePdf = async() => {
-          handleImposto();
+      const generatePdf = async () => {
+        handleImposto();
       };
 
       return (
@@ -97,9 +97,9 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
           <Button variant="image" onClick={editUser}>
             <Image src={EditIcon} alt="botão para editara associado" />
           </Button>
-          <Button variant="image" onClick={promoteUser}>
+          {/* <Button variant="image" onClick={promoteUser}>
             <Image src={AdminIcon} alt="botão para promover associado" />
-          </Button>
+          </Button> */}
           <Button variant="image" onClick={generatePdf}>
             <p>Baixar PDF</p>
           </Button>

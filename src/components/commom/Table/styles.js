@@ -11,7 +11,11 @@ export const Container = styled.div`
 
   text-align: center;
 
-  gap: 3.2rem;
+  gap: 1rem;
+
+  h1 {
+    font-size: 2rem;
+  }
 `;
 
 export const TableContainer = styled.table`
@@ -19,7 +23,7 @@ export const TableContainer = styled.table`
   display: flex;
   flex-direction: column;
 
-  tr:nth-child(even)  {
+  tr:nth-child(even) {
     background-color: rgba(184, 184, 184, 0.2);
   }
 `;
@@ -34,17 +38,16 @@ export const TableRow = styled.tr`
     align-items: center;
 
     width: 100%;
-    padding: 1rem;
+    /* padding: 1rem; */
 
     font-weight: normal;
 
     border: 0.1rem solid black;
     border-radius: 0.4rem;
-    
   }
 
   th::after {
-    content: ":"
+    content: ":";
   }
 
   td {
@@ -53,7 +56,7 @@ export const TableRow = styled.tr`
     align-items: center;
 
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
 
     font-weight: bold;
     border: 0.1rem solid black;
@@ -78,11 +81,10 @@ export const LocationRow = styled.tr`
 
     border: 0.1rem solid black;
     border-radius: 0.4rem;
-    
   }
 
   th::after {
-    content: ":"
+    content: ":";
   }
 
   td {
@@ -91,7 +93,7 @@ export const LocationRow = styled.tr`
     align-items: center;
 
     width: 100%;
-    padding: 1rem;
+    /* padding: 1rem; */
 
     font-weight: bold;
     border: 0.1rem solid black;
@@ -101,7 +103,7 @@ export const LocationRow = styled.tr`
   td {
     background-color: ${theme.colors.white};
   }
-  
+
   div {
     width: 100%;
     display: flex;
