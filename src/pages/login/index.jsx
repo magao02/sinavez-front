@@ -33,7 +33,6 @@ const LoginPage = () => {
   const handleValidFormSubmit = useCallback(async ({ cpf, password }) => {
     try {
       await loginAccount({ cpf, password });
-      alert("Você será redirecionado para sua página");
       router.push("/usuario");
     } catch (error) {
       setGlobalMessage(error.response.data.message);
