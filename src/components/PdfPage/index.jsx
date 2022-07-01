@@ -6,6 +6,8 @@ import { useAdmin } from "../../contexts/AdminContext";
 
 import { useState, useEffect, useCallback } from "react";
 
+import Button from "../commom/Button/index";
+
 import * as service from "../../services/accounts";
 
 import {
@@ -18,7 +20,7 @@ import {
 
 import PdfForm from "../PdfForm";
 
-const PdfPage = ({ outsideForm }) => {
+const PdfPage = ({ setForm, outsideForm }) => {
   const { associado } = useAdmin();
 
   const authContext = useAuth();
@@ -28,8 +30,8 @@ const PdfPage = ({ outsideForm }) => {
   const [associadoUrl, setAssociadoUrl] = useState();
 
   const incrementCurrentPerson = () => {
-      setCurrentPerson(currentPerson + 1);
-    }
+    setCurrentPerson(currentPerson + 1);
+  };
 
   const handleErrorOnDependent = useCallback(async (error) => {
     console.log(error);
@@ -70,11 +72,15 @@ const PdfPage = ({ outsideForm }) => {
       dependenteSubmit(data);
     }
     if (currentPerson < queue.length - 1) {
-      console.log(currentPerson, queue.length)
+      console.log(currentPerson, queue.length);
       incrementCurrentPerson();
     } else {
       outsideForm();
     }
+  };
+
+  const handleStopPdf = () => {
+    setForm("initialForm");
   };
 
   const associadoSubmit = useCallback(async (data) => {
@@ -109,6 +115,9 @@ const PdfPage = ({ outsideForm }) => {
     <Container>
       {queue && (
         <MainContent>
+          <Button variant={"close"} onClick={handleStopPdf}>
+            &#10005;
+          </Button>
           <GreetingsContainer>
             <Title>Imposto de Renda</Title>
             <SubTitle>{queue[currentPerson].name}</SubTitle>

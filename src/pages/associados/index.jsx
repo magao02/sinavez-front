@@ -49,6 +49,8 @@ const Associados = () => {
         toggle: true,
         type: { pdf: false, dependente: true },
       });
+    } else if (type === "initialForm") {
+      setForm(initialForm);
     } else {
       setForm(initialForm);
     }
@@ -153,7 +155,9 @@ const Associados = () => {
           />
         </ContentContainer>
       )}
-      {form.toggle && form.type.pdf && <PdfPage outsideForm={formController} />}
+      {form.toggle && form.type.pdf && (
+        <PdfPage setForm={formController} outsideForm={formController} />
+      )}
       {form.toggle && form.type.dependente && (
         <ContentContainer>
           <DependentsContainer

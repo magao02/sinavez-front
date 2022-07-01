@@ -25,7 +25,7 @@ const ListWrapper = ({
                   value.name.toLowerCase().includes(searchTerm.toLowerCase())
                 ) {
                   return value;
-                } else if (value.cpf.includes(searchTerm)) {
+                } else if (value.cpf.startsWith(searchTerm)) {
                   return value;
                 }
               })
