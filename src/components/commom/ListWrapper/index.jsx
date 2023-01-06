@@ -39,7 +39,6 @@ const ListWrapper = ({
                   }}
                   key={index}
                   remove={remove}
-                  variant="associados"
                   edit={edit}
                   promote={promote}
                   setForm={setForm}
