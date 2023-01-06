@@ -69,7 +69,6 @@ const Dependentes = () => {
         authContext.urlUser,
         authContext.token
       );
-      console.log(dependentsReponse);
       setDependents(dependentsReponse.data);
     } catch (error) {
       await handleErrorOnDependent(error);
