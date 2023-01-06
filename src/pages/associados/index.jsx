@@ -108,7 +108,7 @@ const Associados = () => {
   );
 
   const editUserData = useCallback(async (userUrl) => {
-    adminContext.setUrlUserEdit(userUrl);
+    setUrlUserEdit(userUrl);
     router.push("/redefinir");
   });
 
