@@ -24,7 +24,9 @@ const impostoPDF = (data) => {
     const dependentesArray = [];
 
     data.dependentes.map((dep) => {
-      dependentesArray.push(Object.values(dep.impostoDeRenda));
+      let temp = dep.impostoDeRenda[0];
+      delete temp.ano;
+      dependentesArray.push(Object.values(temp));
     });
 
     let somas = [];
@@ -49,12 +51,16 @@ const impostoPDF = (data) => {
     ];
 
     const impostoAssociado = Object.values(data.impostoDeRenda);
+    delete impostoAssociado[0].ano;
+    delete impostoAssociado[0]._id;
 
     for (let i = 0; i < meses.length; i++) {
       let temp = [];
-      somas[0] += impostoAssociado[i];
+      let valorImposto = impostoAssociado[0][meses[i].toLowerCase().replace("ç","c")]
+      somas[0] += valorImposto;
       temp.push(meses[i]);
-      if (impostoAssociado[i] == null) {
+
+      if (valorImposto == 0) {
         let zero = 0;
         temp.push(
           zero.toLocaleString("pt-br", {
@@ -65,7 +71,7 @@ const impostoPDF = (data) => {
       } 
       else {
         temp.push(
-          impostoAssociado[i].toLocaleString("pt-br", {
+          valorImposto.toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })
@@ -74,7 +80,6 @@ const impostoPDF = (data) => {
       for (let k = 0; k < dependentesArray.length; k++) {
         somas[k + 1] += dependentesArray[k][i];
 
-        console.log(dependentesArray[k][i]);
         if (dependentesArray[k][i] === null) {
           let zero = 0;
           temp.push(
@@ -100,7 +105,6 @@ const impostoPDF = (data) => {
         style: "currency",
         currency: "BRL",
       });
-    console.log(somas);
     somas.map((value, index) => {
       somas[index] = value.toLocaleString("pt-br", {
         style: "currency",
@@ -154,21 +158,21 @@ const impostoPDF = (data) => {
       text: "Declaração",
       fontsize: 45,
       bold: true,
-      margin: [50, 20, 50, 8],
+      margin: [50, 10, 50, 0],
       alignment: "center",
     },
     {
       text: `Declaramos, para fins de prova junto a Delegacia da Receita Federal da Paraíba, que o associado ${data.name} pagou a UNIMED CNPJ: 08.680.639/0001-77, situada à Rua Marechal Deodoro,420-Torre-João Pessoa/PB, através do contrato (custo Operacional e pré-pagamento) mantido com este sindicato pela assistência médica que lhe foi prestada e à sua família no exercício de 2021 as importâncias abaixo descritas:`,
       fontsize: 45,
       bold: false,
-      margin: [50, 20, 50, 8],
+      margin: [50, 5, 50, 8],
       alignment: "center",
     },
     {
       text: "Tabela Imposto de Renda",
       fontsize: 25,
       bold: true,
-      margin: [15, 150, 50, 8],
+      margin: [15, 10, 50, 8],
       alignment: "center",
     },
     {
@@ -204,8 +208,8 @@ const impostoPDF = (data) => {
 
   const document = {
     pageSize: "A4",
-    pageMargins: [15, 50, 15, 40],
-    pageOrientation: "landscape",
+    pageMargins: [15, 30, 15, 40],
+    pageOrientation: "portrait"/* "landscape" */,
 
     content: [body],
   };
