@@ -18,6 +18,12 @@ export async function requiredTextField(textValue) {
     .validate(textValue);
 }
 
+export async function TextField(textValue) {
+  return yup
+    .string()
+    .validate(textValue);
+}
+
 export async function testRequiredCpf(cpfValue) {
   return yup
     .string()
@@ -42,10 +48,16 @@ export async function testRequiredPassword(passwordValue) {
 }
 
 export async function testPassword(passwordValue) {
-  return yup
-    .string()
-    .matches(/^.{8,}$/, validationMessages.passwordTooShort)
-    .validate(passwordValue);
+  if (passwordValue == "") {
+    return yup
+      .string()
+      .validate(passwordValue);
+  } else {
+    return yup
+      .string()
+      .matches(/^.{8,}$/, validationMessages.passwordTooShort)
+      .validate(passwordValue);
+  }
 }
 
 export async function testRequiredEmail(emailValue) {
@@ -57,10 +69,16 @@ export async function testRequiredEmail(emailValue) {
 }
 
 export async function testEmail(emailValue) {
-  return yup
-    .string()
-    .matches(/^\S+@\S+$/, validationMessages.invalidEmail)
-    .validate(emailValue);
+  if (emailValue == "") {
+    return yup
+      .string()
+      .validate(emailValue);
+  } else {
+    return yup
+      .string()
+      .matches(/^\S+@\S+$/, validationMessages.invalidEmail)
+      .validate(emailValue);
+  }
 }
 
 export async function testRequiredData(dateValue) {
@@ -75,13 +93,19 @@ export async function testRequiredData(dateValue) {
 }
 
 export async function testDate(dateValue) {
-  return yup
-    .string()
-    .matches(
-      /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/,
-      validationMessages.invalidDate
-    )
-    .validate(dateValue);
+  if (dateValue == "") {
+    return yup
+      .string()
+      .validate(dateValue);
+  } else {
+    return yup
+      .string()
+      .matches(
+        /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/,
+        validationMessages.invalidDate
+      )
+      .validate(dateValue);
+  }
 }
 
 export async function testRequiredPhone(phoneValue) {
@@ -93,10 +117,16 @@ export async function testRequiredPhone(phoneValue) {
 }
 
 export async function testPhone(phoneValue) {
-  return yup
-    .string()
-    .matches(/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, validationMessages.invalidPhone)
-    .validate(phoneValue);
+  if (phoneValue == "") {
+    return yup
+      .string()
+      .validate(phoneValue);
+  } else {
+    return yup
+      .string()
+      .matches(/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, validationMessages.invalidPhone)
+      .validate(phoneValue);
+  }
 }
 
 export async function testRequiredNumbers(numberValue) {
