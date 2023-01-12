@@ -48,6 +48,8 @@ const Redefinir = () => {
     stepBack();
   }, []);
 
+  const urlAssociado = localStorage.getItem('urlAssociado');
+
   const handleSubmit = useCallback(
     async (data) => {
       try {
@@ -60,7 +62,7 @@ const Redefinir = () => {
           alert(setData.data.message);
         } else {
           const setData = await service.setData(
-            authContext.urlUser,
+            urlAssociado,
             data,
             authContext.token
           );
@@ -92,10 +94,11 @@ const Redefinir = () => {
             dataCollector={dataCollector}
             globalMessage={globalMessage}
             variant="editData"
+            urlAssociado={urlAssociado}
           />
         )}
         {step === 2 && (
-          <SignUpFormSecond dataCollector={dataCollector} variant="editData" />
+          <SignUpFormSecond dataCollector={dataCollector} variant="editData" urlAssociado={urlAssociado}/>
         )}
       </MainContent>
     </Container>

@@ -107,9 +107,10 @@ const Associados = () => {
     [authContext.token]
   );
 
-  const editUserData = useCallback(async (userUrl) => {
-    setUrlUserEdit(userUrl);
-    router.push("/redefinir");
+  const editUserData = useCallback(async (data) => {
+    setUrlUserEdit(data.urlUser);
+    localStorage.setItem('urlAssociado', data.urlUser)
+    router.push("/redefinir", data.userUrl);
   });
 
   const checkNav = () => {
