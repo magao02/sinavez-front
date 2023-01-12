@@ -1,12 +1,45 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
-import { Container, InputContainer, InputColumn } from "./styles";
+import { Container, InputContainer, InputColumn, InputYear } from "./styles";
 import * as validation from "../../utils/validation";
 
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const PdfForm = ({ handleSubmitForm }) => {
+const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAssociado }) => {
+  
+  let [ depedentIndex, setDepedentIndex ] = useState(-1);
+  
+  try{ if (actualPerson == associado.name || depedentIndex == (Object.keys(dependentes).length)) {
+    var janeiro = associado.impostoDeRenda[0].janeiro;
+    var fevereiro = associado.impostoDeRenda[0].fevereiro;
+    var marco = associado.impostoDeRenda[0].marco;
+    var abril = associado.impostoDeRenda[0].abril;
+    var maio = associado.impostoDeRenda[0].maio;
+    var junho = associado.impostoDeRenda[0].junho;
+    var julho = associado.impostoDeRenda[0].julho;
+    var agosto = associado.impostoDeRenda[0].agosto;
+    var setembro = associado.impostoDeRenda[0].setembro;
+    var outubro = associado.impostoDeRenda[0].outubro;
+    var novembro = associado.impostoDeRenda[0].novembro;
+    var dezembro = associado.impostoDeRenda[0].dezembro;
+    var ano = associado.impostoDeRenda[0].ano;
+  } else {
+    var janeiro = dependentes[depedentIndex].impostoDeRenda[0].janeiro;
+    var fevereiro = dependentes[depedentIndex].impostoDeRenda[0].fevereiro;
+    var marco = dependentes[depedentIndex].impostoDeRenda[0].marco;
+    var abril = dependentes[depedentIndex].impostoDeRenda[0].abril;
+    var maio = dependentes[depedentIndex].impostoDeRenda[0].maio;
+    var junho = dependentes[depedentIndex].impostoDeRenda[0].junho;
+    var julho = dependentes[depedentIndex].impostoDeRenda[0].julho;
+    var agosto = dependentes[depedentIndex].impostoDeRenda[0].agosto;
+    var setembro = dependentes[depedentIndex].impostoDeRenda[0].setembro;
+    var outubro = dependentes[depedentIndex].impostoDeRenda[0].outubro;
+    var novembro = dependentes[depedentIndex].impostoDeRenda[0].novembro;
+    var dezembro = dependentes[depedentIndex].impostoDeRenda[0].dezembro;
+    var ano = associado.impostoDeRenda[0].ano;
+  };}catch{}
+
   const janRef = useRef();
   const fevRef = useRef();
   const marRef = useRef();
@@ -19,9 +52,11 @@ const PdfForm = ({ handleSubmitForm }) => {
   const outRef = useRef();
   const novRef = useRef();
   const dezRef = useRef();
+  const anoRef = useRef();
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
+      anoRef,
       janRef,
       fevRef,
       marRef,
@@ -51,6 +86,7 @@ const PdfForm = ({ handleSubmitForm }) => {
     if (!isValidSubmit) return;
 
     const [
+      ano,
       janeiro,
       fevereiro,
       marco,
@@ -64,6 +100,7 @@ const PdfForm = ({ handleSubmitForm }) => {
       novembro,
       dezembro,
     ] = [
+      anoRef,
       janRef,
       fevRef,
       marRef,
@@ -79,6 +116,7 @@ const PdfForm = ({ handleSubmitForm }) => {
     ].map((inputRef) => Number(inputRef.current?.value.replace(",", ".")));
 
     handleSubmitForm({impostoDeRenda: {
+      ano,
       janeiro,
       fevereiro,
       marco,
@@ -102,7 +140,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Janeiro"
             name="janeiro"
-            placeholder="Digite o valor referente a janeiro"
+            placeholder={janeiro}
             ref={janRef}
             validate={validation.testNumberImposto}
           />
@@ -110,7 +148,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Fevereiro"
             name="fevereiro"
-            placeholder="Digite o valor referente a fevereiro"
+            placeholder={fevereiro}
             ref={fevRef}
             validate={validation.testNumberImposto}
           />
@@ -118,7 +156,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Março"
             name="março"
-            placeholder="Digite o valor referente a março"
+            placeholder={marco}
             ref={marRef}
             validate={validation.testNumberImposto}
           />
@@ -126,7 +164,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Abril"
             name="abril"
-            placeholder="Digite o valor referente a abril"
+            placeholder={abril}
             ref={abrRef}
             validate={validation.testNumberImposto}
           />
@@ -134,7 +172,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Maio"
             name="maio"
-            placeholder="Digite o valor referente a maio"
+            placeholder={maio}
             ref={maiRef}
             validate={validation.testNumberImposto}
           />
@@ -142,17 +180,18 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Junho"
             name="junho"
-            placeholder="Digite o valor referente a junho"
+            placeholder={junho}
             ref={junRef}
             validate={validation.testNumberImposto}
           />
         </InputColumn>
+
         <InputColumn>
           <Input
             variant="default"
             label="Julho"
             name="julho"
-            placeholder="Digite o valor referente a julho"
+            placeholder={julho}
             ref={julRef}
             validate={validation.testNumberImposto}
           />
@@ -160,7 +199,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Agosto"
             name="agosto"
-            placeholder="Digite o valor referente a agosto"
+            placeholder={agosto}
             ref={agoRef}
             validate={validation.testNumberImposto}
           />
@@ -168,7 +207,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Setembro"
             name="setembro"
-            placeholder="Digite o valor referente a setembro"
+            placeholder={setembro}
             ref={setRef}
             validate={validation.testNumberImposto}
           />
@@ -176,7 +215,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Outubro"
             name="outubro"
-            placeholder="Digite o valor referente a outubro"
+            placeholder={outubro}
             ref={outRef}
             validate={validation.testNumberImposto}
           />
@@ -184,7 +223,7 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Novembro"
             name="novembro"
-            placeholder="Digite o valor referente a novembro"
+            placeholder={novembro}
             ref={novRef}
             validate={validation.testNumberImposto}
           />
@@ -192,13 +231,23 @@ const PdfForm = ({ handleSubmitForm }) => {
             variant="default"
             label="Dezembro"
             name="dezembro"
-            placeholder="Digite o valor referente a dezembro"
+            placeholder={dezembro}
             ref={dezRef}
             validate={validation.testNumberImposto}
           />
         </InputColumn>
+        <InputYear>
+          <Input
+            variant="default"
+            label="Ano"
+            name="ano"
+            placeholder={ano}
+            ref={anoRef}
+            validate={validation.testNumberImposto}
+          />
+        </InputYear>
       </InputContainer>
-      <Button variant="default">Enviar</Button>
+      <Button onClick={() => setDepedentIndex(depedentIndex + 1)} variant="default">Enviar</Button>
     </Container>
   );
 };
