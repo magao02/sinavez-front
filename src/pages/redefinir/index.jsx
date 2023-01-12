@@ -28,6 +28,8 @@ const Redefinir = () => {
     if (step === 3) {
       handleSubmit(collectedData);
     }
+    setUrlAssociado(localStorage.getItem('urlAssociado'));
+    setIsLoaded(true);
   });
 
   const dataCollector = (data) => {
@@ -48,7 +50,8 @@ const Redefinir = () => {
     stepBack();
   }, []);
 
-  const urlAssociado = localStorage.getItem('urlAssociado');
+  const [urlAssociado, setUrlAssociado] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleSubmit = useCallback(
     async (data) => {
@@ -84,24 +87,29 @@ const Redefinir = () => {
       return "logged";
     }
   }
-  
+
   return (
     <Container>
-      <Navigation variant={checkNav()} />
-      <MainContent>
-        {step === 1 && (
-          <SignUpFormFirst
-            dataCollector={dataCollector}
-            globalMessage={globalMessage}
-            variant="editData"
-            urlAssociado={urlAssociado}
-          />
-        )}
-        {step === 2 && (
-          <SignUpFormSecond dataCollector={dataCollector} variant="editData" urlAssociado={urlAssociado}/>
-        )}
-      </MainContent>
+      {isLoaded && (
+        <>
+          <Navigation variant={checkNav()} />
+          <MainContent>
+            {step === 1 && (
+              <SignUpFormFirst
+                dataCollector={dataCollector}
+                globalMessage={globalMessage}
+                variant="editData"
+                urlAssociado={urlAssociado}
+              />
+            )}
+            {step === 2 && (
+              <SignUpFormSecond dataCollector={dataCollector} variant="editData" urlAssociado={urlAssociado} />
+            )}
+          </MainContent>
+        </>
+      )}
     </Container>
+
   );
 };
 
