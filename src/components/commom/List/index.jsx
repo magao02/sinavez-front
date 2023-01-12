@@ -45,23 +45,24 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
       const authContext = useAuth();
 
       const startPdfForm = () => {
+        localStorage.setItem('urlAssociado', data.urlUser);
         setForm("pdf", data);
       };
-
+      
       const startDependentPage = () => {
         setForm("dependente", data);
       };
-
+      
       const removeUser = () => {
         remove(data.urlUser);
       };
       const editUser = () => {
-        edit(data.urlUser);
+        edit(data);
       };
       const promoteUser = () => {
         promote(data.urlUser);
       };
-
+      
       const getImposto = useCallback(async () => {
         try {
           const responseImposto = await services.getImpostos(
