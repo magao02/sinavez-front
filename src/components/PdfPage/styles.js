@@ -3,7 +3,7 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -31,6 +31,7 @@ export const GreetingsContainer = styled.div`
 `;
 
 export const Title = styled.h1`
+  margin-top: 2%;
   font-size: 2.8rem;
 `;
 

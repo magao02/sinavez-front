@@ -3,13 +3,14 @@ import theme from '../../styles/theme';
 
 
 export const Container = styled.form`
-    width: 100%;
+    margin-top: 2%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
     button {
+        margin-top: 2%;
         width: 30%;
     }
 `
@@ -28,4 +29,10 @@ export const InputColumn = styled.div`
     flex-direction: column;
 
     gap: 1.2rem 0;
+`;
+
+export const InputYear = styled.div`
+    width: 100%;
+    margin-left: 50%;
+    display: flex;
 `;
