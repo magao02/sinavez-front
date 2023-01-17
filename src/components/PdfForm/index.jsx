@@ -6,8 +6,7 @@ import * as validation from "../../utils/validation";
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAssociado }) => {
-  
+const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, ano }) => {
   let [ depedentIndex, setDepedentIndex ] = useState(-1);
   
   try{ if (actualPerson == associado.name || depedentIndex == (Object.keys(dependentes).length)) {
@@ -23,7 +22,6 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
     var outubro = associado.impostoDeRenda[0].outubro;
     var novembro = associado.impostoDeRenda[0].novembro;
     var dezembro = associado.impostoDeRenda[0].dezembro;
-    var ano = associado.impostoDeRenda[0].ano;
   } else {
     var janeiro = dependentes[depedentIndex].impostoDeRenda[0].janeiro;
     var fevereiro = dependentes[depedentIndex].impostoDeRenda[0].fevereiro;
@@ -37,8 +35,7 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
     var outubro = dependentes[depedentIndex].impostoDeRenda[0].outubro;
     var novembro = dependentes[depedentIndex].impostoDeRenda[0].novembro;
     var dezembro = dependentes[depedentIndex].impostoDeRenda[0].dezembro;
-    var ano = associado.impostoDeRenda[0].ano;
-  };}catch{}
+  };}catch{};
 
   const janRef = useRef();
   const fevRef = useRef();
@@ -56,7 +53,6 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
-      anoRef,
       janRef,
       fevRef,
       marRef,
@@ -86,7 +82,6 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
     if (!isValidSubmit) return;
 
     const [
-      ano,
       janeiro,
       fevereiro,
       marco,
@@ -100,7 +95,6 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
       novembro,
       dezembro,
     ] = [
-      anoRef,
       janRef,
       fevRef,
       marRef,
@@ -116,7 +110,7 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
     ].map((inputRef) => Number(inputRef.current?.value.replace(",", ".")));
 
     handleSubmitForm({impostoDeRenda: {
-      ano,
+      ano: ano,
       janeiro,
       fevereiro,
       marco,
@@ -236,16 +230,6 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, urlAs
             validate={validation.testNumberImposto}
           />
         </InputColumn>
-        <InputYear>
-          <Input
-            variant="default"
-            label="Ano"
-            name="ano"
-            placeholder={ano}
-            ref={anoRef}
-            validate={validation.testNumberImposto}
-          />
-        </InputYear>
       </InputContainer>
       <Button onClick={() => setDepedentIndex(depedentIndex + 1)} variant="default">Enviar</Button>
     </Container>
