@@ -13,6 +13,7 @@ import Navigation from "../../components/commom/Nav";
 import ListWrapper from "../../components/commom/ListWrapper";
 import PdfPage from "../../components/PdfPage";
 import DependentsContainer from "../../components/DependentsContainer";
+import ImpostosPage from "../../components/ImpostosPage";
 
 import {
   Container,
@@ -35,7 +36,9 @@ const Associados = () => {
   const authContext = useAuth();
   const adminContext = useAdmin();
 
-  const formController = (type, data) => {
+  const formController = (type, data, year) => {
+    /* console.log(year) */
+    setYear(year)
     if (type === "pdf") {
       setForm({
         toggle: true,
@@ -55,6 +58,20 @@ const Associados = () => {
       setForm(initialForm);
     }
   };
+
+  const initialYears = {
+    toggle: false,
+  };
+  const [years, setYears] = useState(initialYears);
+  const [dataToSubmit, setDataToSubmit] = useState(initialYears);
+  const [yearVariant, setYearVariant] = useState();
+  const [year, setYear] = useState();
+
+  const yearsController = (data, yearVariant) => {
+    setYears({ toggle: true });
+    setYearVariant(yearVariant);
+    setDataToSubmit(data);
+  }
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -113,6 +130,10 @@ const Associados = () => {
     router.push("/redefinir", data.userUrl);
   });
 
+  const viewProfile = useCallback(async (data) => {
+    console.log(data.urlUser);
+  });
+
   const checkNav = () => {
     if (authContext.admin == "true" || authContext.admin == true) {
       return "admin";
@@ -137,7 +158,7 @@ const Associados = () => {
   return (
     <Container>
       <Navigation variant={checkNav()} />
-      {associados && !form.toggle && (
+      {associados && !form.toggle && !years.toggle &&(
         <ContentContainer>
           <ControllerContainer>
             <SearchBar
@@ -150,14 +171,19 @@ const Associados = () => {
             variant="associados"
             searchTerm={searchTerm}
             setForm={formController}
+            yearsController={yearsController}
             remove={userRemove}
             edit={editUserData}
+            view={viewProfile}
             promote={userPromote}
           />
         </ContentContainer>
       )}
+      {years.toggle && !form.toggle && associados && (
+        <ImpostosPage dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
+      )}
       {form.toggle && form.type.pdf && (
-        <PdfPage setForm={formController} outsideForm={formController} />
+        <PdfPage setForm={formController} outsideForm={formController} ano={year} />
       )}
       {form.toggle && form.type.dependente && (
         <ContentContainer>
