@@ -101,8 +101,15 @@ export async function setImpostoDependente(urlUser, depUrl, imposto, token) {
   return requisition;
 }
 
-export async function getImpostos(urlUser, token) {
-  const requisition = await api.get("getPDF/" + urlUser, {
+export async function getImpostos(urlUser, token, year) {
+  const requisition = await api.get("getPDF/" + urlUser + '/' + year, {
+    headers: { authorization: token },
+  });
+  return requisition;
+}
+
+export async function getYears(urlUser, token) {
+  const requisition = await api.get("/getUserYears/" + urlUser, {
     headers: { authorization: token },
   });
   return requisition;
