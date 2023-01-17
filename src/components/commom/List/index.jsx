@@ -13,14 +13,16 @@ import DeleteIcon from "../../../assets/remove_icon.svg";
 import EditIcon from "../../../assets/edit_icon.svg";
 import AdminIcon from "../../../assets/admin_icon.svg";
 import pdfIcon from "../../../assets/pdf_icon.svg";
+import ViewIcon from "../../../assets/view_icon.svg"
 
 import Button from "../Button";
 
 import { Container } from "./styles";
+import Router from "next/router";
 
 const List = (props) => ListVariant(props);
 
-function ListVariant({ variant, data, remove, edit, promote, setForm }) {
+function ListVariant({ variant, data, remove, edit, promote, setForm, view, yearsController }) {
   switch (variant) {
     case "dependente": {
       const removeDependent = () => {
@@ -44,15 +46,30 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
     case "associados": {
       const authContext = useAuth();
 
-      const startPdfForm = () => {
+/*       const startPdfForm = () => {
         localStorage.setItem('urlAssociado', data.urlUser);
+        console.log(data)
         setForm("pdf", data);
+      }; */
+
+      const editYears = () => {
+        localStorage.setItem('urlAssociado', data.urlUser);
+        yearsController(data, "edit");
+      };
+
+      const downloadYears = () => {
+        localStorage.setItem('urlAssociado', data.urlUser);
+        yearsController(data, "download");
       };
       
+      const viewImpostos = () => {
+        view(data);
+      };
+
       const startDependentPage = () => {
         setForm("dependente", data);
       };
-      
+
       const removeUser = () => {
         remove(data.urlUser);
       };
@@ -62,7 +79,7 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
       const promoteUser = () => {
         promote(data.urlUser);
       };
-      
+
       const getImposto = useCallback(async () => {
         try {
           const responseImposto = await services.getImpostos(
@@ -78,7 +95,6 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
       const handleImposto = useCallback(async () => {
         const responseData = await getImposto();
         impostoPdf(responseData);
-        console.log(data);
       });
 
       const generatePdf = async () => {
@@ -87,13 +103,16 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
 
       return (
         <Container variant="associados">
+{/*           <Button variant="image" onClick={viewImpostos}>
+            <Image src={ViewIcon} alt="botão para visualizar impostos" />
+          </Button> */}
           <p>{data.name}</p>
           <p>{data.cpf}</p>
           <Button variant="associado" onClick={startDependentPage}>
-            Dependente
+            Registrar Dependente
           </Button>
-          <Button variant="image" onClick={startPdfForm}>
-            <Image src={pdfIcon} alt="botão para gerar pdf" />
+          <Button variant="image" onClick={editYears}>
+            <p>Editar Impostos</p>
           </Button>
           <Button variant="image" onClick={editUser}>
             <Image src={EditIcon} alt="botão para editara associado" />
@@ -101,8 +120,8 @@ function ListVariant({ variant, data, remove, edit, promote, setForm }) {
           {/* <Button variant="image" onClick={promoteUser}>
             <Image src={AdminIcon} alt="botão para promover associado" />
           </Button> */}
-          <Button variant="image" onClick={generatePdf}>
-            <p>Baixar PDF</p>
+          <Button variant="image" onClick={downloadYears}>
+            <Image src={pdfIcon} alt="botão para baixar pdf" />
           </Button>
           <Button variant="image" onClick={removeUser}>
             <Image src={DeleteIcon} alt="botão para deletar associado" />

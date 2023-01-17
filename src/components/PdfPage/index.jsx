@@ -20,7 +20,7 @@ import {
 
 import PdfForm from "../PdfForm";
 
-const PdfPage = ({ setForm, outsideForm }) => {
+const PdfPage = ({ setForm, outsideForm, ano }) => {
   const { associado } = useAdmin();
 
   const authContext = useAuth();
@@ -54,12 +54,13 @@ const PdfPage = ({ setForm, outsideForm }) => {
   });
 
   const [pdfData, setPdfData] = useState({});
-  
+
   const getImposto = useCallback(async () => {
     try {
       const responseImposto = await service.getImpostos(
         localStorage.getItem("urlAssociado"),
-        authContext.token
+        authContext.token,
+        ano
       );
       return responseImposto.data;
     } catch (error) {
@@ -71,9 +72,10 @@ const PdfPage = ({ setForm, outsideForm }) => {
     const responseData = await getImposto();
     setPdfData(responseData);
   });
-  
+
   useEffect(() => {
     handleImposto();
+    getDependents();
   }, []);
 
   const createQueue = (dependents) => {
@@ -83,10 +85,6 @@ const PdfPage = ({ setForm, outsideForm }) => {
     dependents.map((dependent) => localQueue.push(dependent));
     setQueue(localQueue);
   };
-
-  useEffect(() => {
-    getDependents();
-  }, []);
 
   const handleProcess = (data) => {
     if (currentPerson == 0) {
@@ -144,7 +142,7 @@ const PdfPage = ({ setForm, outsideForm }) => {
             <Title>Imposto de Renda</Title>
             <SubTitle>{queue[currentPerson].name}</SubTitle>
           </GreetingsContainer>
-          <PdfForm actualPerson={queue[currentPerson].name} associado={pdfData} dependentes={pdfData.dependentes} handleSubmitForm={handleProcess} />
+          <PdfForm ano={ano} actualPerson={queue[currentPerson].name} associado={pdfData} dependentes={pdfData.dependentes} handleSubmitForm={handleProcess} />
         </MainContent>
       )}
     </Container>

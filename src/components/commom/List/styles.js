@@ -12,13 +12,14 @@ function getStyleByVariant(variant) {
         height: 7%;
 
         display: grid;
-        grid-template-columns: 40% 30% 7.5% 7.5% 5% 5% 5%;
+        grid-template-columns: 40% 30% 9% 9% 4% 4% 4%;
         justify-content: center;
         align-items: center;
 
         border: 1px solid black;
         border-radius: 0.7rem;
 
+        gap: 2px;
         padding: 0.2rem 2.2rem;
 
         p {

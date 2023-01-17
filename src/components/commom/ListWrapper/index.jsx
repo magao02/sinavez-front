@@ -1,3 +1,9 @@
+import { useCallback } from "react";
+import impostoPdf from "../../../pdf/imposto";
+import * as services from "../../../services/accounts";
+import { useAuth } from "../../../contexts/AuthContext";
+
+import Button from "../Button";
 import List from "../List";
 
 import { ListContainer } from "./styles";
@@ -11,6 +17,10 @@ const ListWrapper = ({
   promote,
   searchTerm,
   setForm,
+  view,
+  yearsController,
+  dataToSubmit,
+  yearVariant,
 }) => {
   if (data !== undefined) {
     switch (variant) {
@@ -40,8 +50,10 @@ const ListWrapper = ({
                   key={index}
                   remove={remove}
                   edit={edit}
+                  view={view}
                   promote={promote}
                   setForm={setForm}
+                  yearsController={yearsController}
                 />
               ))}
           </ListContainer>
@@ -77,6 +89,57 @@ const ListWrapper = ({
               ))}
           </ListContainer>
         );
+      }
+      case "years": {
+        switch (yearVariant) {
+          case "edit": {
+            const startPdfForm = (year) => {
+              setForm("pdf", dataToSubmit, year);
+            };
+
+            return (
+              <ListContainer>
+                {data.impostoDeRenda.map((dataEach, index) => (
+                  <Button variant="year" onClick={() => startPdfForm(dataEach.ano)} key={index}>{dataEach.ano}</Button>
+                ))}
+              </ListContainer>
+            );
+          };
+
+          case "download":
+            const authContext = useAuth();
+            
+            const getImposto = useCallback(async (year) => {
+              try {
+                console
+                const responseImposto = await services.getImpostos(
+                  localStorage.getItem('urlAssociado'),
+                  authContext.token
+                );
+                return responseImposto.data;
+              } catch (error) {
+                console.log(error);
+              }
+            });
+
+            const handleImposto = useCallback(async (year) => {
+              const responseData = await getImposto(year);
+              impostoPdf(responseData);
+            });
+
+            const generatePdf = async (year) => {
+              handleImposto(year);
+            };
+
+            return (
+              <ListContainer>
+                {data.impostoDeRenda.map((dataEach, index) => (
+                  <Button variant="year" onClick={() => generatePdf(dataEach.ano)} key={index}>{dataEach.ano}</Button>
+                  ))}
+                  {/* <Button variant="year" onClick={() => generatePdf(ano)} key={index}>{ano}</Button> */}
+              </ListContainer>
+            );
+        }
       }
     }
   } else {

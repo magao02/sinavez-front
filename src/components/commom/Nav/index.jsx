@@ -37,7 +37,8 @@ function NavVariant({ variant }) {
     try {
       const responseImposto = await services.getImpostos(
         authContext.urlUser,
-        authContext.token
+        authContext.token,
+        (new Date()).getFullYear()
       );
       return responseImposto.data;
     } catch (error) {
