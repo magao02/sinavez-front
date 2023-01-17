@@ -99,8 +99,8 @@ const ListWrapper = ({
 
             return (
               <ListContainer>
-                {data.impostoDeRenda.map((dataEach, index) => (
-                  <Button variant="year" onClick={() => startPdfForm(dataEach.ano)} key={index}>{dataEach.ano}</Button>
+                {data.anosUsuario.map((dataEach, index) => (
+                  <Button variant="year" onClick={() => startPdfForm(dataEach)} key={index}>{dataEach}</Button>
                 ))}
               </ListContainer>
             );
@@ -133,10 +133,9 @@ const ListWrapper = ({
 
             return (
               <ListContainer>
-                {data.impostoDeRenda.map((dataEach, index) => (
-                  <Button variant="year" onClick={() => generatePdf(dataEach.ano)} key={index}>{dataEach.ano}</Button>
+                {data.anosUsuario.map((dataEach, index) => (
+                  <Button variant="year" onClick={() => generatePdf(dataEach)} key={index}>{dataEach}</Button>
                   ))}
-                  {/* <Button variant="year" onClick={() => generatePdf(ano)} key={index}>{ano}</Button> */}
               </ListContainer>
             );
         }
