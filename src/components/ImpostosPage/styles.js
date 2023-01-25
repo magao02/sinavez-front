@@ -17,3 +17,14 @@ export const Title = styled.h1`
 export const SubTitle = styled.h2`
   font-size: 2rem;
 `;
+
+export const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const NewYearContainer = styled.div`
+  display: flex;
+`;

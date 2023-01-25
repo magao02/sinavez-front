@@ -131,5 +131,25 @@ function getStyleByVariant(variant) {
         right: 5rem;
       `;
     }
+
+    case "year": {
+      return css`
+        background: transparent;
+        border: solid 1px black;
+        border-radius: 12px;
+        padding: 10px 20%;
+        margin-top: 10px;
+      `;
+    }
+
+    case "create-year": {
+      return css`
+        background: transparent;
+        border: solid 1px black;
+        border-radius: 12px;
+        padding: 10px 10px;
+        margin: 20px 20px 5px 10px;
+      `;
+    }
   }
 }
