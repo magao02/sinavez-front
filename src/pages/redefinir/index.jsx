@@ -26,11 +26,18 @@ const Redefinir = () => {
 
   useEffect(() => {
     if (step === 3) {
-      handleSubmit(collectedData);
+      handleSubmit(collectedData, urlAssociado);
     }
-    setUrlAssociado(localStorage.getItem('urlAssociado'));
-    setIsLoaded(true);
+    handleGetData();
   });
+
+  const handleGetData = useCallback(
+    async () => {
+      const url = await localStorage.getItem('urlAssociado');
+      setUrlAssociado(url);
+      setIsLoaded(true);
+    }
+  )
 
   const dataCollector = (data) => {
     setCollectedData({ ...collectedData, ...data });
@@ -54,18 +61,18 @@ const Redefinir = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleSubmit = useCallback(
-    async (data) => {
+    async (data, url) => {
       try {
         if (adminContext.urlUserEdit !== undefined) {
           const setData = await service.setUserData(
-            adminContext.urlUserEdit,
+            url,
             data,
             authContext.token
           );
           alert(setData.data.message);
         } else {
           const setData = await service.setData(
-            urlAssociado,
+            url,
             data,
             authContext.token
           );
