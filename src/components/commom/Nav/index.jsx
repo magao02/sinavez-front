@@ -69,7 +69,7 @@ function NavVariant({ variant }) {
             <Link href="/usuario">Meus Dados</Link>
             <Link href="/dependentes">Meus Dependentes</Link>
             <Button variant="image" onClick={startPdf}>
-              <a>Baixar Imposto de Renda</a>
+              <a>Baixar Imposto de Renda Atual</a>
             </Button>
             <Link href="/redefinir">Redefinir Dados</Link>
             <Link href="associados">Listar Associados</Link>
@@ -91,7 +91,7 @@ function NavVariant({ variant }) {
             <Link href="/usuario">Meus Dados</Link>
             <Link href="/dependentes">Meus Dependentes</Link>
             <Button variant="image" onClick={startPdf}>
-              <a>Baixar Imposto de Renda</a>
+              <a>Baixar Imposto de Renda Atual</a>
             </Button>
             <Link href="/redefinir">Redefinir Dados</Link>
           </UserFeaturesLeft>

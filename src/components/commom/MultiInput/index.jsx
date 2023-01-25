@@ -55,7 +55,7 @@ const MultiInputVariant = ({ label, names, refs, validation, variant, placeholde
             variant="signup"
             label={label}
             name={names[0]}
-            placeholder={placeholders ? placeholders.cidade : names[0]}
+            placeholder={placeholders ? placeholders.municipio : names[0]}
             ref={refs.cidadeRef}
             // validate={validation.requiredTextField}
           />

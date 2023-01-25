@@ -55,11 +55,9 @@ const SignUpPage = () => {
 
   const handleSubmit = useCallback(
     async (data) => {
-      console.log(data);
       try {
         const signUp = await service.signUp(data);
         alert(signUp.data.message);
-        console.log(authContext.admin)
         if (authContext.admin == "true" || authContext.admin == true) {
           router.push("/associados");
         } else {

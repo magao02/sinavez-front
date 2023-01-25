@@ -6,35 +6,35 @@ import * as validation from "../../utils/validation";
 import Button from "../commom/Button";
 import Input from "../commom/Input";
 
-const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, ano }) => {
-  let [ depedentIndex, setDepedentIndex ] = useState(-1);
-  
-  try{ if (actualPerson == associado.name || depedentIndex == (Object.keys(dependentes).length)) {
-    var janeiro = associado.impostoDeRenda[0].janeiro;
-    var fevereiro = associado.impostoDeRenda[0].fevereiro;
-    var marco = associado.impostoDeRenda[0].marco;
-    var abril = associado.impostoDeRenda[0].abril;
-    var maio = associado.impostoDeRenda[0].maio;
-    var junho = associado.impostoDeRenda[0].junho;
-    var julho = associado.impostoDeRenda[0].julho;
-    var agosto = associado.impostoDeRenda[0].agosto;
-    var setembro = associado.impostoDeRenda[0].setembro;
-    var outubro = associado.impostoDeRenda[0].outubro;
-    var novembro = associado.impostoDeRenda[0].novembro;
-    var dezembro = associado.impostoDeRenda[0].dezembro;
+const PdfForm = ({ handleSubmitForm, data, actualPerson, ano }) => {
+  let [depedentIndex, setDepedentIndex] = useState(-1)
+
+  try{ if (depedentIndex == -1) {
+    var janeiro = data.impostoDeRenda.janeiro;
+    var fevereiro = data.impostoDeRenda.fevereiro;
+    var marco = data.impostoDeRenda.marco;
+    var abril = data.impostoDeRenda.abril;
+    var maio = data.impostoDeRenda.maio;
+    var junho = data.impostoDeRenda.junho;
+    var julho = data.impostoDeRenda.julho;
+    var agosto = data.impostoDeRenda.agosto;
+    var setembro = data.impostoDeRenda.setembro;
+    var outubro = data.impostoDeRenda.outubro;
+    var novembro = data.impostoDeRenda.novembro;
+    var dezembro = data.impostoDeRenda.dezembro;
   } else {
-    var janeiro = dependentes[depedentIndex].impostoDeRenda[0].janeiro;
-    var fevereiro = dependentes[depedentIndex].impostoDeRenda[0].fevereiro;
-    var marco = dependentes[depedentIndex].impostoDeRenda[0].marco;
-    var abril = dependentes[depedentIndex].impostoDeRenda[0].abril;
-    var maio = dependentes[depedentIndex].impostoDeRenda[0].maio;
-    var junho = dependentes[depedentIndex].impostoDeRenda[0].junho;
-    var julho = dependentes[depedentIndex].impostoDeRenda[0].julho;
-    var agosto = dependentes[depedentIndex].impostoDeRenda[0].agosto;
-    var setembro = dependentes[depedentIndex].impostoDeRenda[0].setembro;
-    var outubro = dependentes[depedentIndex].impostoDeRenda[0].outubro;
-    var novembro = dependentes[depedentIndex].impostoDeRenda[0].novembro;
-    var dezembro = dependentes[depedentIndex].impostoDeRenda[0].dezembro;
+    var janeiro = data.dependentes[depedentIndex].impostoDeRenda[0].janeiro;
+    var fevereiro = data.dependentes[depedentIndex].impostoDeRenda[0].fevereiro;
+    var marco = data.dependentes[depedentIndex].impostoDeRenda[0].marco;
+    var abril = data.dependentes[depedentIndex].impostoDeRenda[0].abril;
+    var maio = data.dependentes[depedentIndex].impostoDeRenda[0].maio;
+    var junho = data.dependentes[depedentIndex].impostoDeRenda[0].junho;
+    var julho = data.dependentes[depedentIndex].impostoDeRenda[0].julho;
+    var agosto = data.dependentes[depedentIndex].impostoDeRenda[0].agosto;
+    var setembro = data.dependentes[depedentIndex].impostoDeRenda[0].setembro;
+    var outubro = data.dependentes[depedentIndex].impostoDeRenda[0].outubro;
+    var novembro = data.dependentes[depedentIndex].impostoDeRenda[0].novembro;
+    var dezembro = data.dependentes[depedentIndex].impostoDeRenda[0].dezembro;
   };}catch{};
 
   const janRef = useRef();
@@ -108,23 +108,42 @@ const PdfForm = ({ handleSubmitForm, associado, dependentes, actualPerson, ano }
       novRef,
       dezRef,
     ].map((inputRef) => Number(inputRef.current?.value.replace(",", ".")));
+    
+    cleanInputs();
 
-    handleSubmitForm({impostoDeRenda: {
-      ano: ano,
-      janeiro,
-      fevereiro,
-      marco,
-      abril,
-      maio,
-      junho,
-      julho,
-      agosto,
-      setembro,
-      outubro,
-      novembro,
-      dezembro,
-    }});
+    handleSubmitForm({
+      impostoDeRenda: {
+        ano: ano,
+        janeiro,
+        fevereiro,
+        marco,
+        abril,
+        maio,
+        junho,
+        julho,
+        agosto,
+        setembro,
+        outubro,
+        novembro,
+        dezembro,
+      }
+    });
   }, [allFieldsAreValid, handleSubmitForm]);
+
+  const cleanInputs = () => {
+    janRef.current.clear();
+    fevRef.current.clear();
+    marRef.current.clear();
+    abrRef.current.clear();
+    maiRef.current.clear();
+    junRef.current.clear();
+    julRef.current.clear();
+    agoRef.current.clear();
+    setRef.current.clear();
+    outRef.current.clear();
+    novRef.current.clear();
+    dezRef.current.clear();
+  }
 
   return (
     <Container onSubmit={handleSubmit}>

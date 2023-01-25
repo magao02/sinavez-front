@@ -115,7 +115,7 @@ function ListVariant({ variant, data, remove, edit, promote, setForm, view, year
             <p>Editar Impostos</p>
           </Button>
           <Button variant="image" onClick={editUser}>
-            <Image src={EditIcon} alt="botão para editara associado" />
+            <Image src={EditIcon} alt="botão para editar associado" />
           </Button>
           {/* <Button variant="image" onClick={promoteUser}>
             <Image src={AdminIcon} alt="botão para promover associado" />
