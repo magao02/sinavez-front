@@ -55,7 +55,6 @@ const impostoPDF = (data) => {
     delete impostoAssociado[1]["idUser"];
     delete impostoAssociado[1]["_id"];
     delete impostoAssociado[1]["__v"];
-    console.log(impostoAssociado)
 
     for (let i = 0; i < meses.length; i++) {
       let temp = [];
