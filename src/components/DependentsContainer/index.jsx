@@ -16,7 +16,7 @@ import {
   FormContainer,
 } from "./styles";
 
-const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
+const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSingUpController }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -26,7 +26,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
   const adminContext = useAdmin();
 
   const allFieldsAreValid = useCallback(async () => {
-    const inputRefs = [nameRef, 
+    const inputRefs = [nameRef,
       birthdayRef,
       cpfRef,
       rgRef,
@@ -63,7 +63,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
           rg,
           emissao,
         }, url, token);
-        return ;
+        return;
       }
       submitForm({ name, nascimento, cpf, rg, emissao });
     },
@@ -132,6 +132,9 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token }) => {
     case "admin": {
       return (
         <Container variant="admin">
+          <Button variant={"close"} onClick={() => window.location.reload(true)}>
+            &#10005;
+          </Button>
           <Header>
             <Title>Cadastrar Dependente</Title>
             <SubTitle>{adminContext.associado.name}</SubTitle>
