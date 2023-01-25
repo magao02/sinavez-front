@@ -53,6 +53,18 @@ export async function getUserData(urlUser, token) {
   return requisition;
 }
 
+export async function createNewImpostoByYearAssociado(urlUser, ano, token) {
+  const requisition = await api.post(`/user/${urlUser}/createNewImpostoByYearUser/${ano}`, {},
+    { headers: { authorization: token } });
+  return requisition;
+}
+
+export async function createNewImpostoByYearDep(urlUser, ano, urlDep, token) {
+  const requisition = await api.post(`/user/${urlUser}/createNewImpostoByYearDep/${urlDep}/${ano}`, {},
+    { headers: { authorization: token } });
+  return requisition;
+}
+
 export async function addDependent(dependentData, urlUser, token) {
   const requisition = await api.post(
     "/user/" + urlUser + "/signUpDep",
@@ -83,18 +95,18 @@ export async function getAssociados(token) {
   return requisition;
 }
 
-export async function setImpostoAssociado(urlUser, imposto, token) {
+export async function setImpostoAssociado(urlUser, imposto, ano, token) {
   const requisition = await api.put(
-    "/user/" + urlUser + "/setImpostoDeRenda",
+    "/user/" + urlUser + "/" + ano + "/setImpostoDeRenda",
     imposto,
     { headers: { authorization: token } }
   );
   return requisition;
 }
 
-export async function setImpostoDependente(urlUser, depUrl, imposto, token) {
+export async function setImpostoDependente(urlUser, depUrl, imposto, ano, token) {
   const requisition = await api.put(
-    "/user/" + urlUser + "/setImpostoDeRendaDep/" + depUrl,
+    "/user/" + urlUser + "/setImpostoDeRendaDep/" + depUrl + "/" + ano,
     imposto,
     { headers: { authorization: token } }
   );
@@ -121,3 +133,4 @@ export async function logout(token) {
   });
   return requisition;
 }
+
