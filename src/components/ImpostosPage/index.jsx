@@ -1,15 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import {
     Title,
     SubTitle,
     GreetingsContainer,
-  } from "./styles";
-import { Container, MainContent } from "../../styles/redefinirStyles";
+} from "./styles";
+import { Container } from "../../styles/redefinirStyles";
+import { MainContent, NewYearContainer } from "./styles";
 
+import * as validation from "../../utils/validation";
 
 import ListWrapper from "../commom/ListWrapper";
 import Button from "../commom/Button";
+import Input from "../commom/Input";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { useAdmin } from "../../contexts/AdminContext";
@@ -38,7 +41,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
             const responseYear = await service.getYears(
                 localStorage.getItem("urlAssociado"),
                 authContext.token
-                );
+            );
             return responseYear.data;
         } catch (error) {
             console.log(error);
@@ -50,45 +53,95 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
         setYearsData(responseData);
     });
 
+    const yearRef = useRef()
+    const createNewYearAssociado = useCallback(async () => {
+        try {
+            const responseImposto = await service.createNewImpostoByYearAssociado(
+                localStorage.getItem("urlAssociado"),
+                yearRef.current.value,
+                authContext.token
+            );
+            return responseImposto.data;
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    const createNewYearDep = useCallback(async (dep) => {
+        dep.forEach(async dep => {
+            try {
+                const responseImposto = await service.createNewImpostoByYearDep(
+                    localStorage.getItem("urlAssociado"),
+                    yearRef.current.value,
+                    dep.urlDep,
+                    authContext.token
+                );
+                return responseImposto.data;
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    });
+
+    const handleCreateNewYear = useCallback(async () => {
+        createNewYearAssociado();
+        const dep = await getDep();
+        createNewYearDep(dep.data);
+        window.location.reload(true);
+    });
+
     switch (variant) {
         case "edit": {
             return (
-                <Container>
-                    {isLoaded && (
-                        <>
-                            <Button variant={"close"} onClick={handleStopYears}>
-                                &#10005;
-                            </Button>
-                            <GreetingsContainer>
-                                <Title>Editar Imposto de Renda</Title>
-                                <SubTitle>selecione o ano</SubTitle>
-                            </GreetingsContainer>
-                            <MainContent>
-                                <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
-                            </MainContent>
-                        </>
-                    )}
-                </Container>
+                <>
+                    <GreetingsContainer>
+                        <Title>Editar Imposto de Renda</Title>
+                        <SubTitle>selecione o ano</SubTitle>
+                    </GreetingsContainer>
+                    <Container>
+                        {isLoaded && (
+                            <>
+                                <Button variant={"close"} onClick={handleStopYears}>
+                                    &#10005;
+                                </Button>
+                                <MainContent>
+                                    <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
+                                    <NewYearContainer>
+                                        <Input variant="default"
+                                            name="ano"
+                                            placeholder="digite um novo ano"
+                                            validate={validation.testNumberImposto}
+                                            ref={yearRef}
+                                        />
+                                        <Button variant="create-year" onClick={handleCreateNewYear}>Criar Novo Ano</Button>
+                                    </NewYearContainer>
+                                </MainContent>
+                            </>
+                        )}
+                    </Container>
+                </>
             );
         }
         case "download": {
             return (
-                <Container>
-                    {isLoaded && (
-                        <>
-                            <Button variant={"close"} onClick={handleStopYears}>
-                                &#10005;
-                            </Button>
-                            <GreetingsContainer>
-                                <Title>Baixar Imposto de Renda</Title>
-                                <SubTitle>selecione o ano</SubTitle>
-                            </GreetingsContainer>
-                            <MainContent>
-                                <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
-                            </MainContent>
-                        </>
-                    )}
-                </Container>
+                <>
+                    <GreetingsContainer>
+                        <Title>Baixar Imposto de Renda</Title>
+                        <SubTitle>selecione o ano</SubTitle>
+                    </GreetingsContainer>
+                    <Container>
+                        {isLoaded && (
+                            <>
+                                <Button variant={"close"} onClick={handleStopYears}>
+                                    &#10005;
+                                </Button>
+                                <MainContent>
+                                    <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
+                                </MainContent>
+                            </>
+                        )}
+                    </Container>
+                </>
             );
         }
     }
