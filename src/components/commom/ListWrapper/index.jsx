@@ -111,10 +111,10 @@ const ListWrapper = ({
             
             const getImposto = useCallback(async (year) => {
               try {
-                console
                 const responseImposto = await services.getImpostos(
                   localStorage.getItem('urlAssociado'),
-                  authContext.token
+                  authContext.token,
+                  year
                 );
                 return responseImposto.data;
               } catch (error) {

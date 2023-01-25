@@ -28,6 +28,7 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
   const [queue, setQueue] = useState();
   const [currentPerson, setCurrentPerson] = useState(0);
   const [associadoUrl, setAssociadoUrl] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const incrementCurrentPerson = () => {
     setCurrentPerson(currentPerson + 1);
@@ -71,8 +72,9 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
   const handleImposto = useCallback(async () => {
     const responseData = await getImposto();
     setPdfData(responseData);
-  });
-
+    setIsLoaded(true);
+  }, []);
+  
   useEffect(() => {
     handleImposto();
     getDependents();
@@ -109,9 +111,9 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
       const associadoResponse = await service.setImpostoAssociado(
         queue[currentPerson].urlUser,
         data.impostoDeRenda,
+        ano,
         authContext.token
       );
-      console.log(associadoResponse.data);
     } catch (error) {
       console.log(error);
     }
@@ -123,9 +125,10 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
         associadoUrl,
         queue[currentPerson].urlDep,
         data,
+        ano,
         authContext.token
       );
-      console.log(dependenteResponse.data);
+      return dependenteResponse.data;
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +136,7 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
 
   return (
     <Container>
-      {queue && (
+      {queue && isLoaded && (
         <MainContent>
           <Button variant={"close"} onClick={handleStopPdf}>
             &#10005;
@@ -142,7 +145,7 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
             <Title>Imposto de Renda</Title>
             <SubTitle>{queue[currentPerson].name}</SubTitle>
           </GreetingsContainer>
-          <PdfForm ano={ano} actualPerson={queue[currentPerson].name} associado={pdfData} dependentes={pdfData.dependentes} handleSubmitForm={handleProcess} />
+          <PdfForm ano={ano} actualPerson={queue[currentPerson].name} data={pdfData} handleSubmitForm={handleProcess} />
         </MainContent>
       )}
     </Container>
