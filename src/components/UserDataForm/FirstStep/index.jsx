@@ -111,9 +111,14 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getUserData = useCallback(async () => {
+    if (urlAssociado == "" || urlAssociado == undefined) {
+      var url = authContext.urlUser;
+    } else {
+      var url = urlAssociado;
+    }
     try {
       const responseData = await service.getUserData(
-        urlAssociado,
+        url,
         authContext.token
       );
       return responseData.data;
@@ -127,6 +132,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
     const responseData = await getUserData();
     setUserData(responseData);
     setIsLoaded(true);
+    localStorage.setItem("urlAssociado", "");
   }, [getUserData]);
 
   useEffect(() => {
