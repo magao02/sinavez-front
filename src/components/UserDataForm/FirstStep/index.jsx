@@ -132,7 +132,6 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
     const responseData = await getUserData();
     setUserData(responseData);
     setIsLoaded(true);
-    localStorage.setItem("urlAssociado", "");
   }, [getUserData]);
 
   useEffect(() => {

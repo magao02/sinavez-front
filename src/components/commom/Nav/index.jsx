@@ -71,7 +71,7 @@ function NavVariant({ variant }) {
             <Button variant="image" onClick={startPdf}>
               <a>Baixar Imposto de Renda Atual</a>
             </Button>
-            <Link href="/redefinir">Redefinir Dados</Link>
+            <Link legacyBehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
             <Link href="associados">Listar Associados</Link>
             <Link href="/cadastro">Cadastrar Novo Membro</Link>
           </UserFeaturesLeft>
