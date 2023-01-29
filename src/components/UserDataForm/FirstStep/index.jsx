@@ -111,14 +111,9 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
   const [isLoaded, setIsLoaded] = useState(false);
 
   const getUserData = useCallback(async () => {
-    if (urlAssociado == "" || urlAssociado == undefined) {
-      var url = authContext.urlUser;
-    } else {
-      var url = urlAssociado;
-    }
     try {
       const responseData = await service.getUserData(
-        url,
+        urlAssociado,
         authContext.token
       );
       return responseData.data;
