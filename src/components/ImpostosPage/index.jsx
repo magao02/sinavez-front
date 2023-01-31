@@ -67,6 +67,18 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
         }
     });
 
+    const getDependents = useCallback(async () => {
+        try {
+          const dependentsReponse = await service.getDependents(
+            localStorage.getItem("urlAssociado"),
+            authContext.token
+          );
+          return dependentsReponse;
+        } catch (error) {
+          await handleErrorOnDependent(error);
+        }
+      });
+
     const createNewYearDep = useCallback(async (dep) => {
         dep.forEach(async dep => {
             try {
@@ -85,7 +97,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
 
     const handleCreateNewYear = useCallback(async () => {
         createNewYearAssociado();
-        const dep = await getDep();
+        const dep = await getDependents();
         createNewYearDep(dep.data);
         window.location.reload(true);
     });
