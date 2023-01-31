@@ -167,7 +167,7 @@ const impostoPDF = (data) => {
         alignment: "center",
       },
       {
-        text: `Declaramos, para fins de prova junto a Delegacia da Receita Federal da Paraíba, que o associado ${data.name} (cpf: ${data.cpf}) pagou a UNIMED CNPJ: 08.680.639/0001-77, situada à Rua Marechal Deodoro,420-Torre-João Pessoa/PB, através do contrato (custo Operacional e pré-pagamento) mantido com este sindicato pela assistência médica que lhe foi prestada e à sua família no exercício de 2021 as importâncias abaixo descritas:`,
+        text: `Declaramos, para fins de prova junto a Delegacia da Receita Federal da Paraíba, que o associado ${data.name} (cpf: ${data.cpf}) pagou a UNIMED CNPJ: 08.680.639/0001-77, situada à Rua Marechal Deodoro,420-Torre-João Pessoa/PB, através do contrato (custo Operacional e pré-pagamento) mantido com este sindicato pela assistência médica que lhe foi prestada e à sua família no exercício de ${data.impostoDeRenda.ano} as importâncias abaixo descritas:`,
         fontsize: 45,
         bold: false,
         margin: [50, 5, 50, 8],
