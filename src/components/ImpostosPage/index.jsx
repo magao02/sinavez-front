@@ -99,7 +99,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
         createNewYearAssociado();
         const dep = await getDependents();
         createNewYearDep(dep.data);
-        window.location.reload(true);
+        alert(`Imposto de ${yearRef.current.value} criado, reinicie a página.`)
     });
 
     switch (variant) {
