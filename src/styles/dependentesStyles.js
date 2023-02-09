@@ -31,3 +31,11 @@ export const ControllerContainer = styled.div`
 
     padding-top: 5rem;
 `;
+
+export const LoadingMessage = styled.div`
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
