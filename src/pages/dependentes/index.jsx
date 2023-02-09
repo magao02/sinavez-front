@@ -20,6 +20,7 @@ import {
   Container,
   ContentContainer,
   ControllerContainer,
+  LoadingMessage,
 } from "../../styles/dependentesStyles";
 
 const Dependentes = () => {
@@ -117,7 +118,10 @@ const Dependentes = () => {
           variant="default"
         />
       )}
-      {!formUp && (
+      {!formUp && !dependents && (
+        <LoadingMessage>Carregando...</LoadingMessage>
+      )}
+      {!formUp && dependents && (
         <ContentContainer>
           <ControllerContainer>
             <SearchBar
