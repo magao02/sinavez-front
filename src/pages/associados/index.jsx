@@ -19,6 +19,7 @@ import {
   Container,
   ContentContainer,
   ControllerContainer,
+  LoadingMessage,
 } from "../../styles/associadosStyles";
 
 const Associados = () => {
@@ -37,7 +38,6 @@ const Associados = () => {
   const adminContext = useAdmin();
 
   const formController = (type, data, year) => {
-    /* console.log(year) */
     setYear(year)
     if (type === "pdf") {
       setForm({
@@ -158,6 +158,9 @@ const Associados = () => {
   return (
     <Container>
       <Navigation variant={checkNav()} />
+      {!associados && !form.toggle && !years.toggle && (
+        <LoadingMessage>Carregando...</LoadingMessage>
+      )}
       {associados && !form.toggle && !years.toggle &&(
         <ContentContainer>
           <ControllerContainer>
