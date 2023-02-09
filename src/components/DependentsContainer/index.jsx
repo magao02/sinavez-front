@@ -98,7 +98,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
               />
               <Input
                 type="text"
-                label="CPF"
+                label="CPF (opcional)"
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
@@ -108,7 +108,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
             <FormContainer>
               <Input
                 type="text"
-                label="RG"
+                label="RG (opcional)"
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
@@ -159,7 +159,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
               />
               <Input
                 type="text"
-                label="CPF"
+                label="CPF (opcional)"
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
@@ -169,7 +169,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
             <FormContainer>
               <Input
                 type="text"
-                label="RG"
+                label="RG (opcional)"
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
