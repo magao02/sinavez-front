@@ -58,6 +58,24 @@ function getStyleByVariant(variant) {
                 }
             `;
         }
+
+        case 'signup-optional': {  
+            return css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                gap: 0.8rem;
+                }
+
+                label {
+                    color: ${theme.colors.dark.heavy};
+                    font-weight: 700;
+                    padding-bottom: 1.6rem;
+                    }
+            `;
+        }
     }
 };
 
