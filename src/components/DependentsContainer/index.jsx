@@ -102,7 +102,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
-                validate={validation.testRequiredCpf}
+                validate={validation.testCpf}
               />
             </FormContainer>
             <FormContainer>
@@ -112,7 +112,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
-                validate={validation.testRequiredNumbers}
+                validate={validation.testNumbers}
               />
               <Input
                 type="text"
@@ -163,7 +163,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 placeholder="Digite apenas os números do CPF"
                 variant="signup"
                 ref={cpfRef}
-                validate={validation.testRequiredCpf}
+                validate={validation.testCpf}
               />
             </FormContainer>
             <FormContainer>
@@ -173,7 +173,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 placeholder="Digite os números do seu RG"
                 variant="signup"
                 ref={rgRef}
-                validate={validation.testRequiredNumbers}
+                validate={validation.testNumbers}
               />
               <Input
                 type="text"
