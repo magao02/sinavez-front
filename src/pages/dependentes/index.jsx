@@ -12,7 +12,6 @@ import * as service from "../../services/accounts";
 
 import DependsForm from "../../components/DependentsContainer";
 import Navigation from "../../components/commom/Nav";
-import List from "../../components/commom/List";
 import ListWrapper from "../../components/commom/ListWrapper";
 import SearchBar from "../../components/commom/SearchBar";
 import Button from "../../components/commom/Button";
