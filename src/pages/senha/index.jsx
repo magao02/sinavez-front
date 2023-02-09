@@ -11,7 +11,7 @@ import {
   Title,
   Subtitle,
   Greetings,
-  Spam,
+  Span,
 } from "../../styles/senhaStyles";
 
 import SinavezLogo from "../../assets/logo_picture.svg";
@@ -73,9 +73,9 @@ const PasswordRecovery = () => {
                   validate={validation.testRequiredEmail}
                 />
                 <input name="token" style={{ "display": "none" }} value="abcd"/>
-                <Spam>
+                <Span>
                   {globalMessage && <span>{globalMessage}</span>}
-                </Spam>
+                </Span>
                 <Button variant="password" onClick={handleSendEmail}>Enviar</Button>
               </form>
             </PasswordSection>

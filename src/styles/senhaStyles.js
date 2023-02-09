@@ -104,3 +104,10 @@ export const DecorativeSection = styled.section`
         display: none;
     }
 `;
+
+export const Span = styled.section`
+    margin-top: 2.5vh;
+    color: ${theme.colors.red};
+    text-align: center;
+    font-weight: bold;
+`;
