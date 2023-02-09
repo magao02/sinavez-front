@@ -82,7 +82,7 @@ const Dependentes = () => {
           authContext.token,
           urlDependent
         );
-        alert(`${dependentRemoveResponse}, Recarregue a Página!`);
+        alert(`${dependentRemoveResponse.data.message}, Recarregue a Página!`);
       } catch (error) {
         console.log(error);
       }
