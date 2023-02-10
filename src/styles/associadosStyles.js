@@ -35,7 +35,7 @@ export const ControllerContainer = styled.div`
 `;
 
 export const LoadingMessage = styled.div`
-    min-height: 100vh;
+    min-height: 92vh;
 
     display: flex;
     justify-content: center;

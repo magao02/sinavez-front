@@ -3,7 +3,7 @@ import theme from './theme';
 
 export const Container = styled.div`
     width: 100vw;
-    height: 100vh;
+    height: 92vh;
     background-color: ${theme.colors.white};
 
     display: flex;
@@ -33,7 +33,7 @@ export const ControllerContainer = styled.div`
 `;
 
 export const LoadingMessage = styled.div`
-    min-height: 100vh;
+    min-height: 92vh;
 
     display: flex;
     justify-content: center;
