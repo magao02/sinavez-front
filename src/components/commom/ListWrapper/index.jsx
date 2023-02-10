@@ -11,16 +11,15 @@ import { ListContainer } from "./styles";
 const ListWrapper = ({
   data,
   variant,
-  toggleForm,
   remove,
   edit,
   promote,
   searchTerm,
   setForm,
-  view,
   yearsController,
   dataToSubmit,
   yearVariant,
+  dependente,
 }) => {
   if (data !== undefined) {
     switch (variant) {
@@ -50,9 +49,8 @@ const ListWrapper = ({
                   key={index}
                   remove={remove}
                   edit={edit}
-                  view={view}
                   promote={promote}
-                  setForm={setForm}
+                  dependente={dependente}
                   yearsController={yearsController}
                 />
               ))}

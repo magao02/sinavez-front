@@ -14,6 +14,7 @@ import ListWrapper from "../../components/commom/ListWrapper";
 import PdfPage from "../../components/PdfPage";
 import DependentsContainer from "../../components/DependentsContainer";
 import ImpostosPage from "../../components/ImpostosPage";
+import UserDependentesPage from "../../components/UserDependentesPage";
 
 import {
   Container,
@@ -31,6 +32,7 @@ const Associados = () => {
   const [associados, setAssociados] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [urlUserEdit, setUrlUserEdit] = useState();
+  const [dependentesToggle, setDependentesToggle] = useState(false);
 
   const router = useRouter();
 
@@ -142,6 +144,13 @@ const Associados = () => {
     }
   };
 
+  const [associadoData, setAssociadoData] = useState([]);
+
+  const editDependente = useCallback((urlAssociado, associadoName) => {
+    setAssociadoData([urlAssociado, associadoName]);
+    setDependentesToggle(true);
+  }, [])
+
   useEffect(() => {
     if (!authContext.auth) {
       router.push("/login");
@@ -161,7 +170,10 @@ const Associados = () => {
       {!associados && !form.toggle && !years.toggle && (
         <LoadingMessage>Carregando...</LoadingMessage>
       )}
-      {associados && !form.toggle && !years.toggle &&(
+      {dependentesToggle && associadoData && (
+        <UserDependentesPage associadoData={associadoData} setDependentesToggle={setDependentesToggle}/>
+      )}
+      {associados && !form.toggle && !years.toggle && !dependentesToggle && (
         <ContentContainer>
           <ControllerContainer>
             <SearchBar
@@ -173,11 +185,10 @@ const Associados = () => {
             data={associados}
             variant="associados"
             searchTerm={searchTerm}
-            setForm={formController}
             yearsController={yearsController}
             remove={userRemove}
             edit={editUserData}
-            view={viewProfile}
+            dependente={editDependente}
             promote={userPromote}
           />
         </ContentContainer>
