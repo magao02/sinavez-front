@@ -39,3 +39,8 @@ export const LoadingMessage = styled.div`
     justify-content: center;
     align-items: center;
 `;
+
+export const Title = styled.h1`
+    margin-top: 2rem;
+    font-size: 4.4rem;
+`;
