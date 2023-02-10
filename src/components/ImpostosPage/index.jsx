@@ -4,9 +4,10 @@ import {
     Title,
     SubTitle,
     GreetingsContainer,
+    MainContent,
+    NewYearContainer,
+    Container,
 } from "./styles";
-import { Container } from "../../styles/redefinirStyles";
-import { MainContent, NewYearContainer } from "./styles";
 
 import * as validation from "../../utils/validation";
 
