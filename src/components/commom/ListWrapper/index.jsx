@@ -6,7 +6,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import Button from "../Button";
 import List from "../List";
 
-import { ListContainer } from "./styles";
+import { ListContainer, ListContainerYears } from "./styles";
 
 const ListWrapper = ({
   data,
@@ -96,11 +96,11 @@ const ListWrapper = ({
             };
 
             return (
-              <ListContainer>
+              <ListContainerYears>
                 {data.anosUsuario.map((dataEach, index) => (
                   <Button variant="year" onClick={() => startPdfForm(dataEach)} key={index}>{dataEach}</Button>
                 ))}
-              </ListContainer>
+              </ListContainerYears>
             );
           };
 
@@ -130,11 +130,11 @@ const ListWrapper = ({
             };
 
             return (
-              <ListContainer>
+              <ListContainerYears>
                 {data.anosUsuario.map((dataEach, index) => (
                   <Button variant="year" onClick={() => generatePdf(dataEach)} key={index}>{dataEach}</Button>
                   ))}
-              </ListContainer>
+              </ListContainerYears>
             );
         }
       }

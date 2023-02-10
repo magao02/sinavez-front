@@ -13,3 +13,18 @@ export const ListContainer = styled.div`
 
     gap: 1.6rem;
 `;
+
+export const ListContainerYears = styled.div`
+    width: 100%;
+    height: 80%;
+    
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0 6.2rem;
+
+    gap: 1.6rem;
+`;
