@@ -7,7 +7,8 @@ import {
     MainContent,
     NewYearContainer,
     Container,
-} from "./styles";
+    LoadingMessage,
+} from "../../styles/impostosStyles";
 
 import * as validation from "../../utils/validation";
 
@@ -30,7 +31,6 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
     useEffect(() => {
         handleImposto();
         setUrlAssociado(localStorage.getItem('urlAssociado'));
-        setIsLoaded(true);
     }, []);
 
     const handleStopYears = () => {
@@ -52,6 +52,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
     const handleImposto = useCallback(async () => {
         const responseData = await getYears();
         setYearsData(responseData);
+        setIsLoaded(true);
     });
 
     const yearRef = useRef()
@@ -70,15 +71,15 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
 
     const getDependents = useCallback(async () => {
         try {
-          const dependentsReponse = await service.getDependents(
-            localStorage.getItem("urlAssociado"),
-            authContext.token
-          );
-          return dependentsReponse;
+            const dependentsReponse = await service.getDependents(
+                localStorage.getItem("urlAssociado"),
+                authContext.token
+            );
+            return dependentsReponse;
         } catch (error) {
-          await handleErrorOnDependent(error);
+            await handleErrorOnDependent(error);
         }
-      });
+    });
 
     const createNewYearDep = useCallback(async (dep) => {
         dep.forEach(async dep => {
@@ -107,13 +108,16 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
         case "edit": {
             return (
                 <>
-                    <GreetingsContainer>
-                        <Title>Editar Imposto de Renda</Title>
-                        <SubTitle>selecione o ano</SubTitle>
-                    </GreetingsContainer>
-                    <Container>
-                        {isLoaded && (
-                            <>
+                    {!isLoaded && (
+                        <LoadingMessage>Carregando...</LoadingMessage>
+                    )}
+                    {isLoaded && (
+                        <>
+                            <GreetingsContainer>
+                                <Title>Editar Imposto de Renda</Title>
+                                <SubTitle>selecione o ano</SubTitle>
+                            </GreetingsContainer>
+                            <Container>
                                 <Button variant={"close"} onClick={handleStopYears}>
                                     &#10005;
                                 </Button>
@@ -129,31 +133,34 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
                                         <Button variant="create-year" onClick={handleCreateNewYear}>Criar Novo Ano</Button>
                                     </NewYearContainer>
                                 </MainContent>
-                            </>
-                        )}
-                    </Container>
+                            </Container>
+                        </>
+                    )}
                 </>
             );
         }
         case "download": {
             return (
                 <>
-                    <GreetingsContainer>
-                        <Title>Baixar Imposto de Renda</Title>
-                        <SubTitle>selecione o ano</SubTitle>
-                    </GreetingsContainer>
-                    <Container>
-                        {isLoaded && (
-                            <>
+                    {!isLoaded && (
+                        <LoadingMessage>Carregando...</LoadingMessage>
+                    )}
+                    {isLoaded && (
+                        <>
+                            <GreetingsContainer>
+                                <Title>Baixar Imposto de Renda</Title>
+                                <SubTitle>selecione o ano</SubTitle>
+                            </GreetingsContainer>
+                            <Container>
                                 <Button variant={"close"} onClick={handleStopYears}>
                                     &#10005;
                                 </Button>
                                 <MainContent>
                                     <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
                                 </MainContent>
-                            </>
-                        )}
-                    </Container>
+                            </Container>
+                        </>
+                    )}
                 </>
             );
         }
