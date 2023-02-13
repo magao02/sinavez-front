@@ -156,7 +156,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
                                     &#10005;
                                 </Button>
                                 <MainContent>
-                                    <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} />
+                                    <ListWrapper dataToSubmit={dataToSubmit} data={yearsData} variant="years" yearVariant={variant} setForm={setForm} urlAssociado={localStorage.getItem("urlAssociado")} />
                                 </MainContent>
                             </Container>
                         </>

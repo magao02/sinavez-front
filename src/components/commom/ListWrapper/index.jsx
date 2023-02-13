@@ -20,6 +20,7 @@ const ListWrapper = ({
   dataToSubmit,
   yearVariant,
   dependente,
+  urlAssociado,
 }) => {
   if (data !== undefined) {
     switch (variant) {
@@ -110,7 +111,7 @@ const ListWrapper = ({
             const getImposto = useCallback(async (year) => {
               try {
                 const responseImposto = await services.getImpostos(
-                  localStorage.getItem('urlAssociado'),
+                  urlAssociado,
                   authContext.token,
                   year
                 );

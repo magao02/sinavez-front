@@ -66,7 +66,7 @@ const Impostos = () => {
                     </GreetingsContainer>
                     <Container>
                         <MainContent>
-                            <ListWrapper data={yearsData} variant="years" yearVariant="download" />
+                            <ListWrapper data={yearsData} variant="years" yearVariant="download" urlAssociado={authContext.urlUser}/>
                         </MainContent>
                     </Container>
                 </>
