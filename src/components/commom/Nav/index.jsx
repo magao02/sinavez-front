@@ -9,8 +9,6 @@ import { useCallback, useEffect, useState } from "react";
 
 import * as services from "../../../services/accounts";
 
-import impostoPdf from "../../../pdf/imposto";
-
 import Button from "../Button";
 
 import SinavezLogo from "../../../assets/logo_picture.svg";
@@ -51,10 +49,6 @@ function NavVariant({ variant }) {
     setPdfData(responseData);
   });
 
-  const startPdf = useCallback(async () => {
-    impostoPdf(pdfData);
-  });
-
   useEffect(() => {
     handleImposto();
     setAdmin(authContext.admin)
@@ -68,9 +62,7 @@ function NavVariant({ variant }) {
             <Image src={SinavezLogo} />
             <Link href="/usuario">Meus Dados</Link>
             <Link href="/dependentes">Meus Dependentes</Link>
-            <Button variant="image" onClick={startPdf}>
-              <a>Baixar Imposto de Renda Atual</a>
-            </Button>
+            <Link href="/impostos">Baixar Imposto de Renda</Link>
             <Link legacyBehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
             <Link href="associados">Listar Associados</Link>
             <Link href="/cadastro">Cadastrar Novo Membro</Link>
@@ -90,9 +82,7 @@ function NavVariant({ variant }) {
             <Image src={SinavezLogo} />
             <Link href="/usuario">Meus Dados</Link>
             <Link href="/dependentes">Meus Dependentes</Link>
-            <Button variant="image" onClick={startPdf}>
-              <a>Baixar Imposto de Renda Atual</a>
-            </Button>
+            <Link href="/impostos">Baixar Imposto de Renda</Link>
             <Link legacyBehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
           </UserFeaturesLeft>
           <UserFeaturesRight>
