@@ -92,7 +92,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 type="text"
                 label="Data de Nascimento"
                 placeholder="DD/MM/AAAA"
-                variant="signup"
+                variant="signup-optional"
                 ref={birthdayRef}
                 validate={validation.testDate}
               />
@@ -118,7 +118,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 type="text"
                 label="Data de Emissão"
                 placeholder="DD/MM/AAAA"
-                variant="signup"
+                variant="signup-optional"
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
@@ -153,7 +153,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 type="text"
                 label="Data de Nascimento"
                 placeholder="DD/MM/AAAA"
-                variant="signup"
+                variant="signup-optional"
                 ref={birthdayRef}
                 validate={validation.testDate}
               />
@@ -179,7 +179,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
                 type="text"
                 label="Data de Emissão"
                 placeholder="DD/MM/AAAA"
-                variant="signup"
+                variant="signup-optional"
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />

@@ -13,36 +13,36 @@ const MultiInputVariant = ({ label, names, refs, validation, variant, placeholde
       return (
         <Container>
           <Input
-            variant="signup"
+            variant="signup-optional"
             label={label}
             name={names[0]}
             placeholder={placeholders ? placeholders.rua : names[0]}
             ref={refs.ruaRef}
-            // validate={validation.requiredTextField}
+            validate={validation.TextField}
           />
           <InputsContainer>
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[1]}
               placeholder={placeholders ? placeholders.bairro : names[1]}
               ref={refs.bairroRef}
-              // validate={validation.requiredTextField}
+              validate={validation.TextField}
             />
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[2]}
               placeholder={placeholders ? placeholders.complemento : names[2]}
               ref={refs.complementoRef}
-              // validate={validation.requiredTextField}
+              validate={validation.TextField}
             />
           </InputsContainer>
           <InputsContainer>
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[3]}
               placeholder={placeholders ? placeholders.numero : names[3]}
               ref={refs.numeroRef}
-              // validate={validation.testNumbers}
+              validate={validation.testNumbers}
             />
           </InputsContainer>
         </Container>
@@ -52,36 +52,36 @@ const MultiInputVariant = ({ label, names, refs, validation, variant, placeholde
       return (
         <Container>
           <Input
-            variant="signup"
+            variant="signup-optional"
             label={label}
             name={names[0]}
             placeholder={placeholders ? placeholders.municipio : names[0]}
             ref={refs.cidadeRef}
-            // validate={validation.requiredTextField}
+            validate={validation.TextField}
           />
           <InputsContainer>
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[1]}
               placeholder={placeholders ? placeholders.estado : names[1]}
               ref={refs.estadoRef}
-              // validate={validation.requiredTextField}
+              validate={validation.TextField}
             />
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[2]}
               placeholder={placeholders ? placeholders.naturalidade : names[2]}
               ref={refs.naturalidadeRef}
-              // validate={validation.requiredTextField}
+              validate={validation.TextField}
             />
           </InputsContainer>
           <InputsContainer>
             <Input
-              variant="signup"
+              variant="signup-optional"
               name={names[3]}
               placeholder={placeholders ? placeholders.nacionalidade : names[3]}
               ref={refs.nacionalidadeRef}
-              // validate={validation.requiredTextField}
+              validate={validation.TextField}
             />
           </InputsContainer>
         </Container>

@@ -134,15 +134,15 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validation={validation}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Número de Inscrição"
                   name="numInscricao"
                   placeholder="Digite o seu número de inscrição"
                   ref={numeroInscricaoRef}
-                  validate={validation.testRequiredNumbers}
+                  validate={validation.testNumbers}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Afiliação"
                   name="dataAfiliacao"
                   placeholder="DD/MM/AA"
@@ -152,23 +152,23 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
               </InputContainer>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Formação Superior"
                   name="formacaoSuperior"
                   placeholder="Digite o nome do seu curso"
                   ref={formacaoSuperiorRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Instituição"
                   name="instituicaoSuperior"
                   placeholder="Digite o nome da sua instituição de formação"
                   ref={instituicaoSuperiorRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Formação"
                   name="dataFormacao"
                   placeholder="DD/MM/AAAA"
@@ -176,15 +176,15 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.testDate}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Nº de Registro no Conselho"
                   name="numRegistroConselho"
                   placeholder="Digite o seu número de registro"
                   ref={numRegistroConselhoRef}
-                  validate={validation.testRequiredNumbers}
+                  validate={validation.testNumbers}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Registro no Conselho"
                   name="dataRegistroConselho"
                   placeholder="DD/MM/AAAA"
@@ -194,20 +194,20 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
               </InputContainer>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Orgão ou Empresa em que trabalha"
                   name="empresa"
                   placeholder="Digite o nome do Orgão ou Empresa"
                   ref={empresaRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Salário"
                   name="salario"
                   placeholder="Digite apenas o valor sem vírgulas ou pontos"
                   ref={salarioRef}
-                  validate={validation.testRequiredNumbers}
+                  validate={validation.testNumbers}
                 />
                 <ButtonContainer>
                   <Button variant="password">Finalizar Cadastro</Button>
@@ -239,7 +239,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validation={validation}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Número de Inscrição"
                   name="numInscricao"
                   placeholder={userData.numInscricao}
@@ -247,7 +247,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.testNumbers}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Afiliação"
                   name="dataAfiliacao"
                   placeholder={userData.dataAfiliacao}
@@ -257,7 +257,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
               </InputContainer>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Formação Superior"
                   name="formacaoSuperior"
                   placeholder={userData.formacaoSuperior}
@@ -265,7 +265,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Instituição"
                   name="instituicaoSuperior"
                   placeholder={userData.instituicaoSuperior}
@@ -273,7 +273,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Formação"
                   name="dataFormacao"
                   placeholder={userData.dataFormacao}
@@ -281,7 +281,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.testDate}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Nº de Registro no Conselho"
                   name="numRegistroConselho"
                   placeholder={userData.numRegistroConselho}
@@ -289,7 +289,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.testNumbers}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Registro no Conselho"
                   name="dataRegistroConselho"
                   placeholder={userData.dataRegistroConselho}
@@ -299,7 +299,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
               </InputContainer>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Orgão ou Empresa em que trabalha"
                   name="empresa"
                   placeholder={userData.empresa}
@@ -307,7 +307,7 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
                   validate={validation.TextField}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Salário"
                   name="salario"
                   placeholder={userData.salario}
