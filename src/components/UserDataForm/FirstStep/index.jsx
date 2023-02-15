@@ -149,34 +149,34 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                 validate={validation.requiredTextField}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Email"
                 name="email"
                 placeholder="email@domínio.com"
                 ref={emailRef}
-                validate={validation.testRequiredEmail}
+                validate={validation.testEmail}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Senha"
                 name="password"
                 placeholder="Digite sua senha (8 dígitos)"
                 type="password"
                 ref={passwordRef}
-                validate={validation.testRequiredPassword}
+                validate={validation.testPassword}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Telefone"
                 name="telefone"
                 placeholder="***********"
                 ref={phoneRef}
-                validate={validation.testRequiredPhone}
+                validate={validation.testPhone}
               />
             </InputContainer>
             <InputContainer>
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Data de Nascimento"
                 name="nascimento"
                 placeholder="DD/MM/AAAA"
@@ -192,15 +192,15 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                 validate={validation.testRequiredCpf}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="RG"
                 name="rg"
                 placeholder="Digite os números do seu RG"
                 ref={rgRef}
-                validate={validation.testRequiredNumbers}
+                validate={validation.testNumbers}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Data De Emissão"
                 name="data_de_emissão"
                 placeholder="DD/MM/AAAA"
@@ -208,12 +208,12 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                 validate={validation.testDate}
               />
               <Input
-                variant="signup"
+                variant="signup-optional"
                 label="Filiação"
                 name="filiação"
                 placeholder="Digite o(s) nome(s) completo(s)"
                 ref={filiacaoRef}
-                validate={validation.requiredTextField}
+                validate={validation.TextField}
               />
             </InputContainer>
             <InputContainer>
@@ -259,7 +259,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
             <InputForm onSubmit={handleSubmit}>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Nome"
                   name="nome"
                   placeholder={userData.name}
@@ -267,7 +267,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   ref={nameRef}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Email"
                   name="email"
                   placeholder={userData.email}
@@ -275,7 +275,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   validate={validation.testEmail}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   validate={validation.testPassword}
                   label="Senha"
                   name="password"
@@ -284,7 +284,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   ref={passwordRef}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   validate={validation.testPhone}
                   label="Telefone"
                   name="telefone"
@@ -294,7 +294,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
               </InputContainer>
               <InputContainer>
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data de Nascimento"
                   validate={validation.testDate}
                   name="nascimento"
@@ -302,7 +302,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   ref={birthdayRef}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="CPF"
                   name="cpf"
                   validate={validation.testCpf}
@@ -311,7 +311,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   disabled
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="RG"
                   name="rg"
                   validate={validation.testNumbers}
@@ -319,7 +319,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   ref={rgRef}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Data De Emissão"
                   name="data_de_emissão"
                   placeholder={userData.emissao}
@@ -327,7 +327,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
                   ref={dataEmissaoRef}
                 />
                 <Input
-                  variant="signup"
+                  variant="signup-optional"
                   label="Filiação"
                   name="filiação"
                   placeholder={userData.filiacao}

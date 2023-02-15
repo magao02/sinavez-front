@@ -138,10 +138,16 @@ export async function testRequiredNumbers(numberValue) {
 }
 
 export async function testNumbers(numberValue) {
-  return yup
-    .string()
-    .matches(/(?:\.|,|[0-9])*/, validationMessages.onlyNumbers)
-    .validate(numberValue);
+  if (numberValue == "") {
+    return yup
+      .string()
+      .validate(numberValue);
+  } else {
+    return yup
+      .string()
+      .matches(/(?:\.|,|[0-9])*/, validationMessages.onlyNumbers)
+      .validate(numberValue);
+  }
 }
 
 export async function testNumberImposto(numberValue) {

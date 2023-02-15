@@ -19,10 +19,15 @@ import Input from "../../components/commom/Input";
 import Button from "../../components/commom/Button";
 import { useRouter } from "next/router";
 
+import * as service from "../../services/accounts";
+
 const PasswordRecovery = () => {
   const formRef = useRef()
+  const emailRef = useRef()
+  
   const [globalMessage, setGlobalMessage] = useState();
   const [sended, setSended] = useState(false);
+  const [token, setToken] = useState();
 
   const router = useRouter();
 
@@ -34,8 +39,10 @@ const PasswordRecovery = () => {
     router.push("/login");
   }
 
-  const handleSendEmail = useCallback((e) => {
+  const handleSendEmail = useCallback(async (e) => {
     e.preventDefault();
+
+    await setPasswordToken();
 
     emailjs.sendForm('service_8enbzpk', 'template_n6fenfo', formRef.current, '1sPzNFpvId-LvMnpy')
       .then((result) => {
@@ -48,6 +55,16 @@ const PasswordRecovery = () => {
         }
       })
   }, []);
+
+  const getToken = useCallback(async () => {
+    const email = emailRef.current.value;
+    const responseData = await service.passwordToken(email);
+    return responseData.data.token;
+  }, []);
+
+  const setPasswordToken = async () => {
+    setToken(await getToken());
+  }
 
   return (
     <>
@@ -66,13 +83,14 @@ const PasswordRecovery = () => {
               </Greetings>
               <form ref={formRef}>
                 <Input
+                  ref={emailRef}
                   variant="signup"
                   label="Email"
                   name="email"
                   placeholder="Digite seu Email"
                   validate={validation.testRequiredEmail}
                 />
-                <input name="token" style={{ "display": "none" }} value="abcd"/>
+                <input name="token" style={{ "display": "none" }} value={token} />
                 <Span>
                   {globalMessage && <span>{globalMessage}</span>}
                 </Span>

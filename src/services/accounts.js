@@ -49,6 +49,20 @@ export async function logout(token) {
     return requisition;
 }
 
+export async function passwordToken(email) {
+    const requisition = await api.get(
+        `/passwordToken/${email}`);
+    return requisition;
+}
+
+export async function setNewPassword(email, token, password) {
+    const requisition = await api.put(
+        `/setNewPassword/${email}/${token}`,
+        { password: password }
+    );
+    return requisition;
+}
+
 //Imposto Routes:
 
 export async function setImpostoAssociado(urlUser, imposto, ano, token) {
