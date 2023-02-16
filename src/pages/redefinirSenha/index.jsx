@@ -51,8 +51,12 @@ const RedefinirSenha = () => {
       const responseData = await service.setNewPassword(email, token, password);
       setPasswordChanged(true);
       return responseData.data;
-    } catch {
-      setInvalidToken(true);
+    } catch (error) {
+      if (error == "Error: Request failed with status code 401") {
+        setInvalidToken(true);
+      } else if ("Error: Request failed with status code 400") {
+        setGlobalMessage('Sua senha deve conter no mínimo 8 caracteres');
+      }
     }
   }, [])
 
