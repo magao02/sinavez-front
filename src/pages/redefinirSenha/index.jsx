@@ -55,7 +55,7 @@ const RedefinirSenha = () => {
       if (error == "Error: Request failed with status code 401") {
         setInvalidToken(true);
       } else if ("Error: Request failed with status code 400") {
-        setGlobalMessage('Sua senha deve conter no mínimo 8 caracteres');
+        setGlobalMessage('Senha inserida com formato incorreto. Insira uma senha apenas com números e sem caracteres especiais com um tamanho de pelo menos 8 dígitos.');
       }
     }
   }, [])
