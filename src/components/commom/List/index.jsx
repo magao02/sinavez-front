@@ -51,7 +51,9 @@ function ListVariant({ variant, data, remove, edit, promote, yearsController, de
         edit(data);
       };
       const promoteUser = () => {
-        promote(data.urlUser);
+        localStorage.setItem("urlUser", data.urlUser)
+        localStorage.setItem("nameAssociado", data.name)
+        promote();
       };
 
       const editDependente = () => {
@@ -60,6 +62,9 @@ function ListVariant({ variant, data, remove, edit, promote, yearsController, de
 
       return (
         <Container variant="associados">
+          <Button variant="image" onClick={promoteUser}>
+            <Image src={AdminIcon} alt="botão para promover associado" />
+          </Button>
           <p>{data.name}</p>
           <p>{data.cpf}</p>
           <Button variant="associado" onClick={editDependente}>
@@ -71,9 +76,6 @@ function ListVariant({ variant, data, remove, edit, promote, yearsController, de
           <Button variant="image" onClick={editUser}>
             <Image src={EditIcon} alt="botão para editar associado" />
           </Button>
-{/*           <Button variant="image" onClick={promoteUser}>
-            <Image src={AdminIcon} alt="botão para promover associado" />
-          </Button> */}
           <Button variant="image" onClick={downloadYears}>
             <Image src={pdfIcon} alt="botão para baixar pdf" />
           </Button>

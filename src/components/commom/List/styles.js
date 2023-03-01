@@ -12,7 +12,7 @@ function getStyleByVariant(variant) {
         height: 7%;
 
         display: grid;
-        grid-template-columns: 40% 30% 9% 9% 4% 4% 4%;
+        grid-template-columns: 4% 36% 30% 9% 9% 4% 4% 4%;
         justify-content: center;
         align-items: center;
 
