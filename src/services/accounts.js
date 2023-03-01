@@ -157,10 +157,9 @@ export async function setUserData(urlUser, newData, token) {
 
 export async function setAdmin(urlUser, token) {
     const requisition = await api.put(
-        `/user/setNewAdmin/${urlUser}`, {
+        `/user/setNewAdmin/${urlUser}`, {}, {
         headers: { authorization: token },
     });
-    console.log(requisition);
     return requisition;
 }
 

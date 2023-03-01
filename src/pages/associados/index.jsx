@@ -15,6 +15,7 @@ import PdfPage from "../../components/PdfPage";
 import DependentsContainer from "../../components/DependentsContainer";
 import ImpostosPage from "../../components/ImpostosPage";
 import UserDependentesPage from "../../components/UserDependentesPage";
+import ConfirmationScreen from "../../components/commom/ConfirmationScreen";
 
 import {
   Container,
@@ -33,6 +34,8 @@ const Associados = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [urlUserEdit, setUrlUserEdit] = useState();
   const [dependentesToggle, setDependentesToggle] = useState(false);
+  const [admToggle, setAdmToggle] = useState(false);
+  const [name, setName] = useState();
 
   const router = useRouter();
 
@@ -111,19 +114,10 @@ const Associados = () => {
     [authContext.token]
   );
 
-  const userPromote = useCallback(
-    async (userUrl) => {
-      try {
-        const userPromoteResponse = await service.setAdmin(
-          userUrl,
-          authContext.token
-        );
-        alert(userPromoteResponse);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [authContext.token]
+  const showUserPromote = useCallback(() => {
+    setAdmToggle(!admToggle)
+    setName(localStorage.getItem("nameAssociado"))
+  }
   );
 
   const editUserData = useCallback(async (data) => {
@@ -167,13 +161,18 @@ const Associados = () => {
   return (
     <Container>
       <Navigation variant={checkNav()} />
-      {!associados && !form.toggle && !years.toggle && (
+      {admToggle && (
+        <ConfirmationScreen buttonText="Sim" variant="setAdm" showUserPromote={showUserPromote}>
+          Você deseja tornar {name} um administrador?
+        </ConfirmationScreen>
+      ) }
+      {!associados && !form.toggle && !years.toggle && !admToggle && (
         <LoadingMessage>Carregando...</LoadingMessage>
       )}
       {dependentesToggle && associadoData && (
-        <UserDependentesPage associadoData={associadoData} setDependentesToggle={setDependentesToggle}/>
+        <UserDependentesPage associadoData={associadoData} setDependentesToggle={setDependentesToggle} />
       )}
-      {associados && !form.toggle && !years.toggle && !dependentesToggle && (
+      {associados && !form.toggle && !years.toggle && !dependentesToggle && !admToggle && (
         <ContentContainer>
           <ControllerContainer>
             <SearchBar
@@ -189,17 +188,17 @@ const Associados = () => {
             remove={userRemove}
             edit={editUserData}
             dependente={editDependente}
-            promote={userPromote}
+            promote={showUserPromote}
           />
         </ContentContainer>
       )}
-      {years.toggle && !form.toggle && associados && (
+      {years.toggle && !form.toggle && associados && !admToggle && (
         <ImpostosPage dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
       )}
-      {form.toggle && form.type.pdf && (
+      {form.toggle && form.type.pdf && !admToggle && (
         <PdfPage setForm={formController} outsideForm={formController} ano={year} />
       )}
-      {form.toggle && form.type.dependente && (
+      {form.toggle && form.type.dependente && !admToggle && (
         <ContentContainer>
           <DependentsContainer
             variant="admin"
