@@ -107,7 +107,7 @@ const PdfForm = ({ handleSubmitForm, data, actualPerson, ano }) => {
       outRef,
       novRef,
       dezRef,
-    ].map((inputRef) => Number(inputRef.current?.value.replace(",", ".")));
+    ].map((inputRef) => inputRef.current?.value.replace(",", "."));
     
     cleanInputs();
 
