@@ -167,7 +167,7 @@ const impostoPDF = (data) => {
         alignment: "center",
       },
       {
-        text: `Declaramos, para fins de prova junto a Delegacia da Receita Federal da Paraíba, que o associado ${data.name} portador do CPF: ${data.cpf} pagou a UNIMED João Pessoa COM REGISTRO DA OPERADORA NA ANS SOB NÚMERO 32.104-4, situada à Rua marechal Deodoro, 420- Torre-João Pessoa PB, CNPJ 08.680.693/0001-77 através do CONTRATO DE PRESTAÇÃO DE SERVIÇOS MÉDICOS E HOSPITALARES através do PLANO UNIVIDA BÁSICO PLUS I COLETIVO POR ADESÃO COM REGISTRO DO PLANO NA ANS 467.142/12-2  mantido com este sindicato pela assistência médico-hospitalar que lhe foi prestada e à sua família no exercício de ${data.impostoDeRenda.ano} as importâncias abaixo descritas:`,
+        text: `Declaramos, para fins de prova junto a Delegacia da Receita Federal da Paraíba, que o associado ${data.name} portador do CPF: ${data.cpf} pagou a UNIMED João Pessoa COM REGISTRO DA OPERADORA NA ANS SOB NÚMERO 32.104-4, situada à Rua marechal Deodoro, 420- Torre-João Pessoa PB, CNPJ 08.680.639/0001-77 através do CONTRATO DE PRESTAÇÃO DE SERVIÇOS MÉDICOS E HOSPITALARES através do PLANO UNIVIDA BÁSICO PLUS I COLETIVO POR ADESÃO COM REGISTRO DO PLANO NA ANS 467.142/12-2  mantido com este sindicato pela assistência médico-hospitalar que lhe foi prestada e à sua família no exercício de ${data.impostoDeRenda.ano} as importâncias abaixo descritas:`,
         fontSize: 10,
         bold: false,
         margin: [50, 5, 50, 8],
