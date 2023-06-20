@@ -2,11 +2,11 @@ import { ThemeConsumer } from "styled-components";
 
 const theme = {
     colors: {
-        white: '#F7F8FF',
+        white: '#FAFBFF',
         blue: {
-            'light': '#0CB9DF',
+            'light': '#EDF6FF',
             'default': '#0096B7',
-            'heavy': '#006D85' 
+            'heavy': '#0760BA' 
         },
         dark: {
             'light': '#404040',
@@ -14,7 +14,7 @@ const theme = {
             'heavy': '#0E0C0C'  
         },
         gray: {
-            'default': '#B8B8B8',
+            'default': '#747880',
             'heavy': '#A3A3A3'
         },
         alert: '#0C014D',

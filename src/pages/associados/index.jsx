@@ -160,7 +160,7 @@ const Associados = () => {
 
   return (
     <Container>
-      <Navigation variant={checkNav()} />
+      <Navigation selectedPage={"associados"} variant={checkNav()} />
       {admToggle && (
         <ConfirmationScreen buttonText="Sim" variant="setAdm" showUserPromote={showUserPromote}>
           Você deseja tornar {name} um administrador?
