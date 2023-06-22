@@ -11,6 +11,7 @@ import * as services from "../../../services/accounts";
 
 import Button from "../Button";
 import LinkBox from "../LinkBox"
+import DropDownMenu from "../DropDownMenu";
 
 import SinavezLogo from "../../../assets/logo_picture.svg";
 import SinavezName from "../../../assets/sinavez_name.svg";
@@ -26,34 +27,10 @@ function NavVariant({ variant, selectedPage }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [pdfData, setPdfData] = useState({});
   const [admin, setAdmin] = useState();
+  const [name, setName] = useState("");
+  const [openedMenu, setOpenedMenu] = useState(false);
 
   const authContext = useAuth();
-
-  const router = useRouter();
-
-  const logout = () => {
-    services.logout(authContext.token);
-    authContext.cleanInfos();
-    router.push("/login");
-  };
-
-  const getImposto = useCallback(async () => {
-    try {
-      const responseImposto = await services.getImpostos(
-        authContext.urlUser,
-        authContext.token,
-        (new Date()).getFullYear()
-      );
-      return responseImposto.data;
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  const handleImposto = useCallback(async () => {
-    const responseData = await getImposto();
-    setPdfData(responseData);
-  });
 
   const handleSelectPage = useCallback(async () => {
     switch (selectedPage) {
@@ -70,9 +47,32 @@ function NavVariant({ variant, selectedPage }) {
     setIsLoaded(true);
   })
 
+  const getUserData = useCallback(async () => {
+    try {
+      const responseData = await services.getUserData(
+        authContext.urlUser,
+        authContext.token
+      );
+      return responseData.data;
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
+    }
+  }, [authContext.token, authContext.urlUser]);
+
+  const handleUserData = useCallback(async () => {
+    const responseData = await getUserData();
+    setName(responseData.name);
+    setIsLoaded(true);
+  }, [getUserData]);
+
+  const handleChangeMenu = useCallback(async () => {
+    setOpenedMenu((prev) => !prev);
+  })
+
   useEffect(() => {
-    handleImposto();
     handleSelectPage();
+    handleUserData();
     setAdmin(authContext.admin)
   }, []);
 
@@ -92,9 +92,7 @@ function NavVariant({ variant, selectedPage }) {
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
-                <Button variant="nav" onClick={logout}>
-                  Sair
-                </Button>
+                <DropDownMenu name={name} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
               </UserFeaturesRight>
             </>
           )}
@@ -112,9 +110,6 @@ function NavVariant({ variant, selectedPage }) {
             <Link legacyBehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
           </UserFeaturesLeft>
           <UserFeaturesRight>
-            <Button variant="nav" onClick={logout}>
-              Sair
-            </Button>
           </UserFeaturesRight>
         </NavBar>
       );

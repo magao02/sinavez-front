@@ -3,110 +3,79 @@ import theme from './theme';
 
 export const Container = styled.div`
     width: 100vw;
+    height: 100vh;
 
-    display: grid;
-    grid-template-columns: 41% 59%;
+    background: linear-gradient(90deg, #032E58 0%, #0760BA 50.52%, #5D9BDA 100%);
+
+    display: flex;
+`
+
+export const Details = styled.div`
+    position: relative;
+
+    display: flex;
+
+    justify-content: flex-start;
+    align-itens: center;
+
+    flex-wrap: nowrap;
+`
+
+export const RightContent = styled.div`
+    display: flex;
+
     align-items: center;
+    flex-direction: column;
     justify-content: center;
+    gap: 5vh;
 
-    @media (max-width: 2560px) {
-        grid-template-columns: 40% 60%;
-    }
+    margin-right: 10%;
+    margin-bottom: 4%;
+`
 
-    @media (max-width: 1920px) {
-        grid-template-columns: 45% 55%;
-    };
-
-    @media (max-width: 1024px) {
-        grid-template-columns: 55% 45%;
-    };
-
-    @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-        height: 100vh;
-    };
-`;
-
-export const LoginSection = styled.section`
-    height: 100%;
+export const LoginBox = styled.div`
+    width: 35vw;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 10%;
+    align-items: flex-start;
+    gap: 3vh;
 
-    padding: 9.6rem 13.4rem 13.3rem 13.4rem;
+    border-radius: 16px;
+    border: 1px solid var(--azul-2, ${theme.colors.blue.border});
+    background: var(--azul-3, ${theme.colors.blue.light});
+`
 
-    background-color: ${theme.colors.white};
-
-    @media (max-width: 1680px) {
-        height: 100vh;
-
-    @media (max-width: 1024px) {
-        padding: 5.0rem 10.4rem;
-`;
-
-export const Center = styled.section`
+export const MenuBox = styled.div`
     display: flex;
+
     justify-content: center;
-    align-items: center;
-    gap: 0.3rem;
-
-    span {
-        font-size: 1.4rem;
-    }
-
-    a {
-        font-weight: bold;
-        color: ${theme.colors.red}
-    }
-`;
-
-export const DecorativeSection = styled.section`
-    width: 100%;
-    height: 100%;
-
-    background: radial-gradient( closest-side, 
-    ${theme.colors.blue['light']} 100%, 
-    ${theme.colors.blue['light']} 1%,
-    ${theme.colors.blue['light']} 2%  
-    );
-
-    image {
-        display: none;
-    }
-
-    @media (max-width: 2560px) {
-        height: 100vh;
-
-    @media (max-width: 776px) {
-        display: none;
-    }
-`;
-
-export const Title = styled.h1`
-    font-size: 4.4rem;
-`;
-
-export const SubTitle = styled.p`
-    font-size: 1.6rem;
-`;
-
-export const GreetingsContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    
+    align-items: center;
 
-    padding-bottom: 5.6rem;
+    gap: 1.25vh;
 
-    @media (max-width: 1920px) {
-        gap: 0.8rem;
-    };
-`;
+    color: var(--background, ${theme.colors.white});
+    text-align: center;
 
-export const Link = styled.a`
-    color: ${theme.colors.dark.heavy};
-    align-self: flex-end;
-`;
+    font-size: 22px;
+    font-weight: 600;
+`
+
+export const Logo = styled.div`
+    display: flex;
+
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2vh;
+`
+
+export const Title = styled.p`
+    color: var(--text-accent, ${theme.colors.blue.heavy});
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+`

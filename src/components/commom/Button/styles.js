@@ -10,19 +10,22 @@ function getStyleByVariant(variant) {
   switch (variant) {
     case "default": {
       return css`
-        width: 100%;
-        border: none;
-        border-radius: 2.4rem;
-
         display: flex;
-        align-items: center;
+        padding: 12px 22px;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
+        align-self: stretch;
 
-        padding: 1.2rem;
+        border-radius: 4px;
+        border: none;
+        background: var(--azul-0, ${theme.colors.blue.heavy});
 
-        font-size: 1.4rem;
-        color: ${theme.colors.white};
-        background-color: ${theme.colors.blue.default};
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        
+        color: var(--primary-contrast, ${theme.colors.white});
+        font-size: 18px;
+        font-weight: 500;
 
         &:hover {
           filter: brightness(80%);

@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import theme from "../../../styles/theme";
 
 export const Container = styled.div`
@@ -6,18 +6,28 @@ export const Container = styled.div`
 `;
 
 function getStyleByVariant(variant) {
-    switch(variant) {
-        case 'default': { 
+    switch (variant) {
+        case 'default': {
             return css`   
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 width: 100%;
 
+                gap: 1vh;
+                margin: 1vh;
+
                 label {
-                    color: ${theme.colors.dark.heavy};
-                    font-weight: 400;
-                    padding-bottom: 1.6rem;
+                    color: ${theme.colors.blue.heavy};
+                    text-align: center;
+                    font-size: 18px;
+                    font-family: Roboto;
+                    line-height: 22px;
+                }
+
+                label::after {
+                    content: '*';
+                    color: ${theme.colors.red};
                 }
 
                 div {
@@ -33,10 +43,61 @@ function getStyleByVariant(variant) {
                         content: '.';
                     }
                 }
-                `;
-            }
 
-        case 'signup': {  
+                input {
+                    padding: 0;
+                    border-radius: 0;
+                    padding-bottom: 0.5vh;
+                    border: none;
+                    background-color: ${theme.colors.blue.light};
+
+                    color: var(--text-secundary, ${theme.colors.gray.default});
+                    font-size: 18px;
+                    font-family: Roboto;
+                    line-height: 22px;
+                    
+                    border-bottom: 1px solid;
+                }
+                `;
+        }
+
+        case 'default-optional': {
+            return css`   
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 100%;
+    
+                    label {
+                        color: ${theme.colors.blue.heavy};
+                        text-align: center;
+                        font-size: 18px;
+                        font-family: Roboto;
+                        line-height: 22px;
+                    }
+    
+                    label::after {
+                        content: '*';
+                        color: ${theme.colors.red};
+                    }
+    
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+    
+                        span {
+                            font-weight: bold;
+                            color: ${theme.colors.red}
+                        }
+                        span::after {
+                            content: '.';
+                        }
+                    }
+                    `;
+        }
+
+        case 'signup': {
             return css`
                 display: flex;
                 flex-direction: column;
@@ -59,7 +120,7 @@ function getStyleByVariant(variant) {
             `;
         }
 
-        case 'signup-optional': {  
+        case 'signup-optional': {
             return css`
                 display: flex;
                 flex-direction: column;

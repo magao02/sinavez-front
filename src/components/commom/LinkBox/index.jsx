@@ -4,20 +4,24 @@ import { Text, TextSelected, LinkBoxStyle, LinkBoxStyleSelected, LinkBoxDetailSe
 const LinkBox = ({ selected, linkText, text }) => {
     if (selected) {
         return (
-            <LinkBoxStyleSelected>
-                <TextSelected>
-                    <Link href={linkText}>{text}</Link>
-                </TextSelected>
-                <LinkBoxDetailSelected />
-            </LinkBoxStyleSelected>
+            <Link href={linkText}>
+                <LinkBoxStyleSelected>
+                    <TextSelected>
+                        {text}
+                    </TextSelected>
+                    <LinkBoxDetailSelected />
+                </LinkBoxStyleSelected>
+            </Link>
         )
     } else {
         return (
-            <LinkBoxStyle>
-                <Text>
-                    <Link href={linkText}>{text}</Link>
-                </Text>
-            </LinkBoxStyle>
+            <Link href={linkText}>
+                <LinkBoxStyle>
+                    <Text>
+                        {text}
+                    </Text>
+                </LinkBoxStyle>
+            </Link>
         )
     }
 }

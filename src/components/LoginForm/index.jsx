@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "react";
 
-import { InputContainer, Link, ButtonContainer } from "./styles";
+import { InputContainer, Link, ButtonContainer, Description, InputBox, LinkBox } from "./styles";
 import * as validation from "../../utils/validation";
 
 import Button from "../commom/Button";
@@ -44,28 +44,41 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
 
   return (
     <InputContainer onSubmit={handleSubmit}>
-      <Input
-        variant="default"
-        label="CPF"
-        name="cpf"
-        placeholder="Números do cpf"
-        ref={cpfRef}
-        validate={validateCpf}
-      />
-      <Input
-        variant="default"
-        label="Senha"
-        name="password"
-        type="password"
-        placeholder="********"
-        ref={passwordRef}
-        validate={validatePassword}
-      />
+      <InputBox>
+        <Input
+          variant="default"
+          label="Usuário"
+          name="cpf"
+          placeholder="000.000.000-0"
+          ref={cpfRef}
+          validate={validateCpf}
+        />
+        <Description>
+          Digite o seu CPF no campo acima.
+        </Description>
+      </InputBox>
+      <InputBox>
+        <Input
+          variant="default"
+          label="Senha"
+          name="password"
+          type="password"
+          placeholder="Insira sua senha"
+          ref={passwordRef}
+          validate={validatePassword}
+        />
+        <Description>
+          Digite o seu CPF no campo acima.
+        </Description>
+      </InputBox>
 
-      <Link href="/senha">esqueceu sua senha?</Link>
+      <LinkBox>
+        Novo por aqui?
+        <Link href="/cadastro">Criar conta</Link>
+      </LinkBox>
       <ButtonContainer>
         {globalMessage && <a>{globalMessage}</a>}
-        <Button variant="default">Entrar</Button>
+        <Button variant="default">ENTRAR</Button>
       </ButtonContainer>
     </InputContainer>
   );

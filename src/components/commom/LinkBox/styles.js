@@ -2,15 +2,14 @@ import styled from "styled-components";
 import theme from "../../../styles/theme";
 
 export const Text = styled.p`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-width: 150px;
-height: 72px;
+    width: 150px;
+    height: 72px;
 
-    a {
         text-decoration: none;
 
         font-family: 'Roboto';
@@ -22,17 +21,20 @@ height: 72px;
     
         text-decoration: none;
         color: ${theme.colors.gray.default};
-    }
 `
 
 export const LinkBoxStyle = styled.p`
     width: 150px;
     height: 72px;
+
+    cursor: pointer;
 `
 
 export const LinkBoxStyleSelected = styled.p`
     width: 150px;
     height: 72px;
+
+    cursor: pointer;
 
     border-radius: 8px 8px 0px 0px;
     background-color: ${theme.colors.blue.light};
@@ -47,7 +49,6 @@ export const TextSelected = styled.p`
     justify-content: center;
     align-items: center;
 
-    a {
         text-decoration: none;
 
         font-family: 'Roboto';
@@ -59,7 +60,6 @@ export const TextSelected = styled.p`
         text-align: center;
     
         color: ${theme.colors.blue.heavy};
-    }
 `
 
 export const LinkBoxDetailSelected = styled.div`

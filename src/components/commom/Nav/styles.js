@@ -36,7 +36,5 @@ export const UserFeaturesRight = styled.div`
     justify-content: end;
     align-items: center;
 
-    padding-right: 3.7rem;
-
-    gap: 5.6rem;
+    margin-right: 81px;
 `;
