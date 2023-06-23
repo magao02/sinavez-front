@@ -37,7 +37,7 @@ const Home = () => {
       router.push("/login");
       return;
     }
-  });
+  }, []);
 
   return (
     <Container>
@@ -51,10 +51,9 @@ const Home = () => {
             </Title>
             <Text>
               Agora a Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!
-              <br />
               Com o Onboarding você pode descobrir como nagegar com facilidade e tranquilidade e sem se estressar com o caminho!
             </Text>
-            <Link href={"/associados"}>
+            <Link href={"/onboarding"}>
               <Button>
                 <Image src={repeatTutorial} />
                 REFAZER TUTORIAL
