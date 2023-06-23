@@ -33,6 +33,60 @@ function getStyleByVariant(variant) {
       `;
     }
 
+    case "default-adjustable-15%": {
+      return css`
+        display: flex;
+        padding: 12px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+
+        width: 15%;
+
+        border-radius: 4px;
+        border: none;
+        background: var(--azul-0, ${theme.colors.blue.heavy});
+
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        
+        color: var(--primary-contrast, ${theme.colors.white});
+        font-size: 18px;
+        font-weight: 500;
+
+        &:hover {
+          filter: brightness(80%);
+        }
+      `;
+    }
+
+    case "default-adjustable-30%": {
+      return css`
+        display: flex;
+        padding: 8px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+
+        width: 30%;
+
+        border-radius: 4px;
+        border: none;
+        background: var(--azul-0, ${theme.colors.blue.heavy});
+
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        
+        color: var(--primary-contrast, ${theme.colors.white});
+        font-size: 18px;
+        font-weight: 500;
+
+        &:hover {
+          filter: brightness(80%);
+        }
+      `;
+    }
+
     case "signup": {
       return css`
         width: 100%;
