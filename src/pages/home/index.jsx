@@ -51,7 +51,7 @@ const Home = () => {
             </Title>
             <Text>
               Agora a Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!
-              Com o Onboarding você pode descobrir como nagegar com facilidade e tranquilidade e sem se estressar com o caminho!
+              Com o Onboarding você pode descobrir como navegar com facilidade e tranquilidade e sem se estressar com o caminho!
             </Text>
             <Link href={"/onboarding"}>
               <Button>
