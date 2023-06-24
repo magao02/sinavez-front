@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import OnBoardingScreen from "../../components/OnBoardingScreen";
 import Navigation from "../../components/commom/Nav";
 import Step from "../../components/commom/Step";
+import ConfirmationScreen from "../../components/commom/ConfirmationScreen";
 
 import { Container, TextBox, Text, Title, StepsBox, LinkBox } from "../../styles/onboardingStyles";
 import Button from "../../components/commom/Button";
@@ -24,6 +25,7 @@ const OnBoardingPage = () => {
     const [started, setStarted] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [name, setName] = useState();
+    let [canceling, setCanceling] = useState(false);
     let [currentStep, setCurrentStep] = useState(1);
 
     const router = useRouter();
@@ -72,8 +74,17 @@ const OnBoardingPage = () => {
         setStarted(true);
     });
 
+    const confirmCancel = useCallback(() => {
+        setCanceling(true);
+    });
+
     return (
         <>
+            {canceling && (
+                <ConfirmationScreen variant={"cancelOnBoarding"} buttonText={"PULAR TUTORIAL"} continue={() => setCanceling(false)}>
+                    Tem certeza que deseja pular o tutorial referente a nova plataforma da SINAVEZ?
+                </ConfirmationScreen>
+            )}
             {isLoaded && !started && (
                 <OnBoardingScreen name={name} onClicked={startOnBoarding} />
             )}
@@ -99,7 +110,7 @@ const OnBoardingPage = () => {
                                 <Button onClick={nextStep} variant={"default-adjustable-30%"}>
                                     CONTINUAR
                                 </Button>
-                                <LinkBox onClick={() => router.push("/home")}>
+                                <LinkBox onClick={confirmCancel}>
                                     PULAR TUTORIAL
                                     <Image src={NextIcon} />
                                 </LinkBox>
@@ -127,7 +138,7 @@ const OnBoardingPage = () => {
                                 <Button onClick={nextStep} variant={"default-adjustable-30%"}>
                                     CONTINUAR
                                 </Button>
-                                <LinkBox onClick={() => router.push("/home")}>
+                                <LinkBox onClick={confirmCancel}>
                                     PULAR TUTORIAL
                                     <Image src={NextIcon} />
                                 </LinkBox>
@@ -143,7 +154,7 @@ const OnBoardingPage = () => {
                                 <Text>
                                     Na sessão de associados você pode adicionar um novo, editar associados e excluí-los. Para ver mais informações sobre um associado basta clicar na linha da tabela em que ele se encontra.
                                 </Text>
-                                <Button variant={"default-adjustable-30%"} onClick={() => router.push("/home")}>
+                                <Button variant={"default-adjustable-30%"} onClick={() => router.push("./home")}>
                                     FINALIZAR TUTORIAL
                                 </Button>
                             </TextBox>

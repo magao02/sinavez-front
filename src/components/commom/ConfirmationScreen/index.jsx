@@ -1,12 +1,16 @@
-import { Container, TextField, MainContent } from "./styles";
+import { Container, TextField, MainContent, ButtonField, CancelButton } from "./styles";
 import Button from "../Button";
+import DarkBackground from "../DarkBackground";
 import { useCallback } from "react";
 
 import * as service from "../../../services/accounts";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useAdmin } from "../../../contexts/AdminContext";
+import { useRouter } from "next/router";
 
 const ConfirmationScreen = (props) => {
+  const router = useRouter();
+
   switch (props.variant) {
     case "setAdm":
       const authContext = useAuth();
@@ -40,6 +44,26 @@ const ConfirmationScreen = (props) => {
             </Button>
           </MainContent>
         </Container>
+      )
+
+    case "cancelOnBoarding":
+      return (
+        <>
+          <DarkBackground />
+          <Container>
+            <TextField>
+              {props.children}
+            </TextField>
+            <ButtonField>
+              <CancelButton onClick={props.continue}>
+                Cancelar
+              </CancelButton>
+              <Button variant={"default"} onClick={() => router.push("./home")}>
+                {props.buttonText}
+              </Button>
+            </ButtonField>
+          </Container>
+        </>
       )
   }
 }
