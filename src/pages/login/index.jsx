@@ -19,7 +19,8 @@ import {
   RightContent,
   MenuBox,
   Logo,
-  Title
+  Title,
+  PatternBox
 } from "../../styles/loginStyles";
 
 import LoginForm from "../../components/LoginForm";
@@ -50,9 +51,9 @@ const LoginPage = () => {
       <Details>
         <Image src={Ilustration} />
       </Details>
-      <Details>
+      <PatternBox>
         <Image src={Pattern} />
-      </Details>
+      </PatternBox>
       <RightContent>
         <MenuBox>
           <Logo>

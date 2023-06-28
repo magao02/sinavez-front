@@ -6,8 +6,10 @@ export const Container = styled.div`
     height: 100vh;
 
     background: linear-gradient(90deg, #032E58 0%, #0760BA 50.52%, #5D9BDA 100%);
+    gap: 20vw;
 
     display: flex;
+    position: fixed;
 `
 
 export const Details = styled.div`
@@ -18,6 +20,7 @@ export const Details = styled.div`
     justify-content: flex-start;
     align-itens: center;
 
+    z-index: 2;
     flex-wrap: nowrap;
 `
 
@@ -31,6 +34,11 @@ export const RightContent = styled.div`
 
     margin-right: 10%;
     margin-bottom: 4%;
+`
+
+export const PatternBox = styled.div`
+    position: absolute;
+    z-index: 1;
 `
 
 export const LoginBox = styled.div`
