@@ -6,7 +6,7 @@ export const NavBar = styled.nav`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
+    height: 8.3vh;
     position: absolute;
 
     box-shadow: 0px 4px 4px rgba(7, 96, 186, 0.44);
@@ -14,6 +14,9 @@ export const NavBar = styled.nav`
 `;
 
 export const LogoSinavez = styled.div`
+    width: 8.18vw;
+    height: 7.5vh;
+
     margin-left: 113px;
     display: flex;
     gap: 2px;
