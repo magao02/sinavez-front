@@ -49,7 +49,7 @@ function getStyleByVariant(variant) {
                     border-radius: 0;
                     padding-bottom: 0.5vh;
                     border: none;
-                    background-color: ${theme.colors.blue.light};
+                    background: none;
 
                     color: var(--text-secundary, ${theme.colors.gray.default});
                     font-size: 18px;
@@ -94,7 +94,7 @@ function getStyleByVariant(variant) {
                             content: '.';
                         }
                     }
-                    `;
+            `;
         }
 
         case 'signup': {
