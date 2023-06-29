@@ -9,8 +9,8 @@ import * as service from "../../services/accounts";
 
 import Pattern from "../../assets/login_pattern.svg";
 import Ilustration from "../../assets/login_ilustration.svg";
-import SinavezLogo from "../../assets/logo_picture.svg";
-import SinavezText from "../../assets/sinavez_name.svg";
+import SinavezLogo from "../../assets/logo_sinavez_blue.svg";
+import SinavezText from "../../assets/text_sinavez_blue.svg";
 
 import {
   WhiteContainer,
