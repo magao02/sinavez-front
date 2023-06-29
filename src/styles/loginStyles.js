@@ -12,6 +12,15 @@ export const Container = styled.div`
     position: fixed;
 `
 
+export const WhiteContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+`
+
 export const Details = styled.div`
     position: relative;
 
@@ -39,6 +48,8 @@ export const RightContent = styled.div`
 export const PatternBox = styled.div`
     position: absolute;
     z-index: 1;
+
+    opacity: ${props => props.lighter ? "30%" : "unset"};
 `
 
 export const LoginBox = styled.div`
@@ -64,7 +75,7 @@ export const MenuBox = styled.div`
 
     gap: 1.25vh;
 
-    color: var(--background, ${theme.colors.white});
+    color: ${ props => props.blue ? `var(--text-accent, ${theme.colors.blue.heavy})` : `var(--background, ${theme.colors.white})`};
     text-align: center;
 
     font-size: 22px;
