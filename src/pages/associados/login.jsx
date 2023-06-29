@@ -23,7 +23,7 @@ import {
   PatternBox
 } from "../../styles/loginStyles";
 
-import LoginForm from "../../components/LoginForm";
+import LoginAssociadoForm from "../../components/LoginAssociadoForm";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -66,7 +66,7 @@ const LoginPage = () => {
           <Title>
             Login
           </Title>
-          <LoginForm onValidSubmit={handleValidFormSubmit}
+          <LoginAssociadoForm onValidSubmit={handleValidFormSubmit}
             globalMessage={globalMessage} />
         </LoginBox>
       </RightContent>
