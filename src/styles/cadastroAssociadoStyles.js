@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import theme from './theme';
 
 export const Container = styled.div`
@@ -39,6 +39,17 @@ export const PatternBox = styled.div`
     opacity: 30%;
 `
 
+const FormBoxAnimation = keyframes`
+    from {
+        opacity: 0%;
+        transform: translateX(10%);
+    }
+    to {
+        opacity: 100%;
+        transform: translateX(0%);
+    }
+`;
+
 export const FormBox = styled.div`
     width: 35vw;
 
@@ -49,6 +60,8 @@ export const FormBox = styled.div`
 
     border-radius: 16px;
     border: 1px solid var(--azul-2, ${theme.colors.blue.border});
+
+    animation: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0s ${FormBoxAnimation};
 `
 
 export const MenuBox = styled.div`
