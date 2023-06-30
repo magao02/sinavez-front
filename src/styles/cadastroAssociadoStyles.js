@@ -83,6 +83,15 @@ export const Steps = styled.div`
     margin-bottom: 25px;
 `;
 
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+
+  width: 100%;
+  margin-top: 16px;
+`;
+
 export const StepDivider = styled.span`
     border-bottom: 1px solid gray;
     flex-grow: 1;

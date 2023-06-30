@@ -15,9 +15,11 @@ import {
   StepDivider,
   StepColor,
   StepNumber,
+  ButtonContainer,
 } from "../../styles/cadastroAssociadoStyles";
 
 import { GenericForm, GenericFormValue } from "../../components/GenericForm";
+import Button from "../../components/commom/Button";
 
 const Step = ({ active, number, children }) => {
   return (
@@ -86,6 +88,11 @@ const CadastroPage = () => {
             />
           </GenericForm>
         </FormBox>
+
+        <ButtonContainer>
+          <Button variant="default">CANCELAR</Button>
+          <Button variant="default">PRÓXIMO</Button>
+        </ButtonContainer>
       </RightContent>
       
     </Container>
