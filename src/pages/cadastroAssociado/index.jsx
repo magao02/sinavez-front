@@ -12,10 +12,20 @@ import {
   PatternBox,
   FormBox,
   Steps,
-  StepDivider
+  StepDivider,
+  StepColor,
+  StepNumber,
 } from "../../styles/cadastroAssociadoStyles";
 
 import { GenericForm, GenericFormValue } from "../../components/GenericForm";
+
+const Step = ({ active, number, children }) => {
+  return (
+    <StepColor active={active}>
+      <StepNumber active={active}>{number}</StepNumber> {children}
+    </StepColor>
+  )
+}
 
 const CadastroPage = () => {
   return (
@@ -31,11 +41,11 @@ const CadastroPage = () => {
       
       <RightContent>
         <Steps>
-          <span>1 Dados</span>
+          <Step active={true} number={1}>Dados</Step>
           <StepDivider />
-          <span>2 Contatos</span>
+          <Step number={2}>Contatos</Step>
           <StepDivider />
-          <span>3 Senha</span>
+          <Step number={3}>Senha</Step>
         </Steps>
 
         <FormBox>
