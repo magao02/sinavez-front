@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Image from "next/image.js";
 
@@ -31,9 +31,33 @@ const Step = ({ active, number, children }) => {
   )
 }
 
+import * as service from "../../services/accounts";
+import * as validation from "../../utils/validation";
+
 const CadastroPage = () => {
   let [currentStep, setCurrentStep] = useState(0);
   let [shouldFlipAnimation, setShouldFlipAnimation] = useState(false);
+
+  // Inputs for the first step
+  const nameRef = useRef(null);
+  const birthdayRef = useRef(null);
+  const cpfRef = useRef(null);
+  const rgRef = useRef(null);
+  const dataEmissaoRef = useRef(null);
+  const filiacaoRef = useRef(null);
+
+  // Inputs for the second step
+  const profissaoRef = useRef(null);
+  const phoneRef = useRef(null);
+  const ruaRef = useRef(null);
+  const bairroRef = useRef(null);
+  const numeroResRef = useRef(null);
+  const complementoRef = useRef(null);
+
+  // Inputs for the third step
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const passwordConfRef = useRef(null);
 
   const backStep = () => {
     if (currentStep !== 0) {
@@ -44,6 +68,7 @@ const CadastroPage = () => {
 
   const nextStep = () => {
     if (currentStep !== 2) {
+      console.log(nameRef.current);
       setCurrentStep(currentStep + 1);
       setShouldFlipAnimation(false);
     }
@@ -79,32 +104,38 @@ const CadastroPage = () => {
                 label="Nome completo"
                 placeholder="Seu nome"
                 description="Digite o seu nome completo no campo acima."
+                ref={nameRef}
               />
               <GenericFormValue
                 label="Data de nascimento"
                 placeholder="00/00/0000"
                 description="Digite a sua data de nascimento no campo acima."
+                ref={birthdayRef}
               />
               <GenericFormValue
                 label="CPF"
                 placeholder="000.000.000-00"
                 description="Digite o seu CPF no campo acima."
+                ref={cpfRef}
               />
               <GenericFormValue
                 label="RG"
                 placeholder="00.000.000"
                 description="Digite o seu RG no campo acima."
+                ref={rgRef}
               />
               <GenericFormValue
                 label="Data de Emissão"
                 variant="default-optional"
                 placeholder="00/00/0000"
                 description="Digite a data de emissão no campo acima."
+                ref={dataEmissaoRef}
               />
               <GenericFormValue
                 label="Filiação"
                 placeholder="Sua filiação"
                 description="Digite sua filiação no campo acima."
+                ref={filiacaoRef}
               />
             </GenericForm>
           </FormBox>
@@ -120,35 +151,41 @@ const CadastroPage = () => {
                 label="Profissão"
                 variant="default-optional"
                 placeholder="Sua profissão"
+                ref={profissaoRef}
               />
               <GenericFormValue
                 label="Telefone"
                 placeholder="(00) 00000-0000"
                 description="Digite o número em uso do seu celular."
+                ref={phoneRef}
               />
               <GenericFormValue
                 label="Rua"
                 placeholder="sei la"
                 variant="default-optional"
                 description="Digite o nome da rua da sua residência."
+                ref={ruaRef}
               />
               <GenericFormValue
                 label="Bairro"
                 placeholder="sei la"
                 variant="default-optional"
                 description="Digite o bairro em que você reside."
+                ref={bairroRef}
               />
               <GenericFormValue
                 label="Número de Residência"
                 placeholder="sei la"
                 variant="default-optional"
                 description="Digite o número de sua residência."
+                ref={numeroResRef}
               />
               <GenericFormValue
                 label="Complemento"
                 placeholder="sei la"
                 variant="default-optional"
                 description="Digite o complemento de seu endereço."
+                ref={complementoRef}
               />
             </GenericForm>
           </FormBox>
@@ -166,18 +203,21 @@ const CadastroPage = () => {
                 variant="default-optional"
                 // melhor??
                 description="Digite o seu melhor email."
+                ref={emailRef}
               />
               <GenericFormValue
                 label="Senha"
                 placeholder="**********"
                 description="Digite sua senha. De 8 a 12 dígitos."
                 type="password"
+                ref={passwordRef}
               />
               <GenericFormValue
                 label="Confirmar senha"
                 placeholder="**********"
                 description="Digite exatamente a mesma senha"
                 type="password"
+                ref={passwordConfRef}
               />
             </GenericForm>
           </FormBox>
