@@ -2,13 +2,14 @@ import styled, { css } from "styled-components";
 import theme from "../../../styles/theme";
 
 export const Container = styled.div`
-    ${props => getStyleByVariant(props.variant)};
+    ${props => getStyleByVariant(props.variant ?? 'default')};
 `;
 
 function getStyleByVariant(variant) {
     switch (variant) {
+        case 'default-optional':
         case 'default': {
-            return css`   
+            return css`
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -23,11 +24,6 @@ function getStyleByVariant(variant) {
                     font-size: 18px;
                     font-family: Roboto;
                     line-height: 22px;
-                }
-
-                label::after {
-                    content: '*';
-                    color: ${theme.colors.red};
                 }
 
                 div {
@@ -58,43 +54,17 @@ function getStyleByVariant(variant) {
                     
                     border-bottom: 1px solid;
                 }
-                `;
-        }
 
-        case 'default-optional': {
-            return css`   
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    width: 100%;
-    
-                    label {
-                        color: ${theme.colors.blue.heavy};
-                        text-align: center;
-                        font-size: 18px;
-                        font-family: Roboto;
-                        line-height: 22px;
-                    }
-    
-                    label::after {
-                        content: '*';
-                        color: ${theme.colors.red};
-                    }
-    
-                    div {
-                        display: flex;
-                        justify-content: space-between;
-                        width: 100%;
-    
-                        span {
-                            font-weight: bold;
-                            color: ${theme.colors.red}
+                ${
+                    variant !== 'default-optional' ? css`
+                        label::after {
+                            content: '*';
+                            color: ${theme.colors.red};
                         }
-                        span::after {
-                            content: '.';
-                        }
-                    }
-            `;
+                    ` : ""
+                }
+                
+        `;
         }
 
         case 'signup': {

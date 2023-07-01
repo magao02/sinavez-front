@@ -97,9 +97,7 @@ const CadastroPage = () => {
               />
               <GenericFormValue
                 label="Data de Emissão"
-                // FIXME: use optional input (no asterisk)
-                // the optional variant is a completely different style for some reason
-                // variant="default-optional"
+                variant="default-optional"
                 placeholder="00/00/0000"
                 description="Digite a data de emissão no campo acima."
               />
