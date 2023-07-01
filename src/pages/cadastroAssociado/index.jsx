@@ -32,16 +32,21 @@ const Step = ({ active, number, children }) => {
 }
 
 const CadastroPage = () => {
-  let [currentStep, setCurrentStep] = useState(1);
+  let [currentStep, setCurrentStep] = useState(0);
+  let [shouldFlipAnimation, setShouldFlipAnimation] = useState(false);
 
   const backStep = () => {
-    if (currentStep !== 0)
+    if (currentStep !== 0) {
       setCurrentStep(currentStep - 1);
+      setShouldFlipAnimation(true);
+    }
   };
 
   const nextStep = () => {
-    if (currentStep !== 2)
+    if (currentStep !== 2) {
       setCurrentStep(currentStep + 1);
+      setShouldFlipAnimation(false);
+    }
   };
 
   return (
@@ -65,7 +70,7 @@ const CadastroPage = () => {
         </Steps>
 
         {currentStep === 0 && (
-          <FormBox>
+          <FormBox flipAnimation={shouldFlipAnimation}>
             <Title>
               Seus Dados!
             </Title>
@@ -108,7 +113,7 @@ const CadastroPage = () => {
         )}
 
         {currentStep === 1 && (
-          <FormBox>
+          <FormBox flipAnimation={shouldFlipAnimation}>
             <Title>
               Seus Contatos!
             </Title>
@@ -147,7 +152,7 @@ const CadastroPage = () => {
         )}
 
         {currentStep === 2 && (
-          <FormBox>
+          <FormBox flipAnimation={shouldFlipAnimation}>
             <Title>
               Finalização cadastral!
             </Title>

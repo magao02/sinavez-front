@@ -39,10 +39,10 @@ export const PatternBox = styled.div`
     opacity: 30%;
 `
 
-const FormBoxAnimation = keyframes`
+const FormBoxAnimation = flip => keyframes`
     from {
         opacity: 0%;
-        transform: translateX(10%);
+        transform: translateX(${flip ? "-10%" : "10%"});
     }
     to {
         opacity: 100%;
@@ -61,7 +61,11 @@ export const FormBox = styled.div`
     border-radius: 16px;
     border: 1px solid var(--azul-2, ${theme.colors.blue.border});
 
-    animation: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0s ${FormBoxAnimation};
+    animation: 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0s ${props => FormBoxAnimation(props.flipAnimation)};
+
+    @media (prefers-reduced-motion) {
+        animation: none;
+    }
 `
 
 export const MenuBox = styled.div`
