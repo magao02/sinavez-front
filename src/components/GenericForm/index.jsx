@@ -15,12 +15,12 @@ export const GenericFormValue = forwardRef(({ variant, description, ...rest }, r
   const valueRef = useRef(null);
 
   useEffect(() => {
-    if (ref && !ref.current) {
-      ref.current = {
-        validate: () => valueRef.current.validate()
-      };
+    if (ref) {
+      if (!ref.current)
+        ref.current = {};
+      ref.current.validate = () => valueRef.current?.validate();
     }
-  });
+  }, [valueRef]);
 
   const onChange = event => {
     if (ref)
@@ -30,7 +30,7 @@ export const GenericFormValue = forwardRef(({ variant, description, ...rest }, r
   return (
     <InputBox>
       <Input
-        variant={variant ?? "default"}
+        variant={variant}
         ref={valueRef}
         initialValue={ref?.current?.value}
         onChange={onChange}

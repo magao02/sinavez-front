@@ -66,11 +66,32 @@ const CadastroPage = () => {
     }
   };
 
-  const nextStep = () => {
+  const validate = async () => {
+    let refs;
+    switch (currentStep) {
+      case 0:
+        refs = [nameRef, birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef];
+        break;
+      case 1:
+        refs = [profissaoRef, phoneRef, ruaRef, bairroRef, numeroResRef, complementoRef];
+        break;
+      case 2:
+        refs = [emailRef, passwordRef, passwordConfRef];
+        break;
+      default: return false;
+    }
+
+    return (await Promise.all(refs.map(ref => ref.current.validate()))).every(x => !!x);
+  };
+
+  const nextStep = async () => {
+    if (!await validate()) return;
+
     if (currentStep !== 2) {
-      console.log(nameRef.current);
       setCurrentStep(currentStep + 1);
       setShouldFlipAnimation(false);
+    } else {
+      // last step, so finalize
     }
   };
 
@@ -105,24 +126,28 @@ const CadastroPage = () => {
                 placeholder="Seu nome"
                 description="Digite o seu nome completo no campo acima."
                 ref={nameRef}
+                validate={validation.requiredTextField}
               />
               <GenericFormValue
                 label="Data de nascimento"
                 placeholder="00/00/0000"
                 description="Digite a sua data de nascimento no campo acima."
                 ref={birthdayRef}
+                validate={validation.testRequiredData}
               />
               <GenericFormValue
                 label="CPF"
                 placeholder="000.000.000-00"
                 description="Digite o seu CPF no campo acima."
                 ref={cpfRef}
+                validate={validation.testRequiredCpf}
               />
               <GenericFormValue
                 label="RG"
                 placeholder="00.000.000"
                 description="Digite o seu RG no campo acima."
                 ref={rgRef}
+                validate={validation.testRequiredNumbers}
               />
               <GenericFormValue
                 label="Data de Emissão"
@@ -130,12 +155,14 @@ const CadastroPage = () => {
                 placeholder="00/00/0000"
                 description="Digite a data de emissão no campo acima."
                 ref={dataEmissaoRef}
+                validate={validation.testDate}
               />
               <GenericFormValue
                 label="Filiação"
                 placeholder="Sua filiação"
                 description="Digite sua filiação no campo acima."
                 ref={filiacaoRef}
+                validate={validation.requiredTextField}
               />
             </GenericForm>
           </FormBox>
@@ -158,6 +185,7 @@ const CadastroPage = () => {
                 placeholder="(00) 00000-0000"
                 description="Digite o número em uso do seu celular."
                 ref={phoneRef}
+                validate={validation.testRequiredPhone}
               />
               <GenericFormValue
                 label="Rua"
@@ -204,6 +232,7 @@ const CadastroPage = () => {
                 // melhor??
                 description="Digite o seu melhor email."
                 ref={emailRef}
+                validate={validation.testEmail}
               />
               <GenericFormValue
                 label="Senha"
@@ -211,6 +240,7 @@ const CadastroPage = () => {
                 description="Digite sua senha. De 8 a 12 dígitos."
                 type="password"
                 ref={passwordRef}
+                validate={validation.testRequiredPassword}
               />
               <GenericFormValue
                 label="Confirmar senha"
@@ -218,6 +248,7 @@ const CadastroPage = () => {
                 description="Digite exatamente a mesma senha"
                 type="password"
                 ref={passwordConfRef}
+                validate={validation.testRequiredPassword}
               />
             </GenericForm>
           </FormBox>
