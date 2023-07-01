@@ -118,6 +118,7 @@ const CadastroPage = () => {
             <GenericForm>
               <GenericFormValue
                 label="Profissão"
+                variant="default-optional"
                 placeholder="Sua profissão"
               />
               <GenericFormValue
@@ -128,21 +129,25 @@ const CadastroPage = () => {
               <GenericFormValue
                 label="Rua"
                 placeholder="sei la"
+                variant="default-optional"
                 description="Digite o nome da rua da sua residência."
               />
               <GenericFormValue
                 label="Bairro"
                 placeholder="sei la"
+                variant="default-optional"
                 description="Digite o bairro em que você reside."
               />
               <GenericFormValue
                 label="Número de Residência"
                 placeholder="sei la"
+                variant="default-optional"
                 description="Digite o número de sua residência."
               />
               <GenericFormValue
                 label="Complemento"
                 placeholder="sei la"
+                variant="default-optional"
                 description="Digite o complemento de seu endereço."
               />
             </GenericForm>
@@ -158,6 +163,7 @@ const CadastroPage = () => {
               <GenericFormValue
                 label="Email"
                 placeholder="seuemail@dominio.com"
+                variant="default-optional"
                 // melhor??
                 description="Digite o seu melhor email."
               />
