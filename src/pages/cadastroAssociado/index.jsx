@@ -248,7 +248,7 @@ const CadastroPage = () => {
                 description="Digite exatamente a mesma senha"
                 type="password"
                 ref={passwordConfRef}
-                validate={validation.testRequiredPassword}
+                validate={value => validation.testRequiredMatchingPassword(value, passwordRef.current.value)}
               />
             </GenericForm>
           </FormBox>

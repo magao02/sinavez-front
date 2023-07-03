@@ -4,6 +4,7 @@ const validationMessages = {
   requiredField: "Este campo é obrigatório",
   invalidCPF: "CPF inválido (digite apenas os números)",
   passwordTooShort: "A senha deve ter no mínimo 8 dígitos",
+  passwordsDontMatch: "As senhas não são iguais",
   invalidEmail: "Email inválido",
   invalidDate: "Data inválida",
   invalidPhone:
@@ -42,6 +43,15 @@ export async function testCpf(cpfValue) {
 export async function testRequiredPassword(passwordValue) {
   return yup
     .string()
+    .required(validationMessages.requiredField)
+    .matches(/^.{8,}$/, validationMessages.passwordTooShort)
+    .validate(passwordValue);
+}
+
+export async function testRequiredMatchingPassword(passwordValue, otherPassword) {
+  return yup
+    .string()
+    .equals([otherPassword], validationMessages.passwordsDontMatch)
     .required(validationMessages.requiredField)
     .matches(/^.{8,}$/, validationMessages.passwordTooShort)
     .validate(passwordValue);
