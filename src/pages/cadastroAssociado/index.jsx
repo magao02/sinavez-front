@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { useRouter } from "next/router";
+
 
 import Image from "next/image.js";
 
@@ -18,6 +20,7 @@ import {
   StepColor,
   StepNumber,
   ButtonContainer,
+  SubmitError,
 } from "../../styles/cadastroAssociadoStyles";
 
 import { GenericForm, GenericFormValue } from "../../components/GenericForm";
@@ -84,6 +87,8 @@ const CadastroPage = () => {
     return (await Promise.all(refs.map(ref => ref.current.validate()))).every(x => !!x);
   };
 
+  const router = useRouter();
+
   const nextStep = async () => {
     if (!await validate()) return;
 
@@ -91,7 +96,55 @@ const CadastroPage = () => {
       setCurrentStep(currentStep + 1);
       setShouldFlipAnimation(false);
     } else {
-      // last step, so finalize
+      await submitData();
+    }
+  };
+
+  const [apiError, setApiError] = useState("");
+
+  const submitData = async () => {
+    const data = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      telefone: phoneRef.current.value,
+      nascimento: birthdayRef.current.value,
+      cpf: cpfRef.current.value,
+      rg: rgRef.current.value,
+      emissao: dataEmissaoRef.current.value ?? "",
+      filiacao: filiacaoRef.current.value,
+      profissao: profissaoRef.current.value,
+      endereco: {
+        rua: ruaRef.current.value,
+        bairro: bairroRef.current.value,
+        complemento: complementoRef.current.value,
+        numero: numeroResRef.current.value,
+      },
+      // TODO: should these be added?
+      regional: "",
+      numInscricao: "",
+      dataAfiliacao: "",
+      formacaoSuperior: "",
+      instituicaoSuperior: "",
+      dataFormacao: "",
+      numRegistroConselho: "",
+      dataRegistroConselho: "",
+      empresa: "",
+      salario: "",
+    };
+
+    setApiError("");
+
+    try {
+      const response = await service.signUp(data);
+      router.push("/");
+    } catch (error) {
+      const err = error.response.data;
+      if (typeof err === 'string') {
+        setApiError(err);
+      } else {
+        setApiError(error.response.data?.message);
+      }
     }
   };
 
@@ -237,6 +290,7 @@ const CadastroPage = () => {
               <GenericFormValue
                 label="Senha"
                 placeholder="**********"
+                // TODO: the validation function doesnt check for >12
                 description="Digite sua senha. De 8 a 12 dígitos."
                 type="password"
                 ref={passwordRef}
@@ -253,6 +307,8 @@ const CadastroPage = () => {
             </GenericForm>
           </FormBox>
         )}
+
+        {apiError && <SubmitError>{apiError}</SubmitError>}
 
         <ButtonContainer>
           <Button onClick={backStep} variant="default">{currentStep === 0 ? "CANCELAR" : "VOLTAR"}</Button>

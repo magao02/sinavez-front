@@ -138,3 +138,10 @@ export const StepNumber = styled.span`
 
     margin-right: 2px;
 `;
+
+export const SubmitError = styled.p`
+    color: red;
+    font-weight: bold;
+    align-self: flex-end;
+    margin-top: 15px;
+`;
