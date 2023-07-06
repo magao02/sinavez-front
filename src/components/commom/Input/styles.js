@@ -40,6 +40,7 @@ function getStyleByVariant(variant) {
                         font-weight: bold;
                         color: ${theme.colors.red};
                         font-size: 14px;
+                        text-align: end;
                     }
                     span::after {
                         content: '.';
@@ -52,14 +53,18 @@ function getStyleByVariant(variant) {
                     border: none;
                     background: none;
 
-                    color: var(--text-secundary, ${theme.colors.gray.default});
+                    color: var(--text-secundary, ${theme.colors.gray.menu});
                     font-size: 18px;
                     font-family: Roboto;
                     line-height: 22px;
                     
-                    border-bottom: 1px solid ${theme.colors.gray.menu};;
+                    border-bottom: 1px solid ${theme.colors.gray.menu};
                     padding-bottom: 5px;
                     width: 100%;
+                }
+
+                input::placeholder {
+                    color: var(--text-secundary, ${theme.colors.gray.heavy});
                 }
 
                 ${
