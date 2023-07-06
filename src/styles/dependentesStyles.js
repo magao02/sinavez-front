@@ -4,7 +4,7 @@ import theme from './theme';
 export const Container = styled.div`
     width: 100vw;
     height: 92vh;
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
 
     display: flex;
     flex-direction: column;

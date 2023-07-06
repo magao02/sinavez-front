@@ -64,7 +64,7 @@ export const MenuBox = styled.div`
 
     gap: 1.25vh;
 
-    color: var(--background, ${theme.colors.white});
+    color: var(--background, ${theme.colors.white.default});
     text-align: center;
 
     font-size: 22px;
