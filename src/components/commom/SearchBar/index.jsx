@@ -1,5 +1,3 @@
-import { useState, useRef, useImperativeHandle } from "react";
-
 import Image from "next/image";
 import SearchIcon from "../../../assets/search_icon.svg";
 
@@ -17,6 +15,7 @@ const SearchBar = ({ setSearch, placeHolder }) => {
     <Container>
       <Image src={SearchIcon} />
       <Input
+        variant="search"
         name="pesquisa"
         placeholder={placeHolder}
         type="text"
