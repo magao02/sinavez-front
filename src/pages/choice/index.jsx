@@ -19,11 +19,17 @@ import {
 
 
 const ChoicePage = () => {
+    const router = useRouter();
+
+    const redirectSindicato = () => {
+        router.push("/login");
+    };
+
     return (
         <Container>
             <Title>Seja Bem Vindo a <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
             <Buttons>
-                <Button>
+                <Button onClick={redirectSindicato}>
                     <ButtonImage>
                         <Image src={SinavezLogo} draggable={false} height="120" />
                         <Image src={SinavezText} draggable={false} />
