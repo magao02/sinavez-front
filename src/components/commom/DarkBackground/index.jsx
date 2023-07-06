@@ -1,8 +1,8 @@
 import { Container } from "./styles";
 
-const DarkBackground = () => {
+const DarkBackground = ({pageHeight}) => {
   return (
-    <Container />
+    <Container pageHeight={pageHeight}/>
   )
 }
 

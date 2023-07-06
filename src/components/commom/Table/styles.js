@@ -101,7 +101,7 @@ export const LocationRow = styled.tr`
   }
 
   td {
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
   }
 
   div {

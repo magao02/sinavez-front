@@ -8,7 +8,7 @@ export const MenuBox = styled.div`
     cursor: pointer;
 
     border-radius: 8px;
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
     border-top: 1px solid var(--azul-2, ${theme.colors.blue.shadow});
     box-shadow: 0px 4px 4px 0px ${theme.colors.blue.shadow};
 
@@ -27,7 +27,7 @@ export const MenuBox = styled.div`
 export const OpenedMenuBox = styled.div`
     position: absolute;
 
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
     display: flex;
     width: 257px;
     height: 90px;

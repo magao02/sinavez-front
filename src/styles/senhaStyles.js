@@ -14,7 +14,7 @@ export const ContentSection = styled.section`
     min-width: 300px;
     max-width: 2560px;
 
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
     margin: 7.0rem 13.9rem 7.0rem 13.9rem;
 
     border-radius: 2.4rem;

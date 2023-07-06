@@ -8,75 +8,57 @@ import { useAdmin } from "../../contexts/AdminContext";
 
 import * as service from "../../services/accounts";
 
-import SearchBar from "../../components/commom/SearchBar";
 import Navigation from "../../components/commom/Nav";
-import ListWrapper from "../../components/commom/ListWrapper";
-import PdfPage from "../../components/PdfPage";
-import DependentsContainer from "../../components/DependentsContainer";
-import ImpostosPage from "../../components/ImpostosPage";
-import UserDependentesPage from "../../components/UserDependentesPage";
-import ConfirmationScreen from "../../components/commom/ConfirmationScreen";
+import DataTable from "../../components/commom/DataTable";
+import Button from "../../components/commom/Button";
+import SearchBar from "../../components/commom/SearchBar";
+import DarkBackground from "../../components/commom/DarkBackground"
+import FirstStepForm from "../../components/UserDataForm/FirstStep";
+import SecondStepForm from "../../components/UserDataForm/SecondStep";
+
+import AddIcon from "../../assets/add_icon.svg";
+
+import Image from "next/image";
 
 import {
   Container,
-  ContentContainer,
-  ControllerContainer,
-  LoadingMessage,
+  Main,
+  Title,
+  MainContainer,
+  MainHead,
+  AddAssociateBox
 } from "../../styles/associadosStyles";
 
 const Associados = () => {
-  const initialForm = {
-    toggle: false,
-    type: { pdf: false, dependente: false },
-  };
-  const [form, setForm] = useState(initialForm);
   const [associados, setAssociados] = useState();
   const [searchTerm, setSearchTerm] = useState("");
-  const [urlUserEdit, setUrlUserEdit] = useState();
-  const [dependentesToggle, setDependentesToggle] = useState(false);
   const [admToggle, setAdmToggle] = useState(false);
-  const [name, setName] = useState();
+  const [addAssociateToggle, setAddAssociateToggle] = useState();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [associadoData, setAssociadoData] = useState([]);
 
   const router = useRouter();
 
   const authContext = useAuth();
   const adminContext = useAdmin();
 
-  const formController = (type, data, year) => {
-    setYear(year)
-    if (type === "pdf") {
-      setForm({
-        toggle: true,
-        type: { pdf: true, dependente: false },
-      });
-      adminContext.setAssociado(data);
-    } else if (type == "dependente") {
-      adminContext.setAssociado(data);
-      setUrlUserEdit(data.urlUser);
-      setForm({
-        toggle: true,
-        type: { pdf: false, dependente: true },
-      });
-    } else if (type === "initialForm") {
-      setForm(initialForm);
-    } else {
-      setForm(initialForm);
-    }
-  };
+  const toggleAddAssociate = useCallback(() => {
+    setAddAssociateToggle((p) => !p);
+  }, []);
 
-  const initialYears = {
-    toggle: false,
-  };
-  const [years, setYears] = useState(initialYears);
-  const [dataToSubmit, setDataToSubmit] = useState(initialYears);
-  const [yearVariant, setYearVariant] = useState();
-  const [year, setYear] = useState();
+  const [globalMessage, setGlobalMessage] = useState();
+  const [collectedData, setCollectedData] = useState({});
 
   const yearsController = (data, yearVariant) => {
     setYears({ toggle: true });
     setYearVariant(yearVariant);
     setDataToSubmit(data);
   }
+
+  const dataCollector = (data) => {
+    setCollectedData({ ...collectedData, ...data });
+    nextStepAddAssociate();
+  };
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -114,12 +96,6 @@ const Associados = () => {
     [authContext.token]
   );
 
-  const showUserPromote = useCallback(() => {
-    setAdmToggle(!admToggle)
-    setName(localStorage.getItem("nameAssociado"))
-  }
-  );
-
   const editUserData = useCallback(async (data) => {
     setUrlUserEdit(data.urlUser);
     localStorage.setItem('urlAssociado', data.urlUser)
@@ -138,14 +114,21 @@ const Associados = () => {
     }
   };
 
-  const [associadoData, setAssociadoData] = useState([]);
-
   const editDependente = useCallback((urlAssociado, associadoName) => {
     setAssociadoData([urlAssociado, associadoName]);
     setDependentesToggle(true);
   }, [])
 
+  const nextStepAddAssociate = useCallback(() => {
+    setCurrentStep((p) => ++p);
+  }, []);
+
+  const previousStepAddAssociate = useCallback(() => {
+    setCurrentStep((p) => --p);
+  }, []);
+
   useEffect(() => {
+    getAssociados();
     if (!authContext.auth) {
       router.push("/login");
       return;
@@ -155,57 +138,40 @@ const Associados = () => {
     } else if (associados !== undefined) {
       return;
     }
-    getAssociados();
-  });
+  }, []);
 
   return (
     <Container>
       <Navigation selectedPage={"associados"} variant={checkNav()} />
-      {admToggle && (
-        <ConfirmationScreen buttonText="Sim" variant="setAdm" showUserPromote={showUserPromote}>
-          Você deseja tornar {name} um administrador?
-        </ConfirmationScreen>
-      ) }
-      {!associados && !form.toggle && !years.toggle && !admToggle && (
-        <LoadingMessage>Carregando...</LoadingMessage>
+      {addAssociateToggle && (
+        <>
+          <DarkBackground pageHeight={"143vh"} />
+          <AddAssociateBox>
+            {currentStep == 1 && (
+              <FirstStepForm globalMessage={globalMessage} title={"Adicionar Associado"} variant={"step1"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
+            )}
+            {currentStep == 2 && (
+              <SecondStepForm globalMessage={globalMessage} title={"Adicionar Associado"} variant={"step2"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+            )}
+          </AddAssociateBox>
+        </>
       )}
-      {dependentesToggle && associadoData && (
-        <UserDependentesPage associadoData={associadoData} setDependentesToggle={setDependentesToggle} />
-      )}
-      {associados && !form.toggle && !years.toggle && !dependentesToggle && !admToggle && (
-        <ContentContainer>
-          <ControllerContainer>
-            <SearchBar
-              setSearch={setSearchTerm}
-              placeHolder="Digite o nome ou CPF do associado"
-            />
-          </ControllerContainer>
-          <ListWrapper
-            data={associados}
-            variant="associados"
-            searchTerm={searchTerm}
-            yearsController={yearsController}
-            remove={userRemove}
-            edit={editUserData}
-            dependente={editDependente}
-            promote={showUserPromote}
-          />
-        </ContentContainer>
-      )}
-      {years.toggle && !form.toggle && associados && !admToggle && (
-        <ImpostosPage dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
-      )}
-      {form.toggle && form.type.pdf && !admToggle && (
-        <PdfPage setForm={formController} outsideForm={formController} ano={year} />
-      )}
-      {form.toggle && form.type.dependente && !admToggle && (
-        <ContentContainer>
-          <DependentsContainer
-            variant="admin"
-            url={urlUserEdit}
-            token={authContext.token}
-          />
-        </ContentContainer>
+      {associados && (
+        <MainContainer>
+          <Title>
+            Gerenciar associados
+          </Title>
+          <MainHead>
+            <SearchBar setSearch={setSearchTerm} placeHolder={"Procurar pelo nome"}></SearchBar>
+            <Button variant={"default"} onClick={toggleAddAssociate}>
+              <Image src={AddIcon} />
+              Adicionar Associado
+            </Button>
+          </MainHead>
+          <Main>
+            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} />
+          </Main>
+        </MainContainer>
       )}
     </Container>
   );

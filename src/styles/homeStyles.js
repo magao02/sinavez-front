@@ -4,12 +4,51 @@ import theme from './theme';
 export const Container = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
 
-    position: fixed;
     display: flex;
     flex-direction: column;
 `;
+
+export const BottomCotainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+`
+
+export const BottonTitle = styled.div`
+    color: var(--text-primary, ${theme.colors.gray.menu});
+
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+`
+
+export const BottonMainContent = styled.div`
+    margin-top: 10vh;
+    margin-left: 10%;
+
+    display: flex;
+    z-index: 1;
+    flex-direction: column;
+`
+
+export const BottonMain = styled.div`
+    margin-top: 2vh;
+
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+`
 
 export const Main = styled.div`
     width: 100%;
@@ -23,8 +62,8 @@ export const Main = styled.div`
 export const MainContent = styled.div`
     margin-top: 15%;
     margin-left: 10%;
-    display: flex;
-    gap: 37%;
+    display: grid;
+    grid-template-columns: 50% 50%;
 `
 
 export const Title = styled.div`
@@ -36,7 +75,7 @@ export const Title = styled.div`
     font-size: 32px;
     line-height: 36px;
 
-    color: #FDFDFD;
+    color: ${theme.colors.white.light};
 
     flex: none;
     order: 0;
@@ -53,37 +92,12 @@ export const Text = styled.div`
     font-size: 18px;
     line-height: 22px;
 
-    color: #FDFDFD;
+    color: ${theme.colors.white.light};
 
     flex: none;
     order: 1;
     flex-grow: 0;
 `
-
-export const Button = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-
-    width: 219px;
-    height: 42px;
-
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-
-    background-color: ${theme.colors.white};
-
-    &:hover{
-        cursor: pointer;
-    }
-`
-
 
 export const Texts = styled.div`
     display: flex;
@@ -92,10 +106,73 @@ export const Texts = styled.div`
     padding: 0px;
     gap: 32px;
 
-    width: 488px;
-    height: 280px;
-
     flex: none;
     order: 0;
     flex-grow: 0;
+`
+
+export const BottonDetail = styled.div`
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100px;
+`
+
+export const TextsBottom = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3vh;
+`
+
+export const TitleBottom = styled.h6`
+    color: var(--text-invertido, ${theme.colors.white.light});
+
+    font-size: 22px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`
+
+export const TextBottom = styled.p`
+    color: var(--text-invertido, ${theme.colors.white.light});
+
+    font-size: 16px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+
+    text-align: start;
+`
+
+export const BottomDivider = styled.div`
+    height:1.52px;
+    border-radius: 5px;
+    background-color: ${theme.colors.blue.heavy};
+    margin: 5vh 8vw;
+`
+
+export const LinkText = styled.p`
+    color: var(--text-invertido, ${theme.colors.white.light});
+
+    font-size: 16px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.15px;
+`
+
+export const Sublime = styled.div`
+    height: 2px;
+    background-color: ${theme.colors.white.light};
+    align-self: stretch;
+    opacity: 0.4000000059604645;
+    position: relative;
+    bottom: 6px;
 `

@@ -18,7 +18,7 @@ export const MainContent = styled.main`
 
   padding: 0 37rem;
 
-  background-color: ${theme.colors.white};
+  background-color: ${theme.colors.white.default};
 `;
 
 export const GreetingsContainer = styled.div`
