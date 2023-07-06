@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import Image from "next/image.js";
 
-import Pattern from "../../assets/login_pattern.svg";
+import Pattern from "../../assets/horizontal_pattern.png";
 import SinavezLogo from "../../assets/sinavez_logo_branco.svg";
 import SinavezText from "../../assets/text_sinavez_branco.svg";
 import ImpostoLogo from "../../assets/multiple_files.svg";
@@ -14,6 +14,7 @@ import {
     Button,
     TitleOrange,
     ButtonImage,
+    PatternContainer,
 } from "../../styles/choiceStyles";
 
 
@@ -37,6 +38,8 @@ const ChoicePage = () => {
                     <span>Entrar na plataforma de Imposto de Renda!</span>
                 </Button>
             </Buttons>
+            {/* Couldn't get it to work with next's Image unfortunately */}
+            <PatternContainer src={Pattern.src} />
         </Container>
     );
 };

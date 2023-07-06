@@ -67,3 +67,12 @@ export const ButtonImage = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+export const PatternContainer = styled.div`
+    position: absolute;
+    background-image: ${props => `url(${props.src})`};
+
+    width: 100vw;
+    height: 20vh;
+    bottom: 0;
+`;
