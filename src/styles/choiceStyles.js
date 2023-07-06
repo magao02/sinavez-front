@@ -61,11 +61,17 @@ export const Button = styled.div`
     align-items: center;
 
     user-select: none;
+
+    font-size: 18px;
 `;
 
 export const ButtonImage = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 10px;
+
+    font-size: 24px;
+    font-weight: 600;
 `;
 
 export const PatternContainer = styled.div`

@@ -25,7 +25,7 @@ const ChoicePage = () => {
             <Buttons>
                 <Button>
                     <ButtonImage>
-                        <Image src={SinavezLogo} draggable={false} />
+                        <Image src={SinavezLogo} draggable={false} height="120" />
                         <Image src={SinavezText} draggable={false} />
                     </ButtonImage>
                     <span>Entrar na plataforma do <b>sindicato!</b></span>
