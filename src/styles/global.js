@@ -30,7 +30,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         height: 100%;
         overflow-x: hidden;
-        background-color: ${theme.colors.white};
+        background-color: ${theme.colors.white.default};
     }
 
     button {

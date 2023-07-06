@@ -75,7 +75,7 @@ export const MenuBox = styled.div`
 
     gap: 1.25vh;
 
-    color: ${ props => props.blue ? `var(--text-accent, ${theme.colors.blue.heavy})` : `var(--background, ${theme.colors.white})`};
+    color: ${ props => props.blue ? `var(--text-accent, ${theme.colors.blue.heavy})` : `var(--background, ${theme.colors.white.default})`};
     text-align: center;
 
     font-size: 22px;

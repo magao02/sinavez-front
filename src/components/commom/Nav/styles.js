@@ -8,9 +8,10 @@ export const NavBar = styled.nav`
     justify-content: center;
     height: 8.3vh;
     position: absolute;
+    z-index: 100;
 
     box-shadow: 0px 4px 4px rgba(7, 96, 186, 0.44);
-    background-color: ${theme.colors.white};
+    background-color: ${theme.colors.white.default};
 `;
 
 export const LogoSinavez = styled.div`

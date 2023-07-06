@@ -1,21 +1,20 @@
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
-import * as validation from '../../../utils/validation';
+import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import {
-  Container,
-  InputForm,
-  InputContainer,
-  ButtonContainer,
-} from "./styles";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle } from "./styles.js";
+
+import CancelIcon from "../../../assets/cancel_icon.svg";
+import LeftIcon from "../../../assets/blue_left_icon.svg";
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
-import MultiInput from "../../commom/MultiInput";
 
-const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
+import Image from 'next/image.js';
+
+const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) => {
   const cidadeRef = useRef();
   const estadoRef = useRef();
   const naturalidadeRef = useRef();
@@ -85,245 +84,119 @@ const SecondStepForm = ({ dataCollector, variant, urlAssociado }) => {
     })
   });
 
-  const authContext = useAuth();
-  let [userData, setUserData] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const getUserData = useCallback(async () => {
-    try {
-      const responseData = await service.getUserData(
-        urlAssociado,
-        authContext.token
-      );
-      return responseData.data;
-    } catch (error) {
-      console.log(error);
-      console.log(error.response.data);
-    }
-  }, [authContext.token, authContext.urlUser]);
-
-  const handleUserData = useCallback(async () => {
-    const responseData = await getUserData();
-    setUserData(responseData);
-    setIsLoaded(true);
-  }, [getUserData]);
-
-  useEffect(() => {
-    getUserData();
-    handleUserData();
-  }, []);
-
-  switch (variant) {
-    case "signUp": {
-      return (
-        <Container>
-          {isLoaded && (
-            <InputForm onSubmit={handleSubmit}>
-              <InputContainer>
-                <MultiInput
-                  label="Regional"
-                  names={[
-                    "Município",
-                    "Estado",
-                    "Naturalidade",
-                    "Nacionalidade",
-                    "Brasileiro",
-                  ]}
-                  refs={{ cidadeRef, estadoRef, naturalidadeRef, nacionalidadeRef, brasileiroRef }}
-                  variant="step2"
-                  validation={validation}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Número de Inscrição"
-                  name="numInscricao"
-                  placeholder="Digite o seu número de inscrição"
-                  ref={numeroInscricaoRef}
-                  validate={validation.testNumbers}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Afiliação"
-                  name="dataAfiliacao"
-                  placeholder="DD/MM/AA"
-                  ref={dataAfiliacaoRef}
-                  validate={validation.testDate}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Formação Superior"
-                  name="formacaoSuperior"
-                  placeholder="Digite o nome do seu curso"
-                  ref={formacaoSuperiorRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Instituição"
-                  name="instituicaoSuperior"
-                  placeholder="Digite o nome da sua instituição de formação"
-                  ref={instituicaoSuperiorRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Formação"
-                  name="dataFormacao"
-                  placeholder="DD/MM/AAAA"
-                  ref={dataFormacaoRef}
-                  validate={validation.testDate}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Nº de Registro no Conselho"
-                  name="numRegistroConselho"
-                  placeholder="Digite o seu número de registro"
-                  ref={numRegistroConselhoRef}
-                  validate={validation.testNumbers}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Registro no Conselho"
-                  name="dataRegistroConselho"
-                  placeholder="DD/MM/AAAA"
-                  ref={dataRegistroConselhoRef}
-                  validate={validation.testDate}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Orgão ou Empresa em que trabalha"
-                  name="empresa"
-                  placeholder="Digite o nome do Orgão ou Empresa"
-                  ref={empresaRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Salário"
-                  name="salario"
-                  placeholder="Digite apenas o valor sem vírgulas ou pontos"
-                  ref={salarioRef}
-                  validate={validation.testNumbers}
-                />
-                <ButtonContainer>
-                  <Button variant="password">Finalizar Cadastro</Button>
-                </ButtonContainer>
-              </InputContainer>
-            </InputForm>
-          )}
-        </Container>
-      );
-    }
-    case "editData": {
-      return (
-        <Container>
-          {isLoaded && (
-            <InputForm onSubmit={handleSubmit}>
-              <InputContainer>
-                <MultiInput
-                  label="Regional"
-                  names={[
-                    "Município",
-                    "Estado",
-                    "Naturalidade",
-                    "Nacionalidade",
-                    "Brasileiro",
-                  ]}
-                  placeholders={userData.regional}
-                  refs={{ cidadeRef, estadoRef, naturalidadeRef, nacionalidadeRef, brasileiroRef }}
-                  variant="step2"
-                  validation={validation}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Número de Inscrição"
-                  name="numInscricao"
-                  placeholder={userData.numInscricao}
-                  ref={numeroInscricaoRef}
-                  validate={validation.testNumbers}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Afiliação"
-                  name="dataAfiliacao"
-                  placeholder={userData.dataAfiliacao}
-                  ref={dataAfiliacaoRef}
-                  validate={validation.testDate}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Formação Superior"
-                  name="formacaoSuperior"
-                  placeholder={userData.formacaoSuperior}
-                  ref={formacaoSuperiorRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Instituição"
-                  name="instituicaoSuperior"
-                  placeholder={userData.instituicaoSuperior}
-                  ref={instituicaoSuperiorRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Formação"
-                  name="dataFormacao"
-                  placeholder={userData.dataFormacao}
-                  ref={dataFormacaoRef}
-                  validate={validation.testDate}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Nº de Registro no Conselho"
-                  name="numRegistroConselho"
-                  placeholder={userData.numRegistroConselho}
-                  ref={numRegistroConselhoRef}
-                  validate={validation.testNumbers}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data de Registro no Conselho"
-                  name="dataRegistroConselho"
-                  placeholder={userData.dataRegistroConselho}
-                  ref={dataRegistroConselhoRef}
-                  validate={validation.testDate}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Orgão ou Empresa em que trabalha"
-                  name="empresa"
-                  placeholder={userData.empresa}
-                  ref={empresaRef}
-                  validate={validation.TextField}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Salário"
-                  name="salario"
-                  placeholder={userData.salario}
-                  ref={salarioRef}
-                  validate={validation.testNumbers}
-                />
-                <ButtonContainer>
-                  <Button variant="password">Finalizar Cadastro</Button>
-                </ButtonContainer>
-              </InputContainer>
-            </InputForm>
-          )}
-        </Container>
-      );
-    }
-  }
+  return (
+    <Container onSubmit={handleSubmit}>
+      <Head>
+        Adicionar Associado
+        <Image src={CancelIcon} onClick={cancelForm} />
+      </Head>
+      <Body>
+        <Description>
+          Passo 2 de 3
+        </Description>
+        <Main>
+          <SubContainer>
+            <SubTitle>
+              Dados Acadêmicos
+            </SubTitle>
+            <Input
+              variant="default-optional"
+              label={"Curso de Formação"}
+              name={"curso_de_formacao"}
+              placeholder={"Digite seu curso de formação"}
+              ref={formacaoSuperiorRef}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default-optional"
+              label={"Data de Formação"}
+              name={"data_de_formacao"}
+              ref={dataFormacaoRef}
+              placeholder={"DD/MM/AAAA"}
+              validate={validation.testDate}
+            />
+          </SubContainer>
+          <SubContainer>
+            <SubTitle>
+              Dados Empregatícios
+            </SubTitle>
+            <Input
+              variant="default-optional"
+              label={"Organização ou empresa que trabalha"}
+              name={"trabalho"}
+              ref={empresaRef}
+              placeholder={"Digite onde você trabalha"}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default-optional"
+              label={"Instituição"}
+              name={"instituição"}
+              ref={instituicaoSuperiorRef}
+              placeholder={"Digite a instituição"}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default-optional"
+              label={"Salário"}
+              name={"salario"}
+              ref={salarioRef}
+              placeholder={"R$ 00,00"}
+              validate={validation.testNumbers}
+            />
+          </SubContainer>
+          <SubContainer>
+            <SubTitle>
+              Vínculo com a SINAVEZ
+            </SubTitle>
+            <Input
+              variant="default-optional"
+              label={"Regional"}
+              name={"regional"}
+              placeholder={"Digite a sua regional"}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default-optional"
+              label={"Número de registro no conselho"}
+              name={"numero_de_registro"}
+              ref={numRegistroConselhoRef}
+              placeholder={"Digite o seu número de registro no conselho"}
+              validate={validation.testDate}
+            />
+            <InputsContainer>
+              <Input
+                variant="default-optional"
+                label={"Número de Inscrição"}
+                name={"numero_de_inscricao"}
+                ref={numeroInscricaoRef}
+                placeholder={"Digite seu número de inscrição"}
+                validate={validation.testNumbers}
+              />
+              <Input
+                variant="default-optional"
+                label={"Data de Afiliação"}
+                name={"data_de_afiliacao"}
+                ref={dataAfiliacaoRef}
+                placeholder={"DD/MM/AAAA"}
+                validate={validation.testPhone}
+              />
+            </InputsContainer>
+          </SubContainer>
+        </Main>
+      </Body>
+      <Footer>
+        <Button variant={"text"} onClick={firstButton}>
+          <Image src={LeftIcon} />
+          VOLTAR
+        </Button>
+        {globalMessage && <span>{globalMessage}</span>}
+        <Button variant={"light"} >
+          CONTINUAR
+        </Button>
+      </Footer>
+    </Container>
+  );
 };
 
-export default SecondStepForm;
+export default SecondStep;

@@ -1,7 +1,7 @@
 import { Container } from './styles';
 
 const Button = ({ variant, children, ...rest }) => 
-<Container 
+<Container disabledButton={props => props.disabledButton} blue={props => props.blue}
 variant={variant}{...rest}>{children
 }</Container>
 

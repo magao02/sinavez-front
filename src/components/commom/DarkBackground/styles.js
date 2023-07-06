@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  z-index: 100;
+  z-index: 99;
 
   position: absolute;
-  height: 100vh;
+  height: ${props => props.pageHeight};
   width: 100vw;
 
   background-color: black;

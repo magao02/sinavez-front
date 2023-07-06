@@ -3,41 +3,47 @@ import theme from './theme';
 
 export const Container = styled.div`
     width: 100vw;
-    height: 100%;
-    background-color: ${theme.colors.white};
-
+ 
     display: flex;
     flex-direction: column;
 `;
 
-export const ContentContainer = styled.div`
-    width: 100%;
-    height: 100%;
+export const Main = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20vh;
+    margin-left: -42.5vw;
+`;
+
+export const Title = styled.h1`
+    color: var(--text-primary, ${theme.colors.gray.menu});
+
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 36px;
+`
+
+export const MainContainer = styled.div`
+    margin-top: 14vh;
+    margin-left: 7.5vw;
 
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
 
-    gap: 1.2rem;
-`;
+    gap: 3vh;
+`
 
-export const ControllerContainer = styled.div`
-    width: 100%;
-
+export const MainHead = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 46vw;
+`
 
-    gap: 2.3rem;
+export const AddAssociateBox = styled.div`
+    position: absolute;
 
-    padding-top: 5rem;
-`;
+    left: 50%;
+    top: 15%;
 
-export const LoadingMessage = styled.div`
-    min-height: 92vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
+    margin-left: -15vw;
+`

@@ -1,48 +1,43 @@
-import { useRef, useCallback, forwardRef, useEffect, useState } from "react";
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import {
-  Container,
-  InputForm,
-  InputContainer,
-  ButtonContainer,
-} from "./styles";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle } from "./styles.js";
+
+import CancelIcon from "../../../assets/cancel_icon.svg";
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
-import Select from "../../commom/Select";
-import MultiInput from "../../commom/MultiInput";
 
-const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) => {
+import Image from 'next/image.js';
+
+const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const phoneRef = useRef(null);
   const cpfRef = useRef(null);
-  const passwordRef = useRef(null);
   const birthdayRef = useRef(null);
-  const filiacaoRef = useRef(null);
   const rgRef = useRef(null);
   const dataEmissaoRef = useRef(null);
-  const profissaoRef = useRef("Engenheiro Agrônomo");
-  const ruaRef = useRef(null);
-  const bairroRef = useRef(null);
-  const complementoRef = useRef(null);
-  const numeroRef = useRef(null);
+  const streetRef = useRef(null);
+  const neighborhoodRef = useRef(null);
+  const numberRef = useRef(null);
+  const cityRef = useRef(null);
+  const complementRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const phoneRef = useRef(null);
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
       nameRef,
+      cpfRef,
+      birthdayRef,
+      rgRef,
+      dataEmissaoRef,
       emailRef,
       passwordRef,
       phoneRef,
-      birthdayRef,
-      cpfRef,
-      rgRef,
-      dataEmissaoRef,
-      filiacaoRef,
     ];
 
     const validationResults = await Promise.all(
@@ -60,320 +55,195 @@ const FirstStepForm = ({ dataCollector, globalMessage, variant, urlAssociado }) 
 
     const [
       name,
+      cpf,
+      nascimento,
+      rg,
+      emissao,
+      street,
+      neighborhood,
+      number,
+      city,
+      complement,
       email,
       password,
       telefone,
-      nascimento,
-      cpf,
-      rg,
-      emissao,
-      filiacao,
-      profissao,
-      rua,
-      bairro,
-      complemento,
-      numero,
     ] = [
       nameRef,
+      cpfRef,
+      birthdayRef,
+      rgRef,
+      dataEmissaoRef,
+      streetRef,
+      neighborhoodRef,
+      numberRef,
+      cityRef,
+      complementRef,
       emailRef,
       passwordRef,
       phoneRef,
-      birthdayRef,
-      cpfRef,
-      rgRef,
-      dataEmissaoRef,
-      filiacaoRef,
-      profissaoRef,
-      ruaRef,
-      bairroRef,
-      complementoRef,
-      numeroRef,
-
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
       name,
+      cpf,
+      nascimento,
+      rg,
+      emissao,
+      endereco: { street, neighborhood, number, city, complement },
       email,
       password,
       telefone,
-      nascimento,
-      cpf,
-      rg,
-      emissao,
-      filiacao,
-      profissao,
-      endereco: { rua, bairro, complemento, numero },
     });
   });
 
-  const authContext = useAuth();
-  let [userData, setUserData] = useState();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const getUserData = useCallback(async () => {
-    try {
-      const responseData = await service.getUserData(
-        urlAssociado,
-        authContext.token
-      );
-      return responseData.data;
-    } catch (error) {
-      console.log(error);
-      console.log(error.response.data);
-    }
-  }, [authContext.token, authContext.urlUser]);
-
-  const handleUserData = useCallback(async () => {
-    const responseData = await getUserData();
-    setUserData(responseData);
-    setIsLoaded(true);
-  }, [getUserData]);
-
-  useEffect(() => {
-    getUserData();
-    handleUserData();
-  }, []);
-
-  switch (variant) {
-    case "signUp": {
-      return (
-        <Container>
-          <InputForm onSubmit={handleSubmit}>
-            <InputContainer>
+  return (
+    <Container onSubmit={handleSubmit}>
+      <Head>
+        Adicionar Associado
+        <Image src={CancelIcon} onClick={cancelForm} />
+      </Head>
+      <Body>
+        <Description>
+          Passo 1 de 3
+        </Description>
+        <Main>
+          <SubContainer>
+            <SubTitle>
+              Dados Pessoais
+            </SubTitle>
+            <Input
+              variant="default"
+              label={"Nome Completo"}
+              name={"nome"}
+              placeholder={"Digite seu nome completo"}
+              ref={nameRef}
+              validate={validation.requiredTextField}
+            />
+            <InputsContainer>
               <Input
-                variant="signup"
-                label="Nome"
-                name="nome"
-                placeholder="Digite seu nome completo"
-                ref={nameRef}
-                validate={validation.requiredTextField}
-              />
-              <Input
-                variant="signup-optional"
-                label="Email"
-                name="email"
-                placeholder="email@domínio.com"
-                ref={emailRef}
-                validate={validation.testEmail}
-              />
-              <Input
-                variant="signup-optional"
-                label="Senha"
-                name="password"
-                placeholder="Digite sua senha (8 dígitos)"
-                type="password"
-                ref={passwordRef}
-                validate={validation.testPassword}
-              />
-              <Input
-                variant="signup-optional"
-                label="Telefone"
-                name="telefone"
-                placeholder="***********"
-                ref={phoneRef}
-                validate={validation.testPhone}
-              />
-            </InputContainer>
-            <InputContainer>
-              <Input
-                variant="signup-optional"
-                label="Data de Nascimento"
-                name="nascimento"
-                placeholder="DD/MM/AAAA"
-                ref={birthdayRef}
-                validate={validation.testDate}
-              />
-              <Input
-                variant="signup"
-                label="CPF"
-                name="cpf"
-                placeholder="Digite os números do seu CPF"
+                variant="default"
+                label={"CPF"}
+                name={"cpf"}
+                placeholder={"000.000.000-0"}
                 ref={cpfRef}
                 validate={validation.testRequiredCpf}
               />
               <Input
-                variant="signup-optional"
-                label="RG"
-                name="rg"
-                placeholder="Digite os números do seu RG"
+                variant="default-optional"
+                label={"Data de Nascimento"}
+                name={"nascimento"}
+                ref={birthdayRef}
+                placeholder={"DD/MM/AAAA"}
+                validate={validation.testDate}
+              />
+              <Input
+                variant="default-optional"
+                label={"Registro Geral (RG)"}
+                name={"rg"}
+                placeholder={"Digite o seu RG"}
                 ref={rgRef}
                 validate={validation.testNumbers}
               />
               <Input
-                variant="signup-optional"
-                label="Data De Emissão"
-                name="data_de_emissão"
-                placeholder="DD/MM/AAAA"
+                variant="default-optional"
+                label={"Data de Emissão"}
+                name={"data_de_emissão"}
+                placeholder={"DD/MM/AAAA"}
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
+            </InputsContainer>
+          </SubContainer>
+          <SubContainer>
+            <SubTitle>
+              Endereço
+            </SubTitle>
+            <Input
+              variant="default-optional"
+              label={"Nome da rua"}
+              name={"Rua"}
+              placeholder={"Rua"}
+              ref={streetRef}
+              validate={validation.TextField}
+            />
+            <InputsContainer>
               <Input
-                variant="signup-optional"
-                label="Filiação"
-                name="filiação"
-                placeholder="Digite o(s) nome(s) completo(s)"
-                ref={filiacaoRef}
+                variant="default-optional"
+                label={"Bairro"}
+                name={"Bairro"}
+                placeholder={"Bairro"}
+                ref={neighborhoodRef}
                 validate={validation.TextField}
               />
-            </InputContainer>
-            <InputContainer>
-              <Select
-                name="Profissões"
-                ref={profissaoRef}
-                profissoes={[
-                  "Engenheiro Agrônomo",
-                  "Engenheiro Florestal",
-                  "Engenheiro de Pesca",
-                  "Tecnólogo em Cooperativismo",
-                  "Médico Veterinário",
-                  "Zootecnista",
-                  "Biólogo",
-                  "Outro",
-                ]}
+              <Input
+                variant="default-optional"
+                label={"Número"}
+                name={"Número"}
+                placeholder={"Número"}
+                ref={numberRef}
+                validate={validation.testNumbers}
               />
-              <MultiInput
-                label="Endereço"
-                names={["Rua", "Bairro", "Complemento", "Número"]}
-                refs={{
-                  ruaRef,
-                  bairroRef,
-                  complementoRef,
-                  numeroRef,
-                }}
-                validation={validation}
-                variant="step1"
+              <Input
+                variant="default-optional"
+                label={"Cidade"}
+                name={"Cidade"}
+                placeholder={"Cidade"}
+                ref={cityRef}
+                validate={validation.TextField}
               />
-              <ButtonContainer>
-                {globalMessage && <span>{globalMessage}</span>}
-                <Button variant="signup">Próxima Página</Button>
-              </ButtonContainer>
-            </InputContainer>
-          </InputForm>
-        </Container>
-      );
-    }
-    case "editData": {
-      return (
-        <Container>
-          {isLoaded && (
-            <InputForm onSubmit={handleSubmit}>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Nome"
-                  name="nome"
-                  placeholder={userData.name}
-                  validate={validation.TextField}
-                  ref={nameRef}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Email"
-                  name="email"
-                  placeholder={userData.email}
-                  ref={emailRef}
-                  validate={validation.testEmail}
-                />
-                <Input
-                  variant="signup-optional"
-                  validate={validation.testPassword}
-                  label="Senha"
-                  name="password"
-                  placeholder="Digite sua senha (8 dígitos)"
-                  type="password"
-                  ref={passwordRef}
-                />
-                <Input
-                  variant="signup-optional"
-                  validate={validation.testPhone}
-                  label="Telefone"
-                  name="telefone"
-                  placeholder={userData.telefone}
-                  ref={phoneRef}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Input
-                  variant="signup-optional"
-                  label="Data de Nascimento"
-                  validate={validation.testDate}
-                  name="nascimento"
-                  placeholder={userData.nascimento}
-                  ref={birthdayRef}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="CPF"
-                  name="cpf"
-                  validate={validation.testCpf}
-                  placeholder={userData.cpf}
-                  ref={cpfRef}
-                  disabled
-                />
-                <Input
-                  variant="signup-optional"
-                  label="RG"
-                  name="rg"
-                  validate={validation.testNumbers}
-                  placeholder={userData.rg}
-                  ref={rgRef}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Data De Emissão"
-                  name="data_de_emissão"
-                  placeholder={userData.emissao}
-                  validate={validation.testDate}
-                  ref={dataEmissaoRef}
-                />
-                <Input
-                  variant="signup-optional"
-                  label="Filiação"
-                  name="filiação"
-                  placeholder={userData.filiacao}
-                  ref={filiacaoRef}
-                  validate={validation.TextField}
-                />
-              </InputContainer>
-              <InputContainer>
-                <Select
-                  profissaoDefault={userData.profissao}
-                  name="Profissões"
-                  ref={profissaoRef}
-                  profissoes={[
-                    "Engenheiro Agrônomo",
-                    "Engenheiro Florestal",
-                    "Engenheiro de Pesca",
-                    "Tecnólogo em Cooperativismo",
-                    "Médico Veterinário",
-                    "Zootecnista",
-                    "Biólogo",
-                    "Outro",
-                  ]}
-                />
-                <MultiInput
-                  label="Endereço"
-                  names={["Rua", "Bairro", "Complemento", "Número"]}
-                  placeholders={userData.endereco}
-                  refs={{
-                    ruaRef,
-                    bairroRef,
-                    complementoRef,
-                    numeroRef,
-                  }}
-                  variant="step1"
-                  validation={validation}
-                />
-                <ButtonContainer>
-                  {globalMessage && <span>{globalMessage}</span>}
-                  <Button variant="signup">Próxima Página</Button>
-                </ButtonContainer>
-              </InputContainer>
-            </InputForm>)}
-        </Container>
-      );
-    }
-  }
+              <Input
+                variant="default-optional"
+                label={"Complemento"}
+                name={"Complemento"}
+                placeholder={"Complemento"}
+                ref={complementRef}
+                validate={validation.TextField}
+              />
+            </InputsContainer>
+          </SubContainer>
+          <SubContainer>
+            <SubTitle>
+              Dados cadastrais
+            </SubTitle>
+            <Input
+              variant="default-optional"
+              label={"E-mail"}
+              name={"E-mail"}
+              placeholder={"email@domínio.com"}
+              ref={emailRef}
+              validate={validation.testEmail}
+            />
+            <Input
+              variant="default-optional"
+              label={"Senha"}
+              name={"senha"}
+              placeholder={"********"}
+              ref={passwordRef}
+              type="password"
+              validate={validation.testPassword}
+            />
+            <Input
+              variant="default-optional"
+              label={"Telefone"}
+              name={"Telefone"}
+              placeholder={"(XX) YYYY-ZZZZ"}
+              ref={phoneRef}
+              validate={validation.testPhone}
+            />
+          </SubContainer>
+        </Main>
+      </Body>
+      <Footer>
+        <Button variant={"text"} onClick={cancelForm}>
+          CANCELAR
+        </Button>
+        {globalMessage && <span>{globalMessage}</span>}
+        <Button variant={"light"} >
+          CONTINUAR
+        </Button>
+      </Footer>
+    </Container>
+  );
 };
 
 export default FirstStepForm;
