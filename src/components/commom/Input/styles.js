@@ -63,6 +63,11 @@ function getStyleByVariant(variant) {
                     width: 100%;
                 }
 
+                input:focus {
+                    outline: none;
+                    border-bottom: 2px solid ${theme.colors.blue.heavy};
+                }
+
                 input::placeholder {
                     color: var(--text-secundary, ${theme.colors.gray.heavy});
                 }
