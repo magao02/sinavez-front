@@ -14,25 +14,86 @@ function getStyleByVariant(variant) {
                 justify-content: center;
                 width: 100%;
 
-                gap: 1vh;
-                margin: 1vh;
+                gap: 0.5vh;
+                margin-top: 1vh;
+                margin-bottom: 1vh;
 
                 label {
-                    color: ${theme.colors.blue.heavy};
-                    text-align: center;
-                    font-size: 18px;
+                    color: ${theme.colors.gray.default};
+
+                    font-size: 14px;
                     font-family: Roboto;
-                    line-height: 22px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 18px;
+                    width: 100%;
                 }
 
                 label::after {
                     content: '*';
+                    margin-left: 3px;
                     color: ${theme.colors.red};
                 }
 
                 div {
                     display: flex;
-                    justify-content: space-between;
+                    justify-items: center;
+                    width: 100%;
+
+                    span {
+                        width: 100%;
+                        font-weight: bold;
+                        color: ${theme.colors.red};
+                        font-size: 14px;
+                    }
+                    span::after {
+                        content: '.';
+                    }
+                }
+
+                input {
+                    padding: 0;
+                    border-radius: 0;
+                    border: none;
+                    background-color: ${theme.colors.blue.light};
+
+                    color: var(--text-secundary, ${theme.colors.gray.default});
+                    font-size: 18px;
+                    font-family: Roboto;
+                    line-height: 22px;
+                    
+                    border-bottom: 1px solid ${theme.colors.gray.menu};;
+                    padding-bottom: 5px;
+                    width: 100%;
+                }
+                `;
+        }
+
+        case 'default-optional': {
+            return css`   
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+
+                gap: 0.5vh;
+                margin-top: 1vh;
+                margin-bottom: 1vh;
+
+                label {
+                    color: ${theme.colors.gray.default};
+
+                    font-size: 14px;
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 18px;
+                    width: 100%;
+                }
+
+                div {
+                    display: flex;
+                    justify-content: center;
                     width: 100%;
 
                     span {
@@ -47,7 +108,6 @@ function getStyleByVariant(variant) {
                 input {
                     padding: 0;
                     border-radius: 0;
-                    padding-bottom: 0.5vh;
                     border: none;
                     background-color: ${theme.colors.blue.light};
 
@@ -56,45 +116,11 @@ function getStyleByVariant(variant) {
                     font-family: Roboto;
                     line-height: 22px;
                     
-                    border-bottom: 1px solid;
+                    border-bottom: 1px solid ${theme.colors.gray.menu};;
+                    padding-bottom: 5px;
+                    width: 100%;
                 }
                 `;
-        }
-
-        case 'default-optional': {
-            return css`   
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    width: 100%;
-    
-                    label {
-                        color: ${theme.colors.blue.heavy};
-                        text-align: center;
-                        font-size: 18px;
-                        font-family: Roboto;
-                        line-height: 22px;
-                    }
-    
-                    label::after {
-                        content: '*';
-                        color: ${theme.colors.red};
-                    }
-    
-                    div {
-                        display: flex;
-                        justify-content: space-between;
-                        width: 100%;
-    
-                        span {
-                            font-weight: bold;
-                            color: ${theme.colors.red}
-                        }
-                        span::after {
-                            content: '.';
-                        }
-                    }
-                    `;
         }
 
         case 'signup': {
@@ -137,21 +163,19 @@ function getStyleByVariant(variant) {
                     }
             `;
         }
+
+        case 'search': {
+            return css`
+                height: 100%;
+                width: 100%;
+            `
+        }
     }
 };
 
 export const BaseInput = styled.input`
-    padding: 1rem 0 1rem 1.6rem;
-    border-radius: 0.7rem;
-    border: 1px solid ${theme.colors.dark.heavy};
+    height: 100%;
     width: 100%;
-
-    outline: none;
-
-    &::placeholder {
-        color: ${theme.colors.dark.heavy};
-        opacity: 0.3;
-    }
 `;
 
 
