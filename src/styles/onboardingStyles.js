@@ -13,7 +13,7 @@ export const TextBox = styled.div`
 
     position: relative;
 
-    top: 20vh;
+    top: 18vh;
     left: 10vw;
 
     display: flex;
