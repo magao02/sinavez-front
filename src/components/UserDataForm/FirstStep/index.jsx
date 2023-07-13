@@ -4,7 +4,7 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle } from "./styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
 
@@ -13,7 +13,7 @@ import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
 
-const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
+const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -27,6 +27,8 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const phoneRef = useRef(null);
+  /*   const naturalidadeRef = useRef();
+    const nacionalidadeRef = useRef("Brasileiro"); */
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
@@ -38,6 +40,8 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       emailRef,
       passwordRef,
       phoneRef,
+      /*       naturalidadeRef,
+            nacionalidadeRef */
     ];
 
     const validationResults = await Promise.all(
@@ -66,7 +70,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       complement,
       email,
       password,
-      telefone,
+      phone,
     ] = [
       nameRef,
       cpfRef,
@@ -92,7 +96,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       endereco: { street, neighborhood, number, city, complement },
       email,
       password,
-      telefone,
+      phone,
     });
   });
 
@@ -102,6 +106,14 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
         Adicionar Associado
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
+      <Profile>
+        <ProfileTitle>
+          Adicionar foto
+        </ProfileTitle>
+        <ProfileDescription>
+          *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
+        </ProfileDescription>
+      </Profile>
       <Body>
         <Description>
           Passo 1 de 3
@@ -117,6 +129,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               name={"nome"}
               placeholder={"Digite seu nome completo"}
               ref={nameRef}
+              previousValue={previousData.name}
               validate={validation.requiredTextField}
             />
             <InputsContainer>
@@ -125,6 +138,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"CPF"}
                 name={"cpf"}
                 placeholder={"000.000.000-0"}
+                previousValue={previousData.cpf}
                 ref={cpfRef}
                 validate={validation.testRequiredCpf}
               />
@@ -132,6 +146,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 variant="default-optional"
                 label={"Data de Nascimento"}
                 name={"nascimento"}
+                previousValue={previousData.nascimento}
                 ref={birthdayRef}
                 placeholder={"DD/MM/AAAA"}
                 validate={validation.testDate}
@@ -141,6 +156,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Registro Geral (RG)"}
                 name={"rg"}
                 placeholder={"Digite o seu RG"}
+                previousValue={previousData.rg}
                 ref={rgRef}
                 validate={validation.testNumbers}
               />
@@ -149,9 +165,27 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Data de Emissão"}
                 name={"data_de_emissão"}
                 placeholder={"DD/MM/AAAA"}
+                previousValue={previousData.emissao}
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
+              {/*               <Input
+                variant="default-optional"
+                label={"Naturalidade"}
+                name={"naturalidade"}
+                placeholder={"Digite sua naturalidade"}
+                previousValue={previousData.naturalidade}
+                ref={naturalidadeRef}
+                validate={validation.TextField}
+              />
+              <Input
+                variant="default-optional"
+                label={"Nacionalidade"}
+                name={"nacionalidade"}
+                placeholder={"Digite sua nacionalidade"}
+                ref={nacionalidadeRef}
+                validate={validation.TextField}
+              /> */}
             </InputsContainer>
           </SubContainer>
           <SubContainer>
@@ -163,6 +197,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
+              previousValue={previousData.endereco ? previousData.endereco.street : ""}
               ref={streetRef}
               validate={validation.TextField}
             />
@@ -172,6 +207,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Bairro"}
                 name={"Bairro"}
                 placeholder={"Bairro"}
+                previousValue={previousData.endereco ? previousData.endereco.neighborhood : ""}
                 ref={neighborhoodRef}
                 validate={validation.TextField}
               />
@@ -180,6 +216,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Número"}
                 name={"Número"}
                 placeholder={"Número"}
+                previousValue={previousData.endereco ? previousData.endereco.number : ""}
                 ref={numberRef}
                 validate={validation.testNumbers}
               />
@@ -188,6 +225,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Cidade"}
                 name={"Cidade"}
                 placeholder={"Cidade"}
+                previousValue={previousData.endereco ? previousData.endereco.city : ""}
                 ref={cityRef}
                 validate={validation.TextField}
               />
@@ -196,6 +234,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"Complemento"}
                 name={"Complemento"}
                 placeholder={"Complemento"}
+                previousValue={previousData.endereco ? previousData.endereco.complement : ""}
                 ref={complementRef}
                 validate={validation.TextField}
               />
@@ -210,6 +249,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               label={"E-mail"}
               name={"E-mail"}
               placeholder={"email@domínio.com"}
+              previousValue={previousData.email}
               ref={emailRef}
               validate={validation.testEmail}
             />
@@ -218,6 +258,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               label={"Senha"}
               name={"senha"}
               placeholder={"********"}
+              previousValue={previousData.password}
               ref={passwordRef}
               type="password"
               validate={validation.testPassword}
@@ -227,6 +268,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}
+              previousValue={previousData.phone}
               ref={phoneRef}
               validate={validation.testPhone}
             />
