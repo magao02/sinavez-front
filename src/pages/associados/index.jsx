@@ -15,6 +15,8 @@ import SearchBar from "../../components/commom/SearchBar";
 import DarkBackground from "../../components/commom/DarkBackground"
 import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
+import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
+import DependentsContainer from "../../components/DependentsContainer";
 
 import AddIcon from "../../assets/add_icon.svg";
 
@@ -148,10 +150,13 @@ const Associados = () => {
           <DarkBackground pageHeight={"143vh"} />
           <AddAssociateBox>
             {currentStep == 1 && (
-              <FirstStepForm globalMessage={globalMessage} title={"Adicionar Associado"} variant={"step1"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
+              <FirstStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
             )}
             {currentStep == 2 && (
-              <SecondStepForm globalMessage={globalMessage} title={"Adicionar Associado"} variant={"step2"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+              <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+            )}
+            {currentStep == 3 && (
+              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
           </AddAssociateBox>
         </>
