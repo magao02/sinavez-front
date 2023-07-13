@@ -18,6 +18,9 @@ function getStyleByVariant(variant) {
         align-self: stretch;
         gap: 0.7vw;
 
+        height: ${props => props.height};
+        width: ${props => props.width};
+
         border-radius: 4px;
         border: none;
         background: var(--azul-0, ${theme.colors.blue.heavy});
