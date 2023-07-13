@@ -73,59 +73,52 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
   switch (variant) {
     case "default": {
       return (
-        <Container>
-          <Button variant="image"></Button>
-          <Header>
-            <Title>Cadastrar Dependente</Title>
-          </Header>
-          <Form onSubmit={handleSubmit}>
-            <FormContainer>
-              <Input
-                type="text"
-                label="Nome"
-                placeholder="Digite seu nome completo"
-                variant="signup"
-                ref={nameRef}
-                validate={validation.requiredTextField}
-              />
-              <Input
-                type="text"
-                label="Data de Nascimento"
-                placeholder="DD/MM/AAAA"
-                variant="signup-optional"
-                ref={birthdayRef}
-                validate={validation.testDate}
-              />
-              <Input
-                type="text"
-                label="CPF"
-                placeholder="Digite apenas os números do CPF"
-                variant="signup-optional"
-                ref={cpfRef}
-                validate={validation.testCpf}
-              />
-            </FormContainer>
-            <FormContainer>
-              <Input
-                type="text"
-                label="RG"
-                placeholder="Digite os números do seu RG"
-                variant="signup-optional"
-                ref={rgRef}
-                validate={validation.testNumbers}
-              />
-              <Input
-                type="text"
-                label="Data de Emissão"
-                placeholder="DD/MM/AAAA"
-                variant="signup-optional"
-                ref={dataEmissaoRef}
-                validate={validation.testDate}
-              />
-              <Button variant="signup">Cadastrar Dependente</Button>
-              {globalMessage && <span>{globalMessage}</span>}
-            </FormContainer>
-          </Form>
+        <Container variant="default">
+          <SubTitle>
+            Dados do Dependente
+          </SubTitle>
+          <Input
+            variant="default"
+            label={"Nome Completo"}
+            name={"nome_completo"}
+            placeholder={"Digite onde você trabalha"}
+            validate={validation.requiredTextField}
+          />
+          <Input
+            variant="default-optional"
+            label={"Data de nascimento"}
+            name={"data_de_nascimento"}
+            placeholder={"DD/MM/AAAA"}
+            validate={validation.testDate}
+          />
+          <Input
+            variant="default"
+            label={"CPF"}
+            name={"cpf"}
+            placeholder={"000.000.000-0"}
+            validate={validation.testCpf}
+          />
+          <Input
+            variant="default-optional"
+            label={"RG"}
+            name={"rg"}
+            placeholder={"Digite o RG do dependente"}
+            validate={validation.TextField}
+          />
+          <Input
+            variant="default-optional"
+            label={"Data de emissão"}
+            name={"data_de_emissao"}
+            placeholder={"DD/MM/AAAA"}
+            validate={validation.testDate}
+          />
+          <Input
+            variant="default"
+            label={"Parentesco"}
+            name={"parentesco"}
+            placeholder={"Filho/Filha/Neto/etc"}
+            validate={validation.TextField}
+          />
         </Container>
       );
     }
