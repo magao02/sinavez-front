@@ -1,8 +1,8 @@
 import { useState, forwardRef, useCallback, useImperativeHandle } from "react";
 import { Container, BaseInput } from "./styles";
 
-const Input = ({ variant, label, name, validate, onChange, ...rest }, ref) => {
-    const [value, setValue] = useState('');
+const Input = ({ variant, label, name, validate, onChange, previousValue, ...rest }, ref) => {
+    const [value, setValue] = useState(previousValue);
     const [alertMessage, setAlertMessage] = useState(null);
 
     const executeValidation = useCallback(
