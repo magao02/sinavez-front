@@ -4,7 +4,7 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle } from "./styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
 import LeftIcon from "../../../assets/blue_left_icon.svg";
@@ -14,49 +14,33 @@ import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
 
-const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) => {
-  const cidadeRef = useRef();
-  const estadoRef = useRef();
-  const naturalidadeRef = useRef();
-  const nacionalidadeRef = useRef("Brasileiro");
-  const brasileiroRef = useRef(true);
-  const numeroInscricaoRef = useRef();
-  const dataAfiliacaoRef = useRef();
+const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm }) => {
   const formacaoSuperiorRef = useRef();
-  const instituicaoSuperiorRef = useRef();
   const dataFormacaoRef = useRef();
-  const numRegistroConselhoRef = useRef();
-  const dataRegistroConselhoRef = useRef();
   const empresaRef = useRef();
+  const instituicaoSuperiorRef = useRef();
   const salarioRef = useRef();
 
+  const numRegistroConselhoRef = useRef();
+  const dataRegistroConselhoRef = useRef();
+  const numeroInscricaoRef = useRef();
+  const dataAfiliacaoRef = useRef();
+
+  /*   const cidadeRef = useRef();
+    const estadoRef = useRef(); */
+
   const allFieldsAreValid = useCallback(async () => {
+    const inputRefs = [
+      formacaoSuperiorRef, dataFormacaoRef, empresaRef,
+      instituicaoSuperiorRef, salarioRef, /* cidadeRef, estadoRef, */
+      numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef,
+      dataAfiliacaoRef
+    ];
 
-    if (brasileiroRef === false) {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-        nacionalidadeRef, numeroInscricaoRef,
-        dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef, salarioRef];
-
-      const validationResults = await Promise.all(
-        inputRefs.map((inputRef) => inputRef.current?.validate()),
-      )
-      return validationResults.every((result) => result === true);
-    }
-
-    else {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-        numeroInscricaoRef, dataAfiliacaoRef, formacaoSuperiorRef,
-        instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef, salarioRef];
-
-      const validationResults = await Promise.all(
-        inputRefs.map((inputRef) => inputRef.current?.validate()),
-      )
-      return validationResults.every((result) => result === true);
-    }
+    const validationResults = await Promise.all(
+      inputRefs.map((inputRef) => inputRef.current?.validate()),
+    )
+    return validationResults.every((result) => result === true);
   });
 
   const handleSubmit = useCallback(async (event) => {
@@ -65,22 +49,21 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
 
     if (!isValidSubmit) return;
 
-    const salario = Number(salarioRef.current?.value.replace(",", "."));
+    const salario = salarioRef.current?.value != undefined ? Number(salarioRef.current?.value.replace(",", ".")) : 0.0;
 
-    const [municipio, estado, naturalidade, nacionalidade, numInscricao,
-      dataAfiliacao, formacaoSuperior, instituicaoSuperior, dataFormacao,
-      numRegistroConselho, dataRegistroConselho, empresa] =
-      [cidadeRef, estadoRef, naturalidadeRef,
-        nacionalidadeRef, numeroInscricaoRef,
-        dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef].map(
-          (inputRef) => inputRef.current?.value,);
+    const [formacaoSuperior, dataFormacao, empresa, instituicaoSuperior,
+      numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao,
+      /* municipio, estado */] =
+      [formacaoSuperiorRef, dataFormacaoRef, empresaRef, instituicaoSuperiorRef,
+        numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef, dataAfiliacaoRef,
+        /* cidadeRef, estadoRef */
+      ].map(
+        (inputRef) => inputRef.current?.value,);
 
     dataCollector({
-      regional: { municipio, estado, naturalidade, nacionalidade },
-      numInscricao, dataAfiliacao, formacaoSuperior, instituicaoSuperior,
-      dataFormacao, numRegistroConselho, dataRegistroConselho, empresa, salario
+      /* regional: { municipio, estado, naturalidade, nacionalidade }, */
+      formacaoSuperior, dataFormacao, empresa, instituicaoSuperior, salario,
+      numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao
     })
   });
 
@@ -90,6 +73,14 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
         Adicionar Associado
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
+      <Profile>
+        <ProfileTitle>
+          Adicionar foto
+        </ProfileTitle>
+        <ProfileDescription>
+          *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
+        </ProfileDescription>
+      </Profile>
       <Body>
         <Description>
           Passo 2 de 3
@@ -104,6 +95,7 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
               label={"Curso de Formação"}
               name={"curso_de_formacao"}
               placeholder={"Digite seu curso de formação"}
+              previousValue={previousData.formacaoSuperior}
               ref={formacaoSuperiorRef}
               validate={validation.TextField}
             />
@@ -111,8 +103,9 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
               variant="default-optional"
               label={"Data de Formação"}
               name={"data_de_formacao"}
-              ref={dataFormacaoRef}
               placeholder={"DD/MM/AAAA"}
+              previousValue={previousData.dataFormacao}
+              ref={dataFormacaoRef}
               validate={validation.testDate}
             />
           </SubContainer>
@@ -124,24 +117,27 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
               variant="default-optional"
               label={"Organização ou empresa que trabalha"}
               name={"trabalho"}
-              ref={empresaRef}
               placeholder={"Digite onde você trabalha"}
+              previousValue={previousData.empresa}
+              ref={empresaRef}
               validate={validation.TextField}
             />
             <Input
               variant="default-optional"
               label={"Instituição"}
               name={"instituição"}
-              ref={instituicaoSuperiorRef}
               placeholder={"Digite a instituição"}
+              previousValue={previousData.instituicaoSuperior}
+              ref={instituicaoSuperiorRef}
               validate={validation.TextField}
             />
             <Input
               variant="default-optional"
               label={"Salário"}
               name={"salario"}
-              ref={salarioRef}
               placeholder={"R$ 00,00"}
+              previousValue={previousData.salario}
+              ref={salarioRef}
               validate={validation.testNumbers}
             />
           </SubContainer>
@@ -149,19 +145,29 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
             <SubTitle>
               Vínculo com a SINAVEZ
             </SubTitle>
-            <Input
+            {/*             <Input
               variant="default-optional"
               label={"Regional"}
               name={"regional"}
               placeholder={"Digite a sua regional"}
               validate={validation.TextField}
-            />
+            /> */}
             <Input
               variant="default-optional"
               label={"Número de registro no conselho"}
               name={"numero_de_registro"}
-              ref={numRegistroConselhoRef}
               placeholder={"Digite o seu número de registro no conselho"}
+              previousValue={previousData.numRegistroConselho}
+              ref={numRegistroConselhoRef}
+              validate={validation.testNumbers}
+            />
+            <Input
+              variant="default-optional"
+              label={"Data de registro no conselho"}
+              name={"data_de_registro"}
+              placeholder={"DD/MM/AAAA"}
+              previousValue={previousData.dataRegistroConselho}
+              ref={dataRegistroConselhoRef}
               validate={validation.testDate}
             />
             <InputsContainer>
@@ -169,17 +175,19 @@ const SecondStep = ({ dataCollector, firstButton, globalMessage, cancelForm }) =
                 variant="default-optional"
                 label={"Número de Inscrição"}
                 name={"numero_de_inscricao"}
+                placeholder={"Número de inscrição"}
+                previousValue={previousData.numInscricao}
                 ref={numeroInscricaoRef}
-                placeholder={"Digite seu número de inscrição"}
                 validate={validation.testNumbers}
               />
               <Input
                 variant="default-optional"
                 label={"Data de Afiliação"}
                 name={"data_de_afiliacao"}
-                ref={dataAfiliacaoRef}
                 placeholder={"DD/MM/AAAA"}
-                validate={validation.testPhone}
+                previousValue={previousData.dataAfiliacao}
+                ref={dataAfiliacaoRef}
+                validate={validation.testDate}
               />
             </InputsContainer>
           </SubContainer>
