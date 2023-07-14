@@ -145,7 +145,7 @@ const Associados = () => {
       <Navigation selectedPage={"associados"} variant={checkNav()} />
       {addAssociateToggle && (
         <>
-          <DarkBackground pageHeight={"143vh"} />
+          <DarkBackground />
           <AddAssociateBox>
             {currentStep == 1 && (
               <FirstStepForm globalMessage={globalMessage} title={"Adicionar Associado"} variant={"step1"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
