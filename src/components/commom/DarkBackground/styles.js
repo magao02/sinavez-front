@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   z-index: 99;
 
-  position: absolute;
-  height: ${props => props.pageHeight};
-  width: 100vw;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 
   background-color: black;
   opacity: 50%;
