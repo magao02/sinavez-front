@@ -7,6 +7,8 @@ import Image from "next/image";
 import {
   FeatureContent,
   Card,
+  CardInner,
+  CardImage,
   ButtonContainer,
   Details,
   Title,
@@ -14,10 +16,24 @@ import {
   Features,
 } from "./styles.js";
 
+import IconWifi from "../../assets/apartamento/wifi.svg";
+import IconPet from "../../assets/apartamento/wifi.svg";
+import IconBathtub from "../../assets/apartamento/wifi.svg";
+import IconWind from "../../assets/apartamento/wind.svg";
+
 const Feature = ({ text }) => {
+  let image;
+  // this sucks
+  switch (text) {
+    case "1 Suíte": image = IconBathtub; break;
+    case "Wifi Grátis": image = IconWifi; break;
+    case "Aceita pets": image = IconPet; break;
+    case "Ar-condicionado": image = IconWind; break;
+    default: image = IconWifi; break;
+  }
   return (
     <FeatureContent>
-      <img src="https://source.unsplash.com/random/20x20" width="20" height="20"/>
+      <Image src={image} width="32" height="32" className="icon" />
       {text}
     </FeatureContent>
   );
@@ -26,22 +42,26 @@ const Feature = ({ text }) => {
 const Apartamento = ({ nome, image, reserva, proxReserva, features }) => {
   return (
     <Card>
-      <img src={image} />
+      <CardImage>
+        <img src={image.src} alt="Imagem do apartamento" />
+      </CardImage>
 
-      <Details>
-        <Title>{nome}</Title>
-        <Reserva>Reserva mais proxima: De {reserva.from} até {reserva.to}</Reserva>
-        <Reserva small>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Reserva>
-        <Features>
-          {features.map(text => (
-            <Feature text={text} />
-          ))}
-        </Features>
-      </Details>
-      
-      <ButtonContainer>
-        <Button>VER MAIS</Button>
-      </ButtonContainer>
+      <CardInner>
+        <Details>
+          <Title>{nome}</Title>
+          <Reserva>Reserva mais proxima: De {reserva.from} até {reserva.to}</Reserva>
+          <Reserva small>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Reserva>
+          <Features>
+            {features.map(text => (
+              <Feature text={text} />
+            ))}
+          </Features>
+        </Details>
+        
+        <ButtonContainer>
+          <Button>VER MAIS</Button>
+        </ButtonContainer>
+      </CardInner>
     </Card>
   );
 };

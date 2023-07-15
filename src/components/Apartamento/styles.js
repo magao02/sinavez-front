@@ -3,53 +3,59 @@ import styled from "styled-components";
 export const FeatureContent = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 5px;
-  font-size: 0.9em;
+  font-size: 16px;
   color: #777;
-  & > img {
-    border-radius: 50px;
-  }
 `;
-
-const round = "10px";
 
 export const Card = styled.div`
   display: flex;
-  border: 2px solid #ddf;
-  border-radius: ${round};
-  gap: 15px;
 
-  // TODO: need a better way of doing this
+  border-radius: 8px;
+  border: 1px solid var(--azul-2, #C5DBF2);
+
+  overflow: hidden;
+`;
+
+export const CardInner = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 24px;
+`;
+
+export const CardImage = styled.div`
+  width: 415px;
+  flex-shrink: 0;
   & > img {
-    border-radius: ${round} 0 0 ${round}; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
 export const ButtonContainer = styled.div`
   margin-left: auto;
-  padding: 20px;
 `;
 
 export const Details = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  margin: 20px 0;
 `;
 
 export const Title = styled.h1`
-  font-size: 1.3em;
+  font-size: 24px;
   color: #444;
 `;
 
 export const Reserva = styled.span`
   color: #777;
-  font-size: ${props => props.small ? "0.9em" : "1.0em"};
+  font-size: ${props => props.small ? "16px" : "18px"};
 `;
 
 export const Features = styled.div`
-  margin-top: auto;
+  margin-top: calc(32px - 10px);
   display: flex;
-  gap: 15px;
+  gap: 16px;
 `;
