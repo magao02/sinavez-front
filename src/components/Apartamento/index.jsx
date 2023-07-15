@@ -17,8 +17,8 @@ import {
 } from "./styles.js";
 
 import IconWifi from "../../assets/apartamento/wifi.svg";
-import IconPet from "../../assets/apartamento/wifi.svg";
-import IconBathtub from "../../assets/apartamento/wifi.svg";
+import IconPet from "../../assets/apartamento/pet.svg";
+import IconBathtub from "../../assets/apartamento/bathtub.svg";
 import IconWind from "../../assets/apartamento/wind.svg";
 
 const Feature = ({ text }) => {
