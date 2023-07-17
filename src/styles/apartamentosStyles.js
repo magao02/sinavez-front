@@ -49,12 +49,56 @@ export const Blue = styled.div`
   background: var(--azul-1, #5D9BDA);
 `;
 
+export const SearchHelpContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > h1 {
+    color: var(--text-invertido, #FDFDFD);
+    text-align: center;
+
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 10px;
+  }
+
+  & > p {
+    color: var(--azul-1, #043F79);
+    text-align: center;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    margin-bottom: 10px;
+  }
+`;
+
 export const SearchHelp = styled.div`
   border-radius: 10px;
   border: 1px solid var(--azul-2, #C5DBF2);
   color: var(--text-invertido, #FDFDFD);
   max-width: 480px;
   padding: 16px;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  p {
+    color: var(--text-invertido, #FDFDFD);
+
+    /* desktop.body2 */
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+  }
 `;
 
 export const NavSpacing = styled.div`

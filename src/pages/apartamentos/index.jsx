@@ -4,7 +4,10 @@ import Button from "../../components/commom/Button";
 import { CounterInput, DropdownInput, SearchInput } from "../../components/SearchInputs";
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
+import ReservaData from "../../assets/apartamento/reserva_data.svg";
 import Navigation from "../../components/commom/Nav";
+
+import Steps from "../../components/Steps";
 
 import {
     Blue,
@@ -17,7 +20,9 @@ import {
     SearchHelp,
     NavSpacing,
     Title,
+    SearchHelpContainer,
 } from "../../styles/apartamentosStyles";
+import Image from "next/image";
 
 const Search = () => {
   return (
@@ -56,7 +61,15 @@ const Page = () => {
       <Content>
         <Blue>
           <Search />
-          <SearchHelp>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</SearchHelp>
+          <SearchHelpContainer>
+            <h1>Faça sua reserva!</h1>
+            <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p>
+            <SearchHelp>
+              <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} />
+              <Image src={ReservaData} />
+              <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
+            </SearchHelp>
+          </SearchHelpContainer>
         </Blue>
 
         <Title>Apartamentos Disponíveis</Title>
