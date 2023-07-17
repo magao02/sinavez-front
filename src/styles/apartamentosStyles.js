@@ -5,13 +5,12 @@ export const Card = styled.div`
   flex-direction: column;
   background: #C5DBF2;
   border-radius: 10px;
-  padding: 20px;
-  gap: 1em;
+  padding: 26px;
+  gap: 1.5em;
 `;
 
 export const Tabs = styled.div`
   display: flex;
-  margin-bottom: 0.6em;
 `;
 
 export const Tab = styled.span`
@@ -65,6 +64,18 @@ export const NavSpacing = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 5vw;
   gap: 16px;
+  padding: 0 30px;
+  @media(min-width: 1400px) {
+    padding: 0 10vw;
+  }
+`;
+
+export const Title = styled.h1`
+  color: rgba(0, 0, 0, 0.80);
+
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 36px;
 `;

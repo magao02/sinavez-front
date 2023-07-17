@@ -16,6 +16,7 @@ import {
     Content,
     SearchHelp,
     NavSpacing,
+    Title,
 } from "../../styles/apartamentosStyles";
 
 const Search = () => {
@@ -37,7 +38,7 @@ const Search = () => {
           <CounterInput min={0} label="Pets" />
         </Row>
         
-        <DropdownInput label="Tipo de Apartamento" options={["Comum", "Alguma", "Coisa"]} />
+        <DropdownInput label="Tipo de Apartamento" options={["Comum", "PCD"]} />
       </Card>
       <Button>BUSCAR APARTAMENTOS</Button>
     </ColumnContent>
@@ -57,6 +58,8 @@ const Page = () => {
           <Search />
           <SearchHelp>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</SearchHelp>
         </Blue>
+
+        <Title>Apartamentos Disponíveis</Title>
 
         {
           Array(20).fill(0).map(() => (
