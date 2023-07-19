@@ -1,4 +1,4 @@
-import { Input, CounterInputContainer, CounterInputButton, Label, Select } from "./styles";
+import { Input, CounterInputContainer, CounterInputButton, Label, Select, RangeInput, RangeValues } from "./styles";
 
 import Image from "next/image";
 
@@ -73,4 +73,16 @@ export const SearchInput = ({ label, innerLabel, type, placeholder }) => {
     </Label>
   );
 };
-  
+
+export const SliderInput = ({ label, min, max, value }) => {
+  return (
+    <Label>
+      {label}
+      <RangeInput type="range" min={min} max={max} value={value} />
+      <RangeValues>
+        <span>{min}</span>
+        <span>{max}</span>
+      </RangeValues>
+    </Label>
+  );
+}

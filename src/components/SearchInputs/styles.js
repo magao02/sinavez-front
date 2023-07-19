@@ -104,3 +104,17 @@ export const CounterInputButton = styled.span`
     display: contents;
     cursor: pointer;
 `;
+
+export const RangeInput = styled.input`
+    appearance: revert;
+    background: rgba(255, 0, 0, 30%);
+    width: 100%;
+    accent-color: ${theme.colors.blue.heavy};
+    cursor: pointer;
+`;
+
+export const RangeValues = styled.div`
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+`;

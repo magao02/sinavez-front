@@ -3,7 +3,7 @@ import { useState } from "react";
 import Apartamento from "../../components/Apartamento";
 
 import Button from "../../components/commom/Button";
-import { CounterInput, DropdownInput, SearchInput } from "../../components/SearchInputs";
+import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
 import ReservaData from "../../assets/apartamento/reserva_data.svg";
@@ -61,6 +61,10 @@ const Search = ({ tabIndex, setTabIndex }) => {
         {
           tabIndex === 0 && <DropdownInput label="Tipo de Apartamento" options={["Comum", "PCD"]} />
         }
+
+        {
+          tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={4} />
+        }
       </Card>
       <Button>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
     </ColumnContent>
@@ -71,7 +75,7 @@ const Page = () => {
   const reserva = { from: "05/04/2023", to: "10/05/2023" };
   const proxReserva = { from: "07/06", to: "10/06" };
 
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(1);
 
   return (
     <div>
