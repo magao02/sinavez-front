@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import theme from "./theme";
 
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  background: #C5DBF2;
+  background: ${theme.colors.blue.shadow};
   border-radius: 10px;
   padding: 26px;
   gap: 1.5em;
@@ -14,9 +15,15 @@ export const Tabs = styled.div`
 `;
 
 export const Tab = styled.span`
-  --color: ${props => props.selected ? "#0760BA" : "#666"};
+  --color: ${props => props.selected ? theme.colors.blue.heavy : theme.colors.gray.default};
   border-bottom: ${props => props.selected ? "2px" : "1px"} solid var(--color);
+
   color: var(--color);
+
+  font-size: 1.1em;
+  font-weight: 600;
+  
+  padding-bottom: 9px;
   flex-grow: 1;
   text-align: center;
   user-select: none;
@@ -46,7 +53,7 @@ export const Blue = styled.div`
   padding: 40px;
 
   border-radius: 0px 0px 16px 16px;
-  background: var(--azul-1, #5D9BDA);
+  background: ${theme.colors.blue.background};
 `;
 
 export const SearchHelpContainer = styled.div`
@@ -55,7 +62,7 @@ export const SearchHelpContainer = styled.div`
   align-items: center;
 
   & > h1 {
-    color: var(--text-invertido, #FDFDFD);
+    color: ${theme.colors.white.light};
     text-align: center;
 
     font-size: 24px;
@@ -66,7 +73,7 @@ export const SearchHelpContainer = styled.div`
   }
 
   & > p {
-    color: var(--azul-1, #043F79);
+    color: #043F79;
     text-align: center;
 
     font-size: 16px;
@@ -79,8 +86,8 @@ export const SearchHelpContainer = styled.div`
 
 export const SearchHelp = styled.div`
   border-radius: 10px;
-  border: 1px solid var(--azul-2, #C5DBF2);
-  color: var(--text-invertido, #FDFDFD);
+  border: 1px solid ${theme.colors.blue.shadow};
+  color: ${theme.colors.white.light};
   max-width: 480px;
   padding: 16px;
   flex-grow: 1;
@@ -90,7 +97,7 @@ export const SearchHelp = styled.div`
   justify-content: space-between;
 
   p {
-    color: var(--text-invertido, #FDFDFD);
+    color: ${theme.colors.white.light};
 
     /* desktop.body2 */
     font-family: Roboto;
