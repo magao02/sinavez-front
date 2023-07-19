@@ -1,14 +1,7 @@
 import styled, { css } from "styled-components";
 import CalendarIcon from "../../assets/calendar_icon.svg";
 import ArrowDropdownFilled from "../../assets/arrow_dropdown_filled.svg";
-
-export const Label = styled.label`
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    color: #4f4f4f;
-    flex-grow: 1;
-`;
+import theme from "../../styles/theme";
 
 const commonStyle = css`
     outline: none;
@@ -16,7 +9,7 @@ const commonStyle = css`
     border-bottom: 2px solid #999;
     background-color: #EDF6FF;
 
-    padding: 0.65em 0.4em;
+    padding: 0.7em 0.65em;
     border-radius: 0.2em 0.2em 0 0;
 
     &:hover {
@@ -28,13 +21,38 @@ const commonStyle = css`
     }
 `;
 
-export const Input = styled.input`
-    ${commonStyle}
-    
-    cursor: pointer;
+export const Label = styled.label`
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #4f4f4f;
+    flex-grow: 1;
 
+    & > .container {
+        ${commonStyle}
+        padding-bottom: 0.4em;
+        cursor: pointer;
+
+        & > .innerLabel {
+            color: ${theme.colors.gray.default};
+            font-size: 14px;
+            margin-bottom: 5px;
+            user-select: none;
+        }
+
+        & > input {
+            width: 100%;
+        }
+    }
+`;
+
+export const Input = styled.input`
     -webkit-appearance: none;
     appearance: none;
+    border: none;
+    background-color: transparent;
+
+    cursor: pointer;
 
     &::-webkit-inner-spin-button,
     &::-webkit-calendar-picker-indicator {
@@ -42,7 +60,11 @@ export const Input = styled.input`
         -webkit-appearance: none;
     }
 
-    &[type="date"] {
+    &:focus-within {
+        outline: none;
+    }
+
+    &[type="date"], &[type="time"] {
         background-image: url(${CalendarIcon.src});
         background-repeat: no-repeat;
         background-position: calc(100% - 10px) 50%;
@@ -64,6 +86,7 @@ export const Select = styled.select`
 
 export const CounterInputContainer = styled.div`
     ${commonStyle};
+
     border: none;
 
     padding: 0.2em 0.4em;

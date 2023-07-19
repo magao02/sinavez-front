@@ -56,9 +56,9 @@ export const DropdownInput = ({ label, options }) => {
   );
 };
 
-export const SearchInput = ({ label, type, placeholder }) => {
+export const SearchInput = ({ label, innerLabel, type, placeholder }) => {
   const onClick = (event) => {
-    if (type === 'date') {
+    if (type === 'date' || type === 'time') {
       event.target.showPicker();
       event.preventDefault();
     }
@@ -66,7 +66,10 @@ export const SearchInput = ({ label, type, placeholder }) => {
   return (
     <Label>
       {label}
-      <Input type={type} placeholder={placeholder} onClick={onClick} />
+      <div className="container">
+        { innerLabel && <p className="innerLabel">{innerLabel}</p> }
+        <Input type={type} placeholder={placeholder} onClick={onClick} />
+      </div>
     </Label>
   );
 };
