@@ -30,6 +30,15 @@ export const Input = styled.input`
     ${commonStyle}
     
     cursor: pointer;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-calendar-picker-indicator {
+        display: none;
+        -webkit-appearance: none;
+    }
 `;
 
 export const CounterInputContainer = styled.div`
