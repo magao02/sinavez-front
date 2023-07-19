@@ -48,7 +48,7 @@ export const DropdownInput = ({ label, options }) => {
       <Input as="select">
         {
           options.map(opt => 
-            <option value={opt}>{opt}</option>
+            <option value={opt} key={opt}>{opt}</option>
           )
         }
       </Input>

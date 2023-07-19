@@ -75,13 +75,14 @@ const Page = () => {
         <Title>Apartamentos Disponíveis</Title>
 
         {
-          Array(20).fill(0).map(() => (
+          Array(20).fill(0).map((_, i) => (
             <Apartamento
               nome="Apartamento algum ai"
               image={Placeholder}
               reserva={reserva}
               proxReserva={proxReserva}
               features={["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"]}
+              key={i}
             />
           ))
         }

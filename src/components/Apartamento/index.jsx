@@ -53,7 +53,7 @@ const Apartamento = ({ nome, image, reserva, proxReserva, features }) => {
           <Reserva small>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Reserva>
           <Features>
             {features.map(text => (
-              <Feature text={text} />
+              <Feature text={text} key={text} />
             ))}
           </Features>
         </Details>
