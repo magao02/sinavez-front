@@ -107,7 +107,6 @@ export const CounterInputButton = styled.span`
 
 export const RangeInput = styled.input`
     appearance: revert;
-    background: rgba(255, 0, 0, 30%);
     width: 100%;
     accent-color: ${theme.colors.blue.heavy};
     cursor: pointer;
