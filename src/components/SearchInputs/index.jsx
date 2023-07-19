@@ -1,4 +1,4 @@
-import { Input, CounterInputContainer, CounterInputButton, Label } from "./styles";
+import { Input, CounterInputContainer, CounterInputButton, Label, Select } from "./styles";
 
 import Image from "next/image";
 
@@ -45,13 +45,13 @@ export const DropdownInput = ({ label, options }) => {
   return (
     <Label>
       {label}
-      <Input as="select">
+      <Select>
         {
           options.map(opt => 
             <option value={opt} key={opt}>{opt}</option>
           )
         }
-      </Input>
+      </Select>
     </Label>
   );
 };
