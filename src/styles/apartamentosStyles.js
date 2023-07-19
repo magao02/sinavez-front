@@ -124,6 +124,7 @@ export const Content = styled.div`
 
 export const Title = styled.h1`
   color: rgba(0, 0, 0, 0.80);
+  margin-top: 16px;
 
   font-size: 32px;
   font-style: normal;
