@@ -39,9 +39,16 @@ const Search = ({ tabIndex, setTabIndex }) => {
         }
 
         <Row>
-          <SearchInput label="Chegada" type="date" />
-          <SearchInput label="Saída" type="date" />
+          <div className="column">
+            <SearchInput innerLabel="Data" label="Chegada" type="date" />
+            <SearchInput innerLabel="Horário" type="time" />
+          </div>
+          <div className="column">
+            <SearchInput innerLabel="Data" label="Saída" type="date" />
+            <SearchInput innerLabel="Horário" type="time" />
+          </div>
         </Row>
+
         {
           tabIndex === 0 && <Row>
             <CounterInput min={0} label="Adultos" />

@@ -39,6 +39,13 @@ export const Tab = styled.span`
 export const Row = styled.div`
   display: flex;
   gap: 1em;
+  
+  & > .column {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 `;
 
 export const ColumnContent = styled.div`
