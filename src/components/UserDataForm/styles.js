@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import theme from '../../styles/theme';
-import icon_add_picture from '../../assets/img/icon_add_picture.png';
-
 
 export const Container = styled.form`
     z-index: 100;
@@ -91,6 +89,7 @@ export const Main = styled.div`
     align-items: flex-start;
     gap: 52px;
     width: 100%;
+    height: ${props => props.height ? '853px' : '100%'};
 
     border-radius: 8px;
     border: 1px solid var(--azul-1, ${theme.colors.blue.background});
@@ -113,7 +112,7 @@ export const SubContainer = styled.div`
     align-items: flex-start;
     gap: 16px;
     align-self: stretch;
-    margin-top: ${props => props.marginTop ? '50px' : '0px'};
+    margin-top: ${props => props.marginTop ? '20px' : '0px'};
 `
 
 export const SubTitle = styled.h3`
@@ -148,6 +147,7 @@ export const ProfileArguments = styled.div`
 `
 
 export const ProfileAvatar = styled.div`
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -155,25 +155,26 @@ export const ProfileAvatar = styled.div`
     height: 114px;
     border-radius: 100%;
     border: 1px solid #C5DBF2;
+    
     background-color: #EDF6FF;
-    position: relative;
+    background-size: 100% auto;
+    background-position: center;
+`
 
-    &:before {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        content: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_1660_109089)'%3E%3Cpath d='M12.6896 15.5C14.7607 15.5 16.4396 13.8211 16.4396 11.75C16.4396 9.67893 14.7607 8 12.6896 8C10.6186 8 8.93964 9.67893 8.93964 11.75C8.93964 13.8211 10.6186 15.5 12.6896 15.5Z' stroke='%23FF730E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6.67206 19.1904C7.23635 18.0789 8.09739 17.1454 9.15975 16.4933C10.2221 15.8413 11.4443 15.4961 12.6908 15.4961C13.9373 15.4961 15.1595 15.8413 16.2219 16.4933C17.2842 17.1454 18.1453 18.0789 18.7096 19.1904' stroke='%23FF730E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M17.1896 5.75H21.6896' stroke='%23FF730E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M19.4396 3.5V8' stroke='%23FF730E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M21.5636 11C21.88 12.88 21.5907 14.812 20.7376 16.5169C19.8844 18.2217 18.5114 19.6114 16.817 20.4851C15.1225 21.3588 13.1942 21.6714 11.3105 21.3777C9.42684 21.084 7.68522 20.1992 6.33716 18.8512C4.9891 17.5031 4.10435 15.7615 3.81066 13.8778C3.51697 11.9941 3.82955 10.0658 4.70325 8.37135C5.57696 6.67689 6.96658 5.30395 8.67147 4.45076C10.3764 3.59758 12.3083 3.30832 14.1883 3.62473' stroke='%23FF730E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1660_109089'%3E%3Crect width='24' height='24' fill='white' transform='translate(0.689636 0.5)'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+export const ProfileAvatarAddPicture = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
 
-        width: 40px;
-        height: 40px;
-        background-color: #EDF6FF;
-        border-radius: 100px;
-        top: 0.5px;
-        left: 74.69px;
-        box-shadow: 0px 6px 10px 0px #00000024; 
-        cursor: pointer;
-    }
+    width: 40px;
+    height: 40px;
+    background-color: #EDF6FF;
+    border-radius: 100px;
+    top: 0.5px;
+    left: 74.69px;
+    box-shadow: 0px 6px 10px 0px #00000024; 
+    cursor: pointer;
 `
 
 export const ProfileTitle = styled.h1`
@@ -207,9 +208,34 @@ export const MainHead = styled.div`
 
 export const Text = styled.p`
     color: ${props => props.title ? `color: var(--text-primary, ${theme.colors.gray.menu})` : `var(--azul-1, ${theme.colors.blue.background})`};
-        
+    font-family: roboto;
     font-size: ${props => props.title ? `22px` : `18px`};
     font-style: normal;
     font-weight: ${props => props.title ? `600` : `500`};
     line-height: normal;
+`
+
+export const SubContainerDependents = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+    margin-top: ${props => props.marginTop ? '20px' : '0px'};
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+        width: 3px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #C5DBF2;
+        border: 2px solid #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #F5F5F5;
+    }
 `

@@ -48,6 +48,11 @@ const Associados = () => {
     setAddAssociateToggle((p) => !p);
   }, []);
 
+  const handleAddAssosiate = useCallback(async (data) => {
+    // fazer aparecer associados na tela
+    setAssociados((p) => [...p, data]);
+  });
+
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
 
@@ -83,8 +88,7 @@ const Associados = () => {
     }
   }, [authContext.token, handleErrorAssociados]);
 
-  const userRemove = useCallback(
-    async (userUrl) => {
+  const userRemove = useCallback(async (userUrl) => {
       try {
         const userRemoveResponse = await service.removeUser(
           userUrl,
@@ -129,6 +133,8 @@ const Associados = () => {
     setCurrentStep((p) => --p);
   }, []);
 
+  
+
   useEffect(() => {
     getAssociados();
     if (!authContext.auth) {
@@ -147,7 +153,7 @@ const Associados = () => {
       <Navigation selectedPage={"associados"} variant={checkNav()} />
       {addAssociateToggle && (
         <>
-          <DarkBackground pageHeight={"170vh"} />
+          <DarkBackground pageHeight={"200vh"} />
           <AddAssociateBox>
             {currentStep == 1 && (
               <FirstStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
@@ -156,7 +162,7 @@ const Associados = () => {
               <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
             {currentStep == 3 && (
-              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssosiate = {handleAddAssosiate} />
             )}
           </AddAssociateBox>
         </>
@@ -174,7 +180,7 @@ const Associados = () => {
             </Button>
           </MainHead>
           <Main>
-            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} />
+            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} userRemove = {userRemove}/>
           </Main>
         </MainContainer>
       )}

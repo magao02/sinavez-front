@@ -4,10 +4,12 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription } from "../styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, ProfileContainerImage, ProfileAvatar, ProfileArguments, ProfileAvatarAddPicture } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
 import LeftIcon from "../../../assets/blue_left_icon.svg";
+import PersonFilled from "../../../assets/person_filled.svg";
+import AddIcon from "../../../assets/icon_add_picture.svg";
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
@@ -49,7 +51,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
 
     if (!isValidSubmit) return;
 
-    const salario = salarioRef.current?.value != undefined ? Number(salarioRef.current?.value.replace(",", ".")) : 0.0;
+    const salario = salarioRef.current?.value != undefined ? Number(salarioRef.current?.value) : 0.0;
 
     const [formacaoSuperior, dataFormacao, empresa, instituicaoSuperior,
       numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao,
@@ -61,11 +63,29 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
         (inputRef) => inputRef.current?.value,);
 
     dataCollector({
-      /* regional: { municipio, estado, naturalidade, nacionalidade }, */
+      /* regional: { municipio, estado, naturalidade, nacionalidade},*/ 
       formacaoSuperior, dataFormacao, empresa, instituicaoSuperior, salario,
       numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao
     })
   });
+
+  // imagem do perfil
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files?.[0];
+    setSelectedFile(file);
+
+  };
+
+  // upload da imagem
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // referencia do input
+  const fileInputRef = useRef(null);
+  
 
   return (
     <Container onSubmit={handleSubmit}>
@@ -74,12 +94,32 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
       <Profile>
-        <ProfileTitle>
-          Adicionar foto
-        </ProfileTitle>
-        <ProfileDescription>
-          *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
-        </ProfileDescription>
+
+        <ProfileContainerImage>
+              <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
+                <Image src={PersonFilled} />
+                <ProfileAvatarAddPicture onClick={handleUploadClick}>
+                  <Image src={AddIcon} />
+                  <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      onChange={handleFileSelect}
+                      ref={fileInputRef}
+                  />
+                </ProfileAvatarAddPicture>
+              </ProfileAvatar>
+          </ProfileContainerImage>
+
+        <ProfileArguments>
+          <ProfileTitle>
+            Adicionar foto
+          </ProfileTitle>
+          <ProfileDescription>
+            *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
+          </ProfileDescription>
+        </ProfileArguments>
+
       </Profile>
       <Body>
         <Description>

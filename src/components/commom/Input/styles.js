@@ -37,6 +37,7 @@ function getStyleByVariant(variant) {
 
                 div {
                     display: flex;
+                    flex-direction: column;
                     justify-items: center;
                     width: 100%;
 
@@ -44,7 +45,7 @@ function getStyleByVariant(variant) {
                         width: 100%;
                         font-weight: bold;
                         color: ${theme.colors.red};
-                        font-size: 14px;
+                        font-size: 12px;
                     }
                     span::after {
                         content: '.';
@@ -61,6 +62,7 @@ function getStyleByVariant(variant) {
                     font-size: 18px;
                     font-family: Roboto;
                     line-height: 22px;
+                    outline: none;
                     
                     border-bottom: 1px solid ${theme.colors.gray.menu};;
                     padding-bottom: 5px;
@@ -115,6 +117,7 @@ function getStyleByVariant(variant) {
                     font-size: 18px;
                     font-family: Roboto;
                     line-height: 22px;
+                    outline: none;
                     
                     border-bottom: 1px solid ${theme.colors.gray.menu};;
                     padding-bottom: 5px;

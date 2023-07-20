@@ -4,11 +4,11 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, ProfileAvatar, ProfileContainerImage, ProfileArguments, ProfileAvatarAdicionar } from "../styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, ProfileAvatar, ProfileContainerImage, ProfileArguments, ProfileAvatarAdicionar, ProfileAvatarAddPicture } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
 import PersonFilled from "../../../assets/person_filled.svg";
-
+import AddIcon from "../../../assets/icon_add_picture.svg";
 
 
 
@@ -32,7 +32,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const phoneRef = useRef(null);
-  const naturalidadeRef = useRef();
+  const naturalidadeRef = useRef(null);
   const nacionalidadeRef = useRef("Brasileiro");
 
   const allFieldsAreValid = useCallback(async () => {
@@ -105,6 +105,24 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
     });
   });
 
+  // imagem do perfil
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files?.[0];
+    setSelectedFile(file);
+
+  };
+
+  // upload da imagem
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // referencia do input
+  const fileInputRef = useRef(null);
+
+
   return (
     <Container onSubmit={handleSubmit}>
       <Head>
@@ -114,9 +132,19 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       <Profile>
 
         <ProfileContainerImage>
-          <ProfileAvatar>
-            <Image src={PersonFilled} />
-          </ProfileAvatar>
+            <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
+              <Image src={PersonFilled} />
+              <ProfileAvatarAddPicture onClick={handleUploadClick}>
+                <Image src={AddIcon} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleFileSelect}
+                    ref={fileInputRef}
+                />
+              </ProfileAvatarAddPicture>
+            </ProfileAvatar>
         </ProfileContainerImage>
 
         <ProfileArguments>
@@ -164,7 +192,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 previousValue={previousData.nascimento}
                 ref={birthdayRef}
                 placeholder={"DD/MM/AAAA"}
-                validate={validation.testDate}
+                validate={validation.requiredTextField}
               />
               <Input
                 variant="default"
@@ -173,7 +201,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 placeholder={"Digite o seu RG"}
                 previousValue={previousData.rg}
                 ref={rgRef}
-                validate={validation.testNumbers}
+                validate={validation.requiredTextField}
               />
               <Input
                 variant="default"
@@ -209,7 +237,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
               Endereço
             </SubTitle>
             <Input
-              variant="default-optional"
+              variant="default"
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
@@ -219,7 +247,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
             />
             <InputsContainer>
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Bairro"}
                 name={"Bairro"}
                 placeholder={"Bairro"}
@@ -228,7 +256,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 validate={validation.TextField}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Número"}
                 name={"Número"}
                 placeholder={"Número"}
@@ -237,7 +265,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 validate={validation.testNumbers}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Cidade"}
                 name={"Cidade"}
                 placeholder={"Cidade"}
@@ -261,7 +289,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
               Dados cadastrais
             </SubTitle>
             <Input
-              variant="default-optional"
+              variant="default"
               label={"E-mail"}
               name={"E-mail"}
               placeholder={"email@domínio.com"}
@@ -270,7 +298,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
               validate={validation.testEmail}
             />
             <Input
-              variant="default-optional"
+              variant="default"
               label={"Senha"}
               name={"senha"}
               placeholder={"********"}
@@ -280,7 +308,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
               validate={validation.testPassword}
             />
             <Input
-              variant="default-optional"
+              variant="default"
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}

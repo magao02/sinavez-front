@@ -16,7 +16,7 @@ import {
   FormContainer,
 } from "./styles";
 
-const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSingUpController }) => {
+const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSingUpController, number, marginTop }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -74,8 +74,8 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
     case "default": {
       return (
         <Container variant="default">
-          <SubTitle>
-            Dados do Dependente
+          <SubTitle marginTop = {marginTop}>
+            Dados do Dependente {number !== 0 ? number : ""}
           </SubTitle>
           <Input
             variant="default"

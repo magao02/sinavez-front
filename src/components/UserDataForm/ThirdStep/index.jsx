@@ -4,11 +4,14 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, MainHead, Text } from "../styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, MainHead, Text, ProfileContainerImage, ProfileAvatar, ProfileArguments, ProfileAvatarAddPicture, SubContainerDependents } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
 import LeftIcon from "../../../assets/blue_left_icon.svg";
 import AddIcon from "../../../assets/add_icon.svg";
+import PersonFilled from "../../../assets/person_filled.svg";
+
+import AddPhotoIcon from "../../../assets/icon_add_picture.svg";
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
@@ -16,7 +19,7 @@ import DependentsContainer from "../../DependentsContainer";
 
 import Image from 'next/image.js';
 
-const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm }) => {
+const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssosiate }) => {
   const cidadeRef = useRef();
   const estadoRef = useRef();
 
@@ -30,6 +33,8 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
   const dataRegistroConselhoRef = useRef();
   const empresaRef = useRef();
   const salarioRef = useRef();
+  const naturalidadeRef = useRef();
+  const nacionalidadeRef = useRef("Brasileiro");
 
   const allFieldsAreValid = useCallback(async () => {
 
@@ -83,27 +88,76 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
       numInscricao, dataAfiliacao, formacaoSuperior, instituicaoSuperior,
       dataFormacao, numRegistroConselho, dataRegistroConselho, empresa, salario
     })
+
   });
 
+  // imagem do perfil
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files?.[0];
+    setSelectedFile(file);
+
+  };
+
+  // upload da imagem
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // referencia do input
+  const fileInputRef = useRef(null);
+
+  const [countDependents, setCountDependents] = useState(0);
+  const [initialNumber, setInitialNumber] = useState(1);
+
+
+  const handleAddMoreDependents = () => {
+    setCountDependents(countDependents + 1);    
+  };
+
+
   return (
+    
     <Container onSubmit={handleSubmit}>
       <Head>
         Adicionar Associado
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
       <Profile>
+
+        <ProfileContainerImage>
+            <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
+              <Image src={PersonFilled} />
+              <ProfileAvatarAddPicture onClick={handleUploadClick}>
+                <Image src={AddPhotoIcon} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleFileSelect}
+                    ref={fileInputRef}
+                />
+              </ProfileAvatarAddPicture>
+            </ProfileAvatar>
+        </ProfileContainerImage>
+
+      <ProfileArguments>
         <ProfileTitle>
           {previousData.name}
         </ProfileTitle>
         <ProfileDescription>
           <strong>CPF:</strong> {previousData.cpf}
         </ProfileDescription>
+      </ProfileArguments>
+
       </Profile>
+
       <Body>
         <Description>
           Passo 3 de 3
         </Description>
-        <Main>
+        <Main height={true}>
           <MainHead>
             <Text title={true}>
               Adicione Dependentes
@@ -112,15 +166,20 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               Para finalizar, você pode adicionar dependentes para esse associado ou concluir o processo e fazer isso em outro momento.
             </Text>
           </MainHead>
-          <SubContainer>
-            <DependentsContainer variant="default" />
+          <SubContainerDependents>
+          
+            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0}/>
+            {[...Array(countDependents)].map((_, index) => (
+                <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true}/>
+              ))}
+
             <Footer>
-              <Button variant={"default"}>
+              <Button variant={"default"} onClick={handleAddMoreDependents}>
                 <Image src={AddIcon} />
                 Adicionar outro dependente
               </Button>
             </Footer>
-          </SubContainer>
+          </SubContainerDependents>
         </Main>
       </Body>
       <Footer>
@@ -129,7 +188,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
           VOLTAR
         </Button>
         {globalMessage && <span>{globalMessage}</span>}
-        <Button variant={"default"} >
+        <Button variant={"default"} onClick={handleAddAssosiate}>
           Finalizar cadastro
         </Button>
       </Footer>

@@ -14,7 +14,6 @@ function getStyleByVariant(variant) {
         align-items: flex-start;
         gap: 16px;
         align-self: stretch;
-        gap: 20px;
       `;
     }
 
@@ -75,9 +74,6 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const SubContainer = styled.div`
-
-`
 
 export const SubTitle = styled.h3`
     color: var(--text-primary, ${theme.colors.gray.menu});
@@ -86,4 +82,5 @@ export const SubTitle = styled.h3`
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    margin-top: ${props => props.marginTop ? `25px` : `0px`}; 
 `
