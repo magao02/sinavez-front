@@ -4,14 +4,19 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription } from "../styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, ProfileAvatar, ProfileContainerImage, ProfileArguments, ProfileAvatarAdicionar } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
+import PersonFilled from "../../../assets/person_filled.svg";
+
+
+
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
+
 
 const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
@@ -27,8 +32,8 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const phoneRef = useRef(null);
-  /*   const naturalidadeRef = useRef();
-    const nacionalidadeRef = useRef("Brasileiro"); */
+  const naturalidadeRef = useRef();
+  const nacionalidadeRef = useRef("Brasileiro");
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
@@ -40,8 +45,8 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       emailRef,
       passwordRef,
       phoneRef,
-      /*       naturalidadeRef,
-            nacionalidadeRef */
+      naturalidadeRef,
+      nacionalidadeRef 
     ];
 
     const validationResults = await Promise.all(
@@ -107,12 +112,22 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
       <Profile>
-        <ProfileTitle>
-          Adicionar foto
-        </ProfileTitle>
-        <ProfileDescription>
-          *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
-        </ProfileDescription>
+
+        <ProfileContainerImage>
+          <ProfileAvatar>
+            <Image src={PersonFilled} />
+          </ProfileAvatar>
+        </ProfileContainerImage>
+
+        <ProfileArguments>
+          <ProfileTitle>
+            Adicionar foto
+          </ProfileTitle>
+          <ProfileDescription>
+            *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
+          </ProfileDescription>
+        </ProfileArguments>
+
       </Profile>
       <Body>
         <Description>
@@ -143,7 +158,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 validate={validation.testRequiredCpf}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Data de Nascimento"}
                 name={"nascimento"}
                 previousValue={previousData.nascimento}
@@ -152,7 +167,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 validate={validation.testDate}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Registro Geral (RG)"}
                 name={"rg"}
                 placeholder={"Digite o seu RG"}
@@ -161,7 +176,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 validate={validation.testNumbers}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Data de Emissão"}
                 name={"data_de_emissão"}
                 placeholder={"DD/MM/AAAA"}
@@ -169,7 +184,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
-              {/*               <Input
+                <Input
                 variant="default-optional"
                 label={"Naturalidade"}
                 name={"naturalidade"}
@@ -185,10 +200,11 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
                 placeholder={"Digite sua nacionalidade"}
                 ref={nacionalidadeRef}
                 validate={validation.TextField}
-              /> */}
+              />
             </InputsContainer>
           </SubContainer>
-          <SubContainer>
+
+          <SubContainer marginTop = {true}>
             <SubTitle>
               Endereço
             </SubTitle>
