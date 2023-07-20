@@ -76,6 +76,17 @@ const Page = () => {
   const proxReserva = { from: "07/06", to: "10/06" };
 
   const [tabIndex, setTabIndex] = useState(1);
+  const [apartamentos, setApartamentos] = useState(Array(20).fill(0).map(() => {
+    return {
+      nome: "Apartamento algum ai",
+      image: Placeholder,
+      reserva,
+      proxReserva,
+      features: ["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"],
+      reservado: false,
+    }
+  }));
+  const [areas, setAreas] = useState([]);
 
   return (
     <div>
@@ -98,15 +109,15 @@ const Page = () => {
         {
           tabIndex === 0 && [
             <Title>Apartamentos Disponíveis</Title>,
-            Array(20).fill(0).map((_, i) => (
+            apartamentos.map((apt, i) => (
               <Apartamento
-                nome="Apartamento algum ai"
-                image={Placeholder}
-                reserva={reserva}
-                proxReserva={proxReserva}
-                features={["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"]}
+                nome={apt.nome}
+                image={apt.image}
+                reserva={apt.reserva}
+                proxReserva={apt.proxReserva}
+                features={apt.features}
+                isReservado={apt.reservado}
                 key={i}
-                isReservado={i < 2}
               />
             ))
           ]
@@ -115,13 +126,14 @@ const Page = () => {
         {
           tabIndex === 1 && [
             <Title>Áreas Disponíveis</Title>,
-            Array(2).fill(0).map((_, i) => (
+            areas.map((apt, i) => (
               <Apartamento
-                nome="Apartamento algum ai"
-                image={Placeholder}
-                reserva={reserva}
-                proxReserva={proxReserva}
-                features={["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"]}
+                nome={apt.nome}
+                image={apt.image}
+                reserva={apt.reserva}
+                proxReserva={apt.proxReserva}
+                features={apt.features}
+                isReservado={apt.reservado}
                 key={i}
               />
             ))
