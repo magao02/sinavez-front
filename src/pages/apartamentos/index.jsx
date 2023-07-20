@@ -7,6 +7,7 @@ import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../com
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
 import ReservaData from "../../assets/apartamento/reserva_data.svg";
+import PeoplePartying from "../../assets/people_partying.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import Navigation from "../../components/commom/Nav";
 
@@ -98,8 +99,9 @@ const Page = () => {
           <Search tabIndex={tabIndex} setTabIndex={setTabIndex} />
           <SearchHelpContainer>
             <h1>Faça sua reserva!</h1>
-            <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p>
-            <SearchHelp>
+            { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
+            { tabIndex === 1 && <p>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</p> }
+            { tabIndex === 0 && <SearchHelp>
               <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} />
               <Image src={ReservaData} />
               <div>
@@ -110,7 +112,21 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-            </SearchHelp>
+            </SearchHelp> }
+
+            { tabIndex === 1 && <SearchHelp>
+              <Steps values={["Espaço", "Horário", "Pessoas"]} current={0} />
+              <Image src={PeoplePartying} />
+              <div>
+                <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
+                <div className="buttonContainer">
+                  <div className="button">
+                    Próximo <img src={CaretRight.src} />
+                  </div>
+                </div>
+              </div>
+            </SearchHelp> }
+
           </SearchHelpContainer>
         </Blue>
 
