@@ -68,6 +68,7 @@ export const Input = styled.input`
         background-image: url(${CalendarIcon.src});
         background-repeat: no-repeat;
         background-position: calc(100% - 10px) 50%;
+        min-width: max(150px, 10vw);
     }
 `;
 
