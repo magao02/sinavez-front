@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../styles/theme";
 
 export const FeatureContent = styled.div`
   display: flex;
@@ -31,6 +32,21 @@ export const CardImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  & > p {
+    position: absolute;
+    margin-top: 25px;
+    text-align: right;
+    padding: 8px 20px;
+    width: 145px;
+
+    border-radius: 0px 100px 100px 0px;
+    background: ${props => props.reservado ? theme.colors.orange.default : theme.colors.green.default};
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    font-size: 14px;
+    color: ${theme.colors.white.light};
+    user-select: none;
   }
 `;
 

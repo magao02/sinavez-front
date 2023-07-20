@@ -39,10 +39,11 @@ const Feature = ({ text }) => {
   );
 };
 
-const Apartamento = ({ nome, image, reserva, proxReserva, features }) => {
+const Apartamento = ({ nome, image, reserva, proxReserva, features, isReservado }) => {
   return (
     <Card>
-      <CardImage>
+      <CardImage reservado={isReservado}>
+        <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
         <img src={image.src} alt="Imagem do apartamento" />
       </CardImage>
 

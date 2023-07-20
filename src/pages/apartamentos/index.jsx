@@ -106,6 +106,7 @@ const Page = () => {
                 proxReserva={proxReserva}
                 features={["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"]}
                 key={i}
+                isReservado={i < 2}
               />
             ))
           ]
