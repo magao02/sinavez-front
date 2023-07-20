@@ -7,6 +7,7 @@ import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../com
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
 import ReservaData from "../../assets/apartamento/reserva_data.svg";
+import CaretRight from "../../assets/caret_right_white.svg";
 import Navigation from "../../components/commom/Nav";
 
 import Steps from "../../components/Steps";
@@ -101,7 +102,14 @@ const Page = () => {
             <SearchHelp>
               <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} />
               <Image src={ReservaData} />
-              <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
+              <div>
+                <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
+                <div className="buttonContainer">
+                  <div className="button">
+                    Próximo <img src={CaretRight.src} />
+                  </div>
+                </div>
+              </div>
             </SearchHelp>
           </SearchHelpContainer>
         </Blue>

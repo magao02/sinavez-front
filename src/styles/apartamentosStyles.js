@@ -113,6 +113,26 @@ export const SearchHelp = styled.div`
     font-weight: 400;
     line-height: 20px; /* 125% */
   }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    gap: 8px;
+    user-select: none;
+    cursor: pointer;
+
+    color: ${theme.colors.white.light};
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
 `;
 
 export const NavSpacing = styled.div`
