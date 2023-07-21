@@ -9,11 +9,10 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ searchTerm, headers, data, userRemove }) => {
+const DataTable = ({ searchTerm, headers, data, userRemove}) => {
     /*     <DataTable nextAssociates={() => currentIndexes[0] + 20 <= associados.length ? changeAssociates(true) : undefined} previousAssociates={() => currentIndexes[0] > 0 ? changeAssociates(false) : undefined} currentIndex={currentIndexes[0]} totalQuantity={associados.length} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={currentAssociados.map((associado) => [associado[1].name, associado[1].profissao, associado[1].cpf])} totalData={associados.map((associado) => [associado.name, associado.profissao, associado.cpf])} paginate={paginate} />
     
 
-    
         const paginate = useCallback((page) => {
             setCurrentIndexes(prev => [prev[0] + page * 20, prev[0] + page * 20]);
             sliceData();
@@ -65,7 +64,7 @@ const DataTable = ({ searchTerm, headers, data, userRemove }) => {
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={userRemove}/>
+                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
                                     </Buttons>
                                 </Associate>
                             )
@@ -77,7 +76,7 @@ const DataTable = ({ searchTerm, headers, data, userRemove }) => {
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={userRemove} />
+                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)}  />
                                     </Buttons>
                                 </Associate>
                             )
@@ -116,7 +115,7 @@ const DataTable = ({ searchTerm, headers, data, userRemove }) => {
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={userRemove}/>
+                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
                                     </Buttons>
                                 </Associate>
                             )
@@ -128,7 +127,7 @@ const DataTable = ({ searchTerm, headers, data, userRemove }) => {
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={userRemove}/>
+                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
                                     </Buttons>
                                 </Associate>
                             )

@@ -16,6 +16,7 @@ import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
+import { red } from '@mui/material/colors';
 
 
 const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancelForm }) => {
@@ -31,7 +32,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
   const complementRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const phoneRef = useRef(null);
+  const telefoneRef = useRef(null);
   const naturalidadeRef = useRef(null);
   const nacionalidadeRef = useRef("Brasileiro");
 
@@ -44,7 +45,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       dataEmissaoRef,
       emailRef,
       passwordRef,
-      phoneRef,
+      telefoneRef,
       naturalidadeRef,
       nacionalidadeRef 
     ];
@@ -75,7 +76,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       complement,
       email,
       password,
-      phone,
+      telefone,
     ] = [
       nameRef,
       cpfRef,
@@ -89,7 +90,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       complementRef,
       emailRef,
       passwordRef,
-      phoneRef,
+      telefoneRef,
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
@@ -101,7 +102,7 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
       endereco: { street, neighborhood, number, city, complement },
       email,
       password,
-      phone,
+      telefone,
     });
   });
 
@@ -307,14 +308,14 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
               type="password"
               validate={validation.testPassword}
             />
-            <Input
+            <Input 
               variant="default"
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}
-              previousValue={previousData.phone}
-              ref={phoneRef}
-              validate={validation.testPhone}
+              previousValue={previousData.telefone}
+              ref={telefoneRef}
+              validate={validation.testtelefone}
             />
           </SubContainer>
         </Main>
@@ -323,11 +324,11 @@ const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancel
         <Button variant={"text"} onClick={cancelForm}>
           CANCELAR
         </Button>
-        {globalMessage && <span>{globalMessage}</span>}
         <Button variant={"light"} >
           CONTINUAR
         </Button>
       </Footer>
+      {globalMessage && <span style={{color: 'red', fontWeight: 'bold'}}>{globalMessage}</span>}
     </Container>
   );
 };

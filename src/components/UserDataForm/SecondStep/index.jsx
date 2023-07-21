@@ -238,11 +238,11 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        {globalMessage && <span>{globalMessage}</span>}
         <Button variant={"light"} >
           CONTINUAR
         </Button>
       </Footer>
+      {globalMessage && <span style={{color: 'red', fontWeight: 'bold'}}>{globalMessage}</span>}
     </Container>
   );
 };

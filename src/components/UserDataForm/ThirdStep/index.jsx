@@ -19,7 +19,7 @@ import DependentsContainer from "../../DependentsContainer";
 
 import Image from 'next/image.js';
 
-const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssosiate }) => {
+const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssosiate }) => {
   const cidadeRef = useRef();
   const estadoRef = useRef();
 
@@ -113,12 +113,12 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
 
 
   const handleAddMoreDependents = () => {
-    setCountDependents(countDependents + 1);    
+    setCountDependents(countDependents + 1);
   };
 
 
   return (
-    
+
     <Container onSubmit={handleSubmit}>
       <Head>
         Adicionar Associado
@@ -127,29 +127,29 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
       <Profile>
 
         <ProfileContainerImage>
-            <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
-              <Image src={PersonFilled} />
-              <ProfileAvatarAddPicture onClick={handleUploadClick}>
-                <Image src={AddPhotoIcon} />
-                <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    onChange={handleFileSelect}
-                    ref={fileInputRef}
-                />
-              </ProfileAvatarAddPicture>
-            </ProfileAvatar>
+          <ProfileAvatar style={{ backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})` }}>
+            <Image src={PersonFilled} />
+            <ProfileAvatarAddPicture onClick={handleUploadClick}>
+              <Image src={AddPhotoIcon} />
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleFileSelect}
+                ref={fileInputRef}
+              />
+            </ProfileAvatarAddPicture>
+          </ProfileAvatar>
         </ProfileContainerImage>
 
-      <ProfileArguments>
-        <ProfileTitle>
-          {previousData.name}
-        </ProfileTitle>
-        <ProfileDescription>
-          <strong>CPF:</strong> {previousData.cpf}
-        </ProfileDescription>
-      </ProfileArguments>
+        <ProfileArguments>
+          <ProfileTitle>
+            {previousData.name}
+          </ProfileTitle>
+          <ProfileDescription>
+            <strong>CPF:</strong> {previousData.cpf}
+          </ProfileDescription>
+        </ProfileArguments>
 
       </Profile>
 
@@ -167,11 +167,11 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
             </Text>
           </MainHead>
           <SubContainerDependents>
-          
-            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0}/>
+
+            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0} />
             {[...Array(countDependents)].map((_, index) => (
-                <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true}/>
-              ))}
+              <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true} />
+            ))}
 
             <Footer>
               <Button variant={"default"} onClick={handleAddMoreDependents}>
@@ -187,13 +187,13 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        {globalMessage && <span>{globalMessage}</span>}
         <Button variant={"default"} onClick={handleAddAssosiate}>
           Finalizar cadastro
         </Button>
       </Footer>
+      {globalMessage && <span style={{ color: 'red', fontWeight: 'bold' }}>{globalMessage}</span>}
     </Container >
   );
 };
 
-export default SecondStep;
+export default ThirdStep;

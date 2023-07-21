@@ -48,10 +48,7 @@ const Associados = () => {
     setAddAssociateToggle((p) => !p);
   }, []);
 
-  const handleAddAssosiate = useCallback(async (data) => {
-    // fazer aparecer associados na tela
-    setAssociados((p) => [...p, data]);
-  });
+  
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
@@ -66,6 +63,17 @@ const Associados = () => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
+
+  const handleAddAssosiate = useCallback(async () => {
+    try {
+      const addAssociateResponse = await service.signUp(collectedData);
+      setAssociados((p) => [...p, collectedData]);
+      setCurrentStep(1);
+      toggleAddAssociate();
+    } catch (error) { 
+      setGlobalMessage(error.response.data.message);
+    } 
+  });
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -88,19 +96,17 @@ const Associados = () => {
     }
   }, [authContext.token, handleErrorAssociados]);
 
+  // removendo usuário
   const userRemove = useCallback(async (userUrl) => {
-      try {
-        const userRemoveResponse = await service.removeUser(
-          userUrl,
-          authContext.token
-        );
-        alert(`${userRemoveResponse.data.message}, Recarregue a Página!`);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [authContext.token]
-  );
+    console.log("Tentando remover usuário com CPF:", userUrl);
+    try {
+      const removeUserResponse = await service.removeUser(userUrl, authContext.token);
+      setAssociados((p) => p.filter((associate) => associate.urlUser !== userUrl));
+      console.log("Usuário removido com sucesso!");
+    } catch (error) {
+      console.log("Erro ao remover usuario:", error.response.data.message);
+    }
+  });
 
   const editUserData = useCallback(async (data) => {
     setUrlUserEdit(data.urlUser);
@@ -162,7 +168,7 @@ const Associados = () => {
               <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
             {currentStep == 3 && (
-              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssosiate = {handleAddAssosiate} />
+              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssosiate={handleAddAssosiate}/>
             )}
           </AddAssociateBox>
         </>
@@ -180,7 +186,7 @@ const Associados = () => {
             </Button>
           </MainHead>
           <Main>
-            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} userRemove = {userRemove}/>
+            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} userRemove = {userRemove} />
           </Main>
         </MainContainer>
       )}
