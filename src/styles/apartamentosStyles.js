@@ -159,3 +159,32 @@ export const Title = styled.h1`
   font-weight: 700;
   line-height: 36px;
 `;
+
+export const BottomPadding = styled.div`
+  height: 100px;
+`;
+
+export const NoResults = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 20px;
+
+  h1 {
+    color: ${theme.colors.gray.menu};
+    text-align: center;
+
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    color: ${theme.colors.gray.menu};
+    text-align: center;
+
+    font-size: 18px;
+    font-weight: 400;
+    max-width: 505px;
+  }
+`;

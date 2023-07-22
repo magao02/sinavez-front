@@ -9,6 +9,7 @@ import Placeholder from "../../assets/apartamento/placeholder.png";
 import ReservaData from "../../assets/apartamento/reserva_data.svg";
 import PeoplePartying from "../../assets/people_partying.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
+import WomanSunglasses from "../../assets/woman_sunglasses.svg";
 import Navigation from "../../components/commom/Nav";
 
 import Steps from "../../components/Steps";
@@ -25,6 +26,8 @@ import {
     NavSpacing,
     Title,
     SearchHelpContainer,
+    NoResults,
+    BottomPadding,
 } from "../../styles/apartamentosStyles";
 import Image from "next/image";
 
@@ -77,8 +80,8 @@ const Page = () => {
   const reserva = { from: "05/04/2023", to: "10/05/2023" };
   const proxReserva = { from: "07/06", to: "10/06" };
 
-  const [tabIndex, setTabIndex] = useState(1);
-  const [apartamentos, setApartamentos] = useState(Array(20).fill(0).map(() => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const [apartamentos, setApartamentos] = useState(Array(0).fill(0).map(() => {
     return {
       nome: "Apartamento algum ai",
       image: Placeholder,
@@ -131,7 +134,7 @@ const Page = () => {
         </Blue>
 
         {
-          tabIndex === 0 && [
+          tabIndex === 0 && (apartamentos.length ? [
             <Title>Apartamentos Disponíveis</Title>,
             apartamentos.map((apt, i) => (
               <Apartamento
@@ -144,11 +147,17 @@ const Page = () => {
                 key={i}
               />
             ))
-          ]
+          ] : 
+          <NoResults>
+            <h1>Não há apartamentos para sua busca!</h1>
+            <Image src={WomanSunglasses} />
+            <p>Tente realizar a busca novamente com outras datas, outra quantidade de pessoas ou outros tipo de quarto.</p>
+          </NoResults>)
         }
 
+
         {
-          tabIndex === 1 && [
+          tabIndex === 1 && (areas.length ? [
             <Title>Áreas Disponíveis</Title>,
             areas.map((apt, i) => (
               <Apartamento
@@ -161,8 +170,15 @@ const Page = () => {
                 key={i}
               />
             ))
-          ]
+          ] :
+          <NoResults>
+            <h1>Não há espaços que correspondem à sua busca!</h1>
+            <Image src={WomanSunglasses} />
+            <p>Tente realizar a busca novamente com outras datas, outros períodos de tempo e outra quantidade de pessoas.</p>
+          </NoResults>)
         }
+
+        <BottomPadding />
       </Content>
     </div>
   );
