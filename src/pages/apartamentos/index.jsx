@@ -10,6 +10,7 @@ import ReservaData from "../../assets/apartamento/reserva_data.svg";
 import PeoplePartying from "../../assets/people_partying.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import WomanSunglasses from "../../assets/woman_sunglasses.svg";
+import SmileySad from "../../assets/smiley_sad.svg";
 import Navigation from "../../components/commom/Nav";
 
 import Steps from "../../components/Steps";
@@ -28,6 +29,7 @@ import {
     SearchHelpContainer,
     NoResults,
     BottomPadding,
+    NoMoreResults,
 } from "../../styles/apartamentosStyles";
 import Image from "next/image";
 import { getAllApartments } from "../../services/apartments";
@@ -163,7 +165,10 @@ const Page = () => {
                 isReservado={apt.reservado}
                 key={i}
               />
-            ))
+            )),
+            <NoMoreResults>
+              <Image src={SmileySad} /> Não há mais resultados a exibir.
+            </NoMoreResults>
           ] : 
           <NoResults>
             <h1>Não há apartamentos para sua busca!</h1>
@@ -186,7 +191,10 @@ const Page = () => {
                 isReservado={apt.reservado}
                 key={i}
               />
-            ))
+            )),
+            <NoMoreResults>
+              <Image src={SmileySad} /> Não há mais resultados a exibir.
+            </NoMoreResults>
           ] :
           <NoResults>
             <h1>Não há espaços que correspondem à sua busca!</h1>

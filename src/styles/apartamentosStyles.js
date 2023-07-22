@@ -188,3 +188,16 @@ export const NoResults = styled.div`
     max-width: 505px;
   }
 `;
+
+export const NoMoreResults = styled.span`
+  color: ${theme.colors.gray.default};
+  font-size: 18px;
+  font-weight: 400;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 3px;
+  margin-top: 30px;
+`;
