@@ -19,7 +19,7 @@ import DependentsContainer from "../../DependentsContainer";
 
 import Image from 'next/image.js';
 
-const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssosiate }) => {
+const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
   const cidadeRef = useRef();
   const estadoRef = useRef();
 
@@ -187,7 +187,7 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"default"} onClick={handleAddAssosiate}>
+        <Button variant={"default"} onClick={handleAddAssociate}>
           Finalizar cadastro
         </Button>
       </Footer>

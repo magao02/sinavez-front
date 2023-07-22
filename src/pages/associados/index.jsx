@@ -30,6 +30,7 @@ import {
   MainHead,
   AddAssociateBox
 } from "../../styles/associadosStyles";
+import CancelForm from "../../components/CancelForm";
 
 const Associados = () => {
   const [associados, setAssociados] = useState();
@@ -38,6 +39,9 @@ const Associados = () => {
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [associadoData, setAssociadoData] = useState([]);
+  const [removeAssociateToggle, setRemoveAssociateToggle] = useState();
+  const [associadoName, setAssociadoName] = useState();
+  const [urlUser, setUrlUser] = useState();
 
   const router = useRouter();
 
@@ -48,7 +52,9 @@ const Associados = () => {
     setAddAssociateToggle((p) => !p);
   }, []);
 
-  
+  const toggleRemoveAssociate = useCallback(() => {
+    setRemoveAssociateToggle((p) => !p);
+  }, []);
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
@@ -64,7 +70,7 @@ const Associados = () => {
     nextStepAddAssociate();
   };
 
-  const handleAddAssosiate = useCallback(async () => {
+  const handleAddAssociate = useCallback(async () => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
       setAssociados((p) => [...p, collectedData]);
@@ -74,6 +80,16 @@ const Associados = () => {
       setGlobalMessage(error.response.data.message);
     } 
   });
+
+  // pega dos dados do usuário
+  const takeData = useCallback((data) => {
+    console.log(data);
+    console.log(data.name);
+    console.log(data.urlUser);
+    setRemoveAssociateToggle((p) => !p);
+    setAssociadoName(data.name);
+    setUrlUser(data.urlUser);
+  }, []);
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -98,7 +114,7 @@ const Associados = () => {
 
   // removendo usuário
   const userRemove = useCallback(async (userUrl) => {
-    console.log("Tentando remover usuário com CPF:", userUrl);
+    console.log(userUrl);
     try {
       const removeUserResponse = await service.removeUser(userUrl, authContext.token);
       setAssociados((p) => p.filter((associate) => associate.urlUser !== userUrl));
@@ -168,27 +184,36 @@ const Associados = () => {
               <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
             {currentStep == 3 && (
-              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssosiate={handleAddAssosiate}/>
+              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate}/>
             )}
           </AddAssociateBox>
         </>
       )}
       {associados && (
-        <MainContainer>
-          <Title>
-            Gerenciar associados
-          </Title>
-          <MainHead>
-            <SearchBar setSearch={setSearchTerm} placeHolder={"Procurar pelo nome"}></SearchBar>
-            <Button variant={"default"} onClick={toggleAddAssociate}>
-              <Image src={AddIcon} />
-              Adicionar Associado
-            </Button>
-          </MainHead>
-          <Main>
-            <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} userRemove = {userRemove} />
-          </Main>
-        </MainContainer>
+        <>
+          <MainContainer>
+            <Title>
+              Gerenciar associados
+            </Title>
+            <MainHead>
+              <SearchBar setSearch={setSearchTerm} placeHolder={"Procurar pelo nome"}></SearchBar>
+              <Button variant={"default"} onClick={toggleAddAssociate}>
+                <Image src={AddIcon} />
+                Adicionar Associado
+              </Button>
+            </MainHead>
+            <Main>
+              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} />
+            </Main>
+
+          </MainContainer>
+          { removeAssociateToggle && (
+          <>
+            <DarkBackground pageHeight={"150vh"} />
+            <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser}/>
+          </>
+          )}
+        </>
       )}
     </Container>
   );

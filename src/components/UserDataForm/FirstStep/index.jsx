@@ -19,7 +19,7 @@ import Image from 'next/image.js';
 import { red } from '@mui/material/colors';
 
 
-const FirstStepForm = ({ previousData, cpf, dataCollector, globalMessage, cancelForm }) => {
+const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);

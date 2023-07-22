@@ -9,7 +9,7 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ searchTerm, headers, data, userRemove}) => {
+const DataTable = ({ searchTerm, headers, data, takeData}) => {
     /*     <DataTable nextAssociates={() => currentIndexes[0] + 20 <= associados.length ? changeAssociates(true) : undefined} previousAssociates={() => currentIndexes[0] > 0 ? changeAssociates(false) : undefined} currentIndex={currentIndexes[0]} totalQuantity={associados.length} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={currentAssociados.map((associado) => [associado[1].name, associado[1].profissao, associado[1].cpf])} totalData={associados.map((associado) => [associado.name, associado.profissao, associado.cpf])} paginate={paginate} />
     
 
@@ -59,12 +59,12 @@ const DataTable = ({ searchTerm, headers, data, userRemove}) => {
                     {currentAssociates.map((d, i) => {
                         if (i % 2 == 0) {
                             return (
-                                <Associate color={"blue"}>
+                                <Associate color={"blue"} key={d.cpf}>
                                     <Name>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )
@@ -76,7 +76,7 @@ const DataTable = ({ searchTerm, headers, data, userRemove}) => {
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)}  />
+                                        <Image src={TrashIcon} onClick={() => takeData(d)}  />
                                     </Buttons>
                                 </Associate>
                             )
@@ -110,24 +110,24 @@ const DataTable = ({ searchTerm, headers, data, userRemove}) => {
                     }).map((d, i) => {
                         if (i % 2 == 0) {
                             return (
-                                <Associate color={"blue"}>
+                                <Associate color={"blue"} key={d.cpf}>
                                     <Name>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )
                         }
                         else {
                             return (
-                                <Associate color={"white"}>
+                                <Associate color={"white"} key={d.cpf}>
                                     <Name>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} />
-                                        <Image src={TrashIcon} onClick={() => userRemove(d.cpf)} />
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )

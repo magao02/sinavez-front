@@ -324,5 +324,47 @@ function getStyleByVariant(variant) {
         gap: 0.5vw;
       `
     }
+
+    case "cancelRemove": {
+      return css`
+      background: none;
+      border: none;
+
+      color: var(--primary-main, ${theme.colors.blue.button});
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+
+      display: flex;
+      padding: 8px 11px;
+      justify-content: center;
+      align-items: center;
+      `
+    }
+
+    case "remove": {
+      return css`
+      background: #CB4242 ;
+      border: none;
+
+      color: white;
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      border-radius: 4px;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20);
+
+      display: flex;
+      padding: 12px 25px;
+      justify-content: center;
+      align-items: center;
+      `
+    }
   }
 }
