@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Apartamento from "../../components/Apartamento";
 
@@ -30,6 +30,8 @@ import {
     BottomPadding,
 } from "../../styles/apartamentosStyles";
 import Image from "next/image";
+import { getAllApartments } from "../../services/apartments";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Search = ({ tabIndex, setTabIndex }) => {
   return (
@@ -77,21 +79,36 @@ const Search = ({ tabIndex, setTabIndex }) => {
 };
 
 const Page = () => {
-  const reserva = { from: "05/04/2023", to: "10/05/2023" };
-  const proxReserva = { from: "07/06", to: "10/06" };
+  const reserva = { from: "??", to: "??" };
+  const proxReserva = { from: "??", to: "??" };
 
   const [tabIndex, setTabIndex] = useState(0);
-  const [apartamentos, setApartamentos] = useState(Array(0).fill(0).map(() => {
-    return {
-      nome: "Apartamento algum ai",
-      image: Placeholder,
-      reserva,
-      proxReserva,
-      features: ["Ar-condicionado", "Wifi Grátis", "1 Suíte", "Aceita pets"],
-      reservado: false,
-    }
-  }));
+  const [apartamentos, setApartamentos] = useState([]);
   const [areas, setAreas] = useState([]);
+
+  const authContext = useAuth();
+
+  useEffect(async () => {
+    const req = await getAllApartments(authContext.token);
+    const data = req.data;
+    setApartamentos(data.map(apt => {
+      const features = [];
+      if (apt.wifi)
+        features.push("Wifi Grátis");
+      if (apt.suite)
+        features.push("1 Suíte");
+      if (apt.animais)
+        features.push("Aceita pets");
+      return {
+        nome: apt.titulo,
+        image: Placeholder,
+        reserva,
+        proxReserva,
+        features,
+        reservado: false,
+      };
+    }))
+  }, [authContext.token]);
 
   return (
     <div>
