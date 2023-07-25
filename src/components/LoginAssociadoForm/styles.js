@@ -11,8 +11,6 @@ export const InputContainer = styled.form`
 
     gap: 1.6rem;
 
-    padding-bottom: 0.8rem;
-
     @media (max-width: 320px) {
         padding-bottom: 1.5rem;
     };
@@ -48,7 +46,6 @@ export const ButtonContainer = styled.div`
     align-items: center;
 
     margin-top: 2vh;
-    margin-bottom: 2vh;
 
     a {
         color: ${theme.colors.red};
