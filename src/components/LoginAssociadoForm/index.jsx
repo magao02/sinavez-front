@@ -73,9 +73,9 @@ const LoginAssociadoForm = ({ onValidSubmit, globalMessage }) => {
       </InputBox>
 
       <LinkBox>
-        Novo por aqui? <Link href="/cadastroAssociado">Criar conta</Link>
+        Novo por aqui? <Link href="/cadastro">Criar conta</Link>
       </LinkBox>
-      <Link href="/login">Login Administrador</Link>
+      <Link href="/loginAdmin">Login Administrador</Link>
       <ButtonContainer>
         {globalMessage && <a>{globalMessage}</a>}
         <Button variant="default">ENTRAR</Button>
