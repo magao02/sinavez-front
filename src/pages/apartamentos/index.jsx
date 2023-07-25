@@ -124,7 +124,7 @@ const Page = () => {
             { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
             { tabIndex === 1 && <p>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</p> }
             { tabIndex === 0 && <SearchHelp>
-              <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} />
+              <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} variant="contrast" />
               <Image src={ReservaData} />
               <div>
                 <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
@@ -137,7 +137,7 @@ const Page = () => {
             </SearchHelp> }
 
             { tabIndex === 1 && <SearchHelp>
-              <Steps values={["Espaço", "Horário", "Pessoas"]} current={0} />
+              <Steps values={["Espaço", "Horário", "Pessoas"]} current={0} variant="contrast" />
               <Image src={PeoplePartying} />
               <div>
                 <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>

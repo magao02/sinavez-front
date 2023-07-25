@@ -1,4 +1,22 @@
 import styled from "styled-components";
+import theme from "../../styles/theme";
+
+export function getColorsForVariant(variant) {
+    switch (variant) {
+        default: return {
+            activeText: '#043F79',
+            text: theme.colors.gray.default,
+            divider: '#808080',
+            activeBackground: theme.colors.blue.border,
+            background: theme.colors.gray.menu,
+        };
+        case 'contrast': return {
+            ...getColorsForVariant(),
+            divider: '#404040',
+            text: '#404040',
+        }
+    }
+}
 
 export const Steps = styled.div`
     display: flex;
@@ -6,17 +24,17 @@ export const Steps = styled.div`
 `;
 
 export const StepDivider = styled.span`
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid ${props => props.colors.divider};
     flex-grow: 1;
     margin: 0 10px;
 `;
 
 export const StepColor = styled.span`
-    color: ${props => props.active ? "var(--azul-1, #043F79)" : "var(--text-secundary, #747880)"};
+    color: ${props => props.active ? props.colors.activeText : props.colors.text};
 `;
 
 export const StepNumber = styled.span`
-    background: ${props => props.active ? "var(--azul-2, #032E58)" : "var(--text-primary, #3D3F45)"};
+    background: ${props => props.active ? props.colors.activeBackground : props.colors.background};
     
     width: 1.5em;
     height: 1.5em;
