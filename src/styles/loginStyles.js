@@ -27,10 +27,12 @@ export const Details = styled.div`
     display: flex;
 
     justify-content: flex-start;
-    align-itens: center;
+    align-items: center;
 
     z-index: 2;
     flex-wrap: nowrap;
+
+    max-width: 33vw;
 `
 
 export const RightContent = styled.div`
@@ -58,6 +60,9 @@ export const LoginBox = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10%;
+    @media (max-height: 720px) {
+        padding: 5vh;
+    }
     align-items: flex-start;
     gap: 3vh;
 
