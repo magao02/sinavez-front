@@ -6,12 +6,16 @@ import Button from "../../components/commom/Button";
 import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
-import ReservaData from "../../assets/apartamento/reserva_data.svg";
 import PeoplePartying from "../../assets/people_partying.svg";
+import CaretLeft from "../../assets/caret_left_white.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import WomanSunglasses from "../../assets/woman_sunglasses.svg";
 import SmileySad from "../../assets/smiley_sad.svg";
 import Navigation from "../../components/commom/Nav";
+
+import ApartmentTutorialStep1 from "../../assets/apartamento/tutorial_apartment/step1.svg";
+import ApartmentTutorialStep2 from "../../assets/apartamento/tutorial_apartment/step2.svg";
+import ApartmentTutorialStep3 from "../../assets/apartamento/tutorial_apartment/step3.svg";
 
 import Steps from "../../components/Steps";
 
@@ -80,6 +84,52 @@ const Search = ({ tabIndex, setTabIndex }) => {
   );
 };
 
+const SearchHelpPage = ({ text, previous, next, last }) => {
+  return (
+    <div>
+      <p>{text}</p>
+      <div className="buttonContainer">
+        { previous && <div className="button" onClick={previous}>
+          <img src={CaretLeft.src} /> Anterior
+        </div> }
+        <div className="button" onClick={next}>
+          { last ? "Início" : "Próximo" } <img src={CaretRight.src} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ApartmentSearchHelp = () => {
+  const [pageIndex, setPageIndex] = useState(0);
+  const previous = () => {
+    if (pageIndex !== 0)
+      setPageIndex(pageIndex - 1);
+  };
+  const next = () => {
+    if (pageIndex === 2) {
+      setPageIndex(0);
+    } else {
+      setPageIndex(pageIndex + 1);
+    }
+  };
+  return (
+    <SearchHelp>
+      <Steps values={["Datas", "Pessoas", "Tipo"]} current={pageIndex} variant="contrast" />
+      <Image src={[ApartmentTutorialStep1, ApartmentTutorialStep2, ApartmentTutorialStep3][pageIndex]} />
+      
+      { pageIndex === 0 && <SearchHelpPage next={next}
+        text="Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres" /> }
+      
+      { pageIndex === 1 && <SearchHelpPage previous={previous} next={next}
+        text="Informe a quantidade de pessoas e animais de estimação que acompanharão você em sua estadia. " /> }
+      
+      { pageIndex === 2 && <SearchHelpPage previous={previous} next={next} last={true}
+        text="Caso tenha necessidade de um quarto adaptado, selecione o tipo do apartamento “PCD”, do contrário selecione “Comum”." /> }
+    </SearchHelp>
+  )
+}
+
 const Page = () => {
   const reserva = { from: "??", to: "??" };
   const proxReserva = { from: "??", to: "??" };
@@ -123,18 +173,7 @@ const Page = () => {
             <h1>Faça sua reserva!</h1>
             { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
             { tabIndex === 1 && <p>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</p> }
-            { tabIndex === 0 && <SearchHelp>
-              <Steps values={["Datas", "Pessoas", "Tipo"]} current={0} variant="contrast" />
-              <Image src={ReservaData} />
-              <div>
-                <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
-                <div className="buttonContainer">
-                  <div className="button">
-                    Próximo <img src={CaretRight.src} />
-                  </div>
-                </div>
-              </div>
-            </SearchHelp> }
+            { tabIndex === 0 && <ApartmentSearchHelp /> }
 
             { tabIndex === 1 && <SearchHelp>
               <Steps values={["Espaço", "Horário", "Pessoas"]} current={0} variant="contrast" />
