@@ -6,7 +6,6 @@ import Button from "../../components/commom/Button";
 import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
 
 import Placeholder from "../../assets/apartamento/placeholder.png";
-import PeoplePartying from "../../assets/people_partying.svg";
 import CaretLeft from "../../assets/caret_left_white.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import WomanSunglasses from "../../assets/woman_sunglasses.svg";
@@ -16,6 +15,10 @@ import Navigation from "../../components/commom/Nav";
 import ApartmentTutorialStep1 from "../../assets/apartamento/tutorial_apartment/step1.svg";
 import ApartmentTutorialStep2 from "../../assets/apartamento/tutorial_apartment/step2.svg";
 import ApartmentTutorialStep3 from "../../assets/apartamento/tutorial_apartment/step3.svg";
+
+import LazerTutorialStep1 from "../../assets/apartamento/tutorial_lazer/step1.svg";
+import LazerTutorialStep2 from "../../assets/apartamento/tutorial_lazer/step2.svg";
+import LazerTutorialStep3 from "../../assets/apartamento/tutorial_lazer/step3.svg";
 
 import Steps from "../../components/Steps";
 
@@ -130,6 +133,36 @@ const ApartmentSearchHelp = () => {
   )
 }
 
+const LazerSearchHelp = () => {
+  const [pageIndex, setPageIndex] = useState(0);
+  const previous = () => {
+    if (pageIndex !== 0)
+      setPageIndex(pageIndex - 1);
+  };
+  const next = () => {
+    if (pageIndex === 2) {
+      setPageIndex(0);
+    } else {
+      setPageIndex(pageIndex + 1);
+    }
+  };
+  return (
+    <SearchHelp>
+      <Steps values={["Espaço", "Horário", "Pessoas"]} current={pageIndex} variant="contrast" />
+      <Image src={[LazerTutorialStep1, LazerTutorialStep2, LazerTutorialStep3][pageIndex]} />
+      
+      { pageIndex === 0 && <SearchHelpPage next={next}
+        text="Escolha o espaço que deseja reservar para o seu lazer, trabalho ou evento. " /> }
+      
+      { pageIndex === 1 && <SearchHelpPage previous={previous} next={next}
+        text="Informe a data e o horário que começa e termina sua reserva, digitando ou selecionado o calendário." /> }
+      
+      { pageIndex === 2 && <SearchHelpPage previous={previous} next={next} last={true}
+        text="Arraste o circulo para direita e esquerda até o balão cinza informar o número de pessoas que compareceram ao espaço. " /> }
+    </SearchHelp>
+  )
+}
+
 const Page = () => {
   const reserva = { from: "??", to: "??" };
   const proxReserva = { from: "??", to: "??" };
@@ -173,21 +206,9 @@ const Page = () => {
             <h1>Faça sua reserva!</h1>
             { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
             { tabIndex === 1 && <p>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</p> }
+            
             { tabIndex === 0 && <ApartmentSearchHelp /> }
-
-            { tabIndex === 1 && <SearchHelp>
-              <Steps values={["Espaço", "Horário", "Pessoas"]} current={0} variant="contrast" />
-              <Image src={PeoplePartying} />
-              <div>
-                <p>Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres</p>
-                <div className="buttonContainer">
-                  <div className="button">
-                    Próximo <img src={CaretRight.src} />
-                  </div>
-                </div>
-              </div>
-            </SearchHelp> }
-
+            { tabIndex === 1 && <LazerSearchHelp /> }
           </SearchHelpContainer>
         </Blue>
 
