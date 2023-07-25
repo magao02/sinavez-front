@@ -20,6 +20,7 @@ export const CancelBox = styled.div`
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+    transition: 0.5s ease;
 `;
 
 export const TitleCancel = styled.div`

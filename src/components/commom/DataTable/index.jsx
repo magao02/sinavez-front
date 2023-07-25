@@ -36,6 +36,12 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
     const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
     const [currentAssociates, setCurrentAssociates] = useState(data.slice(currentIndexes[0], currentIndexes[1]));
 
+    useEffect(() => {
+        // Atualizar 'currentAssociates' sempre que 'data' ou 'currentIndexes' mudarem
+        const updatedAssociates = data.slice(currentIndexes[0], currentIndexes[1]);
+        setCurrentAssociates(updatedAssociates);
+      }, [data, currentIndexes]);
+
     const paginate = useCallback((page) => {
         setCurrentIndexes((prev) => [prev[0] + page, prev[1] + page]);
         changeCurrentAssociates();
@@ -45,9 +51,6 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
         setCurrentAssociates(data.slice(currentIndexes[0], currentIndexes[1]));
     }, [currentAssociates, currentIndexes]);
 
-    useEffect(() => {
-        changeCurrentAssociates();
-    }, [currentIndexes]);
 
     if (searchTerm == "") {
         return (

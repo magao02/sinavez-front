@@ -33,7 +33,7 @@ import {
 import CancelForm from "../../components/CancelForm";
 
 const Associados = () => {
-  const [associados, setAssociados] = useState();
+  const [associados, setAssociados] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [admToggle, setAdmToggle] = useState(false);
   const [addAssociateToggle, setAddAssociateToggle] = useState();
@@ -73,13 +73,13 @@ const Associados = () => {
   const handleAddAssociate = useCallback(async () => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
-      setAssociados((p) => [...p, collectedData]);
+      setAssociados((p) => [...p, addAssociateResponse.data.user]);
       setCurrentStep(1);
       toggleAddAssociate();
     } catch (error) { 
       setGlobalMessage(error.response.data.message);
     } 
-  });
+  }, [associados, collectedData]);
 
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
@@ -111,15 +111,16 @@ const Associados = () => {
 
   // removendo usuário
   const userRemove = useCallback(async (userUrl) => {
-    console.log(userUrl);
     try {
       const removeUserResponse = await service.removeUser(userUrl, authContext.token);
-      setAssociados((p) => p.filter((associate) => associate.urlUser !== userUrl));
+      setAssociados((p) => p.filter((associado) => associado.urlUser !== userUrl));
       toggleRemoveAssociate();
     } catch (error) {
       console.log("Erro ao remover usuario:", error.response.data.message);
+      setAssociados((p) => [...p]);
     }
-  });
+  }, [associados]);
+
 
   const editUserData = useCallback(async (data) => {
     setUrlUserEdit(data.urlUser);
