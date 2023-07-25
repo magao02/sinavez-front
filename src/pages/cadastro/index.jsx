@@ -21,7 +21,7 @@ import {
   StepNumber,
   ButtonContainer,
   SubmitError,
-} from "../../styles/cadastroAssociadoStyles";
+} from "../../styles/cadastroStyles";
 
 import { GenericForm, GenericFormValue } from "../../components/GenericForm";
 import Button from "../../components/commom/Button";
