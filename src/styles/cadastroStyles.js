@@ -20,6 +20,11 @@ export const LeftContent = styled.div`
 
     z-index: 2;
     margin-left: 61px;
+
+    max-width: 40vw;
+    img {
+        max-height: 70vh;
+    }
 `;
 
 export const RightContent = styled.div`
@@ -30,6 +35,12 @@ export const RightContent = styled.div`
     justify-content: center;
 
     margin-right: 10%;
+    @media (max-height: 779px) {
+        scale: 90%;
+    }
+    @media (max-height: 676px) {
+        scale: 80%;
+    }
 `
 
 export const PatternBox = styled.div`
