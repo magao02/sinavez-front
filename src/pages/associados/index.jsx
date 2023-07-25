@@ -83,9 +83,6 @@ const Associados = () => {
 
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
-    console.log(data);
-    console.log(data.name);
-    console.log(data.urlUser);
     setRemoveAssociateToggle((p) => !p);
     setAssociadoName(data.name);
     setUrlUser(data.urlUser);
@@ -118,7 +115,7 @@ const Associados = () => {
     try {
       const removeUserResponse = await service.removeUser(userUrl, authContext.token);
       setAssociados((p) => p.filter((associate) => associate.urlUser !== userUrl));
-      console.log("Usuário removido com sucesso!");
+      toggleRemoveAssociate();
     } catch (error) {
       console.log("Erro ao remover usuario:", error.response.data.message);
     }
