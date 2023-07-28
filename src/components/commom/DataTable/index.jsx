@@ -9,7 +9,7 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ searchTerm, headers, data, takeData}) => {
+const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
     /*     <DataTable nextAssociates={() => currentIndexes[0] + 20 <= associados.length ? changeAssociates(true) : undefined} previousAssociates={() => currentIndexes[0] > 0 ? changeAssociates(false) : undefined} currentIndex={currentIndexes[0]} totalQuantity={associados.length} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={currentAssociados.map((associado) => [associado[1].name, associado[1].profissao, associado[1].cpf])} totalData={associados.map((associado) => [associado.name, associado.profissao, associado.cpf])} paginate={paginate} />
     
 
@@ -63,10 +63,10 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
                         if (i % 2 == 0) {
                             return (
                                 <Associate color={"blue"} key={d.cpf}>
-                                    <Name>{d.name}</Name>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
@@ -75,10 +75,10 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
                         else {
                             return (
                                 <Associate color={"white"}>
-                                    <Name>{d.name}</Name>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)}  />
                                     </Buttons>
                                 </Associate>
@@ -114,10 +114,10 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
                         if (i % 2 == 0) {
                             return (
                                 <Associate color={"blue"} key={d.cpf}>
-                                    <Name>{d.name}</Name>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
@@ -126,10 +126,10 @@ const DataTable = ({ searchTerm, headers, data, takeData}) => {
                         else {
                             return (
                                 <Associate color={"white"} key={d.cpf}>
-                                    <Name>{d.name}</Name>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>

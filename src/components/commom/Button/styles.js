@@ -366,5 +366,64 @@ function getStyleByVariant(variant) {
       align-items: center;
       `
     }
+
+    case "buttonBasic": {
+      return css`
+      background: none;
+      border: none;
+      outline: none;
+      color: #747880;
+      border-radius: 4px; 
+      font-family: Roboto;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; 
+      gap:4px;
+    `
+  }
+
+  case "removeBut": {
+    return css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+
+      background: transparent;
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+    `
+    }
+
+    case "editButton": {
+      return css`
+      display: flex;
+      padding: 8px 22px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      border-radius: 4px;
+      background: #0760BA;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20);    
+      
+      
+      color: #FDFDFD;
+      font-feature-settings: 'clig' off, 'liga' off;
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 26px; 
+      letter-spacing: 0.46px;
+      text-transform: uppercase;
+      border: none;
+      `
+      }
   }
 }

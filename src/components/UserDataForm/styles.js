@@ -110,7 +110,7 @@ export const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: ${props => props.gap ? '10px' : '16px'};
     align-self: stretch;
     margin-top: ${props => props.marginTop ? '20px' : '0px'};
 `
@@ -144,7 +144,9 @@ export const ProfileArguments = styled.div`
     flex-direction: column;
     width: 374px;
     height: 114px;
-`
+    padding: ${props => props.padding ? '12px 0px 8px 0px' : '0px 0px 0px 0px'};
+    gap: ${props => props.padding ? '18px' : '0px'};
+    `
 
 export const ProfileAvatar = styled.div`
     position: relative;
@@ -191,7 +193,7 @@ export const ProfileDescription = styled.p`
     color: var(--text-secundary, ${theme.colors.gray.default});
 
     font-family: Roboto;
-    font-size: 14px;
+    font-size: ${props => props.size ? '16px' : '14px'};
     font-style: normal;
     font-weight: 400;
     line-height: 18px;

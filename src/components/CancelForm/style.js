@@ -11,6 +11,7 @@ export const ContainerCancel = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items:center;
+    background-color: ${props => props.back ? theme.colors.white.default : theme.colors.gray.dark};
 `;
 
 export const CancelBox = styled.div`

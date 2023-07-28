@@ -31,6 +31,7 @@ import {
   AddAssociateBox
 } from "../../styles/associadosStyles";
 import CancelForm from "../../components/CancelForm";
+import DataUser from "../../components/DataUser";
 
 const Associados = () => {
   const [associados, setAssociados] = useState([]);
@@ -38,8 +39,13 @@ const Associados = () => {
   const [admToggle, setAdmToggle] = useState(false);
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
+
   const [associadoData, setAssociadoData] = useState([]);
   const [removeAssociateToggle, setRemoveAssociateToggle] = useState();
+  const [dataUserToggle, setDataUserToggle] = useState();
+
+  const [dataUser, setDataUser] = useState();
+  
   const [associadoName, setAssociadoName] = useState();
   const [urlUser, setUrlUser] = useState();
 
@@ -55,6 +61,10 @@ const Associados = () => {
   const toggleRemoveAssociate = useCallback(() => {
     setRemoveAssociateToggle((p) => !p);
   }, []);
+
+  const toggleDataUser = useCallback(() => {
+    setDataUserToggle((p) => !p);
+  },[]);
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
@@ -87,6 +97,12 @@ const Associados = () => {
     setAssociadoName(data.name);
     setUrlUser(data.urlUser);
   }, []);
+
+  const takeDataUser = useCallback((data) => {
+    setDataUserToggle((p) => !p);
+    setDataUser(data);
+    console.log(data);
+  });
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -201,7 +217,7 @@ const Associados = () => {
               </Button>
             </MainHead>
             <Main>
-              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} />
+              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser}/>
             </Main>
 
           </MainContainer>
@@ -209,6 +225,12 @@ const Associados = () => {
           <>
             <DarkBackground pageHeight={"150vh"} />
             <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser}/>
+          </>
+          )}
+
+          { dataUserToggle && (
+          <>
+            <DataUser back={toggleDataUser} data={dataUser}/>
           </>
           )}
         </>

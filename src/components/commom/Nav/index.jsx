@@ -107,7 +107,7 @@ function NavVariant({ variant, selectedPage }) {
             <Link href="/usuario">Meus Dados</Link>
             <Link href="/dependentes">Meus Dependentes</Link>
             <Link href="/impostos">Baixar Imposto de Renda</Link>
-            <Link legacyBehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
+            <Link legacybehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
           </UserFeaturesLeft>
           <UserFeaturesRight>
           </UserFeaturesRight>

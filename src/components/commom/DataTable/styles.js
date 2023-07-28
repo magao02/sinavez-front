@@ -66,6 +66,7 @@ export const Name = styled.div`
     font-size: 14px;
     font-family: Roboto;
     line-height: 18px;
+    cursor: pointer;
 `
 
 export const Profession = styled.div`
