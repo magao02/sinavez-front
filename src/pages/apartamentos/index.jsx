@@ -41,6 +41,7 @@ import {
 import Image from "next/image";
 import { getAllApartments } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
+import { getAllRecreationAreas } from "../../services/recreationArea";
 
 const Search = ({ tabIndex, setTabIndex }) => {
   return (
@@ -186,6 +187,28 @@ const Page = () => {
         features.push("Aceita pets");
       return {
         nome: apt.titulo,
+        image: Placeholder,
+        reserva,
+        proxReserva,
+        features,
+        reservado: false,
+      };
+    }))
+  }, [authContext.token]);
+
+  useEffect(async () => {
+    const req = await getAllRecreationAreas(authContext.token);
+    const data = req.data;
+    setAreas(data.map(area => {
+      const features = [];
+      if (area.wifi)
+        features.push("Wifi Grátis");
+      if (area.suite)
+        features.push("1 Suíte");
+      if (area.animais)
+        features.push("Aceita pets");
+      return {
+        nome: area.titulo,
         image: Placeholder,
         reserva,
         proxReserva,
