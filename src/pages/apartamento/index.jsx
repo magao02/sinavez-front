@@ -9,12 +9,16 @@ import {
   Body1,
   Body3,
   Title2,
+  Features,
+  FeatureCard,
+  Body2,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
 import MapaImage from "../../assets/apartamento/mapa.png";
+import IconWifi from "../../assets/apartamento/wifi.svg";
 
 const Page = () => {
   return (
@@ -32,6 +36,24 @@ const Page = () => {
               <div>
                 <Subtitle2>Itens do Apartamento</Subtitle2>
               </div>
+              <Features>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Wi-Fi</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Ar-Condicionado</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Travesseiro</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Frigobar</Body2>
+                </FeatureCard>
+              </Features>
             </BlueOutlineCard>
 
             <BlueOutlineCard>
@@ -39,6 +61,24 @@ const Page = () => {
                 <Subtitle2>Áreas comuns</Subtitle2>
                 <Body3>Verifique a disponibilidade de uso das áreas comuns durante sua estadia. Caso queria usufruir de alguma em especifico faça a reserva aqui.</Body3>
               </div>
+              <Features>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Garagem</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Auditório</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Cozinha compartilhada</Body2>
+                </FeatureCard>
+                <FeatureCard>
+                  <Image src={IconWifi} width="32" height="32" />
+                  <Body2>Frigobar</Body2>
+                </FeatureCard>
+              </Features>
             </BlueOutlineCard>
 
             <BlueOutlineCard>

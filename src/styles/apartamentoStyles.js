@@ -96,3 +96,24 @@ export const BlueOutlineCard = styled.div`
   border: 1px solid ${theme.colors.blue.lighter};
   background: ${theme.colors.white.default};
 `;
+
+export const Features = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 6px;
+  max-width: 802px;
+`;
+
+export const FeatureCard = styled.div`
+  display: flex;
+  padding: 4px 16px;
+  align-items: flex-start;
+  gap: 13px;
+  align-items: center;
+  border-radius: 8px;
+  background: ${theme.colors.blue.light};
+
+  flex: none;
+  /* width: calc(33% - 3px); */
+  width: 247px;
+`;
