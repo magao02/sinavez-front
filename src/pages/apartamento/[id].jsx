@@ -12,24 +12,43 @@ import {
   Features,
   FeatureCard,
   Body2,
+  ImageGallery,
+  Breadcrumbs,
+  Header,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
+import PlaceholderImage from "../../assets/apartamento/placeholder.png";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
+import IconArrowLeft from "../../assets/icon_arrow_left.svg";
+import { useRouter } from "next/router";
 
 const Page = () => {
+  const router = useRouter();
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
       <NavSpacing />
       <Content>
-        <div>
-          <Title1>Apartamento 03</Title1>
-          <Body1>Apartamento Padrão (sem adaptação para PCD), 2 andar</Body1>
-        </div>
+        <Breadcrumbs>
+          <Image src={IconArrowLeft} />
+          <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1>
+        </Breadcrumbs>
+        <Header>
+          <ImageGallery>
+            <img src={PlaceholderImage.src} />
+            <img src={PlaceholderImage.src} />
+            <img src={PlaceholderImage.src} />
+          </ImageGallery>
+          <div>
+            <Title1>Apartamento {router.query.id}</Title1>
+            <Body1>Apartamento Padrão (sem adaptação para PCD), 2 andar</Body1>
+          </div>
+        </Header>
         <Details>
           <Column>
             <BlueOutlineCard>

@@ -12,7 +12,6 @@ export const Content = styled.div`
   @media(min-width: 1400px) {
     padding: 0 10vw;
   }
-  margin-top: 100px;
 `;
 
 export const Title1 = styled.h1`
@@ -48,7 +47,7 @@ export const Subtitle2 = styled.h4`
 `;
 
 export const Body1 = styled.span`
-  color: ${theme.colors.gray.default};
+  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
 
   font-family: Roboto;
   font-size: 18px;
@@ -95,13 +94,15 @@ export const BlueOutlineCard = styled.div`
   border-radius: 8px;
   border: 1px solid ${theme.colors.blue.lighter};
   background: ${theme.colors.white.default};
+
+  // silly
+  max-width: 820px;
 `;
 
 export const Features = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px 6px;
-  max-width: 802px;
 `;
 
 export const FeatureCard = styled.div`
@@ -116,4 +117,32 @@ export const FeatureCard = styled.div`
   flex: none;
   /* width: calc(33% - 3px); */
   width: 247px;
+`;
+
+export const ImageGallery = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 8px;
+  height: 285px;
+
+  img {
+    flex-grow: 1;
+    object-fit: cover;
+  }
+`;
+
+export const Breadcrumbs = styled.div`
+  display: flex;
+  padding: 10px 0;
+  gap: 16px;
+  margin: 32px 0;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 `;
