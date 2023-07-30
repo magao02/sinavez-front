@@ -129,6 +129,7 @@ export const ImageGallery = styled.div`
   height: 285px;
 
   img {
+    /* TODO: last image gets clipped on smaller resolutions */
     flex-grow: 1;
     object-fit: cover;
   }
@@ -145,4 +146,32 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+`;
+
+export const BlueBackgroundCard = styled.div`
+  background: ${theme.colors.blue.shadow};
+  border-radius: 8px;
+`;
+
+export const BlueFeatureCard = styled(BlueBackgroundCard)`
+  padding: 12px 0;
+  padding-left: 24px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+
+  color: ${theme.colors.blue.border};
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 700;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+`;
+
+export const BlueFeatures = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
 `;

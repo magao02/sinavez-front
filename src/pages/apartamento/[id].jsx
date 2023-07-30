@@ -15,6 +15,8 @@ import {
   ImageGallery,
   Breadcrumbs,
   Header,
+  BlueFeatureCard,
+  BlueFeatures,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -24,6 +26,7 @@ import PlaceholderImage from "../../assets/apartamento/placeholder.png";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
+import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import { useRouter } from "next/router";
 
 const Page = () => {
@@ -51,6 +54,17 @@ const Page = () => {
         </Header>
         <Details>
           <Column>
+            <BlueFeatures>
+              {
+                Array(4).fill(0).map((_, i) =>
+                  <BlueFeatureCard key={i}>
+                    <Image src={IconDoubleBed} />
+                    {i + 1} Cama casal
+                  </BlueFeatureCard>
+                )
+              }
+            </BlueFeatures>
+
             <BlueOutlineCard>
               <div>
                 <Subtitle2>Itens do Apartamento</Subtitle2>
