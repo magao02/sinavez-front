@@ -20,6 +20,8 @@ import {
   DescriptionCard,
   DescriptionBox,
   ReservationDetailsCard,
+  RulesCard,
+  Subtitle1,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -57,7 +59,7 @@ const Page = () => {
           </div>
         </Header>
         <Details>
-          <Column>
+          <Column className="features-column">
             <BlueFeatures>
               {
                 Array(4).fill(0).map((_, i) =>
@@ -184,6 +186,18 @@ const Page = () => {
                 <Body1 primary>R$ 160,00</Body1>
               </div>
             </ReservationDetailsCard>
+
+            <RulesCard>
+              <Subtitle1>Regras de convivência</Subtitle1>
+              <Body2 primary>
+                <ol>
+                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+                </ol>
+              </Body2>
+            </RulesCard>
           </Column>
         </Details>
         <Title2>Veja a localização no mapa</Title2>

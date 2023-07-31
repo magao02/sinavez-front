@@ -83,6 +83,10 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  .features-column {
+    max-width: 66.6%;
+  }
 `;
 
 export const BlueOutlineCard = styled.div`
@@ -94,9 +98,6 @@ export const BlueOutlineCard = styled.div`
   border-radius: 8px;
   border: 1px solid ${theme.colors.blue.lighter};
   background: ${theme.colors.white.default};
-
-  // silly
-  max-width: 820px;
 `;
 
 export const Features = styled.div`
@@ -116,7 +117,8 @@ export const FeatureCard = styled.div`
 
   flex: none;
   /* width: calc(33% - 3px); */
-  width: 247px;
+  /* width: 247px; */
+  width: max(32.6%, 247px);
 `;
 
 export const ImageGallery = styled.div`
@@ -201,6 +203,7 @@ export const ReservationDetailsCard = styled(BlueBackgroundCard)`
     display: flex;
     gap: 16px;
     justify-content: space-between;
+    align-items: center;
   }
 
   .row-separator {
@@ -212,5 +215,18 @@ export const ReservationDetailsCard = styled(BlueBackgroundCard)`
 
   .top-spacing {
     margin-top: 24px;
+  }
+`;
+
+export const RulesCard = styled(BlueBackgroundCard)`
+  background: ${theme.colors.blue.light};
+  padding: 24px;
+  padding-bottom: 50px;
+
+  ol {
+    list-style-position: inside;
+    margin-top: 24px;
+    display: grid;
+    gap: 16px;
   }
 `;
