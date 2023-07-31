@@ -129,9 +129,11 @@ export const ImageGallery = styled.div`
   height: 285px;
 
   img {
-    /* TODO: last image gets clipped on smaller resolutions */
-    flex-grow: 1;
     object-fit: cover;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    width: 33%;
   }
 `;
 
