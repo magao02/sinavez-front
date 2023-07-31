@@ -187,3 +187,30 @@ export const DescriptionBox = styled(BlueBackgroundCard)`
   padding: 12px;
   margin-top: 12px;
 `;
+
+export const ReservationDetailsCard = styled(BlueBackgroundCard)`
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin-bottom: 24px;
+  }
+
+  .row {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+  .row-separator {
+    flex: 1 0 0;
+    align-self: stretch;
+    border-bottom: 2px solid ${theme.colors.blue.heavy};
+    margin: 16px 0;
+  }
+
+  .top-spacing {
+    margin-top: 24px;
+  }
+`;

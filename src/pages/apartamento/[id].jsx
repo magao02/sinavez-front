@@ -19,6 +19,7 @@ import {
   BlueFeatures,
   DescriptionCard,
   DescriptionBox,
+  ReservationDetailsCard,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -30,6 +31,7 @@ import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import { useRouter } from "next/router";
+import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 
 const Page = () => {
   const router = useRouter();
@@ -137,7 +139,52 @@ const Page = () => {
             </DescriptionCard>
           </Column>
 
-          <Column></Column>
+          <Column>
+            <ReservationDetailsCard>
+              <Title2>Dados da sua reserva</Title2>
+              <div className="row">
+                <SearchInput label="Chegada" type="date" innerLabel="Data" />
+                <SearchInput label="Saída" type="date" innerLabel="Data" />
+              </div>
+              
+              <div className="row-separator" />
+              
+              <div className="row">
+                <DropdownInput label="Hóspedes" options={["2 adultos;  1 criança;  1 bebê; 2 animais de estimação"]} />
+              </div>
+              
+              <div className="row-separator" />
+              
+              <Subtitle2>Horários</Subtitle2>
+              
+              <div className="row">
+                <Body2 primary><b>Chegada:</b> 11:00 manhã</Body2>
+                <Body2 primary><b>Saída:</b> 18:00 noite</Body2>
+              </div>
+              
+              <div className="row top-spacing">
+                <Subtitle2>Valores da reserva</Subtitle2>
+                <div className="row-separator" />
+              </div>
+              
+              <div className="row">
+                <Body2 primary>Valor da diária</Body2>
+                <Body1 primary><b>R$ 40,00</b></Body1>
+              </div>
+              
+              <div className="row">
+                <Body2 primary>Número de diárias</Body2>
+                <Body1 primary><b>4</b></Body1>
+              </div>
+              
+              <div className="row-separator" />
+
+              <div className="row">
+                <Body1 primary>Total</Body1>
+                <Body1 primary>R$ 160,00</Body1>
+              </div>
+            </ReservationDetailsCard>
+          </Column>
         </Details>
         <Title2>Veja a localização no mapa</Title2>
         <Image src={MapaImage} />
