@@ -55,7 +55,7 @@ export const Body1 = styled.span`
 `;
 
 export const Body2 = styled.span`
-  color: ${theme.colors.gray.default};
+  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
 
   font-family: Roboto;
   font-size: 16px;
@@ -63,7 +63,7 @@ export const Body2 = styled.span`
 `;
 
 export const Body3 = styled.span`
-  color: ${theme.colors.gray.default};
+  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
 
   font-family: Roboto;
   font-size: 14px;
@@ -76,7 +76,7 @@ export const Images = styled.div`
 export const Details = styled.div`
   display: flex;
   gap: 24px;
-  margin-top: 32px;
+  margin: 32px 0;
 `;
 
 export const Column = styled.div`
@@ -176,4 +176,14 @@ export const BlueFeatures = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 32px;
+`;
+
+export const DescriptionCard = styled(BlueBackgroundCard)`
+  padding: 24px;
+`;
+
+export const DescriptionBox = styled(BlueBackgroundCard)`
+  background: ${theme.colors.white.default};
+  padding: 12px;
+  margin-top: 12px;
 `;

@@ -17,6 +17,8 @@ import {
   Header,
   BlueFeatureCard,
   BlueFeatures,
+  DescriptionCard,
+  DescriptionBox,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -119,6 +121,20 @@ const Page = () => {
                 <Subtitle2>Locais Próximos</Subtitle2>
               </div>
             </BlueOutlineCard>
+
+            <DescriptionCard>
+              <Subtitle2>Descrição deste quarto</Subtitle2>
+              <Body3 primary>Leia abaixo mais informações e mais detalhes sobre o apartamento.</Body3>
+              <DescriptionBox>
+                <Body2 primary>
+                  <b>ATENÇÃO:</b> Controles e chaves devem ser devolvidos na saída.<br />
+                  <br />
+                  O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset, que continham passagens com Lorem Ipsum, e mais recentemente com os programas de publicação como o Aldus PageMaker que incluem versões do Lorem Ipsum.<br />
+                  <br />
+                  <b>Sobre a Cozinha compartilhada:</b> O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres.
+                </Body2>
+              </DescriptionBox>
+            </DescriptionCard>
           </Column>
 
           <Column></Column>
