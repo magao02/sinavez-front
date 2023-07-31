@@ -22,6 +22,7 @@ import {
   ReservationDetailsCard,
   RulesCard,
   Subtitle1,
+  WarningCard,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -186,6 +187,11 @@ const Page = () => {
                 <Body1 primary>R$ 160,00</Body1>
               </div>
             </ReservationDetailsCard>
+
+            <WarningCard>
+              <Subtitle2>Atenção</Subtitle2>
+              <Body3 primary>Controles e chaves devem ser devolvidos na saída.</Body3>
+            </WarningCard>
 
             <RulesCard>
               <Subtitle1>Regras de convivência</Subtitle1>
