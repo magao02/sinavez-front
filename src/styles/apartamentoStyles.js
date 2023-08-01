@@ -156,6 +156,14 @@ export const ImageGallery = styled.div`
     flex-basis: 0;
     width: 33%;
   }
+
+  position: relative;
+  
+  .button {
+    position: absolute;
+    bottom: 21px;
+    right: 24px;
+  }
 `;
 
 export const Breadcrumbs = styled.div`

@@ -59,6 +59,9 @@ const Page = () => {
             <img src={PlaceholderImage.src} />
             <img src={PlaceholderImage.src} />
             <img src={PlaceholderImage.src} />
+            <div className="button">
+              <Button>VER TODAS AS FOTOS</Button>
+            </div>
           </ImageGallery>
           <div>
             <Title1>Apartamento {router.query.id}</Title1>
