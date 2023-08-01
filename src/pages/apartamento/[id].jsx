@@ -33,6 +33,7 @@ import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
+import IconRedWarning from "../../assets/icon_red_warning.svg";
 import { useRouter } from "next/router";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 
@@ -189,8 +190,11 @@ const Page = () => {
             </ReservationDetailsCard>
 
             <WarningCard>
-              <Subtitle2 red>Atenção</Subtitle2>
-              <Body3 red>Controles e chaves devem ser devolvidos na saída.</Body3>
+              <Image src={IconRedWarning} />
+              <div>
+                <Subtitle2 red>Atenção</Subtitle2>
+                <Body3 red>Controles e chaves devem ser devolvidos na saída.</Body3>
+              </div>
             </WarningCard>
 
             <RulesCard>

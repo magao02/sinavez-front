@@ -252,4 +252,7 @@ export const RulesCard = styled(BlueBackgroundCard)`
 export const WarningCard = styled(BlueBackgroundCard)`
   background: ${theme.colors.yellow.light};
   padding: 14px 16px;
+  display: flex;
+  align-items: start;
+  gap: 12px;
 `;
