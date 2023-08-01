@@ -25,6 +25,7 @@ import {
   WarningCard,
   Locations,
   Location,
+  MapContainer,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -242,8 +243,11 @@ const Page = () => {
             </RulesCard>
           </Column>
         </Details>
-        <Title2>Veja a localização no mapa</Title2>
-        <Image src={MapaImage} />
+
+        <MapContainer>
+          <Title2>Veja a localização no mapa</Title2>
+          <Image src={MapaImage} />
+        </MapContainer>
       </Content>
     </div>
   );

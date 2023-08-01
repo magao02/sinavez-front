@@ -12,6 +12,7 @@ export const Content = styled.div`
   @media(min-width: 1400px) {
     padding: 0 10vw;
   }
+  margin-bottom: 64px;
 `;
 
 function getTitleColor(props) {
@@ -279,4 +280,13 @@ export const Location = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
+`;
+
+export const MapContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  img {
+    border-radius: 16px;
+  }
 `;
