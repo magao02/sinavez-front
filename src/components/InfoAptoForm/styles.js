@@ -26,11 +26,10 @@ export const CamaInputContainer = styled.div`
 
 
 export const CheckBoxInputs = styled.div`
-    width: 50%;
     display: flex;
     flex-direction: row;
     border: none;
-    gap: 5px;
+    gap: .5vw;
 `
 
 export const AddBedButton = styled.button`

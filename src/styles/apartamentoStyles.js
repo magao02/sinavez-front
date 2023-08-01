@@ -22,7 +22,6 @@ export const Main = styled.div`
 export const Header = styled.div`
     height: 10vh;
     width: 100%;
-    background-color: pink;
     position:relative;
 `
 

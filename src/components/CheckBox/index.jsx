@@ -1,39 +1,46 @@
 import { Container, CheckArea } from "./styles";
 import CheckBoxInput from "../commom/CheckBoxInput";
-import { useState } from "react";
 
-const CheckBox = (showTrash) => {
-    const [itens, setItens] =  useState([
-        "Frigobar",
-        "Armario",
-        "Smart TV",
-        "Travesseiro",
-        "Lencol de Elastico",
-        "Ferro de Passar",
-        "Armador de rede",
-        "Pratos, talheres e copos",
-        "Ar condicionado"
-    ])
+const CheckBox = ({ showTrash, options, setChecked, deleteItem }) => {
+  const splitArrayEqually = (array, parts) => {
+    const totalLength = array.length;
+    const partSize = Math.floor(totalLength / parts);
+    const remainder = totalLength % parts;
 
-    return (
-        <Container>
-            <CheckArea>
-                <CheckBoxInput showTrash={showTrash} label={"Frigobar"} />
-                <CheckBoxInput showTrash={showTrash} label={"Armario"} />
-                <CheckBoxInput showTrash={showTrash} label={"Smart TV"} />
-            </CheckArea>
-            <CheckArea>
-                <CheckBoxInput showTrash={showTrash} label={"Travesseiro"} />
-                <CheckBoxInput showTrash={showTrash} label={"Lencol de Elastico"} />
-                <CheckBoxInput showTrash={showTrash} label={"Ferro de passar"} />
-            </CheckArea>
-            <CheckArea border={"none"}>
-                <CheckBoxInput showTrash={showTrash} label={"Armador de rede"} />
-                <CheckBoxInput showTrash={showTrash} label={"Pratos, talheres e copos"} />
-                <CheckBoxInput showTrash={showTrash} label={"Ar condicionado"} />
-            </CheckArea>
-        </Container>
-    )
-}
+    const result = [];
+    let startIndex = 0;
+
+    for (let i = 0; i < parts; i++) {
+      const size = partSize + (i < remainder ? 1 : 0);
+      const part = array.slice(startIndex, startIndex + size);
+      result.push(part);
+      startIndex += size;
+    }
+
+    return result;
+  };
+
+  return (
+    <Container>
+      {splitArrayEqually(options, 3).map((data, key) => {
+        return (
+          <CheckArea id={key}>
+            {data.map((item) => {
+              return (
+                <CheckBoxInput
+                  showTrash={showTrash}
+                  label={item.name}
+                  setChecked={setChecked}
+                  deleteItem={deleteItem}
+                  checked={item.checked}
+                />
+              );
+            })}
+          </CheckArea>
+        );
+      })}
+    </Container>
+  );
+};
 
 export default CheckBox;

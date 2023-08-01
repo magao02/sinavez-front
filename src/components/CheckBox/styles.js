@@ -13,6 +13,6 @@ export const CheckArea = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    border-right: ${(prop) => prop.border == "none" ? "none" : "2px solid"};
+    border-right: ${(props) => props.id == 2 ? "none" : "2px solid"};
     border-color: ${theme.colors.blue.heavy};
 `

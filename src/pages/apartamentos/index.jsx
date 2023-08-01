@@ -1,0 +1,163 @@
+import Navigation from "../../components/commom/Nav";
+import Door from "../../assets/Door.svg";
+import Image from "next/image";
+import InfoAptoForm from "../../components/InfoAptoForm";
+
+import {
+  Container,
+  Main,
+  Header,
+  GridFotos,
+  BusyButton,
+  LeftSide,
+  InfoApto,
+  RightSide,
+  ReservarButton,
+  ButtonArea,
+  InfoBox,
+} from "../../styles/apartamentoStyles";
+import AptoTexts from "../../components/AptoTexts";
+import AptoItens from "../../components/AptoItens";
+import RegrasApto from "../../components/RegrasApto";
+import { useState } from "react";
+
+const apartamento = () => {
+  const [itensApto, setItensApto] = useState([
+    {
+      name: "Frigobar",
+      checked: false,
+    },
+    {
+      name: "Armario",
+      checked: false,
+    },
+    {
+      name: "Smart TV",
+      checked: false,
+    },
+    {
+      name: "Travesseiro",
+      checked: false,
+    },
+    {
+      name: "Lencol de Elastico",
+      checked: false,
+    },
+    {
+      name: "Ferro de passar",
+      checked: false,
+    },
+    {
+      name: "Armador de Rede",
+      checked: false,
+    },
+    {
+      name: "Pratos, talheres e copos",
+      checked: false,
+    },
+    {
+      name: "Ar condicionado",
+      checked: false,
+    },
+  ]);
+
+  const [commumArea, setCommunAreas] = useState([
+    {
+      name: "Garagem",
+      checked: false,
+    },
+    {
+      name: "Piscina",
+      checked: false,
+    },
+    {
+      name: "Auditorio",
+      checked: false,
+    },
+    {
+      name: "Churrasqueira",
+      checked: false,
+    },
+    {
+      name: "Area Gourmet",
+      checked: false,
+    },
+
+    {
+      name: "Lavanderia",
+      checked: false,
+    },
+    {
+      name: "Cozinha compartilhada",
+      checked: false,
+    },
+    {
+      name: "Recreacao infantil",
+      checked: false,
+    },
+  ]);
+
+  return (
+    <Container>
+      <Header>
+        <Navigation variant={"admin"} />
+      </Header>
+      <Main>
+        <GridFotos></GridFotos>
+        <InfoApto>
+          <LeftSide>
+            <ButtonArea>
+              <BusyButton>
+                <Image src={Door} />
+                OCUPADO
+              </BusyButton>
+              <ReservarButton>RESERVAR</ReservarButton>
+            </ButtonArea>
+            <InfoBox>
+              <InfoAptoForm />
+            </InfoBox>
+            <InfoBox>
+              <AptoTexts
+                title={"Descrição do apartamento"}
+                text={
+                  "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
+                }
+              />
+            </InfoBox>
+            <InfoBox>
+              <AptoItens
+                title={"Itens do apartamento"}
+                itens={itensApto}
+                setItens={setItensApto}
+              />
+            </InfoBox>
+            <InfoBox>
+              <AptoTexts
+                title={"Adicione o Valor da Diária do Apartamento"}
+                text={"Valor por Diária"}
+                type={"number"}
+              />
+            </InfoBox>
+          </LeftSide>
+          <RightSide>
+            <InfoBox>
+              <AptoItens
+                title={"Areas Comuns"}
+                itens={commumArea}
+                setItens={setCommunAreas}
+              />
+            </InfoBox>
+            <InfoBox>
+              <RegrasApto title={"Regras de convivencia"} />
+            </InfoBox>
+            <InfoBox>
+              <RegrasApto title={"Locais nos Arredores"} />
+            </InfoBox>
+          </RightSide>
+        </InfoApto>
+      </Main>
+    </Container>
+  );
+};
+
+export default apartamento;

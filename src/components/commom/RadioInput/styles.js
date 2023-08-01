@@ -13,10 +13,9 @@ export const CheckBox = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: .7vh;
-    width: 50%;
-    margin-left: 7px;
-    margin-right: 10px;
+    gap: .7vw;
+    margin-left: .7vw;
+    margin-right: .5vw;
 `
 export const Input = styled.input.attrs({type: "radio"})`
     width: 15px;
@@ -28,7 +27,6 @@ export const CheckBoxContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    width: 100%;
     margin-left: 0px;
 `
 export const Label = styled.label`
