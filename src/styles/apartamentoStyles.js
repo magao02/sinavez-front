@@ -267,3 +267,16 @@ export const WarningCard = styled(BlueBackgroundCard)`
   align-items: start;
   gap: 12px;
 `;
+
+export const Locations = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 6px;
+`;
+
+export const Location = styled.div`
+  width: max(250px, 48%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+`;

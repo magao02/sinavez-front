@@ -23,6 +23,8 @@ import {
   RulesCard,
   Subtitle1,
   WarningCard,
+  Locations,
+  Location,
 } from "../../styles/apartamentoStyles";
 
 import Navigation from "../../components/commom/Nav";
@@ -34,6 +36,7 @@ import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import IconRedWarning from "../../assets/icon_red_warning.svg";
+import IconLocation from "../../assets/icon_gray_location.svg";
 import { useRouter } from "next/router";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 import Button from "../../components/commom/Button";
@@ -127,6 +130,29 @@ const Page = () => {
               <div>
                 <Subtitle2>Locais Próximos</Subtitle2>
               </div>
+              <Locations>
+                <Location>
+                  <Image src={IconLocation} />
+                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
+                </Location>
+                <Location>
+                  <Image src={IconLocation} />
+                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
+                </Location>
+                <Location>
+                  <Image src={IconLocation} />
+                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
+                </Location>
+                <Location>
+                  <Image src={IconLocation} />
+                  <Body3 primary>Praia Nome Aqui com muita areia e sal bem </Body3>
+                </Location>
+                <Location>
+                  <Image src={IconLocation} />
+                  <Body3 primary>Praia Nome Aqui com muita areia e sal bem </Body3>
+                </Location>
+              </Locations>
+              
             </BlueOutlineCard>
 
             <DescriptionCard>
