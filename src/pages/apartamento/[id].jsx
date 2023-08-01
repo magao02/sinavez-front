@@ -171,12 +171,12 @@ const Page = () => {
               </div>
               
               <div className="row">
-                <Body2 primary>Valor da diária</Body2>
+                <Body2 blue>Valor da diária</Body2>
                 <Body1 primary><b>R$ 40,00</b></Body1>
               </div>
               
               <div className="row">
-                <Body2 primary>Número de diárias</Body2>
+                <Body2 blue>Número de diárias</Body2>
                 <Body1 primary><b>4</b></Body1>
               </div>
               
@@ -189,8 +189,8 @@ const Page = () => {
             </ReservationDetailsCard>
 
             <WarningCard>
-              <Subtitle2>Atenção</Subtitle2>
-              <Body3 primary>Controles e chaves devem ser devolvidos na saída.</Body3>
+              <Subtitle2 red>Atenção</Subtitle2>
+              <Body3 red>Controles e chaves devem ser devolvidos na saída.</Body3>
             </WarningCard>
 
             <RulesCard>

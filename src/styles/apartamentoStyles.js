@@ -14,8 +14,26 @@ export const Content = styled.div`
   }
 `;
 
+function getTitleColor(props) {
+  if (props.blue)
+    return theme.colors.blue.border;
+  if (props.red)
+    return theme.colors.red;
+  return theme.colors.gray.menu;
+}
+
+function getBodyColor(props) {
+  if (props.primary)
+    return getTitleColor(props);
+  if (props.blue)
+    return theme.colors.blue.border;
+  if (props.red)
+    return theme.colors.red;
+  return theme.colors.gray.default;
+}
+
 export const Title1 = styled.h1`
-  color: ${theme.colors.gray.menu};
+  color: ${getTitleColor};
 
   font-family: Jost;
   font-size: 32px;
@@ -23,7 +41,7 @@ export const Title1 = styled.h1`
 `;
 
 export const Title2 = styled.h2`
-  color: ${theme.colors.gray.menu};
+  color: ${getTitleColor};
 
   font-family: Jost;
   font-size: 24px;
@@ -31,7 +49,7 @@ export const Title2 = styled.h2`
 `;
 
 export const Subtitle1 = styled.h3`
-  color: ${theme.colors.gray.menu};
+  color: ${getTitleColor};
 
   font-family: Jost;
   font-size: 22px;
@@ -39,7 +57,7 @@ export const Subtitle1 = styled.h3`
 `;
 
 export const Subtitle2 = styled.h4`
-  color: ${theme.colors.gray.menu};
+  color: ${getTitleColor};
 
   font-family: Jost;
   font-size: 18px;
@@ -47,7 +65,7 @@ export const Subtitle2 = styled.h4`
 `;
 
 export const Body1 = styled.span`
-  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
+  color: ${getBodyColor};
 
   font-family: Roboto;
   font-size: 18px;
@@ -55,7 +73,7 @@ export const Body1 = styled.span`
 `;
 
 export const Body2 = styled.span`
-  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
+  color: ${getBodyColor};
 
   font-family: Roboto;
   font-size: 16px;
@@ -63,7 +81,7 @@ export const Body2 = styled.span`
 `;
 
 export const Body3 = styled.span`
-  color: ${props => props.primary ? theme.colors.gray.menu : theme.colors.gray.default};
+  color: ${getBodyColor};
 
   font-family: Roboto;
   font-size: 14px;
