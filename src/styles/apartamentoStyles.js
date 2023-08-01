@@ -213,10 +213,14 @@ export const ReservationDetailsCard = styled(BlueBackgroundCard)`
   display: flex;
   flex-direction: column;
 
-  h2 {
+  ${Title2} {
     margin-bottom: 24px;
   }
 
+  ${Subtitle2} {
+    margin-bottom: 10px;
+  }
+  
   .row {
     display: flex;
     gap: 16px;
@@ -233,6 +237,13 @@ export const ReservationDetailsCard = styled(BlueBackgroundCard)`
 
   .top-spacing {
     margin-top: 24px;
+  }
+
+  .button-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 `;
 

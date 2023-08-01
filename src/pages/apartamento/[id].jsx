@@ -36,6 +36,7 @@ import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import IconRedWarning from "../../assets/icon_red_warning.svg";
 import { useRouter } from "next/router";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
+import Button from "../../components/commom/Button";
 
 const Page = () => {
   const router = useRouter();
@@ -186,6 +187,11 @@ const Page = () => {
               <div className="row">
                 <Body1 primary>Total</Body1>
                 <Body1 primary>R$ 160,00</Body1>
+              </div>
+
+              <div className="button-container">
+                <Button>RESERVE AGORA</Button>
+                <Body3 red>Você ainda não irá pagar*</Body3>
               </div>
             </ReservationDetailsCard>
 
