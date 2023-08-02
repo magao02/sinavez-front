@@ -18,7 +18,7 @@ const CamaInput = ( {id, deleteCama, handleCama}) => {
                 type="number"
                 placeholder="Quantidade"
             />
-            <DeleteBedButton onClick={() => deleteCama(id)} ><Image src={trash} alt="trashIcon"/></DeleteBedButton>
+            <DeleteBedButton onClick={() => deleteCama(id)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
         </Container>
 
     )
