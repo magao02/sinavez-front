@@ -20,7 +20,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
   const formacaoSuperiorRef = useRef();
   const dataFormacaoRef = useRef();
   const empresaRef = useRef();
-  const instituicaoSuperiorRef = useRef();
+  const profissaoRef = useRef();
   const salarioRef = useRef();
 
   const numRegistroConselhoRef = useRef();
@@ -34,7 +34,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
       formacaoSuperiorRef, dataFormacaoRef, empresaRef,
-      instituicaoSuperiorRef, salarioRef, /* cidadeRef, estadoRef, */
+      profissaoRef, salarioRef, /* cidadeRef, estadoRef, */
       numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef,
       dataAfiliacaoRef
     ];
@@ -53,10 +53,10 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
 
     const salario = salarioRef.current?.value != undefined ? Number(salarioRef.current?.value) : 0.0;
 
-    const [formacaoSuperior, dataFormacao, empresa, instituicaoSuperior,
+    const [formacaoSuperior, dataFormacao, empresa, profissao,
       numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao,
       /* municipio, estado */] =
-      [formacaoSuperiorRef, dataFormacaoRef, empresaRef, instituicaoSuperiorRef,
+      [formacaoSuperiorRef, dataFormacaoRef, empresaRef, profissaoRef,
         numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef, dataAfiliacaoRef,
         /* cidadeRef, estadoRef */
       ].map(
@@ -64,7 +64,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
 
     dataCollector({
       /* regional: { municipio, estado, naturalidade, nacionalidade},*/ 
-      formacaoSuperior, dataFormacao, empresa, instituicaoSuperior, salario,
+      formacaoSuperior, dataFormacao, empresa, profissao, salario,
       numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao
     })
   });
@@ -155,20 +155,20 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
             </SubTitle>
             <Input
               variant="default-optional"
+              label={"Profissão"}
+              name={"profissao"}
+              placeholder={"Digite sua profissão"}
+              previousValue={previousData.profissao}
+              ref={profissaoRef}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default-optional"
               label={"Organização ou empresa que trabalha"}
               name={"trabalho"}
               placeholder={"Digite onde você trabalha"}
               previousValue={previousData.empresa}
               ref={empresaRef}
-              validate={validation.TextField}
-            />
-            <Input
-              variant="default-optional"
-              label={"Instituição"}
-              name={"instituição"}
-              placeholder={"Digite a instituição"}
-              previousValue={previousData.instituicaoSuperior}
-              ref={instituicaoSuperiorRef}
               validate={validation.TextField}
             />
             <Input
@@ -185,13 +185,6 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
             <SubTitle>
               Vínculo com a SINAVEZ
             </SubTitle>
-            {/*             <Input
-              variant="default-optional"
-              label={"Regional"}
-              name={"regional"}
-              placeholder={"Digite a sua regional"}
-              validate={validation.TextField}
-            /> */}
             <Input
               variant="default-optional"
               label={"Número de registro no conselho"}

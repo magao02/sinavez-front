@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  z-index: 99;
+  z-index: ${props => props.zIndex? '100' : '99'};
 
   position: absolute;
   height: ${props => props.pageHeight};

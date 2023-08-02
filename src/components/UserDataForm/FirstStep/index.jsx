@@ -25,11 +25,11 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
   const birthdayRef = useRef(null);
   const rgRef = useRef(null);
   const dataEmissaoRef = useRef(null);
-  const streetRef = useRef(null);
-  const neighborhoodRef = useRef(null);
-  const numberRef = useRef(null);
-  const cityRef = useRef(null);
-  const complementRef = useRef(null);
+  const ruaRef = useRef(null);
+  const bairroRef = useRef(null);
+  const numeroRef = useRef(null);
+  const municipioRef = useRef(null);
+  const estadoRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const telefoneRef = useRef(null);
@@ -69,28 +69,32 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       nascimento,
       rg,
       emissao,
-      street,
-      neighborhood,
-      number,
-      city,
-      complement,
+      rua,
+      bairro,
+      numero,
+      municipio,
+      estado,
       email,
       password,
       telefone,
+      naturalidade,
+      nacionalidade,
     ] = [
       nameRef,
       cpfRef,
       birthdayRef,
       rgRef,
       dataEmissaoRef,
-      streetRef,
-      neighborhoodRef,
-      numberRef,
-      cityRef,
-      complementRef,
+      ruaRef,
+      bairroRef,
+      numeroRef,
+      municipioRef,
+      estadoRef,
       emailRef,
       passwordRef,
       telefoneRef,
+      naturalidadeRef,
+      nacionalidadeRef, 
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
@@ -99,10 +103,11 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       nascimento,
       rg,
       emissao,
-      endereco: { street, neighborhood, number, city, complement },
+      endereco: { rua, bairro, numero, municipio, estado },
       email,
       password,
       telefone,
+      regional: {municipio, estado, naturalidade, nacionalidade},
     });
   });
 
@@ -218,7 +223,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Naturalidade"}
                 name={"naturalidade"}
                 placeholder={"Digite sua naturalidade"}
-                previousValue={previousData.naturalidade}
+                previousValue={previousData.regional ? previousData.regional.naturalidade :  ""}
                 ref={naturalidadeRef}
                 validate={validation.TextField}
               />
@@ -227,6 +232,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Nacionalidade"}
                 name={"nacionalidade"}
                 placeholder={"Digite sua nacionalidade"}
+                previousValue={previousData.regional ? previousData.regional.nacionalidade : ""}
                 ref={nacionalidadeRef}
                 validate={validation.TextField}
               />
@@ -242,8 +248,8 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
-              previousValue={previousData.endereco ? previousData.endereco.street : ""}
-              ref={streetRef}
+              previousValue={previousData.endereco ? previousData.endereco.rua : ""}
+              ref={ruaRef}
               validate={validation.TextField}
             />
             <InputsContainer>
@@ -252,8 +258,8 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Bairro"}
                 name={"Bairro"}
                 placeholder={"Bairro"}
-                previousValue={previousData.endereco ? previousData.endereco.neighborhood : ""}
-                ref={neighborhoodRef}
+                previousValue={previousData.endereco ? previousData.endereco.bairro : ""}
+                ref={bairroRef}
                 validate={validation.TextField}
               />
               <Input
@@ -261,26 +267,26 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Número"}
                 name={"Número"}
                 placeholder={"Número"}
-                previousValue={previousData.endereco ? previousData.endereco.number : ""}
-                ref={numberRef}
+                previousValue={previousData.endereco ? previousData.endereco.numero : ""}
+                ref={numeroRef}
                 validate={validation.testNumbers}
               />
               <Input
                 variant="default"
                 label={"Cidade"}
-                name={"Cidade"}
+                name={"Município"}
                 placeholder={"Cidade"}
-                previousValue={previousData.endereco ? previousData.endereco.city : ""}
-                ref={cityRef}
+                previousValue={previousData.endereco ? previousData.regional.municipio : ""}
+                ref={municipioRef}
                 validate={validation.TextField}
               />
               <Input
                 variant="default-optional"
-                label={"Complemento"}
-                name={"Complemento"}
-                placeholder={"Complemento"}
-                previousValue={previousData.endereco ? previousData.endereco.complement : ""}
-                ref={complementRef}
+                label={"Estado"}
+                name={"Estado"}
+                placeholder={"Estado"}
+                previousValue={previousData.endereco ? previousData.regional.estado : ""}
+                ref={estadoRef}
                 validate={validation.TextField}
               />
             </InputsContainer>

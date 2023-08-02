@@ -7,19 +7,22 @@ import Button from "../commom/Button";
 import { InputsContainer, Main, ProfileArguments, ProfileAvatar, ProfileAvatarAddPicture, ProfileContainerImage, ProfileDescription, ProfileTitle, SubContainer, SubTitle } from "../UserDataForm/styles";
 import PersonFilled from "../../assets/person_filled.svg";
 import AddPhotoIcon from "../../assets/icon_add_picture.svg";
-import Trash from "../../assets/trash.svg";
+
 import { TableHead } from "../commom/DataTable/styles";
 import Input from "../commom/Input";
-import ContainerDataUserPage from "../ContainerDataUserPage";
+import ContainerDataUserPage from "./ContainerDataUserPage";
+import ContainerDependents from "./ContainerDependents";
 
 
 
 
-const DataUser = ({back, data}) => {
+
+const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser, dataCollector}) => {
 
     const [selectedUser, setSelectedUser] = useState(true);
     const [selectedDependents, setSelectedDependents] = useState(false);
     const [containerToggle, setContainerToggle] = useState(true);
+    const [containerToggleDependents, setContainerToggleDependents] = useState(false);
     const [edit, setEdit] = useState(false);
 
     const handleSelectUser = () => {
@@ -32,12 +35,22 @@ const DataUser = ({back, data}) => {
         setSelectedDependents(true);
     };
 
-    const handleContainerToggle = () => {
-        setContainerToggle(!containerToggle);
+    const handleContainerToggle = (user) => {
+        if (user == 'associado'){
+            setContainerToggle(true);
+            setContainerToggleDependents(false);
+        } else {
+            setContainerToggle(false);
+            setContainerToggleDependents(true);
+        }
     };
 
     const handleEdit = () => {
         setEdit(!edit);
+    };
+
+    const handleCancelEdit = () => {
+        setEdit(false);
     };
 
     const formatCPF = (cpf) => {
@@ -86,31 +99,30 @@ const DataUser = ({back, data}) => {
 
                 <TableAssociate>
                     <TextTable selected = {selectedUser} onClick={handleSelectUser}>
-                        <ContainerTable selected = {selectedUser}>
+                        <ContainerTable selected = {selectedUser} onClick={() => handleContainerToggle('associado')}>
                              DADOS DO ASSOCIADO
                         </ContainerTable>
                     </TextTable>
 
                     <TextTable selected = {selectedDependents} onClick={handleSelectDependents}>
-                        <ContainerTable selected = {selectedDependents}>
+                        <ContainerTable selected = {selectedDependents} onClick={() => handleContainerToggle('dependente')}>
                             DEPENDENTES
                         </ContainerTable>
                     </TextTable>
                 </TableAssociate>
 
                 {containerToggle && (
-                    <ContainerDataUserPage data={data} edit={edit}/>
+                    <ContainerDataUserPage data={data} edit={edit} urlUser={urlUser} authContext={authContext} handleEdit={handleEdit} cancel={handleCancelEdit} cancelForm={cancelForm} back={back} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
+                    
                 )}
 
-                <ContainerButtons>
-                    <Button variant='removeBut'>
-                        <Image src={Trash} />
-                        Excluir Associado
-                    </Button>
-                    <Button variant='editButton' onClick={handleEdit}>
-                        EDITAR DADOS
-                    </Button>
-                </ContainerButtons>
+                {containerToggleDependents && (
+                    <>
+                        <ContainerDependents />
+                    </>
+                )}
+
+               
                 
             </BoxData>
         </ContainerWhite>

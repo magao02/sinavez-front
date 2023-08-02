@@ -126,3 +126,81 @@ export const ContainerButtons = styled.div`
     align-items: center;
     gap: 24px;
 `;
+
+export const ContainerPageDependents = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 54px;
+    margin-top: 48px;
+    height: 374px;
+`;
+
+export const ContainerDialogo = styled.div`
+    display: flex;
+    width: 629px;
+    height: 160px;
+    padding: 0px 39px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+`;
+
+export const DependentsTitle = styled.div`
+    display: flex;
+    padding: 16px 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    color: #3D3F45;
+    font-family: roboto;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+`;
+
+export const ContainerImage = styled.div`
+    width: 466px;
+    height: 379px;
+`;
+
+export const ContainerButtonCancel = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 1310px;
+    background: #FAFBFF;
+`;
+
+export const LineButton = styled.div`
+    width: 1120px;
+    height: 74px;
+    display: flex;
+    border-radius: 8px;
+    border: 1px solid #0760BA;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const ContentButton = styled.div`
+    display: flex;
+    flex-direction: ${props => props.direction ? 'row' : 'row-reverse'};
+    align-items: center;
+    width: 50%;
+    height: 45px;
+    gap: 15px;
+    margin: 15px;
+`;
+
+export const Aviso = styled.h4`
+    font-family: roboto;
+    line-height: 26.01px;
+    font-weight: 500;
+    font-size: 16px;
+`;

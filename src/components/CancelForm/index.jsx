@@ -6,7 +6,7 @@ import Button from "../commom/Button";
 import Associados from "../../pages/associados";
 
 
-const CancelForm = ({cancelForm, associadoName, userRemove, urlAssociado}) => {
+const CancelForm = ({cancelForm, associadoName, userRemove, urlAssociado, toggleDataUser}) => {
     return (
         <ContainerCancel>
             <CancelBox>
@@ -23,7 +23,7 @@ const CancelForm = ({cancelForm, associadoName, userRemove, urlAssociado}) => {
                     <Button variant={'cancelRemove'} onClick = {cancelForm}>
                        Cancelar
                     </Button>
-                    <Button variant={'remove'} onClick={() => userRemove(urlAssociado)}>
+                    <Button variant={'remove'} onClick={() => {userRemove(urlAssociado); toggleDataUser()}}>
                         Excluir
                     </Button>
                 </ButtonCancel>

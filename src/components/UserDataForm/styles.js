@@ -110,7 +110,7 @@ export const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: ${props => props.gap ? '10px' : '16px'};
+    gap: ${props => props.gap ? '5px' : '16px'};
     align-self: stretch;
     margin-top: ${props => props.marginTop ? '20px' : '0px'};
 `

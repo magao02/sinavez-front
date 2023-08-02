@@ -45,6 +45,7 @@ const Associados = () => {
   const [dataUserToggle, setDataUserToggle] = useState();
 
   const [dataUser, setDataUser] = useState();
+  const [newDataUser, setNewDataUser] = useState();
   
   const [associadoName, setAssociadoName] = useState();
   const [urlUser, setUrlUser] = useState();
@@ -64,7 +65,8 @@ const Associados = () => {
 
   const toggleDataUser = useCallback(() => {
     setDataUserToggle((p) => !p);
-  },[]);
+
+  }, []);
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
@@ -79,6 +81,9 @@ const Associados = () => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
+
+
+
 
   const handleAddAssociate = useCallback(async () => {
     try {
@@ -98,10 +103,26 @@ const Associados = () => {
     setUrlUser(data.urlUser);
   }, []);
 
-  const takeDataUser = useCallback((data) => {
-    setDataUserToggle((p) => !p);
-    setDataUser(data);
-    console.log(data);
+  const takeDataUser = useCallback(async (data) => {
+    try {
+      const dataUserResponse =  await service.getUserData(data.urlUser, authContext.token);
+      setDataUser(dataUserResponse.data);
+      setUrlUser(data.urlUser);
+      setAssociadoName(data.name);
+      setDataUserToggle((p) => !p);
+      console.log(dataUserResponse.data);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  });
+
+  const handleEditUser = useCallback(async(dataNova, urlUser) => {
+    try {
+      const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
+      console.log(editResponse.data);
+    } catch (error) {
+      console.log("Deu erro");
+    }
   });
 
   const handleErrorAssociados = useCallback(
@@ -116,6 +137,10 @@ const Associados = () => {
     [router]
   );
 
+  const closer = useCallback(() => {
+    setDataUserToggle(false);
+  });
+
   const getAssociados = useCallback(async () => {
     try {
       const associadosResponse = await service.getAssociados(authContext.token);
@@ -124,6 +149,7 @@ const Associados = () => {
       await handleErrorAssociados(error);
     }
   }, [authContext.token, handleErrorAssociados]);
+ 
 
   // removendo usuário
   const userRemove = useCallback(async (userUrl) => {
@@ -131,7 +157,10 @@ const Associados = () => {
       const removeUserResponse = await service.removeUser(userUrl, authContext.token);
       setAssociados((p) => p.filter((associado) => associado.urlUser !== userUrl));
       toggleRemoveAssociate();
-    } catch (error) {
+
+     {dataUserToggle ? toggleDataUser() : null};
+
+      } catch (error) {
       console.log("Erro ao remover usuario:", error.response.data.message);
       setAssociados((p) => [...p]);
     }
@@ -183,6 +212,7 @@ const Associados = () => {
       return;
     }
   }, []);
+ 
 
   return (
     <Container>
@@ -223,14 +253,14 @@ const Associados = () => {
           </MainContainer>
           { removeAssociateToggle && (
           <>
-            <DarkBackground pageHeight={"150vh"} />
-            <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser}/>
+            <DarkBackground pageHeight={"170vh"} zIndex={true}/>
+            <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser} toggleDataUser={closer}/>
           </>
           )}
 
           { dataUserToggle && (
           <>
-            <DataUser back={toggleDataUser} data={dataUser}/>
+            <DataUser back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
           </>
           )}
         </>
