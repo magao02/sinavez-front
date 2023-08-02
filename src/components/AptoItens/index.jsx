@@ -30,8 +30,8 @@ const AptoItens = ({ title, itens, setItens }) => {
 
   const deleteItem = (item) => {
     var copy = [...itens];
-
     var copy = copy.filter((data) => data.name != item.id);
+    console.log(item)
     setItens(copy);
   };
 

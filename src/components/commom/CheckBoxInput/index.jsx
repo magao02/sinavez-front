@@ -15,7 +15,7 @@ const CheckBoxInput = ({
         <Button
           id={label}
           variant={trash}
-          onClick={(e) => deleteItem(e.target.parentNode)}
+          onClick={(e) => deleteItem(e.target.parentNode.parentNode)}
         >
           <Image src={trash} alt={"trashIcon"} style={{ width: "100%" }} />
         </Button>

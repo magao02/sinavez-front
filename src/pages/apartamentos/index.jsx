@@ -7,7 +7,7 @@ import {
   Container,
   Main,
   Header,
-  GridFotos,
+  FotosArea,
   BusyButton,
   LeftSide,
   InfoApto,
@@ -15,11 +15,15 @@ import {
   ReservarButton,
   ButtonArea,
   InfoBox,
+  RedirectArea,
 } from "../../styles/apartamentoStyles";
 import AptoTexts from "../../components/AptoTexts";
 import AptoItens from "../../components/AptoItens";
 import RegrasApto from "../../components/RegrasApto";
 import { useState } from "react";
+import leftArrow from "../../assets/leftArrow.svg"
+import Button from "../../components/commom/Button";
+import GridFotos from "../../components/GridFotos"
 
 const apartamento = () => {
   const [itensApto, setItensApto] = useState([
@@ -103,7 +107,19 @@ const apartamento = () => {
         <Navigation variant={"admin"} />
       </Header>
       <Main>
-        <GridFotos></GridFotos>
+        <RedirectArea>
+          <Button variant={"image"} style={{display:"flex", flexDirection:"row", gap:"1vw", alignItens: "center"}}>
+           <Image src={leftArrow} alt={"arrow"}></Image> 
+            <a>Todos os Apartamentos  /</a>
+            <a>Dados do Apartamentos  /</a>
+            <a>Editar Apartamento  </a>
+          </Button>
+        </RedirectArea>
+          <h2 style={{marginBottom:"3vh"}}>Editar o Apartamento</h2>
+        <FotosArea>
+          <h3>Adicionar Fotos do apartamento</h3>
+          <GridFotos></GridFotos>
+        </FotosArea>
         <InfoApto>
           <LeftSide>
             <ButtonArea>

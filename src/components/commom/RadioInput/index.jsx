@@ -12,7 +12,7 @@ const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
               value={op1 ? op1 : "Sim"}
               title={title.toLowerCase()}
             />
-            <Label htmlFor="checkbox-1">{op1 ? op1 : "Sim"}</Label>
+            <Label htmlFor="checkbox-1" style={{fontSize:"1.7vh"}}>{op1 ? op1 : "Sim"}</Label>
           </CheckBox>
           <CheckBox>
             <Input
@@ -20,7 +20,7 @@ const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
               value={op2 ? op2 : "Nao"}
               title={title.toLowerCase()}
             />
-            <Label htmlFor="checkbox-2">{op2 ? op2 : "Nao"}</Label>
+            <Label htmlFor="checkbox-2" style={{fontSize:"1.7vh"}}>{op2 ? op2 : "Nao"} </Label>
           </CheckBox>
         </form>
       </CheckBoxContainer>

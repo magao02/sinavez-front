@@ -25,10 +25,18 @@ export const Header = styled.div`
     position:relative;
 `
 
-export const GridFotos = styled.div`
+export const FotosArea = styled.div`
     width: 100%;
     height: 40vh;
-    background-color: green;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+`
+
+export const RedirectArea = styled.div`
+    width: 70%;
+    margin-top: 20px;
+    margin-bottom: 30px;
 `
 
 export const InfoApto = styled.div`
