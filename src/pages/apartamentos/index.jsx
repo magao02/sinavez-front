@@ -110,8 +110,10 @@ const apartamento = () => {
         <RedirectArea>
           <Button variant={"image"} style={{display:"flex", flexDirection:"row", gap:"1vw", alignItens: "center"}}>
            <Image src={leftArrow} alt={"arrow"}></Image> 
-            <a>Todos os Apartamentos  /</a>
-            <a>Dados do Apartamentos  /</a>
+            <a>Todos os Apartamentos  </a>
+            <a>/</a>
+            <a>Dados do Apartamentos  </a>
+            <a>/</a>
             <a>Editar Apartamento  </a>
           </Button>
         </RedirectArea>
