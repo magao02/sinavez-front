@@ -1,17 +1,11 @@
 import {
   NavSpacing,
   Content,
-  Title1,
-  Subtitle2,
   Details,
   Column,
   BlueOutlineCard,
-  Body1,
-  Body3,
-  Title2,
   Features,
   FeatureCard,
-  Body2,
   ImageGallery,
   Breadcrumbs,
   Header,
@@ -21,13 +15,14 @@ import {
   DescriptionBox,
   ReservationDetailsCard,
   RulesCard,
-  Subtitle1,
   WarningCard,
   Locations,
   Location,
   MapContainer,
   FullImageGallery,
 } from "../../styles/apartamentoStyles";
+import { Title1, Title2, Subtitle1, Subtitle2, Body1, Body2, Body3 } from "../../styles/commonStyles";
+
 
 import { useState } from "react";
 
