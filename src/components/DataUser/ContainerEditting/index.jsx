@@ -9,81 +9,22 @@ import * as service from "../../../services/accounts";
 const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, dataCollector}) => {
  
     const [dataNova, setDataNova] = useState(data);
-    const [nome , setNome] = useState(dataNova.name);
-    const [cpf, setCPF] = useState(dataNova.cpf);
-    const [nascimento, setNascimento] = useState(dataNova.nascimento);
-    const [rg, setRG] = useState(dataNova.rg);
-    const [emissao, setEmissao] = useState(dataNova.emissao);
-    const [naturalidade, setNaturalidade] = useState(dataNova.regional.naturalidade);
-    const [nacionalidade, setNacionalidade] = useState(dataNova.regional.nacionalidade);
-    const [rua, setRua] = useState(dataNova.endereco.rua);
-    const [bairro, setBairro] = useState(dataNova.endereco.bairro);
-    const [numero, setNumero] = useState(dataNova.endereco.numero);
-    const [cidade, setCidade] = useState(dataNova.regional.municipio);
-    const [estado, setEstado] = useState(dataNova.regional.estado);
-    const [email, setEmail] = useState(dataNova.email);
-    const [senha, setSenha] = useState(dataNova.senha);
-    const [telefone, setTelefone] = useState(dataNova.telefone);
-    const [formacao, setFormacao] = useState(dataNova.formacaoSuperior);
-    const [dataFormacao, setDataFormacao] = useState(dataNova.dataFormacao);
-    const [profissao, setProfissao] = useState(dataNova.profissao);
-    const [trabalho, setTrabalho] = useState(dataNova.instituicaoSuperior);
-    const [salario, setSalario] = useState(dataNova.salario);
-    const [conselho, setConselho] = useState(dataNova.numRegistroConselho);
-    const [dataConselho, setDataConselho] = useState(dataNova.dataRegistroConselho);
-    const [inscricao, setInscricao] = useState(dataNova.numInscricao);
-    const [dataAfilicao, setDataAfiliacao] = useState(dataNova.dataAfiliacao);
-
+    const [valorData, setValorData] = useState({});
+    
     const [toggleContainerButtons, setToggleContainerButtons] = useState(false);
     const [mexeu, setMexeu] = useState(false);
 
+    useEffect(() => {
+        setDataNova(data);
+    }, [data]);
+
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault();
-
-        setDataNova((p) => ({
-            ...p,
-            name: nome,
-            cpf: cpf,
-            nascimento: nascimento,
-            rg: rg,
-            emissao: emissao,
-            email: email,
-            senha: senha,
-            telefone: telefone,
-            formacaoSuperior: formacao,
-            dataFormacao: dataFormacao,
-            profissao: profissao,
-            instituicaoSuperior: trabalho,
-            salario: salario,
-            numRegistroConselho: conselho,
-            dataRegistroConselho: dataConselho,
-            numInscricao: inscricao,
-            dataAfiliacao: dataAfilicao,
-            endereco: {
-                rua: rua,
-                bairro: bairro,
-                numero: numero,
-            },
-            regional: {
-                municipio: cidade,
-                estado: estado,
-                naturalidade: naturalidade,
-                nacionalidade: nacionalidade,
-            },
-        }));
-
-        try {
-            const response = await service.setUserData(urlUser, dataNova, authContext.token);
-            console.log(response);
-        } catch (error) {
-            console.log("Erro ao atualizar dados do usuário");
-        }
+    
+        handleEditUser(valorData, urlUser);
+        cancel();
         
-      }, [nome, cpf, nascimento, rg, emissao, naturalidade, nacionalidade, rua, bairro, numero, cidade, estado, email, senha, telefone, formacao, dataFormacao, profissao, trabalho, salario, conselho, dataConselho, inscricao, dataAfilicao]);
-
-      useEffect(() => {
-        console.log(dataNova);
-    }, [dataNova]);
+      }, [valorData, urlUser]);
 
       const handleCancelData = () => {
         if (mexeu){
@@ -91,6 +32,21 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
         } else {
             cancel();
         }
+      };
+
+      const onChageData = (value, textValue, valorObj) => {
+        if (valorObj == ""){
+            setDataNova({...dataNova, [textValue]: value});
+            setValorData({...valorData, [textValue]: value});
+        } else {
+            setDataNova({...dataNova,
+                [valorObj]: {...dataNova[valorObj], [textValue]: value},
+            });
+            setValorData({...valorData,
+                [valorObj]: {...valorData[valorObj], [textValue]: value}});
+        }
+            
+        setMexeu(true);
       };
 
       const cancelou = () => {
@@ -111,8 +67,8 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                         label={"Nome Completo"}
                         name={"nome"}
                         readOnly={false}
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value, setMexeu(true))}    
+                        value={dataNova.name}
+                        onChange={(e) => onChageData(e.target.value, "name", "")}
                         />
                         <InputsContainer>
                             <Input
@@ -120,48 +76,48 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                                 label={"CPF"}
                                 name={"cpf"}    
                                 readOnly={false}        
-                                value={cpf}
-                                onChange={(e) => setCPF(e.target.value, setMexeu(true))}
+                                value={dataNova.cpf}
+                                onChange={(e) => onChageData(e.target.value, "cpf", "")}
                                 />
                             <Input
                                 variant="default"
                                 label={"Data de Nascimento"}
                                 name={"nascimento"}
                                 readOnly={false}
-                                value={nascimento}
-                                onChange={(e) => setNascimento(e.target.value, setMexeu(true))}
+                                value={dataNova.nascimento}
+                                onChange={(e) => onChageData(e.target.value, "nascimento", "")}
                             />
                             <Input
                                 variant="default"
                                 label={"Registro Geral (RG)"}
                                 name={"rg"}
                                 readOnly={false}
-                                value={rg}
-                                onChange={(e) => setRG(e.target.value, setMexeu(true))}
+                                value={dataNova.rg}
+                                onChange={(e) => onChageData(e.target.value, "rg", "")}
                             />
                             <Input
                                 variant="default"
                                 label={"Data de Emissão"}
                                 name={"data_de_emissão"}
                                 readOnly={false}
-                                value={emissao}
-                                onChange={(e) => setEmissao(e.target.value, setMexeu(true))}
+                                value={dataNova.emissao}
+                                onChange={(e) => onChageData(e.target.value, "emissao", "")}
                             />
                             <Input
                                 variant="default-optional"
                                 label={"Naturalidade"}
                                 name={"naturalidade"}    
                                 readOnly={false}   
-                                value={naturalidade}
-                                onChange={(e) => setNaturalidade(e.target.value, setMexeu(true))}                                    
+                                value={dataNova.regional.naturalidade}
+                                onChange={(e) => onChageData(e.target.value, "naturalidade", "regional")}                                    
                             />
                             <Input
                                 variant="default-optional"
                                 label={"Nacionalidade"}
                                 name={"nacionalidade"}
                                 readOnly={false}
-                                value={nacionalidade}
-                                onChange={(e) => setNacionalidade(e.target.value, setMexeu(true))}
+                                value={dataNova.regional.nacionalidade}
+                                onChange={(e) => onChageData(e.target.value, "nacionalidade", "regional")}
                             />
                         </InputsContainer>
 
@@ -176,8 +132,8 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                         label={"Nome da rua"}
                         name={"Rua"}
                         readOnly={false}
-                        value={rua}
-                        onChange={(e) => setRua(e.target.value, setMexeu(true))}
+                        value={dataNova.endereco.rua}
+                        onChange={(e) => onChageData(e.target.value, "rua", "endereco")}
                         />
                         <InputsContainer>
                         <Input
@@ -185,32 +141,32 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                             label={"Bairro"}
                             name={"Bairro"}
                             readOnly={false}
-                            value={bairro}
-                            onChange={(e) => setBairro(e.target.value, setMexeu(true))}
+                            value={dataNova.endereco.bairro}
+                            onChange={(e) => onChageData(e.target.value, "bairro", "endereco")}
                         />
                         <Input
                             variant="default"
                             label={"Número"}
                             name={"Número"}
                             readOnly={false}
-                            value={numero}
-                            onChange={(e) => setNumero(e.target.value, setMexeu(true))}
+                            value={dataNova.endereco.numero}
+                            onChange={(e) => onChageData(e.target.value, "numero", "endereco")}
                         />
                         <Input
                             variant="default"
                             label={"Cidade"}
                             name={"Cidade"}
                             readOnly={false}
-                            value={cidade}
-                            onChange={(e) => setCidade(e.target.value, setMexeu(true))}
+                            value={dataNova.regional.municipio}
+                            onChange={(e) => onChageData(e.target.value, "municipio", "regional")}
                         />
                         <Input
                             variant="default-optional"
                             label={"Estado"}
                             name={"Estado"} 
                             readOnly={false} 
-                            value={estado}
-                            onChange={(e) => setEstado(e.target.value, setMexeu(true))}         
+                            value={dataNova.regional.estado}
+                            onChange={(e) => onChageData(e.target.value, "estado", "regional")}         
                         />
                         </InputsContainer>
                     </SubContainer>
@@ -224,24 +180,24 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                         label={"E-mail"}
                         name={"E-mail"}
                         readOnly={false}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value, setMexeu(true))}
+                        value={dataNova.email}
+                        onChange={(e) => onChageData(e.target.value, "email", "")}
                         />
                         <Input
                         variant="default"
                         label={"Senha"}
                         name={"senha"}
                         readOnly={false}
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value, setMexeu(true))}
+                        value={dataNova.password}
+                        onChange={(e) => onChageData(e.target.value, "password", "")}
                         />
                         <Input 
                         variant="default"
                         label={"Telefone"}
                         name={"Telefone"}
                         readOnly={false}
-                        value={telefone}
-                        onChange={(e) => setTelefone(e.target.value, setMexeu(true))}
+                        value={dataNova.telefone}
+                        onChange={(e) => onChageData(e.target.value, "telefone", "")}
                         />
                     </SubContainer>
 
@@ -257,16 +213,16 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                             label={"Curso de Formação"}
                             name={"curso_de_formacao"}
                             readOnly={false}
-                            value={formacao}
-                            onChange={(e) => setFormacao(e.target.value, setMexeu(true))}
+                            value={dataNova.formacaoSuperior}
+                            onChange={(e) => onChageData(e.target.value, "formacaoSuperior", "")}
                         />
                         <Input
                             variant="default-optional"
                             label={"Data de Formação"}
                             name={"data_de_formacao"}
                             readOnly={false}
-                            value={dataFormacao}
-                            onChange={(e) => setDataFormacao(e.target.value, setMexeu(true))}
+                            value={dataNova.dataFormacao}
+                            onChange={(e) => onChageData(e.target.value, "dataFormacao", "")}
                         />
                     </SubContainer>
 
@@ -279,24 +235,24 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                             label={"Profissão"}
                             name={"profissao"}
                             readOnly={false}
-                            value={profissao}
-                            onChange={(e) => setProfissao(e.target.value, setMexeu(true))}
+                            value={dataNova.profissao}
+                            onChange={(e) => onChageData(e.target.value, "profissao", "")}
                         />
                         <Input
                             variant="default-optional"
                             label={"Organização ou empresa que trabalha"}
                             name={"trabalho"}
                             readOnly={false}
-                            value={trabalho}
-                            onChange={(e) => setTrabalho(e.target.value, setMexeu(true))}
+                            value={dataNova.empresa}
+                            onChange={(e) => onChageData(e.target.value, "empresa", "")}
                         />
                         <Input
                             variant="default-optional"
                             label={"Salário"}
                             name={"salario"}
                             readOnly={false}
-                            value={salario}
-                            onChange={(e) => setSalario(e.target.value, setMexeu(true))}
+                            value={dataNova.salario}
+                            onChange={(e) => onChageData(e.target.value, "salario", "")}
                         />
                     </SubContainer>
 
@@ -309,16 +265,16 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                             label={"Número de registro no conselho"}
                             name={"numero_de_registro"}
                             readOnly={false}
-                            value={conselho}
-                            onChange={(e) => setConselho(e.target.value, setMexeu(true))}
+                            value={dataNova.numRegistroConselho}
+                            onChange={(e) => onChageData(e.target.value, "numRegistroConselho", "")}
                         />
                         <Input
                             variant="default-optional"
                             label={"Data de registro no conselho"}
                             name={"data_de_registro"}
                             readOnly={false}
-                            value={dataConselho}
-                            onChange={(e) => setDataConselho(e.target.value, setMexeu(true))}
+                            value={dataNova.dataRegistroConselho}
+                            onChange={(e) => onChageData(e.target.value, "dataRegistroConselho", "")}
                         />
                         <InputsContainer>
                             <Input
@@ -326,16 +282,16 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
                                 label={"Número de Inscrição"}
                                 name={"numero_de_inscricao"}
                                 readOnly={false}
-                                value={inscricao}
-                                onChange={(e) => setInscricao(e.target.value, setMexeu(true))}
+                                value={dataNova.numInscricao}
+                                onChange={(e) => onChageData(e.target.value, "numInscricao", "")}
                             />
                             <Input
                                 variant="default-optional"
                                 label={"Data de Afiliação"}
                                 name={"data_de_afiliacao"}
                                 readOnly={false}
-                                value={dataAfilicao}
-                                onChange={(e) => setDataAfiliacao(e.target.value, setMexeu(true))}
+                                value={dataNova.dataAfiliacao}
+                                onChange={(e) => onChageData(e.target.value, "dataAfiliacao", "")}
                             />
                         </InputsContainer>
                     </SubContainer>

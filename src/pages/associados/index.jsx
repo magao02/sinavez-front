@@ -119,11 +119,13 @@ const Associados = () => {
   const handleEditUser = useCallback(async(dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
-      console.log(editResponse.data);
+      setAssociados((p) => [...p, editResponse.data.user]);
+      setDataUser(editResponse.data.user);
+      console.log(editResponse.data.user);
     } catch (error) {
       console.log("Deu erro");
     }
-  });
+  }, [associados]);
 
   const handleErrorAssociados = useCallback(
     async (error) => {
