@@ -26,12 +26,16 @@ import {
   Locations,
   Location,
   MapContainer,
+  FullImageGallery,
 } from "../../styles/apartamentoStyles";
+
+import { useState } from "react";
 
 import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
 import PlaceholderImage from "../../assets/apartamento/placeholder.png";
+import PlaceholderImageHD from "../../assets/apartamento/placeholderhd.png";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
@@ -44,6 +48,8 @@ import Button from "../../components/commom/Button";
 
 const Page = () => {
   const router = useRouter();
+
+  const [viewingImages, setViewingImages] = useState(false);
 
   return (
     <div>
@@ -60,7 +66,7 @@ const Page = () => {
             <img src={PlaceholderImage.src} />
             <img src={PlaceholderImage.src} />
             <div className="button">
-              <Button>VER TODAS AS FOTOS</Button>
+              <Button onClick={_ => setViewingImages(true)}>VER TODAS AS FOTOS</Button>
             </div>
           </ImageGallery>
           <div>
@@ -252,6 +258,16 @@ const Page = () => {
           <Image src={MapaImage} />
         </MapContainer>
       </Content>
+
+      { viewingImages && <FullImageGallery>
+        <div className="background" onClick={_ => setViewingImages(false)} />
+        <div className="images">
+          <img src={PlaceholderImageHD.src} />
+          <img src={PlaceholderImageHD.src} />
+          <img src={PlaceholderImageHD.src} />
+          <img src={PlaceholderImageHD.src} />
+        </div>
+      </FullImageGallery> }
     </div>
   );
 };

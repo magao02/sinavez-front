@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import theme from "./theme";
 
 export const NavSpacing = styled.div`
@@ -296,5 +296,45 @@ export const MapContainer = styled.div`
   gap: 24px;
   img {
     border-radius: 16px;
+  }
+`;
+
+const FadeIn = keyframes`
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+`;
+
+export const FullImageGallery = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 9999;
+
+  animation: 0.1s linear 0s ${FadeIn};
+
+  .background {
+    position: fixed;
+    background: rgba(229, 242, 255, 0.80);
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+  }
+
+  .images {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 160px 10vw;
+
+    img {
+      border-radius: 8px;
+      height: auto;
+      width: 100%;
+    }
   }
 `;
