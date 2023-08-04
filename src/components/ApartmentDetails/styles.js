@@ -183,7 +183,6 @@ export const ReservationDetailsCard = styled(BlueBackgroundCard)`
 export const RulesCard = styled(BlueBackgroundCard)`
   background: ${theme.colors.blue.light};
   padding: 24px;
-  padding-bottom: 50px;
 
   ol {
     list-style-position: inside;

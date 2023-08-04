@@ -42,6 +42,20 @@ import Button from "../../components/commom/Button";
 const ApartmentDetails = ({ area, objectUrl }) => {
   const [viewingImages, setViewingImages] = useState(false);
 
+  const rulesCard = (
+    <RulesCard>
+      <Subtitle1>Regras de convivência</Subtitle1>
+      <Body2 primary>
+        <ol>
+          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+        </ol>
+      </Body2>
+    </RulesCard>
+  );
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
@@ -49,7 +63,8 @@ const ApartmentDetails = ({ area, objectUrl }) => {
       <Content>
         <Breadcrumbs>
           <Image src={IconArrowLeft} />
-          <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1>
+          { !area && <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1> }
+          { area && <Body1 primary>Todos apartamentos / <u>Detalhes da área de lazer</u></Body1> }
         </Breadcrumbs>
         <Header>
           <ImageGallery>
@@ -60,14 +75,18 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               <Button onClick={_ => setViewingImages(true)}>VER TODAS AS FOTOS</Button>
             </div>
           </ImageGallery>
-          <div>
+          { !area && <div>
             <Title1>Apartamento {objectUrl}</Title1>
             <Body1>Apartamento Padrão (sem adaptação para PCD), 2 andar</Body1>
-          </div>
+          </div> }
+          {area && <div>
+            <Title1>Piscina</Title1>
+            <Body1>Piscina de 300m²</Body1>
+          </div> }
         </Header>
         <Details>
           <Column className="features-column">
-            <BlueFeatures>
+            { !area && <BlueFeatures>
               {
                 Array(4).fill(0).map((_, i) =>
                   <BlueFeatureCard key={i}>
@@ -76,11 +95,11 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                   </BlueFeatureCard>
                 )
               }
-            </BlueFeatures>
+            </BlueFeatures> }
 
             <BlueOutlineCard>
               <div>
-                <Subtitle2>Itens do Apartamento</Subtitle2>
+                <Subtitle2>{ area ? "Itens disponíveis" : "Itens do Apartamento" }</Subtitle2>
               </div>
               <Features>
                 <FeatureCard>
@@ -102,7 +121,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               </Features>
             </BlueOutlineCard>
 
-            <BlueOutlineCard>
+            { !area && <BlueOutlineCard>
               <div>
                 <Subtitle2>Áreas comuns</Subtitle2>
                 <Body3>Verifique a disponibilidade de uso das áreas comuns durante sua estadia. Caso queria usufruir de alguma em especifico faça a reserva aqui.</Body3>
@@ -125,7 +144,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                   <Body2>Frigobar</Body2>
                 </FeatureCard>
               </Features>
-            </BlueOutlineCard>
+            </BlueOutlineCard> }
 
             <BlueOutlineCard>
               <div>
@@ -153,8 +172,9 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                   <Body3 primary>Praia Nome Aqui com muita areia e sal bem </Body3>
                 </Location>
               </Locations>
-              
             </BlueOutlineCard>
+
+            { area && rulesCard }
 
             <DescriptionCard>
               <Subtitle2>Descrição deste quarto</Subtitle2>
@@ -230,17 +250,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               </div>
             </WarningCard>
 
-            <RulesCard>
-              <Subtitle1>Regras de convivência</Subtitle1>
-              <Body2 primary>
-                <ol>
-                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-                  <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-                </ol>
-              </Body2>
-            </RulesCard>
+            { !area && rulesCard }
           </Column>
         </Details>
 
