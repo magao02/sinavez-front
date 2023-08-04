@@ -18,6 +18,10 @@ export const Main = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1vh;
+
+    @media (max-width: 1379px) {
+        width: 75vw;
+    }
 `
 export const Header = styled.div`
     height: 10vh;

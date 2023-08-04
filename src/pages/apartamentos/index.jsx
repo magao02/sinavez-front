@@ -26,6 +26,14 @@ import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos"
 
 const apartamento = () => {
+  const [description, setDescription] = useState("");
+  const [dailyRate, setDailyRate] = useState("");
+  const [aptoTitle, setAptoTitle] = useState("");
+  const [address, setAddress] = useState("");
+  const [camas, setCamas] = useState();
+  const [radioInputs, setRadioInputs] = useState("")
+
+
   const [itensApto, setItensApto] = useState([
     {
       name: "Frigobar",
@@ -132,7 +140,7 @@ const apartamento = () => {
               <ReservarButton>RESERVAR</ReservarButton>
             </ButtonArea>
             <InfoBox>
-              <InfoAptoForm />
+              <InfoAptoForm  setAptoTitle={setAptoTitle} setAddress={setAddress} setMainCamas={setCamas} setRadioInputs={setRadioInputs}/>
             </InfoBox>
             <InfoBox>
               <AptoTexts
@@ -140,6 +148,7 @@ const apartamento = () => {
                 text={
                   "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
                 }
+                setText={setDescription}
               />
             </InfoBox>
             <InfoBox>
@@ -154,6 +163,7 @@ const apartamento = () => {
                 title={"Adicione o Valor da Diária do Apartamento"}
                 text={"Valor por Diária"}
                 type={"number"}
+                setText={setDailyRate}
               />
             </InfoBox>
           </LeftSide>

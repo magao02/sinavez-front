@@ -38,6 +38,10 @@ export const PhotoAreaSmaller = styled.div`
     border-radius: 10px;
     height: 110px;
     overflow: hidden;
+
+    @media (max-width: 1629px){
+        height: 98px;
+    }
 `
 
 export const PhotoList = styled.div`

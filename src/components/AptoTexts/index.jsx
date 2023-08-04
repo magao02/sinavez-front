@@ -3,8 +3,7 @@ import Input from "../commom/Input";
 import { Container } from "./styles"
 
 
-const AptoTexts = ({text, title,type}) => {
-    const [value, setValue] = useState();
+const AptoTexts = ({text, title, setText, type}) => {
 
     return (
         <Container>
@@ -12,7 +11,7 @@ const AptoTexts = ({text, title,type}) => {
             <Input
                 placeholder={text}
                 type={type}
-                onChange={(event) => setValue(event.target.value)}
+                onChange={(event) => setText(event.target.value)}
             />
         </Container>
     )

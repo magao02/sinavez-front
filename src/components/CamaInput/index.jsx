@@ -3,12 +3,15 @@ import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
 
-const CamaInput = ( {id, deleteCama, handleCama}) => {
+
+const CamaInput = ( {id, deleteCama, handleCama, option}) => {
+
+    console.log(option)
 
     return (
         <Container onChange={(e) => handleCama(id, e)}>
             <Select name="tipoDeCama" id="selectCama">
-                <option value="Tipo de Cama" disabled selected hidden>Tipo de Cama</option>
+                <option value={"Tipo de Cama"} disabled selected hidden>{option ? option : "Tipo de Cama"}</option>
                 <option value="Solteiro">Solteiro</option>
                 <option value="Casal">Casal</option>
             </Select>

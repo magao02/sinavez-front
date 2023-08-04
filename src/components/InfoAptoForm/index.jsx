@@ -7,20 +7,15 @@ import {
   CheckBoxInputs,
 } from "./styles";
 import RadioInput from "../commom/RadioInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CamaInput from "../CamaInput";
 
-const InfoAptoForm = () => {
+
+const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) => {
   // CAMAS
   const [camas, setCamas] = useState([0]);
   const [camaId, setCamaId] = useState(1);
   const [camaInfo, setCamaInfo] = useState([]);
-
-  // TITULO DO APARTAMENTO
-  const [aptoTitle, setAptoTitle] = useState("");
-
-  // ENDERECO
-  const [address, setAddress] = useState("");
 
   const [radioInput, setRadioInput] = useState({
     tipo: "",
@@ -29,6 +24,11 @@ const InfoAptoForm = () => {
     wifi: "",
     animais: "",
   });
+
+  useEffect(() => {
+    setMainCamas(camaInfo)
+    setRadioInputs(radioInput)
+  })
 
   // FUNCOES RELACIONADAS A TITULO
   const handleTitle = (event) => setAptoTitle(event.target.value);
@@ -51,11 +51,24 @@ const InfoAptoForm = () => {
     }
   };
 
+  const map = (id) => {
+    var retorno = false;
+    for (let idx = 0; idx < camaInfo.length; idx++) {
+      if(camaInfo[idx].id == id){
+        retorno = true;
+        break;
+      }
+    }
+
+    return retorno;
+  }
+
   const handleCama = (id, e) => {
     const novoObjeto = [...camaInfo];
-    var qntd = "";
+    var qntd = "1";
     var tipo = "";
 
+  
     if (typeof novoObjeto[id]?.["tipoDeCama"] !== "undefined") {
       tipo = novoObjeto[id]["tipoDeCama"];
     }
@@ -64,12 +77,22 @@ const InfoAptoForm = () => {
       qntd = novoObjeto[id]["Quantidade"];
     }
 
-    novoObjeto[id] = {
-      id: id,
-      tipoDeCama: e.target.name == "tipoDeCama" ? e.target.value : tipo,
-      Quantidade: e.target.name == "Quantidade" ? e.target.value : qntd,
-    };
-    setCamaInfo(novoObjeto);
+
+
+    if(!map(id)){
+      novoObjeto[id] = {
+        id: id,
+        tipoDeCama: e.target.name == "tipoDeCama" ? e.target.value : tipo,
+        Quantidade: e.target.name == "Quantidade" ? e.target.value : qntd,
+    }}else{
+        for (let idx = 0; idx < camaInfo.length; idx++) {
+          if(camaInfo[idx].id == id){
+            novoObjeto[idx][e.target.name] = e.target.value
+          }
+        }
+    }
+
+    setCamaInfo(novoObjeto.filter((data) => data != undefined))
   };
 
   // BOTOES DE RADIO
@@ -95,6 +118,7 @@ const InfoAptoForm = () => {
                 id={id}
                 deleteCama={deleteCama}
                 handleCama={handleCama}
+                option={"solteiro"}
               />
             );
           })}
