@@ -25,7 +25,7 @@ import leftArrow from "../../assets/leftArrow.svg"
 import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos"
 
-const apartamento = () => {
+const editRecreationArea = () => {
   const [description, setDescription] = useState("");
   const [dailyRate, setDailyRate] = useState("");
   const [aptoTitle, setAptoTitle] = useState("");
@@ -36,75 +36,39 @@ const apartamento = () => {
 
   const [itensApto, setItensApto] = useState([
     {
-      name: "Frigobar",
-      checked: false,
-    },
-    {
-      name: "Armario",
-      checked: false,
-    },
-    {
-      name: "Smart TV",
-      checked: false,
-    },
-    {
-      name: "Travesseiro",
-      checked: false,
-    },
-    {
-      name: "Lencol de Elastico",
-      checked: false,
-    },
-    {
-      name: "Ferro de passar",
-      checked: false,
-    },
-    {
-      name: "Armador de Rede",
-      checked: false,
-    },
-    {
-      name: "Pratos, talheres e copos",
-      checked: false,
-    },
-    {
-      name: "Ar condicionado",
-      checked: false,
-    },
-  ]);
-
-  const [commumArea, setCommunAreas] = useState([
-    {
-      name: "Garagem",
-      checked: false,
-    },
-    {
       name: "Piscina",
       checked: false,
     },
     {
-      name: "Auditorio",
+      name: "Hidro",
       checked: false,
     },
     {
-      name: "Churrasqueira",
+      name: "Sauna",
       checked: false,
     },
     {
-      name: "Area Gourmet",
-      checked: false,
-    },
-
-    {
-      name: "Lavanderia",
+      name: "Geladeira",
       checked: false,
     },
     {
-      name: "Cozinha compartilhada",
+      name: "Freezer",
       checked: false,
     },
     {
-      name: "Recreacao infantil",
+      name: "2 pias",
+      checked: false,
+    },
+    {
+      name: "4 churrasqueira eletrica",
+      checked: false,
+    },
+    {
+      name: "Mesa 8 lugares",
+      checked: false,
+    },
+    {
+      name: "Ar condicionado",
       checked: false,
     },
   ]);
@@ -125,9 +89,9 @@ const apartamento = () => {
             <a>Editar Apartamento  </a>
           </Button>
         </RedirectArea>
-          <h2 style={{marginBottom:"3vh"}}>Editar o Apartamento</h2>
+          <h2 style={{marginBottom:"3vh"}}>Editar Área de Lazer</h2>
         <FotosArea>
-          <h3>Adicionar Fotos do apartamento</h3>
+          <h3>Adicionar fotos do espaço de lazer</h3>
           <GridFotos></GridFotos>
         </FotosArea>
         <InfoApto>
@@ -143,18 +107,8 @@ const apartamento = () => {
               <InfoAptoForm  setAptoTitle={setAptoTitle} setAddress={setAddress} setMainCamas={setCamas} setRadioInputs={setRadioInputs}/>
             </InfoBox>
             <InfoBox>
-              <AptoTexts
-                title={"Descrição do apartamento"}
-                text={
-                  "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
-                }
-                setText={setDescription}
-                required
-              />
-            </InfoBox>
-            <InfoBox>
               <AptoItens
-                title={"Itens do apartamento"}
+                title={"Itens do Espaço"}
                 itens={itensApto}
                 setItens={setItensApto}
               />
@@ -169,11 +123,14 @@ const apartamento = () => {
             </InfoBox>
           </LeftSide>
           <RightSide>
-            <InfoBox>
-              <AptoItens
-                title={"Areas Comuns"}
-                itens={commumArea}
-                setItens={setCommunAreas}
+          <InfoBox>
+              <AptoTexts
+                title={"Descrição"}
+                text={
+                  "Coloque aqui mais informações sobre a área de lazer, regras de convivência e detalhes adicionais."
+                }
+                setText={setDescription}
+                required
               />
             </InfoBox>
             <InfoBox>
@@ -189,4 +146,4 @@ const apartamento = () => {
   );
 };
 
-export default apartamento;
+export default editRecreationArea;

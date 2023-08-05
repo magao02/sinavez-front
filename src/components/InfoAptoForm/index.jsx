@@ -12,7 +12,7 @@ import CamaInput from "../CamaInput";
 import { v4 as uuid } from 'uuid';
 
 
-const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) => {
+const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, camas}) => {
   // CAMAS
   const [camaInfo, setCamaInfo] = useState([{
     id: uuid(),
@@ -114,6 +114,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
           placeholder="Título do apartamento"
           onChange={handleTitle}
         />
+        {camas ? 
         <CamaInputContainer>
           {camaInfo.map((data) => {
             return (
@@ -130,6 +131,14 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
             +<span>ADICIONAR CAMA</span>
           </AddBedButton>
         </CamaInputContainer>
+        :
+        <Input
+          variant="default"
+          name="Capacidade Máxima*"
+          type="number"
+          placeholder="Capacidade Máxima*"
+        />
+        }
         <Input
           variant="default"
           name="Endereço"
