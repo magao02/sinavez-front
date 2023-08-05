@@ -32,3 +32,21 @@ export const Img = styled.img`
     width: 100%;
     border-radius: 10px;
 `
+
+export const PhotoArea = styled.div`
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+`
+
+export const EditButton = styled.button`
+    background-color: #edf7fe;
+    padding: 1px 2px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    margin-right: 5px;
+    margin-top: 5px;
+`

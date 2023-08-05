@@ -20,7 +20,7 @@ export const Main = styled.div`
     gap: 1vh;
 
     @media (max-width: 1379px) {
-        width: 75vw;
+        width: 80vw;
     }
 `
 export const Header = styled.div`

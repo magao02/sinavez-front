@@ -1,22 +1,14 @@
-import { Container, Input, Label,Img, Form } from "./styles";
+import { Container, Input, Label,Img, Form, EditButton, PhotoArea } from "./styles";
 import add from "../../../assets/add_cruz.svg";
 import Image from "next/image";
-import { useState } from "react";
+import edit_pen from "../../../assets/edit_pen.svg";
 
-const PhotoInput = () => {
-  const [fileName, setFileName] = useState("No selected File");
-  const [image, setImage] = useState(null);
-
-  const getPhoto = ({ target: { files } }) => {
-    files[0] && setFileName(files[0].name);
-    if (files) {
-      setImage(URL.createObjectURL(files[0]));
-    }
-  }
+const PhotoInput = ({getPhoto, id, File}) => {
+  
 
   return (
     <Container>
-        {!image ? (
+        {File == "" ? (
           <Form style={{width: "100%", height:"100%"}}> 
                 <Label for="file">
                   <Image src={add}></Image>
@@ -24,16 +16,16 @@ const PhotoInput = () => {
                 <Input
                   id="file"
                   accept="image/*"
-                  onChange={({ target: { files } }) => {
-                    files[0] && setFileName(files[0].name);
-                    if (files) {
-                      setImage(URL.createObjectURL(files[0]));
-                    }
-                  }}
+                  onChange={(e) => getPhoto(e, id)}
                 ></Input>
           </Form>
         ) : (
-          <Img src={image} alt={fileName}></Img>
+          <PhotoArea>
+            <Img src={URL.createObjectURL(File)} alt={File.name} />
+            <EditButton>
+              <Image src={edit_pen} alt="EditPen" />
+            </EditButton>
+          </PhotoArea>
         )}
     </Container>
   );

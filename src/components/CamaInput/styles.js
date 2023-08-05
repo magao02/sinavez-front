@@ -12,11 +12,16 @@ export const DeleteBedButton = styled.button`
     height: 100%;
     border-radius: 5px;
     padding: 5px;
-    background-color: #C6CAD0;
+    background-color: #EDF7FE;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+    &:hover {
+        background-color: #C6CAD0;
+    }
 `
 
 export const Select = styled.select`

@@ -81,6 +81,7 @@ const AptoItens = ({ title, itens, setItens }) => {
       </AddItemArea>
       {edit && (
         <ConfirmButtons
+          
           save={HandleSave}
           handleCancel={handleCancel}
         ></ConfirmButtons>

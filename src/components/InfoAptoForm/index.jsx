@@ -9,13 +9,16 @@ import {
 import RadioInput from "../commom/RadioInput";
 import { useEffect, useState } from "react";
 import CamaInput from "../CamaInput";
+import { v4 as uuid } from 'uuid';
 
 
 const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) => {
   // CAMAS
-  const [camas, setCamas] = useState([0]);
-  const [camaId, setCamaId] = useState(1);
-  const [camaInfo, setCamaInfo] = useState([]);
+  const [camaInfo, setCamaInfo] = useState([{
+    id: uuid(),
+    tipoDeCama: "",
+    Quantidade: ""
+  }]);
 
   const [radioInput, setRadioInput] = useState({
     tipo: "",
@@ -38,17 +41,19 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
 
   // FUNCOES RELACIONADAS A CAMA
   const addCamas = () => {
-    setCamaId(1 + camaId);
-    setCamas([...camas, camaId]);
+      setCamaInfo([...camaInfo, {
+        id: uuid(),
+        tipoDeCama: "",
+        Quantidade: ""
+      }])
   };
 
   const deleteCama = (id) => {
-    if (camas.length != 1) {
-      var camasFiltered = camas.filter((data) => data != id);
-      var itensFiltered = camaInfo.filter((data) => data.id != id);
-      setCamas(camasFiltered);
-      setCamaInfo(itensFiltered);
-    }
+      if(camaInfo.length > 1){
+        var itensFiltered = camaInfo.filter((data) => data.id != id);
+        setCamaInfo(itensFiltered);
+      }
+    
   };
 
   const map = (id) => {
@@ -76,8 +81,6 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
     if (typeof novoObjeto[id]?.["Quantidade"] !== "undefined") {
       qntd = novoObjeto[id]["Quantidade"];
     }
-
-
 
     if(!map(id)){
       novoObjeto[id] = {
@@ -112,13 +115,14 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
           onChange={handleTitle}
         />
         <CamaInputContainer>
-          {camas.map((id) => {
+          {camaInfo.map((data) => {
             return (
               <CamaInput
-                id={id}
+                id={data.id}
                 deleteCama={deleteCama}
                 handleCama={handleCama}
-                option={"solteiro"}
+                option={data.tipoDeCama}
+                value={data.Quantidade}
               />
             );
           })}
@@ -143,7 +147,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs}) 
           <RadioInput
             title={"Andar"}
             op1={"Terreo"}
-            op2={"1`"}
+            op2={"1°"}
             addRadioInfo={addRadioInfo}
           />
           <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} />

@@ -19,13 +19,14 @@ export const PhotoArea = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    max-height: 250px;
+    max-height: 248px;
     width: ${(prop) => prop.width ? prop.width : "100%"};
     background-color: #ECF6FE;
     border: 1px solid;
     border-color: #D3E3F4;
     border-radius: 10px;
     overflow: hidden;
+    margin-right: 7px;
 `
 
 export const PhotoAreaSmaller = styled.div`
@@ -36,11 +37,11 @@ export const PhotoAreaSmaller = styled.div`
     border: 1px solid;
     border-color: #D3E3F4;
     border-radius: 10px;
-    height: 110px;
+    height: 120px;
     overflow: hidden;
 
     @media (max-width: 1629px){
-        height: 98px;
+        height: 110px;
     }
 `
 
@@ -50,7 +51,7 @@ export const PhotoList = styled.div`
     grid-template-columns: repeat(3, 1fr);
     max-height: 250px;
     width: 100%;
-    gap: 7px;
+    gap: 5px;
 `
 
 export const Span = styled.span`
