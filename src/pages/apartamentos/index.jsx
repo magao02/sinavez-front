@@ -149,6 +149,7 @@ const apartamento = () => {
                   "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
                 }
                 setText={setDescription}
+                required
               />
             </InfoBox>
             <InfoBox>

@@ -1,9 +1,9 @@
-import { CheckBox, Container, Input, CheckBoxContainer, Label } from "./styles";
+import { CheckBox, Container, Input, CheckBoxContainer, Label, Span } from "./styles";
 
 const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
   return (
     <Container border={border}>
-      <span style={{fontSize: "0.9vw"}}>{title}</span>
+      <Span>{title}<Span red>*</Span></Span>
       <CheckBoxContainer onChange={(e) => addRadioInfo(e.target)}>
         <form>
           <CheckBox>

@@ -17,6 +17,7 @@ export const CheckBox = styled.div`
     margin-left: .7vw;
     margin-right: .5vw;
 `
+
 export const Input = styled.input.attrs({type: "radio"})`
     width: 13px;
     height: 15px;
@@ -31,4 +32,9 @@ export const CheckBoxContainer = styled.div`
 `
 export const Label = styled.label`
     font-size: 15px;
+`
+
+export const Span = styled.span`
+    color: ${(props) => props.red ? theme.colors.red : ""};
+    font-size: "0.9vw";
 `

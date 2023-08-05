@@ -3,7 +3,6 @@ import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
 import { useState } from "react";
-import { useRef } from "react";
 
 
 const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
@@ -21,7 +20,6 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
             options[i].removeAttribute('selected');
           }
         }
-        
     }
 
 
@@ -36,7 +34,7 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
                 variant="default"
                 name="Quantidade"
                 type="number"
-                placeholder="Quantidade"
+                placeholder={"Quantidade"}
                 value={value}
                 onChange={(e) => setInputValue(e.target.value)}
             />
