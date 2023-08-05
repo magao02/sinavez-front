@@ -29,7 +29,13 @@ const theme = {
         },
         alert: '#0C014D',
         fail: '#F38B8B',
-        red: '#B82200'
+        red: '#B82200',
+        orange: {
+            default: '#FF730E',
+        },
+        green: {
+            default: '#42908A',
+        },
     }
 };
 
