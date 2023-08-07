@@ -17,6 +17,7 @@ import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
 import DependentsContainer from "../../components/DependentsContainer";
+import Pattern from "../../assets/pattern.svg"
 
 import AddIcon from "../../assets/add_icon.svg";
 
@@ -77,13 +78,12 @@ const Associados = () => {
     setDataToSubmit(data);
   }
 
+  
+
   const dataCollector = (data) => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
-
-
-
 
   const handleAddAssociate = useCallback(async () => {
     try {
@@ -119,9 +119,9 @@ const Associados = () => {
   const handleEditUser = useCallback(async(dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
-      setAssociados((p) => [...p, editResponse.data.user]);
+      //setAssociados((p) => [...p, editResponse.data.user]);
       setDataUser(editResponse.data.user);
-      console.log(editResponse.data.user);
+      console.log(editResponse.data);
     } catch (error) {
       console.log("Deu erro");
     }

@@ -204,3 +204,14 @@ export const Aviso = styled.h4`
     font-weight: 500;
     font-size: 16px;
 `;
+
+export const ContainerImg = styled.div`
+    z-index: 99;
+
+    display: flex;
+    position: absolute;
+    width: 30vw;
+    height:70vh;
+    right: 0vh;
+    top: 80px;
+`;

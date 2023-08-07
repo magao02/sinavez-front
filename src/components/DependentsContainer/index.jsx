@@ -81,7 +81,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
             variant="default"
             label={"Nome Completo"}
             name={"nome_completo"}
-            placeholder={"Digite onde você trabalha"}
+            placeholder={"Nome Completo"}
             validate={validation.requiredTextField}
           />
           <Input

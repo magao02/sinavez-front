@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BoxData, ContainerButtons, ContainerData, ContainerDataUser, ContainerTable, ContainerWhite, LinkAtual, LinkPage, ProfileTitleUser, ProfileUser, TableAssociate, TextTable } from "./style";
+import { BoxData, ContainerButtons, ContainerData, ContainerDataUser, ContainerImg, ContainerTable, ContainerWhite, LinkAtual, LinkPage, ProfileTitleUser, ProfileUser, TableAssociate, TextTable } from "./style";
 import Pattern from "../../assets/pattern.svg";
 import Arrow from "../../assets/arrow.svg";
 import Image from "next/image";
@@ -31,8 +31,13 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
     };
 
     const handleSelectDependents = () => {
-        setSelectedUser(false);
-        setSelectedDependents(true);
+        if (edit){
+            setSelectedUser(true);
+            setSelectedDependents(false);
+        } else {
+            setSelectedUser(false);
+            setSelectedDependents(true);
+        }  
     };
 
     const handleContainerToggle = (user) => {
@@ -40,8 +45,13 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
             setContainerToggle(true);
             setContainerToggleDependents(false);
         } else {
-            setContainerToggle(false);
-            setContainerToggleDependents(true);
+            if (edit){
+                setContainerToggle(true);
+                setContainerToggleDependents(false);
+            } else {
+                setContainerToggle(false);
+                setContainerToggleDependents(true);
+            }  
         }
     };
 
@@ -59,6 +69,10 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
 
     return (
         <ContainerWhite>
+            <ContainerImg>
+                <Image src={Pattern} />
+            </ContainerImg>
+           
             <BoxData>
 
                 <LinkPage>

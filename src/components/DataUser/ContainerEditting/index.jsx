@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Aviso, ContainerButtonCancel, ContainerButtons, ContainerData, ContainerDataUser, ContentButton, LineButton } from "../style";
+import { Aviso, ContainerButtonCancel, ContainerButtons, ContainerData, ContainerDataUser, ContainerImg, ContentButton, LineButton } from "../style";
 import { InputsContainer, SubContainer, SubTitle } from "../../UserDataForm/styles";
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
-import * as service from "../../../services/accounts";
+
 
 
 const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, dataCollector}) => {
@@ -20,9 +20,14 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
 
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault();
-    
-        handleEditUser(valorData, urlUser);
-        cancel();
+        
+        try{
+            handleEditUser(valorData, urlUser);
+            cancel();
+        } catch (error) {
+            console.log("Deu erro");
+        }
+        
         
       }, [valorData, urlUser]);
 
