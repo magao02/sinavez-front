@@ -6,3 +6,10 @@ export async function getAllApartments(token) {
         { headers: { authorization: token } }
     );
 }
+
+export async function getApartment(token, url) {
+    return await api.get(
+        `/apartment/getApartment/${url}`,
+        { headers: { authorization: token } }
+    );
+}

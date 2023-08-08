@@ -38,19 +38,28 @@ import IconRedWarning from "../../assets/icon_red_warning.svg";
 import IconLocation from "../../assets/icon_gray_location.svg";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 import Button from "../../components/commom/Button";
+import { getApartment } from "../../services/apartments";
+import { useAuth } from "../../contexts/AuthContext";
+import { useEffect } from "react";
 
 const ApartmentDetails = ({ area, objectUrl }) => {
   const [viewingImages, setViewingImages] = useState(false);
+  const [model, setModel] = useState({});
+
+  const authContext = useAuth();
+
+  useEffect(async () => {
+    const req = await getApartment(authContext.token, objectUrl);
+    const data = req.data;
+    setModel(data);
+  }, [objectUrl, authContext]);
 
   const rulesCard = (
     <RulesCard>
       <Subtitle1>Regras de convivência</Subtitle1>
       <Body2 primary>
         <ol>
-          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
-          <li>Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto;</li>
+          { model.regrasConvivencia?.map(regra => <li>{regra}</li>) }
         </ol>
       </Body2>
     </RulesCard>
@@ -75,14 +84,9 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               <Button onClick={_ => setViewingImages(true)}>VER TODAS AS FOTOS</Button>
             </div>
           </ImageGallery>
-          { !area && <div>
-            <Title1>Apartamento {objectUrl}</Title1>
-            <Body1>Apartamento Padrão (sem adaptação para PCD), 2 andar</Body1>
-          </div> }
-          {area && <div>
-            <Title1>Piscina</Title1>
-            <Body1>Piscina de 300m²</Body1>
-          </div> }
+          <Title1>{model.titulo}</Title1>
+          {/* i dont think this is correct */}
+          <Body1>{model.tipo}</Body1>
         </Header>
         <Details>
           <Column className="features-column">
@@ -127,22 +131,12 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                 <Body3>Verifique a disponibilidade de uso das áreas comuns durante sua estadia. Caso queria usufruir de alguma em especifico faça a reserva aqui.</Body3>
               </div>
               <Features>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Garagem</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Auditório</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Cozinha compartilhada</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Frigobar</Body2>
-                </FeatureCard>
+                {
+                  model.areasComuns?.map(text => <FeatureCard>
+                    <Image src={IconWifi} width="32" height="32" />
+                    <Body2>{text}</Body2>
+                  </FeatureCard>)
+                }
               </Features>
             </BlueOutlineCard> }
 
@@ -151,26 +145,12 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                 <Subtitle2>Locais Próximos</Subtitle2>
               </div>
               <Locations>
-                <Location>
-                  <Image src={IconLocation} />
-                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
-                </Location>
-                <Location>
-                  <Image src={IconLocation} />
-                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
-                </Location>
-                <Location>
-                  <Image src={IconLocation} />
-                  <Body3 primary>Rodoviária Fulano de Tal</Body3>
-                </Location>
-                <Location>
-                  <Image src={IconLocation} />
-                  <Body3 primary>Praia Nome Aqui com muita areia e sal bem </Body3>
-                </Location>
-                <Location>
-                  <Image src={IconLocation} />
-                  <Body3 primary>Praia Nome Aqui com muita areia e sal bem </Body3>
-                </Location>
+                {
+                  model.locaisArredores?.map(text => <Location>
+                    <Image src={IconLocation} />
+                    <Body3 primary>{text}</Body3>
+                  </Location>)
+                }
               </Locations>
             </BlueOutlineCard>
 
@@ -181,11 +161,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               <Body3 primary>Leia abaixo mais informações e mais detalhes sobre o apartamento.</Body3>
               <DescriptionBox>
                 <Body2 primary>
-                  <b>ATENÇÃO:</b> Controles e chaves devem ser devolvidos na saída.<br />
-                  <br />
-                  O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar um espécime de livro. Este texto não só sobreviveu 5 séculos, mas também o salto para a tipografia electrónica, mantendo-se essencialmente inalterada. Foi popularizada nos anos 60 com a disponibilização das folhas de Letraset, que continham passagens com Lorem Ipsum, e mais recentemente com os programas de publicação como o Aldus PageMaker que incluem versões do Lorem Ipsum.<br />
-                  <br />
-                  <b>Sobre a Cozinha compartilhada:</b> O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres.
+                  {model.descricao}
                 </Body2>
               </DescriptionBox>
             </DescriptionCard>
