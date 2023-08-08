@@ -92,12 +92,10 @@ const ApartmentDetails = ({ area, objectUrl }) => {
           <Column className="features-column">
             { !area && <BlueFeatures>
               {
-                Array(4).fill(0).map((_, i) =>
-                  <BlueFeatureCard key={i}>
-                    <Image src={IconDoubleBed} />
-                    {i + 1} Cama casal
-                  </BlueFeatureCard>
-                )
+                model.camas?.map((cama, i) => <BlueFeatureCard key={i}>
+                  <Image src={IconDoubleBed} />
+                  {cama.quantidade} Cama {cama.tipo}
+                </BlueFeatureCard>)
               }
             </BlueFeatures> }
 
