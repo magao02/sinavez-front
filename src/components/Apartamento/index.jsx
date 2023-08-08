@@ -20,16 +20,25 @@ import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconPet from "../../assets/apartamento/pet.svg";
 import IconBathtub from "../../assets/apartamento/bathtub.svg";
 import IconWind from "../../assets/apartamento/wind.svg";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
 
-const Feature = ({ text }) => {
-  let image;
-  // this sucks
-  switch (text) {
-    case "1 Suíte": image = IconBathtub; break;
-    case "Wifi Grátis": image = IconWifi; break;
-    case "Aceita pets": image = IconPet; break;
-    case "Ar-condicionado": image = IconWind; break;
-    default: image = IconWifi; break;
+const Feature = ({ type }) => {
+  let image = IconWifi;
+  let text = type;
+  switch (type) {
+    case "suite":
+      text = "1 Suíte";
+      image = IconBathtub;
+      break;
+    case "wifi":
+      text = "Wifi Grátis";
+      image = IconWifi;
+      break;
+    case "animais":
+      text = "Aceita pets";
+      image = IconPet;
+      break;
   }
   return (
     <FeatureContent>
@@ -39,7 +48,28 @@ const Feature = ({ text }) => {
   );
 };
 
-const Apartamento = ({ nome, image, reserva, proxReserva, features, isReservado }) => {
+const Apartamento = ({ obj }) => {
+  // TODO: figure out how reservations should work
+  const isReservado = false;
+  const reserva = { from: '??', to: '??' };
+  const proxReserva = { from: '??', to: '??' };
+
+  const image = obj.images[0];
+
+  const router = useRouter();
+
+  const redirect = () => {
+    router.push(`/apartamento/${obj.urlApt}`);
+  };
+
+  const features = useMemo(() => {
+    let feats = [];
+    obj.wifi && feats.push("wifi");
+    obj.suite && feats.push("suite");
+    obj.animais && feats.push("animais");
+    return feats;
+  }, [obj]);
+
   return (
     <Card>
       <CardImage reservado={isReservado}>
@@ -49,18 +79,18 @@ const Apartamento = ({ nome, image, reserva, proxReserva, features, isReservado 
 
       <CardInner>
         <Details>
-          <Title>{nome}</Title>
+          <Title>{obj.titulo}</Title>
           <Reserva>Reserva mais proxima: De {reserva.from} até {reserva.to}</Reserva>
           <Reserva small>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Reserva>
           <Features>
-            {features.map(text => (
-              <Feature text={text} key={text} />
+            {features.map(f => (
+              <Feature type={f} key={f} />
             ))}
           </Features>
         </Details>
         
         <ButtonContainer>
-          <Button>VER MAIS</Button>
+          <Button onClick={redirect}>VER MAIS</Button>
         </ButtonContainer>
       </CardInner>
     </Card>

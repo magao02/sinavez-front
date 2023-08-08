@@ -177,23 +177,7 @@ const Page = () => {
   useEffect(async () => {
     const req = await getAllApartments(authContext.token);
     const data = req.data;
-    setApartamentos(data.map(apt => {
-      const features = [];
-      if (apt.wifi)
-        features.push("Wifi Grátis");
-      if (apt.suite)
-        features.push("1 Suíte");
-      if (apt.animais)
-        features.push("Aceita pets");
-      return {
-        nome: apt.titulo,
-        image: Placeholder,
-        reserva,
-        proxReserva,
-        features,
-        reservado: false,
-      };
-    }))
+    setApartamentos(data);
   }, [authContext.token]);
 
   useEffect(async () => {
@@ -238,15 +222,10 @@ const Page = () => {
         {
           tabIndex === 0 && (apartamentos.length ? [
             <Title>Apartamentos Disponíveis</Title>,
-            apartamentos.map((apt, i) => (
+            apartamentos.map(apt => (
               <Apartamento
-                nome={apt.nome}
-                image={apt.image}
-                reserva={apt.reserva}
-                proxReserva={apt.proxReserva}
-                features={apt.features}
-                isReservado={apt.reservado}
-                key={i}
+                obj={{...apt, images: [Placeholder]}}
+                key={apt.urlApt}
               />
             )),
             <NoMoreResults>
@@ -264,15 +243,10 @@ const Page = () => {
         {
           tabIndex === 1 && (areas.length ? [
             <Title>Áreas Disponíveis</Title>,
-            areas.map((apt, i) => (
+            areas.map(apt => (
               <Apartamento
-                nome={apt.nome}
-                image={apt.image}
-                reserva={apt.reserva}
-                proxReserva={apt.proxReserva}
-                features={apt.features}
-                isReservado={apt.reservado}
-                key={i}
+                obj={apt}
+                key={apt.urlApt}
               />
             )),
             <NoMoreResults>
