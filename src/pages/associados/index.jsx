@@ -17,8 +17,8 @@ import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
 import DependentsContainer from "../../components/DependentsContainer";
-import Pattern from "../../assets/pattern.svg"
 
+import Pattern from "../../assets/pattern.svg"
 import AddIcon from "../../assets/add_icon.svg";
 
 import Image from "next/image";
@@ -51,26 +51,29 @@ const Associados = () => {
   const [associadoName, setAssociadoName] = useState();
   const [urlUser, setUrlUser] = useState();
 
+  const [globalMessage, setGlobalMessage] = useState();
+  const [collectedData, setCollectedData] = useState({});
+
   const router = useRouter();
 
   const authContext = useAuth();
   const adminContext = useAdmin();
 
+  // Toggle para abrir e fechar o modal de adicionar associado
   const toggleAddAssociate = useCallback(() => {
     setAddAssociateToggle((p) => !p);
   }, []);
 
+  // Toggle para abrir e fechar o modal de remover associado
   const toggleRemoveAssociate = useCallback(() => {
     setRemoveAssociateToggle((p) => !p);
   }, []);
 
+  // Toggle para abrir e fechar o modal da tela de dados do usuário
   const toggleDataUser = useCallback(() => {
     setDataUserToggle((p) => !p);
 
   }, []);
-
-  const [globalMessage, setGlobalMessage] = useState();
-  const [collectedData, setCollectedData] = useState({});
 
   const yearsController = (data, yearVariant) => {
     setYears({ toggle: true });
@@ -78,13 +81,14 @@ const Associados = () => {
     setDataToSubmit(data);
   }
 
-  
-
+  //  coletando dados do usuário
   const dataCollector = (data) => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
 
+
+  // adicionando usuário
   const handleAddAssociate = useCallback(async () => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
@@ -103,6 +107,7 @@ const Associados = () => {
     setUrlUser(data.urlUser);
   }, []);
 
+  // pega dos dados do usuário
   const takeDataUser = useCallback(async (data) => {
     try {
       const dataUserResponse =  await service.getUserData(data.urlUser, authContext.token);
@@ -116,6 +121,7 @@ const Associados = () => {
     }
   });
 
+  // editando dados do usuário
   const handleEditUser = useCallback(async(dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
@@ -139,10 +145,12 @@ const Associados = () => {
     [router]
   );
 
+  // fechando modal de dados do usuário
   const closer = useCallback(() => {
     setDataUserToggle(false);
   });
 
+  // pegando dados dos associados
   const getAssociados = useCallback(async () => {
     try {
       const associadosResponse = await service.getAssociados(authContext.token);
@@ -167,6 +175,28 @@ const Associados = () => {
       setAssociados((p) => [...p]);
     }
   }, [associados]);
+
+  // adionar dependente
+  const addDependente = useCallback(async (data, urlAssociado) => {
+    // try {
+    //   const addDependentResponse = await service.addDependent(data, urlAssociado, authContext.token);
+    //   console.log(addDependentResponse.data);
+    // } catch (error) {
+    //   console.log(error.response.data.message);
+    // }
+
+    console.log(data);
+  });
+
+  // remover dependente
+  const removeDependente = useCallback(async (urlDependente, urlAssociado) => {
+    try {
+      const removeDependentResponse = await service.removeDependent(authContext.token, urlDependente);
+      console.log(removeDependentResponse.data);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  });
 
 
   const editUserData = useCallback(async (data) => {
@@ -262,7 +292,7 @@ const Associados = () => {
 
           { dataUserToggle && (
           <>
-            <DataUser back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
+            <DataUser back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector} addDependente={addDependente}/>
           </>
           )}
         </>

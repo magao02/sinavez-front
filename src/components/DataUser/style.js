@@ -60,11 +60,12 @@ export const ProfileTitleUser = styled.h1`
     height: 34.039px;
     color: #3D3F45;
     font-family: roboto;
-    font-size: 32px;
+    font-size: ${props => props.size ? '24px' : '32px'};;
     font-style: normal;
     font-weight: 700;
     line-height: 36px;
     gap-bottom: 24px;
+    margin: ${props => props.margin ? '20px' : '0px'};
 `;
 
 export const TableAssociate = styled.div`
@@ -214,4 +215,55 @@ export const ContainerImg = styled.div`
     height:70vh;
     right: 0vh;
     top: 80px;
+`;
+
+export const AddDependentBox = styled.div`
+    width: 100vw;
+    height: 150vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center; 
+    position: relative;
+    background-color: transparent;
+    top: -147px;
+`;
+
+export const AddDependent = styled.div`
+    width: 544px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    background-color: ${theme.colors.white.default};
+    border-radius: 8px;
+    position: absolute;
+    top: 135px;
+    z-index: 100;
+`;
+
+export const ContainerDataDependent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-items: flex-start;
+    width: 544px;
+    height: 529px;
+    padding: 24px;
+    
+`;
+
+export const Dependentes = styled.div`
+    background-color: #EDF6FF;
+    width: 100%;
+`;
+
+export const ContainerButtonsDependent = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    height: 111px;
 `;

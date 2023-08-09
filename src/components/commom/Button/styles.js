@@ -454,5 +454,40 @@ function getStyleByVariant(variant) {
           }
         `;
       }
+
+      case "dependente": {
+        return css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+  
+          background: transparent;
+  
+          text-decoration: none;
+          font-size: 1.6rem;
+          color:#2196F3;
+        `;
+      }
+
+      case "dependenteConcluir": {
+        return css`
+          
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+  
+          background: #52B4AD;
+          padding: 4px 10px;
+          border-radius: 6px;
+          width: 100px;
+  
+          text-decoration: none;
+          font-size: 1.6rem;
+          color: ${theme.colors.white.default};
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        `;
+      }
   }
 }

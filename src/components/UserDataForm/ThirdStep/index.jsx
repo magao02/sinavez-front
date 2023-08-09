@@ -168,7 +168,7 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
           </MainHead>
           <SubContainerDependents>
 
-            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0} />
+            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0} submitForm={dataCollector}/>
             {[...Array(countDependents)].map((_, index) => (
               <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true} />
             ))}

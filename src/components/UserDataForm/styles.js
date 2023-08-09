@@ -34,8 +34,9 @@ export const Head = styled.form`
     align-items: center;
     align-self: stretch;
 
-    width: 29.25vw;
-    margin-left: -24px;
+    width: ${props => props.width ? '100%' : '29.25vw'};
+    margin: ${props => props.margin ? '21px' : '0px'};
+    margin-left: ${props => props.marginLeft ? '0px' : '-24px'};
 
     border-bottom: 1px solid var(--azul-1, ${theme.colors.blue.lighter});
 
@@ -141,7 +142,7 @@ export const ProfileContainerImage = styled.div`
 
 export const ProfileArguments = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: ${props => props.direction ? 'row' : 'column'};
     width: 374px;
     height: 114px;
     padding: ${props => props.padding ? '12px 0px 8px 0px' : '0px 0px 0px 0px'};

@@ -12,8 +12,9 @@ function getStyleByVariant(variant) {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: ${props => props.gap ? '11px' : '16px'};
         align-self: stretch;
+        padding: ${props => props.padding ? '0px 24px' : '0px'};
       `;
     }
 

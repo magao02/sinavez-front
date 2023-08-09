@@ -16,7 +16,7 @@ import {
   FormContainer,
 } from "./styles";
 
-const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSingUpController, number, marginTop }) => {
+const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, depSingUpController, number, marginTop, takeDataDependents }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -66,6 +66,12 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
         return;
       }
       submitForm({ name, nascimento, cpf, rg, emissao });
+      takeDataDependents({ 
+        name: name, 
+        nascimento: nascimento, 
+        cpf: cpf, 
+        rg: rg, 
+        emissao: emissao });
     },
     [allFieldsAreValid, submitForm]
   );
@@ -73,7 +79,7 @@ const DependentsForm = ({ submitForm, globalMessage, variant, url, token, depSin
   switch (variant) {
     case "default": {
       return (
-        <Container variant="default">
+        <Container variant="default" padding={pad ? pad : false} gap={marginTop}>
           <SubTitle marginTop = {marginTop}>
             Dados do Dependente {number !== 0 ? number : ""}
           </SubTitle>
