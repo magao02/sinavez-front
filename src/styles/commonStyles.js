@@ -13,6 +13,8 @@ function getTitleColor(props) {
 function getBodyColor(props) {
   if (props.primary)
     return getTitleColor(props);
+  if (props.strong)
+    return '#222';
   if (props.blue)
     return theme.colors.blue.border;
   if (props.red)
