@@ -146,19 +146,19 @@ const OnBoardingPage = () => {
 
                                 {currentStep == 1 && (
                                     <ContainerImage>
-                                        <Image src={Buscar} />
+                                        <img src={Buscar.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 2 && (
                                     <ContainerImage>
-                                        <Image src={Resumo} />
+                                        <img src={Resumo.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>    
                                 )}
 
                                 {currentStep == 3 && (
                                     <ContainerImage>
-                                        <Image src={Reserva} />
+                                        <img src={Reserva.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
                             </ContainerTutorial>
@@ -194,25 +194,25 @@ const OnBoardingPage = () => {
 
                                 {currentStep == 4 && (
                                     <ContainerImage>
-                                        <Image src={DadosAp} />
+                                        <img src={DadosAp.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 5 && (
                                     <ContainerImage>
-                                        <Image src={Imagens} />
+                                        <img src={Imagens.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 6 && (
                                     <ContainerImage>
-                                        <Image src={Informacao} />
+                                        <img src={Informacao.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 7 && (
                                     <ContainerImage>
-                                        <Image src={Salvar} />
+                                        <img src={Salvar.src} width={'100%'} height={'100%'}/>
                                     </ContainerImage>
                                 )}
                             </ContainerTutorial>
@@ -234,7 +234,7 @@ const OnBoardingPage = () => {
                                 </Container>
 
                                 <ContainerImage>
-                                    <Image src={Associados} />
+                                    <img src={Associados.src} width={'100%'} height={'100%'}/>
                                 </ContainerImage>
                             </ContainerTutorial>
                         )}
@@ -291,25 +291,25 @@ const OnBoardingPage = () => {
 
                                 {currentStep == 1 && (
                                     <ContainerImage>
-                                        <Image src={BuscarAssociado} />
+                                        <img src={BuscarAssociado.src} width={'100%'} height={'100%'}/>
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 2 && (
                                     <ContainerImage>
-                                        <Image src={ResumoAssociado} />
+                                        <img src={ResumoAssociado.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>    
                                 )}
 
                                 {currentStep == 3 && (
                                     <ContainerImage>
-                                        <Image src={Detalhe} />
+                                        <img src={Detalhe.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
 
                                 {currentStep == 4 && (
                                     <ContainerImage>
-                                        <Image src={ReservaAssociado} />
+                                        <img src={ReservaAssociado.src} width={'100%'} height={'100%'} />
                                     </ContainerImage>
                                 )}
                             </ContainerTutorial>
@@ -335,7 +335,7 @@ const OnBoardingPage = () => {
                                 </Container>
 
                                 <ContainerImage>
-                                    <Image src={Perfil} />
+                                    <img src={Perfil.src} width={'100%'} height={'100%'} />
                                 </ContainerImage>
                             </ContainerTutorial>
                         )}
@@ -356,7 +356,7 @@ const OnBoardingPage = () => {
                                 </Container>
 
                                 <ContainerImage>
-                                    <Image src={Dependentes} />
+                                    <img src={Dependentes.src} width={'100%'} height={'100%'} />
                                 </ContainerImage>
                             </ContainerTutorial>
                         )}

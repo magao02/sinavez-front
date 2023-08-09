@@ -99,7 +99,7 @@ export const ContainerTutorial = styled.div`
 
 export const ContainerImage = styled.div`
     width: 60vw;
-    height: 135vh;
+    height: 127vh;
     display: flex;
     justify-content: center;
     align-items: center;
