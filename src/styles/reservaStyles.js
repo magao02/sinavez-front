@@ -37,6 +37,10 @@ export const Breadcrumbs = styled.div`
   gap: 16px;
   margin: 32px 0;
   margin-top: 0;
+
+  .button {
+    cursor: pointer;
+  }
 `;
 
 export const BlueBackgroundCard = styled.div`

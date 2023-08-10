@@ -23,15 +23,22 @@ import MapaImage from "../../assets/apartamento/mapa.png";
 import PiscinaImage from "../../assets/apartamento/piscina.png";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import Button from "../../components/commom/Button";
+import { useRouter } from "next/router";
 
 const Page = () => {
+  const router = useRouter();
+
+  const goBack = () => {
+    router.push(`/apartamento/${router.query.id}`);
+  };
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
       <NavSpacing />
       <Content>
         <Breadcrumbs>
-          <Image src={IconArrowLeft} />
+          <Image src={IconArrowLeft} onClick={goBack} className="button" />
           <Title1>Pedir pra reservar</Title1>
         </Breadcrumbs>
 
