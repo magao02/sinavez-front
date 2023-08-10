@@ -6,6 +6,7 @@ import MinusCircle from "../../assets/minus-circle.svg";
 import PlusCircle from "../../assets/plus-circle.svg";
 
 import { useState } from "react";
+import { Body3, Subtitle2 } from "../../styles/commonStyles";
 
 export const CounterInput = ({ label, min, max, value }) => {
   const [counterValue, setCounterValue] = useState(value ?? 0);
@@ -56,19 +57,21 @@ export const DropdownInput = ({ label, options }) => {
   );
 };
 
-export const SearchInput = ({ label, innerLabel, type, placeholder }) => {
+export const SearchInput = ({ label, innerLabel, type, placeholder, variant, disabled }) => {
   const onClick = (event) => {
-    if (type === 'date' || type === 'time') {
+    if (disabled) {
+      event.preventDefault();
+    } else if (type === 'date' || type === 'time') {
       event.target.showPicker();
       event.preventDefault();
     }
   };
   return (
-    <Label>
-      {label}
+    <Label variant={variant}>
+      <Subtitle2>{label}</Subtitle2>
       <div className="container">
-        { innerLabel && <p className="innerLabel">{innerLabel}</p> }
-        <Input type={type} placeholder={placeholder} onClick={onClick} />
+        { innerLabel && <Body3 className="innerLabel">{innerLabel}</Body3> }
+        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} />
       </div>
     </Label>
   );

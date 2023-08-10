@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Navigation from "../../components/commom/Nav";
+import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 
 import { Title1, Title2, Subtitle2, Body2, Body3, Subtitle1, Body1 } from "../../styles/commonStyles";
 import {
@@ -39,6 +40,7 @@ const Page = () => {
             <TripDetails>
               <Subtitle1>Sua viagem</Subtitle1>
               <div>
+                <SearchInput label="Chegada" innerLabel="Data" type="date" variant="light-blue" disabled />
               </div>
             </TripDetails>
 

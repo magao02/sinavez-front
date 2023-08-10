@@ -117,7 +117,7 @@ export const CardWithName = styled.div`
   img {
     border-radius: 8px;
     object-fit: fill;
-    width: 36%;
+    width: 40%;
   }
 
   .text {

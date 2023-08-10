@@ -24,8 +24,6 @@ const commonStyle = css`
 export const Label = styled.label`
     display: flex;
     flex-direction: column;
-    font-weight: 600;
-    color: #4f4f4f;
     flex-grow: 1;
 
     & > .container {
@@ -34,15 +32,17 @@ export const Label = styled.label`
         cursor: pointer;
 
         & > .innerLabel {
-            color: ${theme.colors.gray.default};
-            font-size: 14px;
-            margin-bottom: 5px;
             user-select: none;
         }
 
         & > input {
             width: 100%;
         }
+
+        ${props => props.variant === "light-blue" ? css`
+        background: ${theme.colors.white.default};
+        border-bottom: 1px solid ${theme.colors.blue.background};
+        ` : ''}
     }
 `;
 
