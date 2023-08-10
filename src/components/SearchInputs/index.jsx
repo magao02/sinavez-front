@@ -42,11 +42,11 @@ export const CounterInput = ({ label, min, max, value }) => {
   );
 };
   
-export const DropdownInput = ({ label, options }) => {
+export const DropdownInput = ({ label, options, variant, disabled }) => {
   return (
     <Label>
       {label}
-      <Select>
+      <Select disabled={!!disabled} variant={variant}>
         {
           options.map(opt => 
             <option value={opt} key={opt}>{opt}</option>
