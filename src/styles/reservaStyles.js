@@ -130,4 +130,10 @@ export const TripDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  .row {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+  }
 `;
