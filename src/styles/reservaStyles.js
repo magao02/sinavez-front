@@ -136,4 +136,13 @@ export const TripDetails = styled.div`
     gap: 16px;
     justify-content: space-between;
   }
+
+  .pad-bottom {
+    margin-bottom: 8px;
+  }
+
+  .separator {
+    border-bottom: 2px solid ${theme.colors.blue.heavy};
+    margin-bottom: 20px;
+  }
 `;

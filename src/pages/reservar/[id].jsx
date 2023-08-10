@@ -44,13 +44,14 @@ const Page = () => {
                 <SearchInput label="Chegada" innerLabel="Data" type="date" variant="light-blue" disabled />
               </div>
               <div>
-                <Subtitle2>Horários</Subtitle2>
+                <Subtitle2 className="pad-bottom">Horários</Subtitle2>
                 <div className="row">
                   <Body2 primary><b>Chegada:</b> 11:00 manhã</Body2>
                   <Body2 primary><b>Saída:</b> 18:00 noite</Body2>
                 </div>
               </div>
               <div>
+                <div className="separator" />
                 <DropdownInput label="Hóspedes" options={["2 adultos;  1 criança;  1 bebê; 2 animais de estimação"]} variant="light-shadow" disabled />
               </div>
             </TripDetails>
