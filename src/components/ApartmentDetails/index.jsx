@@ -41,6 +41,7 @@ import Button from "../../components/commom/Button";
 import { getApartment } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
+import { useMemo } from "react";
 
 const ApartmentDetails = ({ area, objectUrl }) => {
   const [viewingImages, setViewingImages] = useState(false);
@@ -65,6 +66,25 @@ const ApartmentDetails = ({ area, objectUrl }) => {
     </RulesCard>
   );
 
+  const formatPrice = value => {
+    return value.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
+  
+  const valorDiaria = useMemo(() => {
+    return formatPrice(model.diaria ?? 0);
+  }, [model]);
+
+  const numDiarias = useMemo(() => {
+    return 4;
+  }, [model]);
+
+  const totalDiarias = useMemo(() => {
+    return formatPrice((model.diaria ?? 0) * numDiarias);
+  }, [valorDiaria, numDiarias]);
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
@@ -86,7 +106,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
           </ImageGallery>
           <Title1>{model.titulo}</Title1>
           {/* i dont think this is correct */}
-          <Body1>{model.tipo}</Body1>
+          <Body1>{model.tipo}, {model.andar}º andar</Body1>
         </Header>
         <Details>
           <Column className="features-column">
@@ -104,22 +124,12 @@ const ApartmentDetails = ({ area, objectUrl }) => {
                 <Subtitle2>{ area ? "Itens disponíveis" : "Itens do Apartamento" }</Subtitle2>
               </div>
               <Features>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Wi-Fi</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Ar-Condicionado</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Travesseiro</Body2>
-                </FeatureCard>
-                <FeatureCard>
-                  <Image src={IconWifi} width="32" height="32" />
-                  <Body2>Frigobar</Body2>
-                </FeatureCard>
+                {
+                  model.itens?.map(item => <FeatureCard>
+                    <Image src={IconWifi} width="32" height="32" />
+                    <Body2>{item}</Body2>
+                  </FeatureCard>)
+                }
               </Features>
             </BlueOutlineCard>
 
@@ -195,19 +205,19 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               
               <div className="row">
                 <Body2 blue>Valor da diária</Body2>
-                <Body1 primary><b>R$ 40,00</b></Body1>
+                <Body1 primary><b>R$ {valorDiaria}</b></Body1>
               </div>
               
               <div className="row">
                 <Body2 blue>Número de diárias</Body2>
-                <Body1 primary><b>4</b></Body1>
+                <Body1 primary><b>{numDiarias}</b></Body1>
               </div>
               
               <div className="row-separator" />
 
               <div className="row">
                 <Body1 primary>Total</Body1>
-                <Body1 primary>R$ 160,00</Body1>
+                <Body1 primary>R$ {totalDiarias}</Body1>
               </div>
 
               <div className="button-container">
