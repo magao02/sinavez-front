@@ -42,12 +42,15 @@ import { getApartment } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useMemo } from "react";
+import { useRouter } from "next/router";
 
 const ApartmentDetails = ({ area, objectUrl }) => {
   const [viewingImages, setViewingImages] = useState(false);
   const [model, setModel] = useState({});
 
   const authContext = useAuth();
+
+  const router = useRouter();
 
   useEffect(async () => {
     const req = await getApartment(authContext.token, objectUrl);
@@ -85,13 +88,21 @@ const ApartmentDetails = ({ area, objectUrl }) => {
     return formatPrice((model.diaria ?? 0) * numDiarias);
   }, [valorDiaria, numDiarias]);
 
+  const goToReservationPage = () => {
+    router.push(`/reservar/${objectUrl}`);
+  };
+
+  const goBack = () => {
+    router.push(`/apartamentos`);
+  };
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
       <NavSpacing />
       <Content>
         <Breadcrumbs>
-          <Image src={IconArrowLeft} />
+          <Image onClick={goBack} src={IconArrowLeft} className="button" />
           { !area && <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1> }
           { area && <Body1 primary>Todos apartamentos / <u>Detalhes da área de lazer</u></Body1> }
         </Breadcrumbs>
@@ -221,7 +232,7 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               </div>
 
               <div className="button-container">
-                <Button>RESERVE AGORA</Button>
+                <Button onClick={goToReservationPage}>RESERVE AGORA</Button>
                 <Body3 red>Você ainda não irá pagar*</Body3>
               </div>
             </ReservationDetailsCard>

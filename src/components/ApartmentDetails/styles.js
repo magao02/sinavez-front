@@ -95,6 +95,10 @@ export const Breadcrumbs = styled.div`
   padding: 10px 0;
   gap: 16px;
   margin: 32px 0;
+
+  .button {
+    cursor: pointer;
+  }
 `;
 
 export const Header = styled.div`
