@@ -3,9 +3,11 @@ import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { Modal } from "../commom/Modal";
+import modal_img from "../../assets/delete_cama_modal_img.svg"
 
 
-const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
+const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) => {
 
     const [inputValue, setInputValue] = useState();
 
@@ -22,11 +24,13 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
         }
     }
 
+    const [showModal, setShowModal] = useState(false);
 
     return (
+      <>
         <Container onChange={(e) => handleCama(id, e)}>
-            <Select name="tipoDeCama" id="selectCama" onChange={() => handleSelected()}>
-                <option value="Tipo de Cama" disabled selected hidden>{option != "" ? option : "Tipo de Cama"}</option>
+            <Select name="tipo" id="selectCama" onChange={() => handleSelected()}>
+                <option value="Tipo de Cama" disabled selected hidden>{"Tipo de Cama"}</option>
                 <option value="Solteiro">Solteiro</option>
                 <option value="Casal">Casal</option>
             </Select>
@@ -38,9 +42,18 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value}) => {
                 value={value}
                 onChange={(e) => setInputValue(e.target.value)}
             />
-            <DeleteBedButton onClick={() => deleteCama(id)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
+            <DeleteBedButton onClick={() => setShowModal(!showModal)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
         </Container>
-
+      {showModal &&
+        <Modal
+          title="Excluir Cama"
+          asideText="Deseja excluir uma das camas cadastradas?"
+          closeModal={() => setShowModal(!showModal)}
+          actionFunction={() => deleteCama(id)}
+          img={modal_img.src}
+        />
+      }
+      </>
     )
 }
 

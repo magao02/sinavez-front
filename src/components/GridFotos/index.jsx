@@ -10,9 +10,9 @@ import {
 } from "./styles";
 import editPen from "../../assets/edit_pen.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const GridFotos = () => {
+const GridFotos = ( {setFotos }) => {
   const [Images, setImages] = useState([
     {
       id: 0,
@@ -64,30 +64,49 @@ const GridFotos = () => {
     setImages(fotos);
   };
 
+  const deletePhoto = (event) => {
+    var itemId = event.target.parentNode.parentNode.id;
+
+    var Fotos = [...Images]; 
+    
+      Fotos.forEach((data) => {
+      if(data.id == itemId){
+        data.name = "";
+        data.file = "";
+      }
+    })
+
+    setImages(Fotos)
+  }
+
+  useEffect(() =>{
+      setFotos(Images)
+  })
+
   return (
     <Container>
       <FotosContainer>
         <PhotoArea width={"40%"}>
-          <PhotoInput id={0} getPhoto={getPhoto} File={Images[0].file} />
+          <PhotoInput  id={0} getPhoto={getPhoto} File={Images[0].file} deletePhoto={deletePhoto}/>
         </PhotoArea>
         <PhotoList>
           <PhotoAreaSmaller>
-            <PhotoInput id={1} getPhoto={getPhoto} File={Images[1].file} />
+            <PhotoInput  id={1} getPhoto={getPhoto} File={Images[1].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput id={2} getPhoto={getPhoto} File={Images[2].file} />
+            <PhotoInput  id={2} getPhoto={getPhoto} File={Images[2].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput id={3} getPhoto={getPhoto} File={Images[3].file} />
+            <PhotoInput  id={3} getPhoto={getPhoto} File={Images[3].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput id={4} getPhoto={getPhoto} File={Images[4].file} />
+            <PhotoInput  id={4} getPhoto={getPhoto} File={Images[4].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput id={5} getPhoto={getPhoto} File={Images[5].file} />
+            <PhotoInput  id={5} getPhoto={getPhoto} File={Images[5].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput id={6} getPhoto={getPhoto} File={Images[6].file} />
+            <PhotoInput  id={6} getPhoto={getPhoto} File={Images[6].file} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
         </PhotoList>
       </FotosContainer>

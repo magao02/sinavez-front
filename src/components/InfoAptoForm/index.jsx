@@ -16,9 +16,11 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
   // CAMAS
   const [camaInfo, setCamaInfo] = useState([{
     id: uuid(),
-    tipoDeCama: "",
+    tipo: "",
     Quantidade: ""
   }]);
+
+  const [disableButton, setDisableButton] = useState(true);
 
   const [radioInput, setRadioInput] = useState({
     tipo: "",
@@ -43,7 +45,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
   const addCamas = () => {
       setCamaInfo([...camaInfo, {
         id: uuid(),
-        tipoDeCama: "",
+        tipo: "",
         Quantidade: ""
       }])
   };
@@ -53,7 +55,6 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
         var itensFiltered = camaInfo.filter((data) => data.id != id);
         setCamaInfo(itensFiltered);
       }
-    
   };
 
   const map = (id) => {
@@ -71,11 +72,11 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
   const handleCama = (id, e) => {
     const novoObjeto = [...camaInfo];
     var qntd = "1";
-    var tipo = "";
+    var tipoValue = "";
 
   
-    if (typeof novoObjeto[id]?.["tipoDeCama"] !== "undefined") {
-      tipo = novoObjeto[id]["tipoDeCama"];
+    if (typeof novoObjeto[id]?.["tipo"] !== "undefined") {
+      tipoValue = novoObjeto[id]["tipo"];
     }
 
     if (typeof novoObjeto[id]?.["Quantidade"] !== "undefined") {
@@ -85,7 +86,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
     if(!map(id)){
       novoObjeto[id] = {
         id: id,
-        tipoDeCama: e.target.name == "tipoDeCama" ? e.target.value : tipo,
+        tipoDeCama: e.target.name == "tipo" ? e.target.value : tipoValue,
         Quantidade: e.target.name == "Quantidade" ? e.target.value : qntd,
     }}else{
         for (let idx = 0; idx < camaInfo.length; idx++) {
@@ -122,7 +123,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
                 id={data.id}
                 deleteCama={deleteCama}
                 handleCama={handleCama}
-                option={data.tipoDeCama}
+                option={data.tipo}
                 value={data.Quantidade}
               />
             );

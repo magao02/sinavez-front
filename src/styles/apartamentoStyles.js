@@ -4,10 +4,8 @@ import theme from './theme';
 
 export const Container = styled.div`
     width: 100vw;
-
     display: flex;
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
 `
@@ -18,6 +16,7 @@ export const Main = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1vh;
+    margin-bottom: 20px;
 
     @media (max-width: 1379px) {
         width: 80vw;
@@ -55,7 +54,7 @@ export const LeftSide = styled.div`
     display: flex;
     flex-direction: column;
     gap:2vh;
-    margin-bottom: 10vh;
+
 `
 
 export const RightSide = styled.div`
@@ -121,3 +120,14 @@ export const InfoBox = styled.div`
     background: var(--azul-3, ${theme.colors.blue.light});
 `
 
+
+export const CautionBox = styled.div`
+    width: 100%;
+    background-color: #C4DAF2;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 3px;
+    gap: 2vh;
+    box-shadow: rgba(0, 0, 0, 0.60) 0px 5px 15px;
+`

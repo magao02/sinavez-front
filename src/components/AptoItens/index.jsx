@@ -13,7 +13,7 @@ import CheckBox from "../CheckBox";
 import { useState } from "react";
 import ConfirmButtons from "../commom/ConfirmButtons";
 
-const AptoItens = ({ title, itens, setItens }) => {
+const AptoItens = ({ title, itens, setItens, cautionModal, cancelAll, setCancelAll, setSaveAll, saveAll }) => {
   const [edit, setEdit] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [oldItens, setOldItens] = useState(itens);
@@ -48,18 +48,27 @@ const AptoItens = ({ title, itens, setItens }) => {
   const handleCancel = () => {
     setItens(oldItens);
     setEdit(!edit);
+    cautionModal(title, !edit);
   };
 
   const HandleSave = () => {
     setOldItens(itens);
     setEdit(!edit);
+    cautionModal(title, !edit);
   };
+
+  const showEdit = () => {
+    setEdit(!edit) 
+    cautionModal(title, !edit);
+    setCancelAll(false);
+    setSaveAll(false)
+  }
 
   return (
     <Container>
       <Header>
         <h3>{title}</h3>
-        <EditButton onClick={() => setEdit(!edit)}>
+        <EditButton onClick={showEdit}>
           <Image src={edit_pen} alt="EditPen" />
         </EditButton>
       </Header>
@@ -81,9 +90,10 @@ const AptoItens = ({ title, itens, setItens }) => {
       </AddItemArea>
       {edit && (
         <ConfirmButtons
-          
+          cancelAll={cancelAll}
           save={HandleSave}
           handleCancel={handleCancel}
+          saveAll={saveAll}
         ></ConfirmButtons>
       )}
     </Container>
