@@ -56,10 +56,14 @@ const Apartamento = ({ obj }) => {
 
   const image = obj.images[0];
 
+  const isArea = !!obj.urlRec;
+  const isApt = !isArea;
+  const url = isApt ? `/apartamento/${obj.urlApt}` : `/area/${obj.urlRec}`;
+
   const router = useRouter();
 
   const redirect = () => {
-    router.push(`/apartamento/${obj.urlApt}`);
+    router.push(url);
   };
 
   const features = useMemo(() => {

@@ -20,6 +20,7 @@ export const Details = styled.div`
   display: flex;
   gap: 24px;
   margin: 32px 0;
+  justify-content: space-between;
 `;
 
 export const Column = styled.div`
@@ -27,8 +28,8 @@ export const Column = styled.div`
   flex-direction: column;
   gap: 24px;
 
-  .features-column {
-    max-width: 66.6%;
+  &.features-column {
+    flex: 1;
   }
 `;
 

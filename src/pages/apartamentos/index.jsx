@@ -183,23 +183,7 @@ const Page = () => {
   useEffect(async () => {
     const req = await getAllRecreationAreas(authContext.token);
     const data = req.data;
-    setAreas(data.map(area => {
-      const features = [];
-      if (area.wifi)
-        features.push("Wifi Grátis");
-      if (area.suite)
-        features.push("1 Suíte");
-      if (area.animais)
-        features.push("Aceita pets");
-      return {
-        nome: area.titulo,
-        image: Placeholder,
-        reserva,
-        proxReserva,
-        features,
-        reservado: false,
-      };
-    }))
+    setAreas(data);
   }, [authContext.token]);
 
   return (
@@ -245,8 +229,8 @@ const Page = () => {
             <Title>Áreas Disponíveis</Title>,
             areas.map(apt => (
               <Apartamento
-                obj={apt}
-                key={apt.urlApt}
+                obj={{...apt, images: [Placeholder]}}
+                key={apt.urlRec}
               />
             )),
             <NoMoreResults>

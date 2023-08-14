@@ -43,6 +43,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
+import { getRecreationArea } from "../../services/recreationArea";
 
 const ApartmentDetails = ({ area, objectUrl }) => {
   const [viewingImages, setViewingImages] = useState(false);
@@ -53,10 +54,11 @@ const ApartmentDetails = ({ area, objectUrl }) => {
   const router = useRouter();
 
   useEffect(async () => {
-    const req = await getApartment(authContext.token, objectUrl);
+    if (!objectUrl) return;
+    const req = area ? await getRecreationArea(authContext.token, objectUrl) : await getApartment(authContext.token, objectUrl);
     const data = req.data;
     setModel(data);
-  }, [objectUrl, authContext]);
+  }, [area, objectUrl, authContext]);
 
   const rulesCard = (
     <RulesCard>
