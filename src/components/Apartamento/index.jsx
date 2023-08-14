@@ -48,7 +48,7 @@ const Feature = ({ type }) => {
   );
 };
 
-const Apartamento = ({ obj }) => {
+const Apartamento = ({ obj, queryData }) => {
   // TODO: figure out how reservations should work
   const isReservado = false;
   const reserva = { from: '??', to: '??' };
@@ -58,7 +58,10 @@ const Apartamento = ({ obj }) => {
 
   const isArea = !!obj.urlRec;
   const isApt = !isArea;
-  const url = isApt ? `/apartamento/${obj.urlApt}` : `/area/${obj.urlRec}`;
+  const url = useMemo(() => {
+    const query = queryData ? `?adultos=${queryData.adultos}&criancas=${queryData.criancas}&bebes=${queryData.bebes}&animais=${queryData.animais}` : '';
+    return isApt ? `/apartamento/${obj.urlApt}${query}` : `/area/${obj.urlRec}${query}`;
+  }, [obj, queryData]);
 
   const router = useRouter();
 
