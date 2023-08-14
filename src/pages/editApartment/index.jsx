@@ -12,7 +12,7 @@ import {
   LeftSide,
   InfoApto,
   RightSide,
-  ReservarButton,
+  CalendarWrapper,
   ButtonArea,
   InfoBox,
   RedirectArea,
@@ -27,9 +27,8 @@ import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos";
 import { useAuth } from "../../contexts/AuthContext";
 import * as service from "../../services/Apto";
-import { useEffect } from "react";
-import { Modal } from "../../components/commom/Modal";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
+import CalendarButton from "../../components/CalendarButton";
 
 const editApartment = () => {
 
@@ -43,6 +42,7 @@ const editApartment = () => {
   const [locais, setLocais] = useState([]);
   const [regras, setRegras] = useState([]);
   const [fotos, setFotos] = useState([]);
+  const [datas, setDatas] = useState("")
   
   // Modal de Alteracao
   const [showCautionMsg, setShowCautionMsg] = useState(false);
@@ -263,7 +263,7 @@ const editApartment = () => {
                 <Image src={Door} />
                 OCUPADO
               </BusyButton>
-              <ReservarButton>RESERVAR</ReservarButton>
+              <CalendarWrapper><CalendarButton setDatas={setDatas}/></CalendarWrapper>
             </ButtonArea>
             <InfoBox>
               <InfoAptoForm

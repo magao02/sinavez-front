@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from './theme';
+import createGlobalStyle from "styled-components";
 
 
 export const Container = styled.div`
@@ -67,7 +68,7 @@ export const RightSide = styled.div`
 
 export const ButtonArea = styled.div`
     width: 100%;
-    height: 10%;
+    height: 60px;
     display: flex;
     flex-direction: row;
 `
@@ -86,21 +87,13 @@ export const BusyButton = styled.button`
     gap: 10px;
 `
 
-export const ReservarButton = styled.button`
-    background-color: #0661BA;
-    padding: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    font-weight: 400;
+export const CalendarWrapper= styled.div`
+    border-radius: 10px;
+    border: 2px solid #0661BA;
     width: 48%;
-    margin-left: 30px;
+    margin-left: 15px;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 `
 
 export const InfoBox = styled.div`
