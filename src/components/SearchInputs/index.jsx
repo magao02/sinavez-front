@@ -8,7 +8,7 @@ import PlusCircle from "../../assets/plus-circle.svg";
 import { useState } from "react";
 import { Body3, Subtitle2 } from "../../styles/commonStyles";
 
-export const CounterInput = ({ label, min, max, value }) => {
+export const CounterInput = ({ label, min, max, value, onChange }) => {
   const [counterValue, setCounterValue] = useState(value ?? 0);
 
   const realMin = min ?? -Infinity;
@@ -16,10 +16,12 @@ export const CounterInput = ({ label, min, max, value }) => {
 
   const decrease = () => {
     setCounterValue(Math.max(counterValue - 1, realMin));
+    onChange(counterValue);
   };
 
   const increase = () => {
     setCounterValue(Math.min(counterValue + 1, realMax));
+    onChange(counterValue);
   };
   
   return (
@@ -57,7 +59,8 @@ export const DropdownInput = ({ label, options, variant, disabled }) => {
   );
 };
 
-export const SearchInput = ({ label, innerLabel, type, placeholder, variant, disabled }) => {
+export const SearchInput = ({ label, innerLabel, type, placeholder, variant, disabled, initialValue, onChange }) => {
+  const [value, setValue] = useState(initialValue);
   const onClick = (event) => {
     if (disabled) {
       event.preventDefault();
@@ -66,12 +69,23 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
       event.preventDefault();
     }
   };
+  const processValue = (value) => {
+    if (type === 'date' && value instanceof Date) {
+      return value.toISOString().split('T')[0];
+    }
+    return value;
+  }
+  const update = (ev) => {
+    setValue(ev.target.value);
+    if (onChange)
+      onChange(ev);
+  }
   return (
     <Label variant={variant}>
       <Subtitle2>{label}</Subtitle2>
       <div className="container">
         { innerLabel && <Body3 className="innerLabel">{innerLabel}</Body3> }
-        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} />
+        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} value={processValue(value)} onChange={update} />
       </div>
     </Label>
   );
