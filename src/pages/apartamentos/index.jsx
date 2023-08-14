@@ -165,12 +165,18 @@ const LazerSearchHelp = () => {
 }
 
 const Page = () => {
-  const reserva = { from: "??", to: "??" };
-  const proxReserva = { from: "??", to: "??" };
-
   const [tabIndex, setTabIndex] = useState(0);
   const [apartamentos, setApartamentos] = useState([]);
   const [areas, setAreas] = useState([]);
+
+  const [chegadaDate, setChegadaDate] = useState(new Date());
+  const [saidaDate, setSaidaDate] = useState(new Date());
+  
+  const [adultos, setAdultos] = useState(1);
+  const [criancas, setCriancas] = useState(0);
+  const [bebes, setBebes] = useState(0);
+  const [animais, setAnimais] = useState(0);
+
 
   const authContext = useAuth();
 

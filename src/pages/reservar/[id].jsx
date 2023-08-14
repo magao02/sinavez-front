@@ -29,7 +29,7 @@ const Page = () => {
   const router = useRouter();
 
   const goBack = () => {
-    router.push(`/apartamento/${router.query.id}`);
+    router.back();
   };
 
   return (

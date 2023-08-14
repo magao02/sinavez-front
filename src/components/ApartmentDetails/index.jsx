@@ -45,7 +45,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/router";
 import { getRecreationArea } from "../../services/recreationArea";
 
-const ApartmentDetails = ({ area, objectUrl }) => {
+const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
   const [model, setModel] = useState({});
 
@@ -91,12 +91,32 @@ const ApartmentDetails = ({ area, objectUrl }) => {
   }, [valorDiaria, numDiarias]);
 
   const goToReservationPage = () => {
-    router.push(`/reservar/${objectUrl}`);
+    router.push(`/reservar/${objectUrl}?area=${area}`);
   };
 
   const goBack = () => {
     router.push(`/apartamentos`);
   };
+
+  const defaultedQuery = useMemo(() => {
+    query = query ?? {};
+    return {
+      adultos: query.adultos ?? 1,
+      criancas: query.criancas ?? 0,
+      bebes: query.bebes ?? 0,
+      animais: query.animais ?? 0,
+    };
+  }, [query]);
+
+  const applyPlural = (count, str) => {
+    if (count == 1) {
+      return `${count} ${str}`;
+    } else if (str.endsWith("l")) {
+      return `${count} ${str.substr(0, str.length - 1)}is`;
+    } else {
+      return `${count} ${str}s`;
+    }
+  }
 
   return (
     <div>
@@ -199,7 +219,9 @@ const ApartmentDetails = ({ area, objectUrl }) => {
               <div className="row-separator" />
               
               <div className="row">
-                <DropdownInput label="Hóspedes" options={["2 adultos;  1 criança;  1 bebê; 2 animais de estimação"]} />
+                <DropdownInput label="Hóspedes" disabled options={[
+                  `${applyPlural(defaultedQuery.adultos, "adulto")}; ${applyPlural(defaultedQuery.criancas, "criança")}; ${applyPlural(defaultedQuery.bebes, "bebê")}; ${applyPlural(defaultedQuery.animais, "animal")} de estimação`
+                ]} />
               </div>
               
               <div className="row-separator" />
