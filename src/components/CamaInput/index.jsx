@@ -2,7 +2,7 @@ import { Container, DeleteBedButton, Select, } from "./styles"
 import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../commom/Modal";
 import modal_img from "../../assets/delete_cama_modal_img.svg"
 
@@ -11,28 +11,15 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
 
     const [inputValue, setInputValue] = useState();
 
-    const handleSelected = () => {
-        const options = document.getElementsByTagName("option")
-    
-        // Percorre todas as opções para definir o atributo "selected" conforme o valor selecionado
-        for (let i = 0; i < options.length; i++) {
-          if (options[i].value === option) {
-            options[i].setAttribute('selected', 'selected');
-          } else {
-            options[i].removeAttribute('selected');
-          }
-        }
-    }
-
     const [showModal, setShowModal] = useState(false);
 
     return (
       <>
         <Container onChange={(e) => handleCama(id, e)}>
-            <Select name="tipo" id="selectCama" onChange={() => handleSelected()}>
-                <option value="Tipo de Cama" disabled selected hidden>{"Tipo de Cama"}</option>
-                <option value="Solteiro">Solteiro</option>
-                <option value="Casal">Casal</option>
+            <Select name="tipo" id="selectCama">
+                <option value="Tipo de Cama" disabled hidden>{"Tipo de Cama"}</option>
+                <option value="Solteiro" selected={option == "Solteiro"}>Solteiro</option>
+                <option value="Casal" selected={option == "Casal"}>Casal</option>
             </Select>
             <Input
                 variant="default"

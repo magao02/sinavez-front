@@ -21,7 +21,7 @@ import {
 import AptoTexts from "../../components/AptoTexts";
 import AptoItens from "../../components/AptoItens";
 import RegrasApto from "../../components/RegrasApto";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import leftArrow from "../../assets/leftArrow.svg";
 import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos";
@@ -29,6 +29,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import * as service from "../../services/Apto";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
 import CalendarButton from "../../components/CalendarButton";
+import { v4 as uuid } from 'uuid';
 
 const editApartment = () => {
 
@@ -37,96 +38,33 @@ const editApartment = () => {
   const [dailyRate, setDailyRate] = useState("");
   const [aptoTitle, setAptoTitle] = useState("");
   const [address, setAddress] = useState("");
-  const [camas, setCamas] = useState();
-  const [radioInputs, setRadioInputs] = useState("");
+  const [camas, setCamas] = useState([]);
+  const [radioInputs, setRadioInputs] = useState([]);
   const [locais, setLocais] = useState([]);
   const [regras, setRegras] = useState([]);
   const [fotos, setFotos] = useState([]);
-  const [datas, setDatas] = useState("")
+  const [datas, setDatas] = useState([])
   
   // Modal de Alteracao
   const [showCautionMsg, setShowCautionMsg] = useState(false);
   const [cancelAll, setCancelAll] = useState(false);
   const [saveAll, setSaveAll] = useState(false);
   const [alterations, setAlterations] = useState([false, false, false, false]);
+  
+  
+  // ITENS
+  const [itensApto, setItensApto] = useState([]);
+  const [commumArea, setCommunAreas] = useState([]);
+  
 
   const authContext = useAuth();
+  
+  
+  useEffect(() => {
+    getApartmentInfo()
+  },[])
 
-  const [itensApto, setItensApto] = useState([
-    {
-      name: "Frigobar",
-      checked: false,
-    },
-    {
-      name: "Armario",
-      checked: false,
-    },
-    {
-      name: "Smart TV",
-      checked: false,
-    },
-    {
-      name: "Travesseiro",
-      checked: false,
-    },
-    {
-      name: "Lencol de Elastico",
-      checked: false,
-    },
-    {
-      name: "Ferro de passar",
-      checked: false,
-    },
-    {
-      name: "Armador de Rede",
-      checked: false,
-    },
-    {
-      name: "Pratos, talheres e copos",
-      checked: false,
-    },
-    {
-      name: "Ar condicionado",
-      checked: false,
-    },
-  ]);
-
-  const [commumArea, setCommunAreas] = useState([
-    {
-      name: "Garagem",
-      checked: false,
-    },
-    {
-      name: "Piscina",
-      checked: false,
-    },
-    {
-      name: "Auditorio",
-      checked: false,
-    },
-    {
-      name: "Churrasqueira",
-      checked: false,
-    },
-    {
-      name: "Area Gourmet",
-      checked: false,
-    },
-
-    {
-      name: "Lavanderia",
-      checked: false,
-    },
-    {
-      name: "Cozinha compartilhada",
-      checked: false,
-    },
-    {
-      name: "Recreacao infantil",
-      checked: false,
-    },
-  ]);
-
+  // REQUISICAO POST
   const postRequisicaoApto = () => {
     var itens = [];
     itensApto.map((data) => {
@@ -178,26 +116,154 @@ const editApartment = () => {
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
       images: images,
+      reservas: [{
+        dataInicial:  datas[0]
+        },{
+          dataFinal: datas[1] ? datas[1] : datas[0] 
+        }
+      ]
     };
 
     console.log(req);
 
     //service.createApartament(req, authContext.urlUser, authContext.token);
   };
-
-  const getApartmentInfo = () => {
-    var ap = service.getAllApartaments(authContext.token);
-    console.log(ap);
-  };
+  // REQUISICAO GET DO APARTAMENTO
+  const getApartmentInfo = async () => {
+    var {data} = await service.getAllApartaments(authContext.token);
+    
+    // Itens
   
+    var itens = data[3].itens
+    var objItens = getItens(itens)
+    setItensApto(objItens)
+    
 
+    // Areas
+    var areas = getItens(data[3].areasComuns)
+    setCommunAreas(areas)
+
+    
+    // Regras
+    var rules = data[3].regrasConvivencia
+    var obj = []
+    rules.forEach((data, key) => {
+      var item = {
+        id: key,
+          placeholder:
+            "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+          value: data,
+        }
+      obj.push(item)    
+    })
+    setRegras(obj)
+
+    
+    // Locais nos arredores
+    var locaisNosArredores = data[3].locaisArredores
+    var obj = []
+      locaisNosArredores.forEach((data, key) => {
+        var item = {
+          id: key,
+          placeholder:
+            "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+          value: data,
+        }
+        obj.push(item)
+      })
+    setLocais(obj) 
+
+    // Descricao
+    var descricao = data[3].descricao
+    setDescription(descricao)
+
+
+    // Valor da diaria
+    var diaria = data[3].diaria
+    setDailyRate(diaria)
+    
+
+    // CAMAS
+    var descricao = data[3].camas
+    var obj = []
+    descricao.forEach((data) => {
+      var item = {
+        id: uuid(),
+        tipo: data.tipo,
+        Quantidade: data.quantidade ? data.quantidade : 1
+      }
+      obj.push(item)
+    })
+    setCamas(obj)
+
+
+    // TITULO
+    var title = data[3].titulo
+    setAptoTitle(title)
+    
+    
+    // ENDERECO
+    var endereco = data[3].endereco
+    setAddress(endereco)
+    
+    
+    // RADIOS INPUTS
+    var tipo = data[3].tipo
+    var andar = data[3].andar
+    var wifi = data[3].wifi
+    var animais = data[3].animais
+    var suite = data[3].suite
+    var obj = {
+      tipo: tipo,
+      andar: andar,
+      suite: suite,
+      wifi: wifi,
+      animais: animais,
+    }
+    setRadioInputs(obj)
+
+    // Datas
+    if(data[3].reservas.length > 0){
+      var dates = data[3].reservas 
+      var obj = []
+      obj.push(dates.dataInicial)
+      obj.push(dates.dataFinal)
+      setDatas(obj)
+    }
+
+    // Images
+    var imgs = data[3].images
+    var obj = []
+    for (let idx = 0; idx < 7; idx++) {
+      var item =  {
+        id: idx,
+        name: "",
+        file: imgs[idx] != undefined ? imgs[idx] : "",
+      }
+      obj.push(item)
+    }
+    setFotos(obj)
+  };
+
+  
+  // MODELA OS DADOS DOS ITENS
+  const getItens = (itens) => {
+    var obj = []
+    itens.forEach((data) => {
+      obj.push({
+        name: data,
+        checked: true
+      })
+    })
+    return obj
+  }
 
   // FUNCOES RELACIONADAS AO MODAL DE ALTERACOES
   const checkAlterations = (title, value) => {
-      var copy = [...alterations];
-
-      if (title == "Itens do apartamento") {
-        copy[0] = value;
+    var copy = [...alterations];
+    
+    if (title == "Itens do apartamento") {
+      copy[0] = value;
       } else if (title == "Areas Comuns") {
         copy[1] = value;
       } else if (title == "Regras de convivencia") {
@@ -215,7 +281,7 @@ const editApartment = () => {
       setAlterations(copy)
     }
 
-
+  // FUNCOES RELACIONADAS AOS BOTOES DO MODAL DE CUIDADo
   const handleCancelAll = () => {
     setCancelAll(true);
     setAlterations([false,false,false,false])
@@ -254,7 +320,7 @@ const editApartment = () => {
         <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
         <FotosArea>
           <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos setFotos={setFotos}></GridFotos>
+          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
         </FotosArea>
         <InfoApto>
           <LeftSide>
@@ -263,24 +329,29 @@ const editApartment = () => {
                 <Image src={Door} />
                 OCUPADO
               </BusyButton>
-              <CalendarWrapper><CalendarButton setDatas={setDatas}/></CalendarWrapper>
+              <CalendarWrapper><CalendarButton datas={datas} setDatas={setDatas}/></CalendarWrapper>
             </ButtonArea>
             <InfoBox>
               <InfoAptoForm
                 setAptoTitle={setAptoTitle}
                 setAddress={setAddress}
-                setMainCamas={setCamas}
-                setRadioInputs={setRadioInputs}
+                camaInfo={camas ? camas : []}
+                setCamaInfo={setCamas}
+                radioInput={radioInputs}
+                setRadioInput={setRadioInputs}
                 camas={true}
+                title={aptoTitle}
+                address={address}
               />
             </InfoBox>
             <InfoBox>
               <AptoTexts
                 title={"Descrição do apartamento"}
-                text={
+                placeholder={
                   "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
                 }
                 setText={setDescription}
+                text={description}
                 required
               />
             </InfoBox>
@@ -299,9 +370,10 @@ const editApartment = () => {
             <InfoBox>
               <AptoTexts
                 title={"Adicione o Valor da Diária do Apartamento"}
-                text={"Valor por Diária"}
+                placeholder={"Valor por Diária"}
                 type={"number"}
                 setText={setDailyRate}
+                text={dailyRate}
               />
             </InfoBox>
           </LeftSide>
@@ -321,23 +393,25 @@ const editApartment = () => {
             <InfoBox>
               <RegrasApto
                 title={"Regras de convivencia"}
-                setValues={setRegras}
                 cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
                 saveAll={saveAll}
+                inputsBase={regras}
+                setInputsBase={setRegras}
               />
             </InfoBox>
             <InfoBox>
               <RegrasApto
                 title={"Locais nos Arredores"}
-                setValues={setLocais}
                 cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
                 saveAll={saveAll}
+                inputsBase={locais}
+                setInputsBase={setLocais}
               />
             </InfoBox>
           </RightSide>

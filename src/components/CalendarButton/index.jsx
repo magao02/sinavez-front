@@ -1,9 +1,9 @@
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { CalendarWrapper, Container, ReservarButton } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const CalendarButton = ({setDatas}) => {
+const CalendarButton = ({datas, setDatas}) => {
     const [errorMsg, setErrorMsg] = useState(false);
 
     const formatDate = (date) => {
@@ -21,6 +21,18 @@ const CalendarButton = ({setDatas}) => {
         }
     }
 
+    const verifyData = () => {
+        if(datas.length > 0){
+            return datas;
+        }else{
+            return "today"
+        }
+    }
+
+    const defaultDate = () => {
+        return verifyData()
+    }
+    
     return (
         <Container>
             <CalendarWrapper>
@@ -36,7 +48,7 @@ const CalendarButton = ({setDatas}) => {
                     locale: {
                         rangeSeparator: " ate " 
                     },
-                    defaultDate: "today",
+                    defaultDate: defaultDate(),
                     onClose: (e) => {
                         try{
                             var copy = []

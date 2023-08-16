@@ -10,46 +10,8 @@ import {
 } from "./styles";
 import editPen from "../../assets/edit_pen.svg";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
-const GridFotos = ( {setFotos }) => {
-  const [Images, setImages] = useState([
-    {
-      id: 0,
-      name: "",
-      file: "",
-    },
-    {
-      id: 1,
-      name: "",
-      file: "",
-    },
-    {
-      id: 2,
-      name: "",
-      file: "",
-    },
-    {
-      id: 3,
-      name: "",
-      file: "",
-    },
-    {
-      id: 4,
-      name: "",
-      file: "",
-    },
-    {
-      id: 5,
-      name: "",
-      file: "",
-    },
-    {
-      id: 6,
-      name: "",
-      file: "",
-    },
-  ]);
+const GridFotos = ( {Images, setImages }) => {
 
   const getPhoto = ({ target: { files } }, id) => {
     var fotos = [...Images];
@@ -79,34 +41,30 @@ const GridFotos = ( {setFotos }) => {
     setImages(Fotos)
   }
 
-  useEffect(() =>{
-      setFotos(Images)
-  })
-
   return (
     <Container>
       <FotosContainer>
         <PhotoArea width={"40%"}>
-          <PhotoInput  id={0} getPhoto={getPhoto} File={Images[0].file} deletePhoto={deletePhoto}/>
+          <PhotoInput  id={0} getPhoto={getPhoto} File={Images.length > 0 ? Images[0].file : ""} deletePhoto={deletePhoto}/>
         </PhotoArea>
         <PhotoList>
           <PhotoAreaSmaller>
-            <PhotoInput  id={1} getPhoto={getPhoto} File={Images[1].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={1} getPhoto={getPhoto} File={Images.length > 0 ? Images[1].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={2} getPhoto={getPhoto} File={Images[2].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={2} getPhoto={getPhoto} File={Images.length > 0 ? Images[2].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={3} getPhoto={getPhoto} File={Images[3].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={3} getPhoto={getPhoto} File={Images.length > 0 ? Images[3].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={4} getPhoto={getPhoto} File={Images[4].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={4} getPhoto={getPhoto} File={Images.length > 0 ? Images[4].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={5} getPhoto={getPhoto} File={Images[5].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={5} getPhoto={getPhoto} File={Images.length > 0 ? Images[5].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={6} getPhoto={getPhoto} File={Images[6].file} deletePhoto={deletePhoto}/>
+            <PhotoInput  id={6} getPhoto={getPhoto} File={Images.length > 0 ? Images[6].file : ""} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
         </PhotoList>
       </FotosContainer>

@@ -17,48 +17,23 @@ import ConfirmButtons from "../commom/ConfirmButtons";
 
 const RegrasApto = ({
   title,
-  setValues,
   cautionModal,
   cancelAll,
   setCancelAll,
   setSaveAll,
   saveAll,
+  inputsBase,
+  setInputsBase,
 }) => {
   const [edit, setEdit] = useState(false);
   const [inputId, setInputId] = useState(4);
   const [newRuleInput, setNewRuleInput] = useState("");
-  const [inputsBase, setInputsBase] = useState([
-    {
-      id: 0,
-      placeholder:
-        "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-      value: "",
-    },
-    {
-      id: 1,
-      placeholder:
-        "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-      value: "",
-    },
-    {
-      id: 2,
-      placeholder:
-        "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-      value: "",
-    },
-    {
-      id: 3,
-      placeholder:
-        "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-      value: "",
-    },
-  ]);
 
   const [oldInput, setOldInput] = useState(inputsBase);
 
   useEffect(() => {
-    setValues(inputsBase);
-  });
+    setOldInput(inputsBase);
+  }, []);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -71,12 +46,20 @@ const RegrasApto = ({
 
   const addInput = () => {
     setInputId(1 + inputId);
-    setInputsBase([...inputsBase, { id: inputId, value: newRuleInput }]);
+    setInputsBase([
+      ...inputsBase,
+      {
+        id: inputId,
+        placeholder:
+          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+        value: newRuleInput,
+      },
+    ]);
     setNewRuleInput("");
   };
 
   const deleteInput = (id) => {
-    if (inputsBase.length != 1) {
+    if (inputsBase.length > 1) {
       var filtered = inputsBase.filter((data) => data.id != id);
       setInputsBase(filtered);
     }
@@ -86,7 +69,6 @@ const RegrasApto = ({
     setOldInput(inputsBase);
     setEdit(!edit);
     cautionModal(title, !edit);
-    console.log("executou")
   };
 
   const handleCancel = (data) => {
@@ -128,7 +110,7 @@ const RegrasApto = ({
                 placeholder={item.placeholder}
                 onChange={handleChange}
                 id={item.id}
-                initialValue={item.value}
+                value={item.value}
               ></Input>
             </InputContainer>
           );
@@ -136,7 +118,9 @@ const RegrasApto = ({
       </RegrasArea>
       <Wrapper>
         <Input
+          id="addInput"
           placeholder="Nova Regra"
+          value={newRuleInput}
           onChange={(e) => setNewRuleInput(e.target.value)}
         ></Input>
         <AddButton onClick={addInput}>

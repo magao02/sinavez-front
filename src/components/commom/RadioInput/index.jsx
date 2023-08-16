@@ -1,6 +1,7 @@
 import { CheckBox, Container, Input, CheckBoxContainer, Label, Span } from "./styles";
 
-const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
+const RadioInput = ({ title, op1, op2, border, addRadioInfo, value }) => {
+
   return (
     <Container border={border}>
       <Span>{title}<Span red>*</Span></Span>
@@ -11,6 +12,7 @@ const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
               name="OPCAO"
               value={op1 ? op1 : true}
               title={title.toLowerCase()}
+              checked={value}
             />
             <Label htmlFor="checkbox-1" style={{fontSize:"1.7vh"}}>{op1 ? op1 : "Sim"}</Label>
           </CheckBox>
@@ -19,6 +21,7 @@ const RadioInput = ({ title, op1, op2, border, addRadioInfo }) => {
               name="OPCAO"
               value={op2 ? op2 : false}
               title={title.toLowerCase()}
+              checked={!value}
             />
             <Label htmlFor="checkbox-2" style={{fontSize:"1.7vh"}}>{op2 ? op2 : "Nao"} </Label>
           </CheckBox>

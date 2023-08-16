@@ -12,28 +12,27 @@ import CamaInput from "../CamaInput";
 import { v4 as uuid } from 'uuid';
 
 
-const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, camas}) => {
+const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInput, setRadioInput, camas, title, address}) => {
+
   // CAMAS
-  const [camaInfo, setCamaInfo] = useState([{
+  /*const [camaInfo, setCamaInfo] = useState([{
     id: uuid(),
     tipo: "",
     Quantidade: ""
-  }]);
+  }]); */
 
-  const [disableButton, setDisableButton] = useState(true);
-
-  const [radioInput, setRadioInput] = useState({
+  /*const [radioInput, setRadioInput] = useState({
     tipo: "",
     andar: "",
     suite: "",
     wifi: "",
     animais: "",
-  });
+  });*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     setMainCamas(camaInfo)
     setRadioInputs(radioInput)
-  })
+  })*/
 
   // FUNCOES RELACIONADAS A TITULO
   const handleTitle = (event) => setAptoTitle(event.target.value);
@@ -114,6 +113,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
           type="text"
           placeholder="Título do apartamento"
           onChange={handleTitle}
+          value={title}
         />
         {camas ? 
         <CamaInputContainer>
@@ -146,6 +146,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
           type="text"
           placeholder="Endereço"
           onChange={handleAddress}
+          value={address}
         />
         <CheckBoxInputs>
           <RadioInput
@@ -153,19 +154,22 @@ const InfoAptoForm = ({setAptoTitle, setAddress, setMainCamas, setRadioInputs, c
             op1={"Comum"}
             op2={"PCD"}
             addRadioInfo={addRadioInfo}
+            value={radioInput.tipo == "Comum" ?  true : false}
           />
           <RadioInput
             title={"Andar"}
             op1={"Terreo"}
             op2={"1°"}
             addRadioInfo={addRadioInfo}
+            value={radioInput.andar == 0 || radioInput.andar == "Terreo" ?  true : false}
           />
-          <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} />
-          <RadioInput title={"Wifi"} addRadioInfo={addRadioInfo} />
+          <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+          <RadioInput title={"Wifi"} addRadioInfo={addRadioInfo}  value={radioInput.wifi == true || radioInput.wifi == "true" ?  true : false}/>
           <RadioInput
             title={"Animais"}
             border={"none"}
             addRadioInfo={addRadioInfo}
+            value={radioInput.animais == true || radioInput.animais == "true" ?  true : false}
           />
         </CheckBoxInputs>
       </InputContainer>

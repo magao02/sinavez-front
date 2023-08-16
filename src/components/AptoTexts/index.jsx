@@ -3,15 +3,16 @@ import { Container } from "./styles"
 import { Span } from "../commom/RadioInput/styles";
 
 
-const AptoTexts = ({text, title, setText, type, required}) => {
+const AptoTexts = ({text, placeholder, title, setText, type, required}) => {
 
     return (
         <Container>
             <h3>{title}{required && <Span red>*</Span>}</h3>
             <Input
-                placeholder={text}
+                placeholder={placeholder}
                 type={type}
                 onChange={(event) => setText(event.target.value)}
+                value={text}
             />
         </Container>
     )
