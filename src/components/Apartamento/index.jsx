@@ -48,7 +48,7 @@ const Feature = ({ type }) => {
   );
 };
 
-const Apartamento = ({ obj }) => {
+const Apartamento = ({ obj, queryData }) => {
   // TODO: figure out how reservations should work
   const isReservado = false;
   const reserva = { from: '??', to: '??' };
@@ -56,10 +56,17 @@ const Apartamento = ({ obj }) => {
 
   const image = obj.images[0];
 
+  const isArea = !!obj.urlRec;
+  const isApt = !isArea;
+  const url = useMemo(() => {
+    const query = queryData ? new URLSearchParams(queryData) : '';
+    return isApt ? `/apartamento/${obj.urlApt}?${query}` : `/area/${obj.urlRec}?${query}`;
+  }, [obj, queryData]);
+
   const router = useRouter();
 
   const redirect = () => {
-    router.push(`/apartamento/${obj.urlApt}`);
+    router.push(url);
   };
 
   const features = useMemo(() => {

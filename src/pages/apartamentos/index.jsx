@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Apartamento from "../../components/Apartamento";
 
@@ -41,8 +41,10 @@ import {
 import Image from "next/image";
 import { getAllApartments } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
+import { getAllRecreationAreas } from "../../services/recreationArea";
+import { dateToYMD } from "../../utils/date";
 
-const Search = ({ tabIndex, setTabIndex }) => {
+const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
   return (
     <ColumnContent>
       <Card>
@@ -56,21 +58,21 @@ const Search = ({ tabIndex, setTabIndex }) => {
 
         <Row>
           <div className="column">
-            <SearchInput innerLabel="Data" label="Chegada" type="date" />
-            <SearchInput innerLabel="Horário" type="time" />
+            <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => setChegadaDate(ev.target.valueAsDate)} />
+            <SearchInput innerLabel="Horário" type="time" initialValue={chegadaTime} onChange={ev => setChegadaTime(ev.target.value)} />
           </div>
           <div className="column">
-            <SearchInput innerLabel="Data" label="Saída" type="date" />
-            <SearchInput innerLabel="Horário" type="time" />
+            <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />
+            <SearchInput innerLabel="Horário" type="time" initialValue={saidaTime} onChange={ev => setSaidaTime(ev.target.value)} />
           </div>
         </Row>
 
         {
           tabIndex === 0 && <Row>
-            <CounterInput min={0} label="Adultos" />
-            <CounterInput min={0} label="Crianças" />
-            <CounterInput min={0} label="Bebês" />
-            <CounterInput min={0} label="Pets" />
+            <CounterInput min={0} value={adultos} onChange={setAdultos} label="Adultos" />
+            <CounterInput min={0} value={criancas} onChange={setCriancas} label="Crianças" />
+            <CounterInput min={0} value={bebes} onChange={setBebes} label="Bebês" />
+            <CounterInput min={0} value={animais} onChange={setAnimais} label="Pets" />
           </Row>
         }
         
@@ -164,12 +166,24 @@ const LazerSearchHelp = () => {
 }
 
 const Page = () => {
-  const reserva = { from: "??", to: "??" };
-  const proxReserva = { from: "??", to: "??" };
-
   const [tabIndex, setTabIndex] = useState(0);
   const [apartamentos, setApartamentos] = useState([]);
   const [areas, setAreas] = useState([]);
+
+  const [chegadaDate, setChegadaDate] = useState(new Date());
+  const [chegadaTime, setChegadaTime] = useState('11:00');
+
+  const [saidaDate, setSaidaDate] = useState((() => {
+    let now = new Date();
+    now.setDate(now.getDate() + 7);
+    return now;
+  })());
+  const [saidaTime, setSaidaTime] = useState('18:00');
+  
+  const [adultos, setAdultos] = useState(1);
+  const [criancas, setCriancas] = useState(0);
+  const [bebes, setBebes] = useState(0);
+  const [animais, setAnimais] = useState(0);
 
   const authContext = useAuth();
 
@@ -179,13 +193,41 @@ const Page = () => {
     setApartamentos(data);
   }, [authContext.token]);
 
+  useEffect(async () => {
+    const req = await getAllRecreationAreas(authContext.token);
+    const data = req.data;
+    setAreas(data);
+  }, [authContext.token]);
+
+  const queryData = useMemo(() => {
+    return {
+      adultos,
+      criancas,
+      bebes,
+      animais,
+      chegadaDate: dateToYMD(chegadaDate),
+      saidaDate: dateToYMD(saidaDate),
+      chegadaTime,
+      saidaTime,
+    }
+  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais]);
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant="admin" />
       <NavSpacing />
       <Content>
         <Blue>
-          <Search tabIndex={tabIndex} setTabIndex={setTabIndex} />
+          <Search tabIndex={tabIndex} setTabIndex={setTabIndex}
+            chegadaDate={chegadaDate} setChegadaDate={setChegadaDate}
+            saidaDate={saidaDate} setSaidaDate={setSaidaDate}
+            adultos={adultos} setAdultos={setAdultos}
+            criancas={criancas} setCriancas={setCriancas}
+            bebes={bebes} setBebes={setBebes}
+            animais={animais} setAnimais={setAnimais}
+            chegadaTime={chegadaTime} setChegadaTime={setChegadaTime}
+            saidaTime={saidaTime} setSaidaTime={setSaidaTime}
+          />
           <SearchHelpContainer>
             <h1>Faça sua reserva!</h1>
             { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
@@ -203,6 +245,7 @@ const Page = () => {
               <Apartamento
                 obj={{...apt, images: [Placeholder]}}
                 key={apt.urlApt}
+                queryData={queryData}
               />
             )),
             <NoMoreResults>
@@ -222,8 +265,8 @@ const Page = () => {
             <Title>Áreas Disponíveis</Title>,
             areas.map(apt => (
               <Apartamento
-                obj={apt}
-                key={apt.urlApt}
+                obj={{...apt, images: [Placeholder]}}
+                key={apt.urlRec}
               />
             )),
             <NoMoreResults>

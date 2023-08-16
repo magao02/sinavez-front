@@ -6,19 +6,25 @@ import MinusCircle from "../../assets/minus-circle.svg";
 import PlusCircle from "../../assets/plus-circle.svg";
 
 import { useState } from "react";
+import { Body3, Subtitle2 } from "../../styles/commonStyles";
+import { dateToYMD } from "../../utils/date";
 
-export const CounterInput = ({ label, min, max, value }) => {
+export const CounterInput = ({ label, min, max, value, onChange }) => {
   const [counterValue, setCounterValue] = useState(value ?? 0);
 
   const realMin = min ?? -Infinity;
   const realMax = max ?? Infinity;
 
   const decrease = () => {
-    setCounterValue(Math.max(counterValue - 1, realMin));
+    const newValue = Math.max(counterValue - 1, realMin);
+    setCounterValue(newValue);
+    onChange(newValue);
   };
 
   const increase = () => {
-    setCounterValue(Math.min(counterValue + 1, realMax));
+    const newValue = Math.min(counterValue + 1, realMax);
+    setCounterValue(newValue);
+    onChange(newValue);
   };
   
   return (
@@ -41,11 +47,11 @@ export const CounterInput = ({ label, min, max, value }) => {
   );
 };
   
-export const DropdownInput = ({ label, options }) => {
+export const DropdownInput = ({ label, options, variant, disabled }) => {
   return (
     <Label>
-      {label}
-      <Select>
+      <Subtitle2>{label}</Subtitle2>
+      <Select disabled={!!disabled} variant={variant}>
         {
           options.map(opt => 
             <option value={opt} key={opt}>{opt}</option>
@@ -56,19 +62,33 @@ export const DropdownInput = ({ label, options }) => {
   );
 };
 
-export const SearchInput = ({ label, innerLabel, type, placeholder }) => {
+export const SearchInput = ({ label, innerLabel, type, placeholder, variant, disabled, initialValue, onChange }) => {
+  const [value, setValue] = useState(initialValue);
   const onClick = (event) => {
-    if (type === 'date' || type === 'time') {
+    if (disabled) {
+      event.preventDefault();
+    } else if (type === 'date' || type === 'time') {
       event.target.showPicker();
       event.preventDefault();
     }
   };
+  const processValue = (value) => {
+    if (type === 'date' && value instanceof Date) {
+      return dateToYMD(value);
+    }
+    return value;
+  }
+  const update = (ev) => {
+    setValue(ev.target.value);
+    if (onChange)
+      onChange(ev);
+  }
   return (
-    <Label>
-      {label}
+    <Label variant={variant}>
+      <Subtitle2>{label}</Subtitle2>
       <div className="container">
-        { innerLabel && <p className="innerLabel">{innerLabel}</p> }
-        <Input type={type} placeholder={placeholder} onClick={onClick} />
+        { innerLabel && <Body3 className="innerLabel">{innerLabel}</Body3> }
+        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} value={processValue(value)} onChange={update} />
       </div>
     </Label>
   );

@@ -24,8 +24,6 @@ const commonStyle = css`
 export const Label = styled.label`
     display: flex;
     flex-direction: column;
-    font-weight: 600;
-    color: #4f4f4f;
     flex-grow: 1;
 
     & > .container {
@@ -34,15 +32,17 @@ export const Label = styled.label`
         cursor: pointer;
 
         & > .innerLabel {
-            color: ${theme.colors.gray.default};
-            font-size: 14px;
-            margin-bottom: 5px;
             user-select: none;
         }
 
         & > input {
             width: 100%;
         }
+
+        ${props => props.variant === "light-blue" ? css`
+        background: ${theme.colors.white.default};
+        border-bottom: 1px solid ${theme.colors.blue.background};
+        ` : ''}
     }
 `;
 
@@ -76,6 +76,7 @@ export const Select = styled.select`
     ${commonStyle}
 
     /* padding: 1em 0.5em; */
+    color: ${theme.colors.gray.menu};
 
     cursor: pointer;
     appearance: none;
@@ -83,6 +84,12 @@ export const Select = styled.select`
     background-image: url(${ArrowDropdownFilled.src});
     background-repeat: no-repeat;
     background-position: calc(100% - 10px) 50%;
+
+    ${props => props.variant === "light-shadow" ? css`
+    background-color: ${theme.colors.white.default};
+    border-bottom: none;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.20), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    ` : ''}
 `;
 
 export const CounterInputContainer = styled.div`

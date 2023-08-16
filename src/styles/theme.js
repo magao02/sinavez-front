@@ -36,6 +36,9 @@ const theme = {
         green: {
             default: '#42908A',
         },
+        yellow: {
+            light: '#FDEC8D',
+        }
     }
 };
 
