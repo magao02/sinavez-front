@@ -5,7 +5,10 @@ export const Container = styled.div`
     position: relative;
 
     display: flex;
-    width: 100vw;
+    width: ${props => props.width ? '40vw' : '50vw'};
+    height: 100vh;
+    top: 77px;
+}
 `
 
 export const TextBox = styled.div`
@@ -13,7 +16,7 @@ export const TextBox = styled.div`
 
     position: relative;
 
-    top: 20vh;
+    top: 18vh;
     left: 10vw;
 
     display: flex;
@@ -87,3 +90,29 @@ export const LinkBox = styled.div`
         cursor: pointer;
     }
 `
+export const ContainerTutorial = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+`; 
+
+export const ContainerImage = styled.div`
+    width: 60vw;
+    height: 127vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: 0;
+`;
+
+export const DarkImage = styled.div`
+    width: 60vw;
+    height: 135vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 50%;
+    position: absolute;
+    right: 0;
+    z-index: 0;
+`;
