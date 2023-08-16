@@ -16,7 +16,6 @@ import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
-import { red } from '@mui/material/colors';
 
 
 const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm }) => {
