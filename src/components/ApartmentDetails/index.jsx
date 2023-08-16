@@ -44,6 +44,7 @@ import { useEffect } from "react";
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import { getRecreationArea } from "../../services/recreationArea";
+import { dayDifference } from "../../utils/date";
 
 const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
@@ -77,26 +78,6 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       maximumFractionDigits: 2
     });
   };
-  
-  const valorDiaria = useMemo(() => {
-    return formatPrice(model.diaria ?? 0);
-  }, [model]);
-
-  const numDiarias = useMemo(() => {
-    return 4;
-  }, [model]);
-
-  const totalDiarias = useMemo(() => {
-    return formatPrice((model.diaria ?? 0) * numDiarias);
-  }, [valorDiaria, numDiarias]);
-
-  const goToReservationPage = () => {
-    router.push(`/reservar/${objectUrl}?area=${area}`);
-  };
-
-  const goBack = () => {
-    router.push(`/apartamentos`);
-  };
 
   const defaultedQuery = useMemo(() => {
     query = query ?? {};
@@ -110,6 +91,26 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       saidaTime: query.saidaTime ?? '11:00',
     };
   }, [query]);
+  
+  const valorDiaria = useMemo(() => {
+    return formatPrice(model.diaria ?? 0);
+  }, [model]);
+
+  const numDiarias = useMemo(() => {
+    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate));
+  }, [model, defaultedQuery]);
+
+  const totalDiarias = useMemo(() => {
+    return formatPrice((model.diaria ?? 0) * numDiarias);
+  }, [valorDiaria, numDiarias]);
+
+  const goToReservationPage = () => {
+    router.push(`/reservar/${objectUrl}?area=${area}`);
+  };
+
+  const goBack = () => {
+    router.push(`/apartamentos`);
+  };
 
   const applyPlural = (count, str) => {
     if (count == 1) {
