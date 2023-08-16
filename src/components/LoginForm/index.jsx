@@ -73,8 +73,8 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
       </InputBox>
 
       <LinkBox>
-        Novo por aqui?
-        <Link href="/cadastro">Criar conta</Link>
+        Não é administrador?
+        <Link href="/login">Login Associado</Link>
       </LinkBox>
       <ButtonContainer>
         {globalMessage && <a>{globalMessage}</a>}

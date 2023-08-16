@@ -9,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 50vw;
-  height: 25vh;
+  height: 26vh;
 
   left: 50vw;
   top: 50vh;
@@ -19,7 +19,7 @@ export const Container = styled.div`
   background-color: #FFF;
   border-radius: 5px;
 
-  padding: 50px;
+  padding: 24px;
 `;
 
 export const MainContent = styled.div`

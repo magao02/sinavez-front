@@ -9,11 +9,11 @@ import * as service from "../../services/accounts";
 
 import Pattern from "../../assets/login_pattern.svg";
 import Ilustration from "../../assets/login_ilustration.svg";
-import SinavezLogo from "../../assets/sinavez_logo_branco.svg";
-import SinavezText from "../../assets/text_sinavez_branco.svg";
+import SinavezLogo from "../../assets/logo_sinavez_blue.svg";
+import SinavezText from "../../assets/text_sinavez_blue.svg";
 
 import {
-  Container,
+  WhiteContainer,
   Details,
   LoginBox,
   RightContent,
@@ -23,7 +23,7 @@ import {
   PatternBox
 } from "../../styles/loginStyles";
 
-import LoginForm from "../../components/LoginForm";
+import LoginAssociadoForm from "../../components/LoginAssociadoForm";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -47,15 +47,15 @@ const LoginPage = () => {
   }, [loginAccount, router]);
 
   return (
-    <Container>
+    <WhiteContainer>
       <Details>
         <Image src={Ilustration} />
       </Details>
-      <PatternBox>
+      <PatternBox lighter={true}>
         <Image src={Pattern} />
       </PatternBox>
       <RightContent>
-        <MenuBox>
+        <MenuBox blue={true}>
           <Logo>
             <Image src={SinavezLogo} />
             <Image src={SinavezText} />
@@ -64,13 +64,13 @@ const LoginPage = () => {
         </MenuBox>
         <LoginBox>
           <Title>
-            Login Administrador
+            Login
           </Title>
-          <LoginForm onValidSubmit={handleValidFormSubmit}
+          <LoginAssociadoForm onValidSubmit={handleValidFormSubmit}
             globalMessage={globalMessage} />
         </LoginBox>
       </RightContent>
-    </Container >
+    </WhiteContainer>
   );
 };
 

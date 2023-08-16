@@ -56,7 +56,7 @@ function NavVariant({ variant, selectedPage }) {
       return responseData.data;
     } catch (error) {
       console.log(error);
-      console.log(error.response.data);
+      throw error;
     }
   }, [authContext.token, authContext.urlUser]);
 

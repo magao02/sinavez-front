@@ -7,7 +7,7 @@ export const Container = styled.button`
 `;
 
 function getStyleByVariant(variant) {
-  switch (variant) {
+  switch (variant ?? "default") {
     case "default": {
       return css`
         display: flex;

@@ -16,7 +16,6 @@ import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
-import { red } from '@mui/material/colors';
 
 
 const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm }) => {
@@ -178,7 +177,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               name={"nome"}
               placeholder={"Digite seu nome completo"}
               ref={nameRef}
-              previousValue={previousData.name}
+              initialValue={previousData.name}
               validate={validation.requiredTextField}
             />
             <InputsContainer>
@@ -187,7 +186,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"CPF"}
                 name={"cpf"}
                 placeholder={"000.000.000-0"}
-                previousValue={previousData.cpf}
+                initialValue={previousData.cpf}
                 ref={cpfRef}
                 validate={validation.testRequiredCpf}
               />
@@ -195,7 +194,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 variant="default"
                 label={"Data de Nascimento"}
                 name={"nascimento"}
-                previousValue={previousData.nascimento}
+                initialValue={previousData.nascimento}
                 ref={birthdayRef}
                 placeholder={"DD/MM/AAAA"}
                 validate={validation.requiredTextField}
@@ -205,7 +204,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Registro Geral (RG)"}
                 name={"rg"}
                 placeholder={"Digite o seu RG"}
-                previousValue={previousData.rg}
+                initialValue={previousData.rg}
                 ref={rgRef}
                 validate={validation.requiredTextField}
               />
@@ -214,7 +213,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Data de Emissão"}
                 name={"data_de_emissão"}
                 placeholder={"DD/MM/AAAA"}
-                previousValue={previousData.emissao}
+                initialValue={previousData.emissao}
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
@@ -223,7 +222,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Naturalidade"}
                 name={"naturalidade"}
                 placeholder={"Digite sua naturalidade"}
-                previousValue={previousData.regional ? previousData.regional.naturalidade :  ""}
+                initialValue={previousData.regional ? previousData.regional.naturalidade :  ""}
                 ref={naturalidadeRef}
                 validate={validation.TextField}
               />
@@ -232,7 +231,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Nacionalidade"}
                 name={"nacionalidade"}
                 placeholder={"Digite sua nacionalidade"}
-                previousValue={previousData.regional ? previousData.regional.nacionalidade : ""}
+                initialValue={previousData.regional ? previousData.regional.nacionalidade : ""}
                 ref={nacionalidadeRef}
                 validate={validation.TextField}
               />
@@ -248,7 +247,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
-              previousValue={previousData.endereco ? previousData.endereco.rua : ""}
+              initialValue={previousData.endereco ? previousData.endereco.rua : ""}
               ref={ruaRef}
               validate={validation.TextField}
             />
@@ -258,7 +257,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Bairro"}
                 name={"Bairro"}
                 placeholder={"Bairro"}
-                previousValue={previousData.endereco ? previousData.endereco.bairro : ""}
+                initialValue={previousData.endereco ? previousData.endereco.bairro : ""}
                 ref={bairroRef}
                 validate={validation.TextField}
               />
@@ -267,7 +266,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Número"}
                 name={"Número"}
                 placeholder={"Número"}
-                previousValue={previousData.endereco ? previousData.endereco.numero : ""}
+                initialValue={previousData.endereco ? previousData.endereco.numero : ""}
                 ref={numeroRef}
                 validate={validation.testNumbers}
               />
@@ -276,7 +275,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Cidade"}
                 name={"Município"}
                 placeholder={"Cidade"}
-                previousValue={previousData.endereco ? previousData.regional.municipio : ""}
+                initialValue={previousData.endereco ? previousData.regional.municipio : ""}
                 ref={municipioRef}
                 validate={validation.TextField}
               />
@@ -285,7 +284,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 label={"Estado"}
                 name={"Estado"}
                 placeholder={"Estado"}
-                previousValue={previousData.endereco ? previousData.regional.estado : ""}
+                initialValue={previousData.endereco ? previousData.regional.estado : ""}
                 ref={estadoRef}
                 validate={validation.TextField}
               />
@@ -300,7 +299,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               label={"E-mail"}
               name={"E-mail"}
               placeholder={"email@domínio.com"}
-              previousValue={previousData.email}
+              initialValue={previousData.email}
               ref={emailRef}
               validate={validation.testEmail}
             />
@@ -309,7 +308,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               label={"Senha"}
               name={"senha"}
               placeholder={"********"}
-              previousValue={previousData.password}
+              initialValue={previousData.password}
               ref={passwordRef}
               type="password"
               validate={validation.testPassword}
@@ -319,7 +318,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}
-              previousValue={previousData.telefone}
+              initialValue={previousData.telefone}
               ref={telefoneRef}
               validate={validation.testtelefone}
             />
