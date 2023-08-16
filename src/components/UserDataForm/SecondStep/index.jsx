@@ -135,7 +135,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Curso de Formação"}
               name={"curso_de_formacao"}
               placeholder={"Digite seu curso de formação"}
-              previousValue={previousData.formacaoSuperior}
+              initialValue={previousData.formacaoSuperior}
               ref={formacaoSuperiorRef}
               validate={validation.TextField}
             />
@@ -144,7 +144,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Data de Formação"}
               name={"data_de_formacao"}
               placeholder={"DD/MM/AAAA"}
-              previousValue={previousData.dataFormacao}
+              initialValue={previousData.dataFormacao}
               ref={dataFormacaoRef}
               validate={validation.testDate}
             />
@@ -158,7 +158,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Profissão"}
               name={"profissao"}
               placeholder={"Digite sua profissão"}
-              previousValue={previousData.profissao}
+              initialValue={previousData.profissao}
               ref={profissaoRef}
               validate={validation.TextField}
             />
@@ -167,7 +167,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Organização ou empresa que trabalha"}
               name={"trabalho"}
               placeholder={"Digite onde você trabalha"}
-              previousValue={previousData.empresa}
+              initialValue={previousData.empresa}
               ref={empresaRef}
               validate={validation.TextField}
             />
@@ -176,7 +176,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Salário"}
               name={"salario"}
               placeholder={"R$ 00,00"}
-              previousValue={previousData.salario}
+              initialValue={previousData.salario}
               ref={salarioRef}
               validate={validation.testNumbers}
             />
@@ -190,7 +190,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Número de registro no conselho"}
               name={"numero_de_registro"}
               placeholder={"Digite o seu número de registro no conselho"}
-              previousValue={previousData.numRegistroConselho}
+              initialValue={previousData.numRegistroConselho}
               ref={numRegistroConselhoRef}
               validate={validation.testNumbers}
             />
@@ -199,7 +199,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
               label={"Data de registro no conselho"}
               name={"data_de_registro"}
               placeholder={"DD/MM/AAAA"}
-              previousValue={previousData.dataRegistroConselho}
+              initialValue={previousData.dataRegistroConselho}
               ref={dataRegistroConselhoRef}
               validate={validation.testDate}
             />
@@ -209,7 +209,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
                 label={"Número de Inscrição"}
                 name={"numero_de_inscricao"}
                 placeholder={"Número de inscrição"}
-                previousValue={previousData.numInscricao}
+                initialValue={previousData.numInscricao}
                 ref={numeroInscricaoRef}
                 validate={validation.testNumbers}
               />
@@ -218,7 +218,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
                 label={"Data de Afiliação"}
                 name={"data_de_afiliacao"}
                 placeholder={"DD/MM/AAAA"}
-                previousValue={previousData.dataAfiliacao}
+                initialValue={previousData.dataAfiliacao}
                 ref={dataAfiliacaoRef}
                 validate={validation.testDate}
               />
