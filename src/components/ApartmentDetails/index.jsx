@@ -61,7 +61,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     setModel(data);
   }, [area, objectUrl, authContext]);
 
-  const rulesCard = (
+  const rulesCard = useMemo(() => (
     <RulesCard>
       <Subtitle1>Regras de convivência</Subtitle1>
       <Body2 primary>
@@ -70,7 +70,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
         </ol>
       </Body2>
     </RulesCard>
-  );
+  ), [model]);
 
   const formatPrice = value => {
     return value.toLocaleString('pt-BR', {
@@ -81,6 +81,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
 
   const defaultedQuery = useMemo(() => {
     query = query ?? {};
+    delete query.id;
     return {
       ...query,
       adultos: query.adultos ?? 1,
@@ -105,7 +106,8 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [valorDiaria, numDiarias]);
 
   const goToReservationPage = () => {
-    router.push(`/reservar/${objectUrl}?area=${area}`);
+    const queryStr = new URLSearchParams({ ...defaultedQuery, area });
+    router.push(`/reservar/${objectUrl}?${queryStr}`);
   };
 
   const goBack = () => {
@@ -132,6 +134,15 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       return `${time} manhã`;
     }
   };
+
+  const hospedesStr = useMemo(() => {
+    return [
+      applyPlural(defaultedQuery.adultos, "adulto"),
+      applyPlural(defaultedQuery.criancas, "criança"),
+      applyPlural(defaultedQuery.bebes, "bebê"),
+      `${applyPlural(defaultedQuery.animais, "animal")} de estimação`
+    ].join('; ');
+  }, [defaultedQuery]);
 
   return (
     <div>
@@ -234,9 +245,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
               <div className="row-separator" />
               
               <div className="row">
-                <DropdownInput label="Hóspedes" disabled options={[
-                  `${applyPlural(defaultedQuery.adultos, "adulto")}; ${applyPlural(defaultedQuery.criancas, "criança")}; ${applyPlural(defaultedQuery.bebes, "bebê")}; ${applyPlural(defaultedQuery.animais, "animal")} de estimação`
-                ]} />
+                <DropdownInput label="Hóspedes" disabled options={[hospedesStr]} />
               </div>
               
               <div className="row-separator" />
