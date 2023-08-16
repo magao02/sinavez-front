@@ -59,8 +59,8 @@ const Apartamento = ({ obj, queryData }) => {
   const isArea = !!obj.urlRec;
   const isApt = !isArea;
   const url = useMemo(() => {
-    const query = queryData ? `?adultos=${queryData.adultos}&criancas=${queryData.criancas}&bebes=${queryData.bebes}&animais=${queryData.animais}` : '';
-    return isApt ? `/apartamento/${obj.urlApt}${query}` : `/area/${obj.urlRec}${query}`;
+    const query = queryData ? new URLSearchParams(queryData) : '';
+    return isApt ? `/apartamento/${obj.urlApt}?${query}` : `/area/${obj.urlRec}?${query}`;
   }, [obj, queryData]);
 
   const router = useRouter();

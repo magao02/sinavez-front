@@ -42,8 +42,9 @@ import Image from "next/image";
 import { getAllApartments } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
 import { getAllRecreationAreas } from "../../services/recreationArea";
+import { dateToYMD } from "../../utils/date";
 
-const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais }) => {
+const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
   return (
     <ColumnContent>
       <Card>
@@ -58,11 +59,11 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
         <Row>
           <div className="column">
             <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => setChegadaDate(ev.target.valueAsDate)} />
-            <SearchInput innerLabel="Horário" type="time" />
+            <SearchInput innerLabel="Horário" type="time" initialValue={chegadaTime} onChange={ev => setChegadaTime(ev.target.value)} />
           </div>
           <div className="column">
             <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />
-            <SearchInput innerLabel="Horário" type="time" />
+            <SearchInput innerLabel="Horário" type="time" initialValue={saidaTime} onChange={ev => setSaidaTime(ev.target.value)} />
           </div>
         </Row>
 
@@ -170,7 +171,15 @@ const Page = () => {
   const [areas, setAreas] = useState([]);
 
   const [chegadaDate, setChegadaDate] = useState(new Date());
-  const [saidaDate, setSaidaDate] = useState(new Date());
+  const [chegadaTime, setChegadaTime] = useState('11:00');
+
+  const [saidaDate, setSaidaDate] = useState((() => {
+    let now = new Date();
+    now.setDate(now.getDate() + 7);
+    return now;
+  })());
+  const [saidaTime, setSaidaTime] = useState('18:00');
+  
   const [adultos, setAdultos] = useState(1);
   const [criancas, setCriancas] = useState(0);
   const [bebes, setBebes] = useState(0);
@@ -195,7 +204,11 @@ const Page = () => {
       adultos,
       criancas,
       bebes,
-      animais
+      animais,
+      chegadaDate: dateToYMD(chegadaDate),
+      saidaDate: dateToYMD(saidaDate),
+      chegadaTime,
+      saidaTime,
     }
   }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais]);
 
@@ -205,7 +218,16 @@ const Page = () => {
       <NavSpacing />
       <Content>
         <Blue>
-          <Search tabIndex={tabIndex} setTabIndex={setTabIndex} chegadaDate={chegadaDate} setChegadaDate={setChegadaDate} saidaDate={saidaDate} setSaidaDate={setSaidaDate} adultos={adultos} setAdultos={setAdultos} criancas={criancas} setCriancas={setCriancas} bebes={bebes} setBebes={setBebes} animais={animais} setAnimais={setAnimais} />
+          <Search tabIndex={tabIndex} setTabIndex={setTabIndex}
+            chegadaDate={chegadaDate} setChegadaDate={setChegadaDate}
+            saidaDate={saidaDate} setSaidaDate={setSaidaDate}
+            adultos={adultos} setAdultos={setAdultos}
+            criancas={criancas} setCriancas={setCriancas}
+            bebes={bebes} setBebes={setBebes}
+            animais={animais} setAnimais={setAnimais}
+            chegadaTime={chegadaTime} setChegadaTime={setChegadaTime}
+            saidaTime={saidaTime} setSaidaTime={setSaidaTime}
+          />
           <SearchHelpContainer>
             <h1>Faça sua reserva!</h1>
             { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
