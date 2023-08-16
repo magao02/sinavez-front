@@ -9,6 +9,7 @@ const Page = () => {
     <ApartmentDetails
       area={true}
       objectUrl={router.query.id}
+      query={router.query}
     />
   );
 };

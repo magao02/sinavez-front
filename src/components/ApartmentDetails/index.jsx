@@ -101,10 +101,13 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   const defaultedQuery = useMemo(() => {
     query = query ?? {};
     return {
+      ...query,
       adultos: query.adultos ?? 1,
       criancas: query.criancas ?? 0,
       bebes: query.bebes ?? 0,
       animais: query.animais ?? 0,
+      chegadaTime: query.chegadaTime ?? '11:00',
+      saidaTime: query.saidaTime ?? '11:00',
     };
   }, [query]);
 
@@ -116,7 +119,18 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     } else {
       return `${count} ${str}s`;
     }
-  }
+  };
+
+  const formatTime = (time) => {
+    const hour = parseInt(time.split(':')[0]);
+    if (hour >= 18) {
+      return `${time} noite`;
+    } else if (hour >= 12) {
+      return `${time} tarde`;
+    } else {
+      return `${time} manhã`;
+    }
+  };
 
   return (
     <div>
@@ -212,8 +226,8 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             <ReservationDetailsCard>
               <Title2>Dados da sua reserva</Title2>
               <div className="row">
-                <SearchInput label="Chegada" type="date" innerLabel="Data" />
-                <SearchInput label="Saída" type="date" innerLabel="Data" />
+                <SearchInput label="Chegada" type="date" innerLabel="Data" disabled initialValue={defaultedQuery.chegadaDate} />
+                <SearchInput label="Saída" type="date" innerLabel="Data" disabled initialValue={defaultedQuery.saidaDate} />
               </div>
               
               <div className="row-separator" />
@@ -229,8 +243,8 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
               <Subtitle2>Horários</Subtitle2>
               
               <div className="row">
-                <Body2 primary><b>Chegada:</b> 11:00 manhã</Body2>
-                <Body2 primary><b>Saída:</b> 18:00 noite</Body2>
+                <Body2 primary><b>Chegada:</b> {formatTime(defaultedQuery.chegadaTime)}</Body2>
+                <Body2 primary><b>Saída:</b> {formatTime(defaultedQuery.saidaTime)}</Body2>
               </div>
               
               <div className="row top-spacing">
