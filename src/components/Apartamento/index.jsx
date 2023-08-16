@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Button from "../commom/Button";
 
 import Image from "next/image";
@@ -11,8 +9,6 @@ import {
   CardImage,
   ButtonContainer,
   Details,
-  Title,
-  Reserva,
   Features,
 } from "./styles.js";
 
@@ -22,6 +18,7 @@ import IconBathtub from "../../assets/apartamento/bathtub.svg";
 import IconWind from "../../assets/apartamento/wind.svg";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { Body1, Body2, Title2 } from "../../styles/commonStyles";
 
 const Feature = ({ type }) => {
   let image = IconWifi;
@@ -86,9 +83,9 @@ const Apartamento = ({ obj, queryData }) => {
 
       <CardInner>
         <Details>
-          <Title>{obj.titulo}</Title>
-          <Reserva>Reserva mais proxima: De {reserva.from} até {reserva.to}</Reserva>
-          <Reserva small>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Reserva>
+          <Title2>{obj.titulo}</Title2>
+          <Body1>Reserva mais proxima: De {reserva.from} até {reserva.to}</Body1>
+          <Body2>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Body2>
           <Features>
             {features.map(f => (
               <Feature type={f} key={f} />
