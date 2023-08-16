@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "./theme";
+import { Body3, Title2 } from "./commonStyles";
 
 export const Card = styled.div`
   display: flex;
@@ -14,14 +15,11 @@ export const Tabs = styled.div`
   display: flex;
 `;
 
-export const Tab = styled.span`
+export const Tab = styled(Title2)`
   --color: ${props => props.selected ? theme.colors.blue.heavy : theme.colors.gray.default};
   border-bottom: ${props => props.selected ? "2px" : "1px"} solid var(--color);
 
-  color: var(--color);
-
-  font-size: 1.1em;
-  font-weight: 600;
+  color: var(--color) !important;
   
   padding-bottom: 9px;
   flex-grow: 1;
@@ -68,18 +66,14 @@ export const SearchHelpContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  & > h1 {
+  & > ${Title2} {
     color: ${theme.colors.white.light};
     text-align: center;
 
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 28px;
     margin-bottom: 10px;
   }
 
-  & > p {
+  & > ${Body3} {
     color: #043F79;
     text-align: center;
 
@@ -191,8 +185,6 @@ export const NoResults = styled.div`
 
 export const NoMoreResults = styled.span`
   color: ${theme.colors.gray.default};
-  font-size: 18px;
-  font-weight: 400;
 
   display: flex;
   align-items: center;
