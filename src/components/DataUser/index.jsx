@@ -27,9 +27,10 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
     const [containerToggle, setContainerToggle] = useState(true);
     const [containerToggleDependents, setContainerToggleDependents] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [listDependents, setListDependents] = useState(false);
 
     const [dark, setDark] = useState(false);
-    const [dataDependent, setDataDependent] = useState({});
+    const [dataDependent, setDataDependent] = useState({nome: "Naiara", idade: 21});
 
     const toggleDark = () => {
         setDark(!dark);
@@ -175,11 +176,15 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
                         
                     )}
 
+                    
                     {containerToggleDependents && (
                         <>
                             <ContainerDependents startToggle={toggleDark} />
                         </>
-                    )}
+                        )}
+            
+
+
 
                 
                     

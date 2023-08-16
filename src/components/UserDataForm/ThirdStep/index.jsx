@@ -36,6 +36,12 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
   const naturalidadeRef = useRef();
   const nacionalidadeRef = useRef("Brasileiro");
 
+  const [dataDependent, setDataDependent] = useState({});
+
+  const takeDataDependents = (data) => {
+    setDataDependent(data);
+};
+
   const allFieldsAreValid = useCallback(async () => {
 
     if (brasileiroRef === false) {
@@ -86,7 +92,8 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
     dataCollector({
       regional: { municipio, estado, naturalidade, nacionalidade },
       numInscricao, dataAfiliacao, formacaoSuperior, instituicaoSuperior,
-      dataFormacao, numRegistroConselho, dataRegistroConselho, empresa, salario
+      dataFormacao, numRegistroConselho, dataRegistroConselho, empresa, salario, 
+      dependentes: dataDependent
     })
 
   });
@@ -116,7 +123,7 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
     setCountDependents(countDependents + 1);
   };
 
-
+console.log(dataDependentes);
   return (
 
     <Container onSubmit={handleSubmit}>
@@ -168,9 +175,9 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
           </MainHead>
           <SubContainerDependents>
 
-            <DependentsContainer variant="default" number={countDependents > 0 ? initialNumber : 0} submitForm={dataCollector}/>
+            <DependentsContainer variant="default" handleDataDependentes={handleDataDependentes} number={countDependents > 0 ? initialNumber : 0} submitForm={dataCollector} previousData={previousData}/>
             {[...Array(countDependents)].map((_, index) => (
-              <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true} />
+              <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true} handleDataDependentes={handleDataDependentes} previousData={previousData} takeDataDependents={takeDataDependents}/>
             ))}
 
             <Footer>

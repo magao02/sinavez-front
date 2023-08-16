@@ -16,21 +16,27 @@ import {
   FormContainer,
 } from "./styles";
 
-const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, depSingUpController, number, marginTop, takeDataDependents }) => {
-  const nameRef = useRef(null);
-  const cpfRef = useRef(null);
-  const birthdayRef = useRef(null);
-  const rgRef = useRef(null);
-  const dataEmissaoRef = useRef(null);
+const DependentsForm = ({ previousData, handleDataDependentes, submitForm, pad, globalMessage, variant, url, token, depSingUpController, number, marginTop, takeDataDependents }) => {
+  const nameRef = useRef();
+  const cpfRef = useRef();
+  const nascimentoRef = useRef();
+  const rgRef = useRef();
+  const emissaoRef = useRef();
+  const parentescoRef = useRef(); 
 
   const adminContext = useAdmin();
 
+  const onChangeInput = useCallback((value, textValue) => {
+    takeDataDependents(prevData => ({ ...prevData, [textValue]: value }));
+  }, []);
+
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [nameRef,
-      birthdayRef,
+      nascimentoRef,
       cpfRef,
       rgRef,
-      dataEmissaoRef
+      emissaoRef, 
+      parentescoRef
     ];
 
     const validationResults = await Promise.all(
@@ -40,61 +46,50 @@ const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, d
     return validationResults.every((result) => result === true);
   });
 
-  const handleSubmit = useCallback(
-    async (event) => {
+  const handleSubmit = useCallback(async (event) => {
       event.preventDefault();
       const isValidSubmit = await allFieldsAreValid();
 
       if (!isValidSubmit) return;
 
-      const [name, nascimento, cpf, rg, emissao] = [
+      const [name, nascimento, cpf, rg, emissao, parentesco] = [
         nameRef,
-        birthdayRef,
+        nascimentoRef,
         cpfRef,
         rgRef,
-        dataEmissaoRef,
+        emissaoRef,
+        parentescoRef
       ].map((inputRef) => inputRef.current?.value);
-
-      if (variant == "admin") {
-        adminContext.createDependentOnUser({
-          name,
-          nascimento,
-          cpf,
-          rg,
-          emissao,
-        }, url, token);
-        return;
-      }
-      submitForm({ name, nascimento, cpf, rg, emissao });
-      takeDataDependents({ 
-        name: name, 
-        nascimento: nascimento, 
-        cpf: cpf, 
-        rg: rg, 
-        emissao: emissao });
+        
+      submitForm({ name, nascimento, cpf, rg, emissao, parentesco });
+      takeDataDependents({ name, nascimento, cpf, rg, emissao, parentesco });
     },
-    [allFieldsAreValid, submitForm]
+    [allFieldsAreValid, submitForm, handleDataDependentes, url, token]
   );
 
   switch (variant) {
     case "default": {
       return (
-        <Container variant="default" padding={pad ? pad : false} gap={marginTop}>
+        <Container variant="default" padding={pad ? pad : false} gap={marginTop} onSubmit={handleSubmit}>
           <SubTitle marginTop = {marginTop}>
             Dados do Dependente {number !== 0 ? number : ""}
           </SubTitle>
           <Input
             variant="default"
             label={"Nome Completo"}
-            name={"nome_completo"}
+            name={"name"}
             placeholder={"Nome Completo"}
+            onChange={(event) => onChangeInput(event.target.value, "name")}
+            ref={nameRef}
             validate={validation.requiredTextField}
           />
           <Input
             variant="default-optional"
             label={"Data de nascimento"}
-            name={"data_de_nascimento"}
+            name={"nascimento"}
             placeholder={"DD/MM/AAAA"}
+            onChange={(event) => onChangeInput(event.target.value, "nascimento")}
+            ref={nascimentoRef}
             validate={validation.testDate}
           />
           <Input
@@ -102,6 +97,8 @@ const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, d
             label={"CPF"}
             name={"cpf"}
             placeholder={"000.000.000-0"}
+            ref={cpfRef}
+            onChange={(event) => onChangeInput(event.target.value, "cpf")}
             validate={validation.testCpf}
           />
           <Input
@@ -109,13 +106,17 @@ const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, d
             label={"RG"}
             name={"rg"}
             placeholder={"Digite o RG do dependente"}
+            onChange={(event) => onChangeInput(event.target.value, "rg")}
+            ref={rgRef}
             validate={validation.TextField}
           />
           <Input
             variant="default-optional"
             label={"Data de emissão"}
-            name={"data_de_emissao"}
+            name={"emissao"}
             placeholder={"DD/MM/AAAA"}
+            onChange={(event) => onChangeInput(event.target.value, "emissao")}
+            ref={emissaoRef}
             validate={validation.testDate}
           />
           <Input
@@ -123,75 +124,79 @@ const DependentsForm = ({ submitForm, pad, globalMessage, variant, url, token, d
             label={"Parentesco"}
             name={"parentesco"}
             placeholder={"Filho/Filha/Neto/etc"}
+            onChange={(event) => onChangeInput(event.target.value, "parentesco")}
+            ref={parentescoRef}
             validate={validation.TextField}
           />
         </Container>
       );
     }
-    case "admin": {
-      return (
-        <Container variant="admin">
-          <Button variant={"close"} onClick={() => window.location.reload(true)}>
-            &#10005;
-          </Button>
-          <Header>
-            <Title>Cadastrar Dependente</Title>
-            <SubTitle>{adminContext.associado.name}</SubTitle>
-          </Header>
-          <Form onSubmit={handleSubmit}>
-            <FormContainer>
-              <Input
-                type="text"
-                label="Nome"
-                placeholder="Digite seu nome completo"
-                variant="signup"
-                ref={nameRef}
-                validate={validation.requiredTextField}
-              />
-              <Input
-                type="text"
-                label="Data de Nascimento"
-                placeholder="DD/MM/AAAA"
-                variant="signup-optional"
-                ref={birthdayRef}
-                validate={validation.testDate}
-              />
-              <Input
-                type="text"
-                label="CPF"
-                placeholder="Digite apenas os números do CPF"
-                variant="signup-optional"
-                ref={cpfRef}
-                validate={validation.testCpf}
-              />
-            </FormContainer>
-            <FormContainer>
-              <Input
-                type="text"
-                label="RG"
-                placeholder="Digite os números do seu RG"
-                variant="signup-optional"
-                ref={rgRef}
-                validate={validation.testNumbers}
-              />
-              <Input
-                type="text"
-                label="Data de Emissão"
-                placeholder="DD/MM/AAAA"
-                variant="signup-optional"
-                ref={dataEmissaoRef}
-                validate={validation.testDate}
-              />
-              <Button variant="signup">Cadastrar Dependente</Button>
-              {adminContext.globalMessage && (
-                <span>{adminContext.globalMessage}</span>
-              )}
-            </FormContainer>
-          </Form>
-        </Container>
-      );
-    }
-  }
+  //   case "admin": {
+  //     return (
+  //       <Container variant="admin">
+  //         <Button variant={"close"} onClick={() => window.location.reload(true)}>
+  //           &#10005;
+  //         </Button>
+  //         <Header>
+  //           <Title>Cadastrar Dependente</Title>
+  //           <SubTitle>{adminContext.associado.name}</SubTitle>
+  //         </Header>
+  //         <Form onSubmit={handleSubmit}>
+  //           <FormContainer>
+  //             <Input
+  //               type="text"
+  //               label="Nome"
+  //               placeholder="Digite seu nome completo"
+  //               variant="signup"
+  //               ref={nameRef}
+  //               validate={validation.requiredTextField}
+  //             />
+  //             <Input
+  //               type="text"
+  //               label="Data de Nascimento"
+  //               placeholder="DD/MM/AAAA"
+  //               variant="signup-optional"
+  //               ref={birthdayRef}
+  //               validate={validation.testDate}
+  //             />
+  //             <Input
+  //               type="text"
+  //               label="CPF"
+  //               placeholder="Digite apenas os números do CPF"
+  //               variant="signup-optional"
+  //               ref={cpfRef}
+  //               validate={validation.testCpf}
+  //             />
+  //           </FormContainer>
+  //           <FormContainer>
+  //             <Input
+  //               type="text"
+  //               label="RG"
+  //               placeholder="Digite os números do seu RG"
+  //               variant="signup-optional"
+  //               ref={rgRef}
+  //               validate={validation.testNumbers}
+  //             />
+  //             <Input
+  //               type="text"
+  //               label="Data de Emissão"
+  //               placeholder="DD/MM/AAAA"
+  //               variant="signup-optional"
+  //               ref={dataEmissaoRef}
+  //               validate={validation.testDate}
+  //             />
+  //             <Button variant="signup">Cadastrar Dependente</Button>
+  //             {adminContext.globalMessage && (
+  //               <span>{adminContext.globalMessage}</span>
+  //             )}
+  //           </FormContainer>
+  //         </Form>
+  //       </Container>
+  //     );
+  //   }
+  // }
 };
+};
+
 
 export default DependentsForm;

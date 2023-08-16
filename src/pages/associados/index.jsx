@@ -178,12 +178,13 @@ const Associados = () => {
 
   // adionar dependente
   const addDependente = useCallback(async (data, urlAssociado) => {
-    // try {
-    //   const addDependentResponse = await service.addDependent(data, urlAssociado, authContext.token);
-    //   console.log(addDependentResponse.data);
-    // } catch (error) {
-    //   console.log(error.response.data.message);
-    // }
+     try {
+       const addDependentResponse = await service.addDependent(data, urlAssociado, authContext.token);
+       console.log(addDependentResponse.data);
+       
+     } catch (error) {
+       console.log(error.response.data.message);
+     }
 
     console.log(data);
   });
@@ -267,6 +268,7 @@ const Associados = () => {
       )}
       {associados && (
         <>
+      
           <MainContainer>
             <Title>
               Gerenciar associados
@@ -292,7 +294,7 @@ const Associados = () => {
 
           { dataUserToggle && (
           <>
-            <DataUser back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector} addDependente={addDependente}/>
+            <DataUser  back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector} addDependente={addDependente}/>
           </>
           )}
         </>
