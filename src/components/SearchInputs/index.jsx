@@ -7,6 +7,7 @@ import PlusCircle from "../../assets/plus-circle.svg";
 
 import { useState } from "react";
 import { Body3, Subtitle2 } from "../../styles/commonStyles";
+import { dateToYMD } from "../../utils/date";
 
 export const CounterInput = ({ label, min, max, value, onChange }) => {
   const [counterValue, setCounterValue] = useState(value ?? 0);
@@ -15,13 +16,15 @@ export const CounterInput = ({ label, min, max, value, onChange }) => {
   const realMax = max ?? Infinity;
 
   const decrease = () => {
-    setCounterValue(Math.max(counterValue - 1, realMin));
-    onChange(counterValue);
+    const newValue = Math.max(counterValue - 1, realMin);
+    setCounterValue(newValue);
+    onChange(newValue);
   };
 
   const increase = () => {
-    setCounterValue(Math.min(counterValue + 1, realMax));
-    onChange(counterValue);
+    const newValue = Math.min(counterValue + 1, realMax);
+    setCounterValue(newValue);
+    onChange(newValue);
   };
   
   return (
@@ -71,7 +74,7 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
   };
   const processValue = (value) => {
     if (type === 'date' && value instanceof Date) {
-      return value.toISOString().split('T')[0];
+      return dateToYMD(value);
     }
     return value;
   }
