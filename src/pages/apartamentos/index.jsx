@@ -43,6 +43,7 @@ import { getAllApartments } from "../../services/apartments";
 import { useAuth } from "../../contexts/AuthContext";
 import { getAllRecreationAreas } from "../../services/recreationArea";
 import { dateToYMD } from "../../utils/date";
+import { Body3, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 
 const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
   return (
@@ -229,9 +230,9 @@ const Page = () => {
             saidaTime={saidaTime} setSaidaTime={setSaidaTime}
           />
           <SearchHelpContainer>
-            <h1>Faça sua reserva!</h1>
-            { tabIndex === 0 && <p>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</p> }
-            { tabIndex === 1 && <p>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</p> }
+            <Title2>Faça sua reserva!</Title2>
+            { tabIndex === 0 && <Body3>Siga os passos abaixo para buscar o apartamento perfeito para sua hospedagem.</Body3> }
+            { tabIndex === 1 && <Body3>Siga os passos abaixo para buscar as áreas de lazer perfeita para sua necessidade.</Body3> }
             
             { tabIndex === 0 && <ApartmentSearchHelp /> }
             { tabIndex === 1 && <LazerSearchHelp /> }
@@ -240,7 +241,7 @@ const Page = () => {
 
         {
           tabIndex === 0 && (apartamentos.length ? [
-            <Title>Apartamentos Disponíveis</Title>,
+            <Title1>Apartamentos Disponíveis</Title1>,
             apartamentos.map(apt => (
               <Apartamento
                 obj={{...apt, images: [Placeholder]}}
@@ -249,7 +250,7 @@ const Page = () => {
               />
             )),
             <NoMoreResults>
-              <Image src={SmileySad} /> Não há mais resultados a exibir.
+              <Image src={SmileySad} /> <Subtitle2 gray>Não há mais resultados a exibir.</Subtitle2>
             </NoMoreResults>
           ] : 
           <NoResults>
@@ -262,7 +263,7 @@ const Page = () => {
 
         {
           tabIndex === 1 && (areas.length ? [
-            <Title>Áreas Disponíveis</Title>,
+            <Title1>Áreas Disponíveis</Title1>,
             areas.map(apt => (
               <Apartamento
                 obj={{...apt, images: [Placeholder]}}
@@ -270,7 +271,7 @@ const Page = () => {
               />
             )),
             <NoMoreResults>
-              <Image src={SmileySad} /> Não há mais resultados a exibir.
+              <Image src={SmileySad} /> <Subtitle2 gray>Não há mais resultados a exibir.</Subtitle2>
             </NoMoreResults>
           ] :
           <NoResults>

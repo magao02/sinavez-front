@@ -7,6 +7,8 @@ function getTitleColor(props) {
     return theme.colors.blue.border;
   if (props.red)
     return theme.colors.red;
+  if (props.gray)
+    return theme.colors.gray.default;
   return theme.colors.gray.menu;
 }
 
