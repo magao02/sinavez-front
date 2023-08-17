@@ -13,7 +13,9 @@ import {
   AmbienteTitle,
   SelectAmbient,
   AmbientsArea,
-  AmbientWrapper
+  AmbientWrapper,
+  LoadItens,
+  VerMaisButtons
 } from "../../styles/manageReservations";
 import Input from "../../components/commom/Input";
 import filter from "../../assets/filter.svg";
@@ -22,6 +24,7 @@ import AmbientModal from "../../components/AmbientModal";
 import * as serviceApto from "../../services/Apto";
 import * as serviceArea from "../../services/RecreationArea";
 import { useAuth } from "../../contexts/AuthContext";
+import { useRouter } from "next/router";
 
 const ManageReserVations = () => {
 
@@ -30,8 +33,10 @@ const ManageReserVations = () => {
     const [aptos, setAptos] = useState([])
     const [recreationArea, setRecreationArea] = useState([])
     const [searchValue, setSearchValue] = useState("")
+    const [itensPerPage, setItensPerPage] = useState(3);
 
-    const authContext = useAuth()
+    const authContext = useAuth();
+    const router = useRouter();
 
     const handleSelect = () => {
         setToShow(!toShow)
@@ -52,22 +57,40 @@ const ManageReserVations = () => {
         var obj = {
             "suite": data.suite,
             "wifi": data.wifi,
-            "animais": data.animais
+            "animais": data.animais,
+            "arCondicionado": data.itens.includes("ar condicionado") ? true : false 
         }
         return obj;
     }
 
+    const checkBusy = (datas) => {
+        const data1 = new Date("05/04/2023")
+        const data2 = new Date("10/05/2023")
+        const today = new Date()
+
+        if(data1 < today && data2 > today){
+          return true
+        }else{
+          return false
+        }
+    }
+
+
     const lowerSearch = searchValue.toLowerCase(); 
 
-    const AptoFiltrado = aptos.filter((data) => data.titulo.toLowerCase().includes(lowerSearch))
+    const AptoFiltrado = aptos.slice(0, itensPerPage).filter((data) => data.titulo.toLowerCase().includes(lowerSearch))
 
-    const RecreationAreaFiltrada = recreationArea.filter((RecreationArea) => RecreationArea.titulo. toLowerCase().includes(lowerSearch));
+    const RecreationAreaFiltrada = recreationArea.slice(0, itensPerPage).filter((RecreationArea) => RecreationArea.titulo. toLowerCase().includes(lowerSearch));
 
     useEffect(() => {
         getAptos()
         getRecreationAreas()
-    },[])
 
+        if (!authContext.auth) {
+            router.push("/login");
+          return;
+        }
+    },[authContext.auth])
 
 
   return (
@@ -90,10 +113,10 @@ const ManageReserVations = () => {
             </InputArea>
             <InputArea width={"25%"} gap={"0px"} paddingLeft={"0px"}>
             <img src={filter.src}></img>
-              <Select name="tipo" id="selectAmbiente">
+              <Select name="tipo" id="selectAmbiente" onChange={(e) => console.log(e.target.value)}>
                 <option value="Filtrar Busca" disabled hidden selected>Filtrar Busca</option>
-                <option value="Ocupados (neste mês)">Ocupados (neste mês)</option>
-                <option value="Disponíveis (neste mês)">Disponíveis (neste mês)</option>
+                <option value="ocupados">Ocupados (neste mês)</option>
+                <option value="disponiveis">Disponíveis (neste mês)</option>
               </Select>
             </InputArea>
           </FiltersArea>
@@ -113,7 +136,7 @@ const ManageReserVations = () => {
                     AptoFiltrado.map((data) => {
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)}>
+                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)}>
                                 </AmbientModal>
                             </AmbientWrapper>
                         )
@@ -122,18 +145,45 @@ const ManageReserVations = () => {
                     RecreationAreaFiltrada.map((data) => {
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)}>
+                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)}>
                                 </AmbientModal>
                             </AmbientWrapper>
                         )
                     })
-
                 }
             </AmbientsArea>
-
         </ToggleArea>
-
       </MainContent>
+      <LoadItens>
+        {
+          toShow ?
+          <>
+              {AptoFiltrado.length == aptos.length ?
+                <span>Nao ha mais resultados</span>
+                
+                :
+                <>
+                  <span>Exibindo {AptoFiltrado.length} itens de {aptos.length}</span>
+                  <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Apartamentos</VerMaisButtons>
+                </>
+              }
+          </>
+          :
+
+          <>
+            {RecreationAreaFiltrada.length == recreationArea.length ?
+              <span>Nao ha mais resultados</span>
+              
+              :
+              <>
+                <span>Exibindo {RecreationAreaFiltrada.length} itens de {recreationArea.length}</span>
+                <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Areas</VerMaisButtons>
+              </>
+            }
+          </>
+
+        }
+      </LoadItens>
     </Container>
   );
 };

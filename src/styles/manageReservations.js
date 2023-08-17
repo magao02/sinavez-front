@@ -130,3 +130,21 @@ export const AmbientWrapper = styled.div`
     width: 100%;
     height: 200px;
 `
+
+export const LoadItens = styled.div`
+    height: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1vh;
+`
+
+export const VerMaisButtons = styled.button`
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+    color: #0761BB;
+`

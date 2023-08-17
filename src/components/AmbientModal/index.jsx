@@ -1,16 +1,17 @@
 import ItensModal from "../commom/ItensModal";
-import { Container, PhotoArea, InfoArea, MainInfo, ItensArea, Button, TitleAndButtonArea, SpanArea } from "./styles";
+import { Container, PhotoArea, InfoArea, MainInfo, ItensArea, Button, TitleAndButtonArea, SpanArea, Status } from "./styles";
 import wifi_icon from "../../assets/wifi_icon.svg"
 import dog_paw from "../../assets/dog_paw.svg"
 import wind from "../../assets/wind.svg"
 import suite from "../../assets/suite.svg"
 
-export const AmbientModal = ({title, datas, itens}) => {
+export const AmbientModal = ({title, datas, itens, status}) => {
 
     return (
         <Container>
             <PhotoArea>
                 <img src="https://img.freepik.com/fotos-gratis/design-moderno-apartamento-com-quarto-e-sala-de-estar_1262-12375.jpg"></img>
+                <Status status={status}> {status ? "Livre agora" : "Reservado agora"}</Status>
             </PhotoArea>
             <InfoArea>
                 <MainInfo>
@@ -36,7 +37,10 @@ export const AmbientModal = ({title, datas, itens}) => {
                         itens.animais && 
                         <ItensModal label={"Aceita Pets"} img={dog_paw.src}></ItensModal>
                     }
-                    <ItensModal label={"Ar Condicionado"} img={wind.src}></ItensModal>
+                    {
+                        itens.arCondicionado && 
+                        <ItensModal label={"Ar Condicionado"} img={wind.src}></ItensModal>
+                    }
                 </ItensArea>
             </InfoArea>
         </Container>

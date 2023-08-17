@@ -13,13 +13,25 @@ export const Container = styled.div`
 export const PhotoArea = styled.div`
     width: 35%;
     height: 100%;
-    z-index: -1;
-    
+
+    display: flex;
+
     img{
         width: 100%;
         height: 100%;
         border-radius: 5px 0px 0px 5px;
     }
+`
+export const Status = styled.div`
+    background-color: ${(props) => props.status ? "#42908A" : "#FE730F"};
+    border-radius: 0px 10px 10px 0px;
+    padding: 10px;
+    position: absolute;
+    display: flex;
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 30px;
 `
 
 export const InfoArea = styled.div`
@@ -38,6 +50,7 @@ export const MainInfo = styled.div`
     height: 65%;
     gap: 10px;
 `
+
 
 export const TitleAndButtonArea = styled.div`
     width: 100%;
