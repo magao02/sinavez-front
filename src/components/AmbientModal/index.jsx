@@ -7,7 +7,6 @@ import suite from "../../assets/suite.svg"
 
 export const AmbientModal = ({title, datas, itens}) => {
 
-
     return (
         <Container>
             <PhotoArea>
@@ -16,7 +15,7 @@ export const AmbientModal = ({title, datas, itens}) => {
             <InfoArea>
                 <MainInfo>
                     <TitleAndButtonArea>
-                        <h2>Apartamento 104 Bloco 3</h2>
+                        <h2>{title}</h2>
                         <Button>VER MAIS</Button>
                     </TitleAndButtonArea>
                     <SpanArea>
@@ -25,9 +24,18 @@ export const AmbientModal = ({title, datas, itens}) => {
                     </SpanArea>
                 </MainInfo>
                 <ItensArea>
-                    <ItensModal label={"1 Suite"} img={suite.src}></ItensModal>
-                    <ItensModal label={"Wifi Gratis"} img={wifi_icon.src}></ItensModal>
-                    <ItensModal label={"Aceita Pets"} img={dog_paw.src}></ItensModal>
+                    {
+                        itens.suite &&
+                        <ItensModal label={"1 Suite"} img={suite.src}></ItensModal>
+                    }
+                    {
+                        itens.wifi &&
+                        <ItensModal label={"Wifi Gratis"} img={wifi_icon.src}></ItensModal>
+                    }
+                    {
+                        itens.animais && 
+                        <ItensModal label={"Aceita Pets"} img={dog_paw.src}></ItensModal>
+                    }
                     <ItensModal label={"Ar Condicionado"} img={wind.src}></ItensModal>
                 </ItensArea>
             </InfoArea>
