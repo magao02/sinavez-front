@@ -124,6 +124,15 @@ function getStyleByVariant(variant) {
             `;
         }
 
+        case 'searchApto' : {
+            return css`
+                width: 100%;
+                border: none;
+                outline: none;
+                padding: 10px;
+            `
+        }
+
         case 'search': {
             return css`
                 height: 100%;
