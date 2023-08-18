@@ -72,6 +72,8 @@ const UserData = () => {
     handleUserData();
   }, [authContext.auth, handleUserData, router]);
 
+  const [tabIndex, setTabIndex] = useState(0);
+
   return (
     <Container>
       <Navigation variant={checkNav()} />
@@ -133,11 +135,13 @@ const UserData = () => {
                 <img src="https://source.unsplash.com/random/300x300?abstract" />
                 <Subtitle1>{value.name}</Subtitle1>
                 <Tabs>
-                  <Tab selected>Dados Pessoais</Tab>
-                  <Tab>Contato</Tab>
-                  <Tab>Endereço</Tab>
+                  {
+                    ["Dados Pessoais", "Contato", "Endereço"].map((name, i) => 
+                      <Tab key={name} selected={tabIndex === i} onClick={_ => setTabIndex(i)}>{name}</Tab>
+                    )
+                  }
                 </Tabs>
-                <Dados>
+                { tabIndex === 0 && <Dados>
                   <Input
                     label="Profissão"
                     variant="default-optional"
@@ -172,7 +176,74 @@ const UserData = () => {
                       disabled
                     />
                   </Row>
-                </Dados>
+                </Dados> }
+
+                { tabIndex === 1 && <Dados>
+                  <Input
+                    label="Celular"
+                    variant="default-optional"
+                    initialValue={value.telefone}
+                    disabled
+                  />
+                  {/* TODO: telefone fixo */}
+                  <Input
+                    label="Telefone Fixo"
+                    variant="default-optional"
+                    initialValue=""
+                    disabled
+                  />
+                  <Row>
+                    <Input
+                      label="E-mail"
+                      variant="default-optional"
+                      initialValue={value.email}
+                      disabled
+                    />
+                    <Input
+                      label="Senha"
+                      variant="default-optional"
+                      initialValue="????? oxe"
+                      disabled
+                    />
+                  </Row>
+                </Dados> }
+
+                { tabIndex === 2 && <Dados>
+                  <Input
+                    label="Nome da Rua"
+                    variant="default-optional"
+                    initialValue={value.endereco.rua}
+                    disabled
+                  />
+                  <Row>
+                    <Input
+                      label="Bairro"
+                      variant="default-optional"
+                      initialValue={value.endereco.bairro}
+                      disabled
+                    />
+                    <Input
+                      label="Número"
+                      variant="default-optional"
+                      initialValue={value.endereco.numero}
+                      disabled
+                    />
+                  </Row>
+                  <Row>
+                    <Input
+                      label="Cidade"
+                      variant="default-optional"
+                      initialValue={value.regional.municipio}
+                      disabled
+                    />
+                    <Input
+                      label="Estado"
+                      variant="default-optional"
+                      initialValue={value.regional.estado}
+                      disabled
+                    />
+                  </Row>
+                </Dados> }
                 <DadosButton>Ver todos os dados</DadosButton>
               </div>
             </Card>
