@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import theme from "./theme";
-import { Subtitle2, Title2 } from "./commonStyles";
+import { Body3, Subtitle2, Title2 } from "./commonStyles";
 
 export const Container = styled.div`
   /* width: 100vw;
@@ -93,7 +93,7 @@ export const Tab = styled(Subtitle2)`
 
   color: var(--color) !important;
   
-  padding-bottom: 9px;
+  padding: 9px 0;
   flex: 1;
   text-align: center;
   user-select: none;
@@ -106,4 +106,29 @@ export const Tab = styled(Subtitle2)`
   }
 
   text-transform: uppercase;
+`;
+
+export const DadosButton = styled(Body3)`
+  padding: 8px;
+
+  --color: ${theme.colors.blue.heavy};
+  border-radius: 4px;
+  border: 1px solid var(--color);
+
+  background: none;
+
+  color: var(--color);
+  font-weight: 500;
+  text-transform: uppercase;
+
+  user-select: none;
+  cursor: pointer;
+
+  transition: background 0.1s;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+
+  margin-top: 24px;
 `;

@@ -22,6 +22,7 @@ import {
   Row,
   Tabs,
   Tab,
+  DadosButton,
 } from "../../styles/usuarioStyles";
 import { Subtitle1, Subtitle2, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -172,6 +173,7 @@ const UserData = () => {
                     />
                   </Row>
                 </Dados>
+                <DadosButton>Ver todos os dados</DadosButton>
               </div>
             </Card>
             <Card blue>
