@@ -3,10 +3,6 @@ import theme from "./theme";
 import { Body3, Subtitle2, Title2 } from "./commonStyles";
 
 export const Container = styled.div`
-  /* width: 100vw;
-  height: 100vh;
-  background-color: ${theme.colors.white.default}; */
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,9 +25,9 @@ export const CardsContainer = styled.div`
 
   width: 100%;
 
+  margin-bottom: 50px;
   // temporary
   margin-top: 100px;
-  margin-bottom: 50px;
 `;
 
 export const Card = styled.div`
@@ -72,8 +68,12 @@ export const Card = styled.div`
 export const Dados = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
-  width: 100%;
+  ${props => props.fill ? css`
+    padding: 0 16px;
+    width: 100%;
+  ` : css`
+    
+  `}
 `;
 
 export const Row = styled.div`
@@ -131,4 +131,78 @@ export const DadosButton = styled(Body3)`
   }
 
   margin-top: 24px;
+`;
+
+export const DadosPopup = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 9999;
+
+  .background {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.50);
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+  }
+
+  .modal {
+    display: flex;
+    flex-direction: column;
+    margin: 160px 60px;
+    @media(min-width: 1400px) {
+      margin: 160px 15vw;
+    }
+
+    background: ${theme.colors.white.default};
+
+    & > header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+
+      border-bottom: 1px solid var(--azul-1, #5D9BDA);
+    }
+
+    & > article {
+      padding: 32px;
+
+      display: flex;
+      flex-direction: column;
+
+      & > header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 42px;
+
+        .perfil {
+          display: flex;
+          gap: 30px;
+
+          img {
+            width: 140px;
+            height: 140px;
+            border-radius: 140px;
+          }
+        }
+      }
+
+      .columns {
+        display: flex;
+        gap: 64px;
+
+        .column {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          justify-content: space-between;
+
+          gap: 16px;
+        }
+      }
+    }
+  }
 `;
