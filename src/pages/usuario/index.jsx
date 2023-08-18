@@ -79,55 +79,6 @@ const UserData = () => {
       <Navigation variant={checkNav()} />
       {isLoaded && (
         <ContentContainer>
-          {/* <SubContainer>
-            <UserTitle>
-              <RoundImage />
-              <h1>{value.name}</h1>
-              <Separator />
-            </UserTitle>
-            <Table
-              variant="pessoal"
-              title="Informações Pessoais"
-              headers={[
-                "Nome",
-                "Data de Nascimento",
-                "Data de Afiliação",
-                "RG",
-                "CPF",
-                "Profissão",
-              ]}
-              data={[
-                value.name,
-                value.nascimento,
-                value.dataAfiliacao,
-                value.rg,
-                value.cpf,
-                value.profissao,
-              ]}
-            ></Table>
-          </SubContainer>
-          <SubContainer>
-            <Table
-              variant="contato"
-              title="Informações de Contato"
-              headers={["Email", "Telefone", "Endereço"]}
-              data={[
-                value.email,
-                value.telefone,
-                value.endereco.rua,
-                value.endereco.numero,
-                value.endereco.bairro,
-                value.endereco.complemento,
-              ]}
-            ></Table>
-
-            <Table
-              variant="trabalho"
-              title="Informações de Trabalho"
-              headers={["Salário", "Organização Ou Empresa", "Nº de Inscrição"]}
-              data={[value.salario, value.empresa, value.numInscricao]}
-            ></Table>
-          </SubContainer> */}
           <CardsContainer>
             <Card>
               <Title2>Meus Dados</Title2>
