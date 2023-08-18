@@ -16,7 +16,14 @@ import {
   UserTitle,
   SubContainer,
   Separator,
+  CardsContainer,
+  Card,
+  Dados,
+  Row,
 } from "../../styles/usuarioStyles";
+import { Subtitle1, Subtitle2, Title2 } from "../../styles/commonStyles";
+import Input from "../../components/commom/Input";
+import { formatCPF, formatRG } from "../../utils/format";
 
 const UserData = () => {
   const router = useRouter();
@@ -35,7 +42,7 @@ const UserData = () => {
       return responseData.data;
     } catch (error) {
       console.log(error);
-      console.log(error.response.data);
+      throw error;
     }
   }, [authContext.token, authContext.urlUser]);
 
@@ -67,7 +74,7 @@ const UserData = () => {
       <Navigation variant={checkNav()} />
       {isLoaded && (
         <ContentContainer>
-          <SubContainer>
+          {/* <SubContainer>
             <UserTitle>
               <RoundImage />
               <h1>{value.name}</h1>
@@ -115,7 +122,58 @@ const UserData = () => {
               headers={["Salário", "Organização Ou Empresa", "Nº de Inscrição"]}
               data={[value.salario, value.empresa, value.numInscricao]}
             ></Table>
-          </SubContainer>
+          </SubContainer> */}
+          <CardsContainer>
+            <Card>
+              <Title2>Meus Dados</Title2>
+              <div className="card">
+                Bom dia
+                <Subtitle1>{value.name}</Subtitle1>
+                <Dados>
+                  <Input
+                    label="Profissão"
+                    variant="default-optional"
+                    initialValue={value.profissao}
+                    disabled
+                  />
+                  <Row>
+                    <Input
+                      label="CPF"
+                      variant="default-optional"
+                      initialValue={formatCPF(value.cpf)}
+                      disabled
+                    />
+                    <Input
+                      label="Data de Nascimento"
+                      variant="default-optional"
+                      initialValue={value.nascimento}
+                      disabled
+                    />
+                  </Row>
+                  <Row>
+                    <Input
+                      label="Registro Geral (RG)"
+                      variant="default-optional"
+                      initialValue={formatRG(value.rg)}
+                      disabled
+                    />
+                    <Input
+                      label="Data de Emissão"
+                      variant="default-optional"
+                      initialValue={value.emissao}
+                      disabled
+                    />
+                  </Row>
+                </Dados>
+              </div>
+            </Card>
+            <Card>
+              <Title2>Meus Dependentes</Title2>
+              <div className="card">
+                Bom dia denovo
+              </div>
+            </Card>
+          </CardsContainer>
         </ContentContainer>
       )}
     </Container>

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import theme from "./theme";
+import { Title2 } from "./commonStyles";
 
 export const Container = styled.div`
-  width: 100vw;
+  /* width: 100vw;
   height: 100vh;
-  background-color: ${theme.colors.white.default};
+  background-color: ${theme.colors.white.default}; */
 
   display: flex;
   flex-direction: column;
@@ -12,60 +13,57 @@ export const Container = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-  width: 80%;
-  height: 100%;
-  min-height: 480px;
-
-  margin: 1.9rem 13.9rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 1px solid black;
-  border-radius: 2rem;
-`;
-
-export const SubContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
-  gap: 4.2rem;
-
-  padding: 1rem 8.4rem;
-`;
-
-export const UserTitle = styled.div`
+  margin-top: 8.3vh; // copied from the Navigation's height
   width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  text-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
-
-  > h1 {
-    font-size: 2.8rem;
+  padding: 0 30px;
+  @media(min-width: 1400px) {
+    padding: 0 10vw;
   }
 `;
 
-export const Separator = styled.div`
-  width: 100px;
+export const CardsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 32px;
 
-  &::before,
-  &::after {
-    width: 100%;
-    height: 0.2rem;
+  width: 100%;
 
-    content: "";
+  // temporary
+  margin-top: 100px;
+`;
+
+export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  & > ${Title2} {
+    margin-bottom: 16px;
+  }
+
+  .card {
+    padding: 24px;
+    border: 1px solid ${theme.colors.blue.background};
+    background: ${theme.colors.white.default};
+    border-radius: 8px;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-
-    background: black;
-    opacity: 0;
+    gap: 16px;
   }
+`;
+
+export const Dados = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  width: 100%;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 `;
