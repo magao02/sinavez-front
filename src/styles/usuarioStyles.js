@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import theme from "./theme";
-import { Title2 } from "./commonStyles";
+import { Subtitle2, Title2 } from "./commonStyles";
 
 export const Container = styled.div`
   /* width: 100vw;
@@ -31,6 +31,7 @@ export const CardsContainer = styled.div`
 
   // temporary
   margin-top: 100px;
+  margin-bottom: 50px;
 `;
 
 export const Card = styled.div`
@@ -79,4 +80,30 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
+`;
+
+export const Tabs = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const Tab = styled(Subtitle2)`
+  --color: ${props => props.selected ? theme.colors.blue.heavy : theme.colors.blue.lighter};
+  border-bottom: 2px solid var(--color);
+
+  color: var(--color) !important;
+  
+  padding-bottom: 9px;
+  flex: 1;
+  text-align: center;
+  user-select: none;
+
+  transition: 0.1s;
+
+  &:hover {
+    cursor: pointer;
+    --color: #0f59a3;
+  }
+
+  text-transform: uppercase;
 `;

@@ -20,6 +20,8 @@ import {
   Card,
   Dados,
   Row,
+  Tabs,
+  Tab,
 } from "../../styles/usuarioStyles";
 import { Subtitle1, Subtitle2, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -129,6 +131,11 @@ const UserData = () => {
               <div className="card">
                 <img src="https://source.unsplash.com/random/300x300?abstract" />
                 <Subtitle1>{value.name}</Subtitle1>
+                <Tabs>
+                  <Tab selected>Dados Pessoais</Tab>
+                  <Tab>Contato</Tab>
+                  <Tab>Endereço</Tab>
+                </Tabs>
                 <Dados>
                   <Input
                     label="Profissão"
