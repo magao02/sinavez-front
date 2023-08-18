@@ -127,7 +127,7 @@ const UserData = () => {
             <Card>
               <Title2>Meus Dados</Title2>
               <div className="card">
-                Bom dia
+                <img src="https://source.unsplash.com/random/300x300?abstract" />
                 <Subtitle1>{value.name}</Subtitle1>
                 <Dados>
                   <Input
@@ -167,7 +167,7 @@ const UserData = () => {
                 </Dados>
               </div>
             </Card>
-            <Card>
+            <Card blue>
               <Title2>Meus Dependentes</Title2>
               <div className="card">
                 Bom dia denovo

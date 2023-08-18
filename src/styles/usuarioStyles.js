@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import theme from "./theme";
 import { Title2 } from "./commonStyles";
 
@@ -52,6 +52,19 @@ export const Card = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 16px;
+
+    flex: 1;
+
+    & > img {
+      width: 177px;
+      height: 177px;
+      border-radius: 177px;
+    }
+
+    ${props => props.blue ? css`
+      background: ${theme.colors.blue.shadow};
+      border: none;
+    ` : ''}
   }
 `;
 
