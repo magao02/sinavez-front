@@ -151,9 +151,9 @@ export const DadosPopup = styled.div`
   .modal {
     display: flex;
     flex-direction: column;
-    margin: 160px 60px;
+    margin: 100px 60px;
     @media(min-width: 1400px) {
-      margin: 160px 15vw;
+      margin: 100px 15vw;
     }
 
     background: ${theme.colors.white.default};
@@ -164,7 +164,12 @@ export const DadosPopup = styled.div`
       align-items: center;
       padding: 16px 24px;
 
-      border-bottom: 1px solid var(--azul-1, #5D9BDA);
+      border-bottom: 1px solid ${theme.colors.blue.background};
+
+      & > img {
+        cursor: pointer;
+        user-select: none;
+      }
     }
 
     & > article {

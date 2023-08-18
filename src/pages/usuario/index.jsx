@@ -23,15 +23,17 @@ import {
 import { Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
 import { formatCPF, formatRG } from "../../utils/format";
+import Button from "../../components/commom/Button";
+import CancelIcon from "../../assets/cancel_icon.svg";
 
-const UserDataPopup = ({ value }) => {
+const UserDataPopup = ({ value, onClose }) => {
   return (
     <DadosPopup>
       <div className="background" />
       <div className="modal">
         <header>
           <Title1>Meus Dados</Title1>
-          <span>um (X) mto bonito</span>
+          <img src={CancelIcon.src} onClick={() => onClose()} />
         </header>
         <article>
           <header>
@@ -42,7 +44,9 @@ const UserDataPopup = ({ value }) => {
                 <Subtitle2>{value.profissao}</Subtitle2>
               </div>
             </div>
-            <span>EDITAR DADOS</span>
+            <div>
+              <Button>EDITAR DADOS</Button>
+            </div>
           </header>
           <div className="columns">
             <div className="column">
@@ -279,7 +283,6 @@ const UserData = () => {
     const responseData = await getUserData();
     setValue(responseData);
     setIsLoaded(true);
-    setViewingPopup(true);
   }, [getUserData]);
 
   const checkNav = () => {
@@ -423,7 +426,7 @@ const UserData = () => {
                     />
                   </Row>
                 </Dados> }
-                <DadosButton>Ver todos os dados</DadosButton>
+                <DadosButton onClick={() => setViewingPopup(true)}>Ver todos os dados</DadosButton>
               </div>
             </Card>
             <Card blue>
@@ -435,7 +438,7 @@ const UserData = () => {
           </CardsContainer>
         </ContentContainer>
       )}
-      { viewingPopup && <UserDataPopup value={value} /> }
+      { viewingPopup && <UserDataPopup value={value} onClose={() => setViewingPopup(false)} /> }
     </Container>
   );
 };
