@@ -29,6 +29,7 @@ import Button from "../../components/commom/Button";
 import CancelIcon from "../../assets/cancel_icon.svg";
 import EditIcon from "../../assets/edit.svg";
 import TrashIcon from "../../assets/trash.svg";
+import DependentsForm from "../../components/DependentsContainer";
 
 const UserDataPopup = ({ value, onClose }) => {
   return (
@@ -262,6 +263,24 @@ const UserDataPopup = ({ value, onClose }) => {
   )
 };
 
+
+const AddDependentPopup = ({ onClose }) => {
+  return <>
+    <DadosPopup>
+      <div className="background" />
+      <div className="modal">
+        <header>
+          <Title1>Adicionar Dependente</Title1>
+          <img src={CancelIcon.src} onClick={() => onClose()} />
+        </header>
+        <article>
+          <DependentsForm variant="default" submitForm={() => onClose()} />
+        </article>
+      </div>
+    </DadosPopup>
+  </>;
+};
+
 const UserData = () => {
   const router = useRouter();
 
@@ -308,6 +327,7 @@ const UserData = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [viewingPopup, setViewingPopup] = useState(false);
+  const [viewingAddDependent, setViewingAddDependent] = useState(false);
 
   return (
     <Container>
@@ -449,13 +469,14 @@ const UserData = () => {
                   }
                 </Dependentes>
                 <div className="align-right">
-                  <Button>ADICIONAR DEPENDENTE</Button>
+                  <Button onClick={() => setViewingAddDependent(true)}>ADICIONAR DEPENDENTE</Button>
                 </div>
               </div>
             </Card>
           </CardsContainer>
         </ContentContainer>
       )}
+      { viewingAddDependent && <AddDependentPopup onClose={() => setViewingAddDependent(false)} /> }
       { viewingPopup && <UserDataPopup value={value} onClose={() => setViewingPopup(false)} /> }
     </Container>
   );
