@@ -19,6 +19,8 @@ import {
   Tab,
   DadosButton,
   DadosPopup,
+  Dependentes,
+  DependenteCell,
 } from "../../styles/usuarioStyles";
 import { Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -431,8 +433,15 @@ const UserData = () => {
             </Card>
             <Card blue>
               <Title2>Meus Dependentes</Title2>
-              <div className="card">
-                Bom dia denovo
+              <div className="card dependentes">
+                <Dependentes>
+                  <DependenteCell>José da silva</DependenteCell>
+                  <DependenteCell>Bernadete</DependenteCell>
+                  <DependenteCell>Luis figueredo</DependenteCell>
+                </Dependentes>
+                <div className="align-right">
+                  <Button>ADICIONAR DEPENDENTE</Button>
+                </div>
               </div>
             </Card>
           </CardsContainer>

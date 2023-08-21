@@ -63,6 +63,14 @@ export const Card = styled.div`
       border: none;
     ` : ''}
   }
+
+  .dependentes {
+    justify-content: space-between;
+  }
+
+  .align-right {
+    align-self: flex-end;
+  }
 `;
 
 export const Dados = styled.div`
@@ -210,4 +218,21 @@ export const DadosPopup = styled.div`
       }
     }
   }
+`;
+
+export const Dependentes = styled.div`
+  width: 100%;
+`;
+
+export const DependenteCell = styled.div`
+  background: ${theme.colors.white.default};
+
+  &:nth-of-type(even) {
+    background: ${theme.colors.blue.light};
+  }
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+  padding: 10px 8px;
+  width: 100%;
 `;
