@@ -31,6 +31,7 @@ function NavVariant({ variant, selectedPage }) {
   const [openedMenu, setOpenedMenu] = useState(false);
 
   const authContext = useAuth();
+  const router = useRouter();
 
   const handleSelectPage = useCallback(async () => {
     switch (selectedPage) {
@@ -48,22 +49,22 @@ function NavVariant({ variant, selectedPage }) {
   })
 
   const getUserData = useCallback(async () => {
-    try {
-      const responseData = await services.getUserData(
-        authContext.urlUser,
-        authContext.token
-      );
-      return responseData.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    const responseData = await services.getUserData(
+      authContext.urlUser,
+      authContext.token
+    );
+    return responseData.data;
   }, [authContext.token, authContext.urlUser]);
 
   const handleUserData = useCallback(async () => {
-    const responseData = await getUserData();
-    setName(responseData.name);
-    setIsLoaded(true);
+    try {
+      const responseData = await getUserData();
+      setName(responseData.name);
+      setIsLoaded(true);
+    } catch (err) {
+      // request failed, assume user is logged out
+      router.replace('/login');
+    }
   }, [getUserData]);
 
   const handleChangeMenu = useCallback(async () => {
