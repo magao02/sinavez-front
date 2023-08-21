@@ -22,11 +22,13 @@ import {
   Dependentes,
   DependenteCell,
 } from "../../styles/usuarioStyles";
-import { Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
+import { Body2, Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
 import { formatCPF, formatRG } from "../../utils/format";
 import Button from "../../components/commom/Button";
 import CancelIcon from "../../assets/cancel_icon.svg";
+import EditIcon from "../../assets/edit.svg";
+import TrashIcon from "../../assets/trash.svg";
 
 const UserDataPopup = ({ value, onClose }) => {
   return (
@@ -435,9 +437,16 @@ const UserData = () => {
               <Title2>Meus Dependentes</Title2>
               <div className="card dependentes">
                 <Dependentes>
-                  <DependenteCell>José da silva</DependenteCell>
-                  <DependenteCell>Bernadete</DependenteCell>
-                  <DependenteCell>Luis figueredo</DependenteCell>
+                  {
+                    ["Jose da silva alguma coisa", "Bernadete dantas", "Luis figueredo alguma coisa"].map(name => <DependenteCell>
+                      <Body2 className="nome">{name}</Body2>
+                      <Body2 className="parentesco">Filho</Body2>
+                      <div className="icons">
+                        <img src={EditIcon.src} />
+                        <img src={TrashIcon.src} />
+                      </div>
+                    </DependenteCell>)
+                  }
                 </Dependentes>
                 <div className="align-right">
                   <Button>ADICIONAR DEPENDENTE</Button>

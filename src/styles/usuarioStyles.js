@@ -235,4 +235,24 @@ export const DependenteCell = styled.div`
 
   padding: 10px 8px;
   width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  --color: rgba(0, 0, 0, 0.87);
+
+  .nome {
+    flex: 4;
+    color: var(--color);
+  }
+
+  .parentesco {
+    flex: 3;
+    color: var(--color);
+  }
+
+  .icons {
+    display: flex;
+    gap: 8px;
+  }
 `;
