@@ -61,10 +61,7 @@ function NavVariant({ variant, selectedPage }) {
       const responseData = await getUserData();
       setName(responseData.name);
       setIsLoaded(true);
-    } catch (err) {
-      // request failed, assume user is logged out
-      router.replace('/login');
-    }
+    } catch (err) {}
   }, [getUserData]);
 
   const handleChangeMenu = useCallback(async () => {
