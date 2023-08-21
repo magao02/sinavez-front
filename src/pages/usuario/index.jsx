@@ -32,12 +32,17 @@ import TrashIcon from "../../assets/trash.svg";
 import DependentsForm from "../../components/DependentsContainer";
 
 const UserDataPopup = ({ value, onClose }) => {
+  const [editing, setEditing] = useState(false);
+
+  // when not editing hide the required star
+  const variantRequired = editing ? "default" : "default-optional";
+
   return (
     <DadosPopup>
       <div className="background" />
       <div className="modal">
         <header>
-          <Title1>Meus Dados</Title1>
+          <Title1>{ editing ? "Editar Dados" : "Meus Dados"}</Title1>
           <img src={CancelIcon.src} onClick={() => onClose()} />
         </header>
         <article>
@@ -50,7 +55,7 @@ const UserDataPopup = ({ value, onClose }) => {
               </div>
             </div>
             <div>
-              <Button>EDITAR DADOS</Button>
+              { !editing && <Button onClick={() => setEditing(true)}>EDITAR DADOS</Button> }
             </div>
           </header>
           <div className="columns">
@@ -59,42 +64,42 @@ const UserDataPopup = ({ value, onClose }) => {
                 <Subtitle2>Dados Pessoais</Subtitle2>
                 <Input
                   label="Nome completo"
-                  variant="default-optional"
+                  variant={variantRequired}
                   initialValue={value.name}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Profissão"
-                  variant="default-optional"
+                  variant={variantRequired}
                   initialValue={value.profissao}
-                  disabled
+                  disabled={!editing}
                 />
                 <Row>
                   <Input
                     label="CPF"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={formatCPF(value.cpf)}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Data de Nascimento"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.nascimento}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
                 <Row>
                   <Input
                     label="Registro Geral (RG)"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={formatRG(value.rg)}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Data de Emissão"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.emissao}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
                 <Row>
@@ -102,13 +107,13 @@ const UserDataPopup = ({ value, onClose }) => {
                     label="Naturalidade"
                     variant="default-optional"
                     initialValue={value.regional.naturalidade}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Nacionalidade"
                     variant="default-optional"
                     initialValue={value.regional.nacionalidade}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
               </Dados>
@@ -117,43 +122,43 @@ const UserDataPopup = ({ value, onClose }) => {
                 <Row>
                   <Input
                     label="Nome da Rua"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.endereco.rua}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Número"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.endereco.numero}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
                 <Row>
                   <Input
                     label="Bairro"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.endereco.bairro}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Complemento"
                     variant="default-optional"
                     initialValue={value.endereco.complemento}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
                 <Row>
                   <Input
                     label="Cidade"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.regional.municipio}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Estado"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.regional.estado}
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
               </Dados>
@@ -162,28 +167,28 @@ const UserDataPopup = ({ value, onClose }) => {
                 <Row>
                   <Input
                     label="Celular"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.telefone}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Telefone Fixo"
                     variant="default-optional"
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
                 <Row>
                   <Input
                     label="E-mail"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue={value.email}
-                    disabled
+                    disabled={!editing}
                   />
                   <Input
                     label="Senha"
-                    variant="default-optional"
+                    variant={variantRequired}
                     initialValue="oxente"
-                    disabled
+                    disabled={!editing}
                   />
                 </Row>
               </Dados>
@@ -196,13 +201,13 @@ const UserDataPopup = ({ value, onClose }) => {
                   label="Curso de Formação"
                   variant="default-optional"
                   initialValue={value.formacaoSuperior}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Data de Formação"
                   variant="default-optional"
                   initialValue={value.dataFormacao}
-                  disabled
+                  disabled={!editing}
                 />
               </Dados>
 
@@ -212,19 +217,19 @@ const UserDataPopup = ({ value, onClose }) => {
                   label="Organização ou empresa que trabalha"
                   variant="default-optional"
                   initialValue={value.empresa}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Instituição"
                   variant="default-optional"
                   initialValue={value.instituicaoSuperior}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Salário"
                   variant="default-optional"
                   initialValue={value.salario}
-                  disabled
+                  disabled={!editing}
                 />
               </Dados>
 
@@ -234,29 +239,33 @@ const UserDataPopup = ({ value, onClose }) => {
                   label="Número de registro no conselho"
                   variant="default-optional"
                   initialValue={value.numRegistroConselho}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Data de registro no conselho"
                   variant="default-optional"
                   initialValue={value.dataRegistroConselho}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Data da afiliação"
                   variant="default-optional"
                   initialValue={value.dataAfiliacao}
-                  disabled
+                  disabled={!editing}
                 />
                 <Input
                   label="Número de Inscrição"
                   variant="default-optional"
                   initialValue={value.numInscricao}
-                  disabled
+                  disabled={!editing}
                 />
               </Dados>
             </div>
           </div>
+          { editing && <div className="confirm-buttons">
+            <div className="cancel">CANCELAR</div>
+            <Button>SALVAR ALTERAÇÕES</Button>
+          </div> }
         </article>
       </div>
     </DadosPopup>

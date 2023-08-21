@@ -216,6 +216,30 @@ export const DadosPopup = styled.div`
           gap: 16px;
         }
       }
+
+      .confirm-buttons {
+        align-self: center;
+        padding-top: 32px;
+        display: flex;
+        gap: 24px;
+
+        .cancel {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px;
+
+          color: ${theme.colors.gray.default};
+
+          font-family: Roboto;
+          font-size: 16px;
+          font-weight: 500;
+          text-transform: uppercase;
+
+          user-select: none;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;
