@@ -128,6 +128,7 @@ const Home = () => {
 
           <BottomDivider />
 
+          { authContext.admin && <>
           <Texts>
             <BottonTitle>
               Espaço Administrativo
@@ -178,6 +179,8 @@ const Home = () => {
               </Button>
             </Link>
           </BottonMain>
+          </>}
+
         </BottonMainContent>
       </BottomCotainer>
       <BottonDetail>
