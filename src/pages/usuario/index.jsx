@@ -74,8 +74,9 @@ export const InputValue = forwardRef(({ ...rest }, ref) => {
 
   useEffect(() => {
     if (ref) {
-      if (!ref.current)
+      if (!ref.current) {
         ref.current = {};
+      }
       ref.current.validate = () => valueRef.current?.validate();
       ref.current.hasChanged = false;
       ref.current.resetChanged = () => {
@@ -128,8 +129,18 @@ const UserDataPopup = ({ value, onClose }) => {
     rg: useRef(null),
     nascimento: useRef(null),
     emissao: useRef(null),
-    // naturalidade: useRef(null),
-    // nacionalidade: useRef(null),
+    regional: {
+      naturalidade: useRef(null),
+      nacionalidade: useRef(null),
+      municipio: useRef(null),
+      estado: useRef(null),
+    },
+    endereco: {
+      rua: useRef(null),
+      numero: useRef(null),
+      bairro: useRef(null),
+      complemento: useRef(null),
+    },
     telefone: useRef(null),
     email: useRef(null),
     formacaoSuperior: useRef(null),
@@ -143,22 +154,39 @@ const UserDataPopup = ({ value, onClose }) => {
     numInscricao: useRef(null),
   };
 
-  const handleSave = async () => {
+  const authContext = useAuth();
+  const router = useRouter();
+
+  const handleSave = useCallback(async () => {
     setTriedCancel(false);
     setTriedClose(false);
 
-    const valid = (await Promise.all(Object.values(refs).map(ref => {
-      return ref.current.validate();
+    const valid = (await Promise.all(Object.keys(refs).map(async key => {
+      if (key === 'regional' || key == 'endereco') {
+        return (await Promise.all(Object.values(refs[key]).map(ref => ref.current.validate()))).every(x => !!x);
+      } else {
+        return await refs[key].current.validate();
+      }
     }))).every(x => !!x);
 
     if (valid) {
       // save, then close and reload page
       setEditing(false);
+      const data = Object.fromEntries(Object.entries(refs).map(([key, value]) => {
+        if (key === 'regional' || key == 'endereco') {
+          return [key, Object.fromEntries(Object.entries(value).map(([k, ref]) => [k, ref.current.value]))];
+        } else {
+          return [key, value.current.value];
+        }
+      }));
+      await service.setData(authContext.urlUser, data, authContext.token);
+      router.reload();
+      onClose();
     } else {
       // something was invalid
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
+  }, [authContext, router]);
 
   return <>
     <DadosPopup>
@@ -242,12 +270,14 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant="default-optional"
                     initialValue={value.regional.naturalidade}
                     disabled={!editing}
+                    ref={refs.regional.naturalidade}
                   />
                   <Input
                     label="Nacionalidade"
                     variant="default-optional"
                     initialValue={value.regional.nacionalidade}
                     disabled={!editing}
+                    ref={refs.regional.nacionalidade}
                   />
                 </Row>
               </Dados>
@@ -259,12 +289,16 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant={variantRequired}
                     initialValue={value.endereco.rua}
                     disabled={!editing}
+                    validate={validation.requiredTextField}
+                    ref={refs.endereco.rua}
                   />
                   <Input
                     label="Número"
                     variant={variantRequired}
                     initialValue={value.endereco.numero}
                     disabled={!editing}
+                    validate={validation.requiredTextField}
+                    ref={refs.endereco.numero}
                   />
                 </Row>
                 <Row>
@@ -273,12 +307,15 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant={variantRequired}
                     initialValue={value.endereco.bairro}
                     disabled={!editing}
+                    validate={validation.requiredTextField}
+                    ref={refs.endereco.bairro}
                   />
                   <Input
                     label="Complemento"
                     variant="default-optional"
                     initialValue={value.endereco.complemento}
                     disabled={!editing}
+                    ref={refs.endereco.complemento}
                   />
                 </Row>
                 <Row>
@@ -287,12 +324,16 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant={variantRequired}
                     initialValue={value.regional.municipio}
                     disabled={!editing}
+                    validate={validation.requiredTextField}
+                    ref={refs.regional.municipio}
                   />
                   <Input
                     label="Estado"
                     variant={variantRequired}
                     initialValue={value.regional.estado}
                     disabled={!editing}
+                    validate={validation.requiredTextField}
+                    ref={refs.regional.estado}
                   />
                 </Row>
               </Dados>
