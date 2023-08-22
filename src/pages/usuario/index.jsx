@@ -69,9 +69,28 @@ const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfir
 
 const UserDataPopup = ({ value, onClose }) => {
   const [editing, setEditing] = useState(false);
+  const [triedCancel, setTriedCancel] = useState(false);
+  const [triedClose, setTriedClose] = useState(false);
 
   // when not editing hide the required star
   const variantRequired = editing ? "default" : "default-optional";
+
+  const handleClose = () => {
+    if (editing) {
+      setTriedClose(true);
+    } else {
+      onClose();
+    }
+  };
+
+  const handleCancel = () => {
+    onClose();
+  };
+
+  const handleSave = () => {
+    // save, then close and reload page
+    onClose();
+  };
 
   return <>
     <DadosPopup>
@@ -79,7 +98,7 @@ const UserDataPopup = ({ value, onClose }) => {
       <div className="modal">
         <header>
           <Title1>{ editing ? "Editar Dados" : "Meus Dados"}</Title1>
-          <img src={CancelIcon.src} onClick={() => onClose()} />
+          <img src={CancelIcon.src} onClick={handleClose} />
         </header>
         <article>
           <header>
@@ -299,20 +318,29 @@ const UserDataPopup = ({ value, onClose }) => {
             </div>
           </div>
           { editing && <div className="confirm-buttons">
-            <div className="cancel">CANCELAR</div>
-            <Button>SALVAR ALTERAÇÕES</Button>
+            <div className="cancel" onClick={() => setTriedCancel(true)}>CANCELAR</div>
+            <Button onClick={handleSave}>SALVAR ALTERAÇÕES</Button>
           </div> }
         </article>
       </div>
     </DadosPopup>
-    { editing && <BigConfirmPopup
+    { triedCancel && <BigConfirmPopup
       title="Cancelar Alterações"
       image={WomanExclamation.src}
       body="Deseja realmente cancelar as alterações não salvas?"
-      confirmText="SALVAR ALTERAÇÕES"
       cancelText="CANCELAR ALTERAÇÕES"
-      onCancel={() => setEditing(false)}
-      onConfirm={() => setEditing(false)}
+      confirmText="SALVAR ALTERAÇÕES"
+      onCancel={handleCancel}
+      onConfirm={handleSave}
+    /> }
+    { triedClose && <BigConfirmPopup
+      title="Alterações Não Salvas"
+      image={WomanExclamation.src}
+      body="Deseja sair sem salvar as alterações? "
+      cancelText="CANCELAR ALTERAÇÕES"
+      confirmText="SALVAR ALTERAÇÕES"
+      onCancel={handleCancel}
+      onConfirm={handleSave}
     /> }
   </>;
 };
