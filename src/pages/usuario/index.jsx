@@ -58,8 +58,8 @@ const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfir
             <Subtitle1>{body}</Subtitle1>
           </section>
           <footer>
-            <ColorButton transparent onClick={() => onCancel()}>{cancelText}</ColorButton>
-            <ColorButton onClick={() => onConfirm()}>{confirmText}</ColorButton>
+            { cancelText && <ColorButton transparent onClick={() => onCancel()}>{cancelText}</ColorButton> }
+            { confirmText && <ColorButton onClick={() => onConfirm()}>{confirmText}</ColorButton> }
           </footer>
         </article>
       </div>
@@ -106,6 +106,7 @@ const UserDataPopup = ({ value, onClose }) => {
   const [editing, setEditing] = useState(false);
   const [triedCancel, setTriedCancel] = useState(false);
   const [triedClose, setTriedClose] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   // when not editing hide the required star
   const variantRequired = editing ? "default" : "default-optional";
@@ -171,7 +172,6 @@ const UserDataPopup = ({ value, onClose }) => {
 
     if (valid) {
       // save, then close and reload page
-      setEditing(false);
       const data = Object.fromEntries(Object.entries(refs).map(([key, value]) => {
         if (key === 'regional' || key == 'endereco') {
           return [key, Object.fromEntries(Object.entries(value).map(([k, ref]) => [k, ref.current.value]))];
@@ -179,9 +179,14 @@ const UserDataPopup = ({ value, onClose }) => {
           return [key, value.current.value];
         }
       }));
-      await service.setData(authContext.urlUser, data, authContext.token);
-      router.reload();
-      onClose();
+      try {
+        await service.setData(authContext.urlUser, data, authContext.token);
+        setEditing(false);
+        router.reload();
+        onClose();
+      } catch (err) {
+        setShowError(true);
+      }
     } else {
       // something was invalid
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -474,6 +479,13 @@ const UserDataPopup = ({ value, onClose }) => {
       confirmText="SALVAR ALTERAÇÕES"
       onCancel={handleCancel}
       onConfirm={handleSave}
+    /> }
+    { showError && <BigConfirmPopup
+      title="Erro Desconhecido"
+      image={WomanExclamation.src}
+      body="Houve um erro ao tentar salvar as alterações. Por favor tente novamente"
+      cancelText="VOLTAR"
+      onCancel={() => setShowError(false)}
     /> }
   </>;
 };
