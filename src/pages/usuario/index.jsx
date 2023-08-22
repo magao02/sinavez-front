@@ -21,6 +21,8 @@ import {
   DadosPopup,
   Dependentes,
   DependenteCell,
+  BigCenteredPopup,
+  ColorButton,
 } from "../../styles/usuarioStyles";
 import { Body2, Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -30,6 +32,40 @@ import CancelIcon from "../../assets/cancel_icon.svg";
 import EditIcon from "../../assets/edit.svg";
 import TrashIcon from "../../assets/trash.svg";
 import DependentsForm from "../../components/DependentsContainer";
+import WomanExclamation from "../../assets/woman_exclamation.svg";
+
+
+const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfirm, onCancel }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    // ran when the component is destroyed
+    return () => {
+      document.body.style.overflow = "";
+    };
+  });
+
+  return <>
+    <BigCenteredPopup>
+      <div className="background" />
+      <div className="container">
+        <article>
+          <header>
+            <Title1>{title}</Title1>
+          </header>
+          <section>
+            { image && <img src={image} /> }
+            <Subtitle1>{body}</Subtitle1>
+          </section>
+          <footer>
+            <ColorButton transparent onClick={() => onCancel()}>{cancelText}</ColorButton>
+            <ColorButton onClick={() => onConfirm()}>{confirmText}</ColorButton>
+          </footer>
+        </article>
+      </div>
+    </BigCenteredPopup>
+  </>;
+};
 
 const UserDataPopup = ({ value, onClose }) => {
   const [editing, setEditing] = useState(false);
@@ -37,7 +73,7 @@ const UserDataPopup = ({ value, onClose }) => {
   // when not editing hide the required star
   const variantRequired = editing ? "default" : "default-optional";
 
-  return (
+  return <>
     <DadosPopup>
       <div className="background" />
       <div className="modal">
@@ -269,7 +305,16 @@ const UserDataPopup = ({ value, onClose }) => {
         </article>
       </div>
     </DadosPopup>
-  )
+    { editing && <BigConfirmPopup
+      title="Cancelar Alterações"
+      image={WomanExclamation.src}
+      body="Deseja realmente cancelar as alterações não salvas?"
+      confirmText="SALVAR ALTERAÇÕES"
+      cancelText="CANCELAR ALTERAÇÕES"
+      onCancel={() => setEditing(false)}
+      onConfirm={() => setEditing(false)}
+    /> }
+  </>;
 };
 
 
