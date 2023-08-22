@@ -394,6 +394,7 @@ const UserDataPopup = ({ value, onClose }) => {
                   initialValue={value.dataFormacao}
                   disabled={!editing}
                   ref={refs.dataFormacao}
+                  validate={validation.testDate}
                 />
               </Dados>
 
@@ -437,6 +438,7 @@ const UserDataPopup = ({ value, onClose }) => {
                   initialValue={value.dataRegistroConselho}
                   disabled={!editing}
                   ref={refs.dataRegistroConselho}
+                  validate={validation.testDate}
                 />
                 <Input
                   label="Data da afiliação"
@@ -444,6 +446,7 @@ const UserDataPopup = ({ value, onClose }) => {
                   initialValue={value.dataAfiliacao}
                   disabled={!editing}
                   ref={refs.dataAfiliacao}
+                  validate={validation.testDate}
                 />
                 <Input
                   label="Número de Inscrição"
