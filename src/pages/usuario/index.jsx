@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, forwardRef, useRef } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -67,6 +67,40 @@ const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfir
   </>;
 };
 
+import * as validation from "../../utils/validation";
+
+export const InputValue = forwardRef(({ ...rest }, ref) => {
+  const valueRef = useRef(null);
+
+  useEffect(() => {
+    if (ref) {
+      if (!ref.current)
+        ref.current = {};
+      ref.current.validate = () => valueRef.current?.validate();
+      ref.current.hasChanged = false;
+      ref.current.resetChanged = () => {
+        ref.current.hasChanged = false;
+      };
+    }
+  }, [valueRef]);
+
+  const onChange = event => {
+    if (ref) {
+      ref.current.value = event.target.value;
+      ref.current.hasChanged = true;
+    }
+  };
+
+  return (
+    <Input
+      ref={valueRef}
+      onChange={onChange}
+      {...rest}
+    />
+  );
+});
+
+
 const UserDataPopup = ({ value, onClose }) => {
   const [editing, setEditing] = useState(false);
   const [triedCancel, setTriedCancel] = useState(false);
@@ -87,9 +121,43 @@ const UserDataPopup = ({ value, onClose }) => {
     onClose();
   };
 
-  const handleSave = () => {
-    // save, then close and reload page
-    onClose();
+  const refs = {
+    name: useRef(null),
+    profissao: useRef(null),
+    cpf: useRef(null),
+    rg: useRef(null),
+    nascimento: useRef(null),
+    emissao: useRef(null),
+    // naturalidade: useRef(null),
+    // nacionalidade: useRef(null),
+    telefone: useRef(null),
+    email: useRef(null),
+    formacaoSuperior: useRef(null),
+    dataFormacao: useRef(null),
+    empresa: useRef(null),
+    instituicaoSuperior: useRef(null),
+    salario: useRef(null),
+    numRegistroConselho: useRef(null),
+    dataRegistroConselho: useRef(null),
+    dataAfiliacao: useRef(null),
+    numInscricao: useRef(null),
+  };
+
+  const handleSave = async () => {
+    setTriedCancel(false);
+    setTriedClose(false);
+
+    const valid = (await Promise.all(Object.values(refs).map(ref => {
+      return ref.current.validate();
+    }))).every(x => !!x);
+
+    if (valid) {
+      // save, then close and reload page
+      setEditing(false);
+    } else {
+      // something was invalid
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return <>
@@ -117,44 +185,55 @@ const UserDataPopup = ({ value, onClose }) => {
             <div className="column">
               <Dados>
                 <Subtitle2>Dados Pessoais</Subtitle2>
-                <Input
+                <InputValue
                   label="Nome completo"
                   variant={variantRequired}
                   initialValue={value.name}
                   disabled={!editing}
+                  validate={validation.requiredTextField}
+                  ref={refs.name}
                 />
-                <Input
+                <InputValue
                   label="Profissão"
                   variant={variantRequired}
                   initialValue={value.profissao}
                   disabled={!editing}
+                  ref={refs.profissao}
                 />
                 <Row>
-                  <Input
+                  <InputValue
                     label="CPF"
                     variant={variantRequired}
-                    initialValue={formatCPF(value.cpf)}
+                    initialValue={value.cpf}
                     disabled={!editing}
+                    ref={refs.cpf}
+                    validate={validation.testRequiredCpf}
                   />
-                  <Input
+                  <InputValue
                     label="Data de Nascimento"
                     variant={variantRequired}
                     initialValue={value.nascimento}
                     disabled={!editing}
+                    ref={refs.nascimento}
+                    validate={validation.testRequiredData}
                   />
                 </Row>
                 <Row>
-                  <Input
+                  <InputValue
                     label="Registro Geral (RG)"
                     variant={variantRequired}
-                    initialValue={formatRG(value.rg)}
+                    initialValue={value.rg}
                     disabled={!editing}
+                    ref={refs.rg}
+                    validate={validation.testRequiredNumbers}
                   />
                   <Input
                     label="Data de Emissão"
                     variant={variantRequired}
                     initialValue={value.emissao}
                     disabled={!editing}
+                    ref={refs.emissao}
+                    validate={validation.testRequiredData}
                   />
                 </Row>
                 <Row>
@@ -225,6 +304,8 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant={variantRequired}
                     initialValue={value.telefone}
                     disabled={!editing}
+                    ref={refs.telefone}
+                    validate={validation.testRequiredPhone}
                   />
                   <Input
                     label="Telefone Fixo"
@@ -238,6 +319,8 @@ const UserDataPopup = ({ value, onClose }) => {
                     variant={variantRequired}
                     initialValue={value.email}
                     disabled={!editing}
+                    ref={refs.email}
+                    validate={validation.testEmail}
                   />
                   <Input
                     label="Senha"
@@ -257,12 +340,14 @@ const UserDataPopup = ({ value, onClose }) => {
                   variant="default-optional"
                   initialValue={value.formacaoSuperior}
                   disabled={!editing}
+                  ref={refs.formacaoSuperior}
                 />
                 <Input
                   label="Data de Formação"
                   variant="default-optional"
                   initialValue={value.dataFormacao}
                   disabled={!editing}
+                  ref={refs.dataFormacao}
                 />
               </Dados>
 
@@ -273,18 +358,21 @@ const UserDataPopup = ({ value, onClose }) => {
                   variant="default-optional"
                   initialValue={value.empresa}
                   disabled={!editing}
+                  ref={refs.empresa}
                 />
                 <Input
                   label="Instituição"
                   variant="default-optional"
                   initialValue={value.instituicaoSuperior}
                   disabled={!editing}
+                  ref={refs.instituicaoSuperior}
                 />
                 <Input
                   label="Salário"
                   variant="default-optional"
                   initialValue={value.salario}
                   disabled={!editing}
+                  ref={refs.salario}
                 />
               </Dados>
 
@@ -295,24 +383,28 @@ const UserDataPopup = ({ value, onClose }) => {
                   variant="default-optional"
                   initialValue={value.numRegistroConselho}
                   disabled={!editing}
+                  ref={refs.numRegistroConselho}
                 />
                 <Input
                   label="Data de registro no conselho"
                   variant="default-optional"
                   initialValue={value.dataRegistroConselho}
                   disabled={!editing}
+                  ref={refs.dataRegistroConselho}
                 />
                 <Input
                   label="Data da afiliação"
                   variant="default-optional"
                   initialValue={value.dataAfiliacao}
                   disabled={!editing}
+                  ref={refs.dataAfiliacao}
                 />
                 <Input
                   label="Número de Inscrição"
                   variant="default-optional"
                   initialValue={value.numInscricao}
                   disabled={!editing}
+                  ref={refs.numInscricao}
                 />
               </Dados>
             </div>
