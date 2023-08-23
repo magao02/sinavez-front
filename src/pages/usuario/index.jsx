@@ -517,6 +517,11 @@ const AddDependentPopup = ({ onClose, obj }) => {
       }));
       if (editing) {
         await service.updateDependent(data, obj.urlDep, authContext.token);
+        for (let key in data) {
+          if (data[key]) {
+            obj[key] = data[key];
+          }
+        }
       } else {
         await service.addDependent(data, authContext.urlUser, authContext.token);
       }
