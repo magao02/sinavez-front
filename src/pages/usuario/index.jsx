@@ -496,7 +496,7 @@ const UserDataPopup = ({ value, onClose }) => {
 };
 
 
-const AddDependentPopup = ({ onClose, obj }) => {
+const AddDependentPopup = ({ onClose, obj, onAdd }) => {
   const refs = {
     name: useRef(null),
     nascimento: useRef(null),
@@ -509,12 +509,15 @@ const AddDependentPopup = ({ onClose, obj }) => {
   const authContext = useAuth();
   const editing = !!obj;
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handleDone = useCallback(async () => {
     const valid = (await Promise.all(Object.values(refs).map(ref => ref.current.validate()))).every(x => !!x);
     if (valid) {
       const data = Object.fromEntries(Object.entries(refs).map(([key, value]) => {
         return [key, value.current.value];
       }));
+      setIsProcessing(true);
       if (editing) {
         await service.updateDependent(data, obj.urlDep, authContext.token);
         for (let key in data) {
@@ -523,10 +526,18 @@ const AddDependentPopup = ({ onClose, obj }) => {
           }
         }
       } else {
-        await service.addDependent(data, authContext.urlUser, authContext.token);
+        const res = await service.addDependent(data, authContext.urlUser, authContext.token);
+        if (onAdd) {
+          onAdd({
+            ...data,
+            urlDep: res.data.urlDep
+          })
+        }
       }
 
       onClose();
+    } else {
+      setIsProcessing(false);
     }
   }, [refs, authContext]);
 
@@ -590,10 +601,10 @@ const AddDependentPopup = ({ onClose, obj }) => {
               validate={validation.requiredTextField}
             />
           </DependenteFormModal>
-          <div className="buttons">
+          { !isProcessing && <div className="buttons">
             <ColorButton onClick={() => onClose()} transparent>CANCELAR</ColorButton>
             <ColorButton onClick={handleDone} cyan>CONCLUIR</ColorButton>
-          </div>
+          </div> }
         </article>
       </div>
     </DependentePopup>
@@ -665,6 +676,10 @@ const UserData = () => {
     setDeletingDependent(null);
     await service.removeDependent(authContext.token, deletingDependent.urlDep);
   }, [authContext.token, deletingDependent]);
+
+  const handleAddDependent = (obj) => {
+    setDependentList([...dependentList, obj]);
+  };
 
   return (
     <Container>
@@ -813,8 +828,8 @@ const UserData = () => {
           </CardsContainer>
         </ContentContainer>
       )}
-      { viewingAddDependent && <AddDependentPopup onClose={() => setViewingAddDependent(false)} /> }
       { viewingPopup && <UserDataPopup value={value} onClose={() => setViewingPopup(false)} /> }
+      { viewingAddDependent && <AddDependentPopup onClose={() => setViewingAddDependent(false)} onAdd={handleAddDependent} /> }
       { editingDependent && <AddDependentPopup onClose={() => setEditingDependent(null)} obj={editingDependent} /> }
       { deletingDependent && <BigConfirmPopup
         title="Excluir Dependente"
