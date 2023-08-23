@@ -33,8 +33,8 @@ import Button from "../../components/commom/Button";
 import CancelIcon from "../../assets/cancel_icon.svg";
 import EditIcon from "../../assets/edit.svg";
 import TrashIcon from "../../assets/trash.svg";
-import DependentsForm from "../../components/DependentsContainer";
 import WomanExclamation from "../../assets/woman_exclamation.svg";
+import ManTrashCan from "../../assets/man_deleting_trash_can.svg";
 
 
 const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfirm, onCancel }) => {
@@ -834,7 +834,7 @@ const UserData = () => {
       { deletingDependent && <BigConfirmPopup
         title="Excluir Dependente"
         body={`Tem certeza que deseja excluir o dependente ${deletingDependent.name}?`}
-        image={WomanExclamation.src}
+        image={ManTrashCan.src}
         cancelText="CANCELAR"
         confirmText="DELETAR"
         onCancel={() => setDeletingDependent(null)}
