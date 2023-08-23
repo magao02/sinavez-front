@@ -246,6 +246,8 @@ export const DadosPopup = styled.div`
 
 export const Dependentes = styled.div`
   width: 100%;
+  overflow-y: scroll;
+  max-height: 525px;
 `;
 
 export const DependenteCell = styled.div`
