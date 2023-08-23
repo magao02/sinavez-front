@@ -507,14 +507,19 @@ const AddDependentPopup = ({ onClose, obj }) => {
   };
 
   const authContext = useAuth();
+  const editing = !!obj;
 
   const handleDone = useCallback(async () => {
-    const valid = (await Promise.all(Object.values(refs).map(ref => ref.current.validate()))).every(x => !!x);    
+    const valid = (await Promise.all(Object.values(refs).map(ref => ref.current.validate()))).every(x => !!x);
     if (valid) {
       const data = Object.fromEntries(Object.entries(refs).map(([key, value]) => {
         return [key, value.current.value];
       }));
-      await service.addDependent(data, authContext.urlUser, authContext.token);
+      if (editing) {
+        await service.updateDependent(data, obj.urlDep, authContext.token);
+      } else {
+        await service.addDependent(data, authContext.urlUser, authContext.token);
+      }
 
       onClose();
     }
@@ -525,7 +530,7 @@ const AddDependentPopup = ({ onClose, obj }) => {
       <div className="background" />
       <div className="modal">
         <header>
-          <Title1>Adicionar Dependente</Title1>
+          <Title1>{ editing ? "Editar Dados" : "Adicionar Dependente" }</Title1>
           <img src={CancelIcon.src} onClick={() => onClose()} />
         </header>
         <article>
@@ -597,6 +602,7 @@ const UserData = () => {
 
   const [value, setValue] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [dependentList, setDependentList] = useState([]);
 
   const getUserData = useCallback(async () => {
     try {
@@ -614,8 +620,15 @@ const UserData = () => {
   const handleUserData = useCallback(async () => {
     const responseData = await getUserData();
     setValue(responseData);
-    setIsLoaded(true);
   }, [getUserData]);
+
+  const fetchDependents = useCallback(async () => {
+    const dependentsReponse = await service.getDependents(
+      authContext.urlUser,
+      authContext.token
+    );
+    setDependentList(dependentsReponse.data);
+  }, [authContext]);
 
   const checkNav = () => {
     if (authContext.admin == 'true' || authContext.admin == true) {
@@ -626,17 +639,28 @@ const UserData = () => {
     }
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!authContext.auth) {
       router.push("/login");
       return;
     }
-    handleUserData();
-  }, [authContext.auth, handleUserData, router]);
+    await handleUserData();
+    await fetchDependents();
+    setIsLoaded(true);
+  }, [authContext.auth, handleUserData, router, fetchDependents]);
 
   const [tabIndex, setTabIndex] = useState(0);
   const [viewingPopup, setViewingPopup] = useState(false);
   const [viewingAddDependent, setViewingAddDependent] = useState(false);
+  const [editingDependent, setEditingDependent] = useState(null);
+
+  const handleEditDependent = (obj) => {
+    setEditingDependent(obj);
+  };
+
+  const handleDeleteDependent = (obj) => {
+
+  };
 
   return (
     <Container>
@@ -767,12 +791,12 @@ const UserData = () => {
               <div className="card dependentes">
                 <Dependentes>
                   {
-                    ["Jose da silva alguma coisa", "Bernadete dantas", "Luis figueredo alguma coisa"].map(name => <DependenteCell>
-                      <Body2 className="nome">{name}</Body2>
-                      <Body2 className="parentesco">Filho</Body2>
+                    dependentList.map(obj => <DependenteCell>
+                      <Body2 className="nome">{obj.name}</Body2>
+                      <Body2 className="parentesco">{obj.parentesco}</Body2>
                       <div className="icons">
-                        <img src={EditIcon.src} />
-                        <img src={TrashIcon.src} />
+                        <img onClick={() => handleEditDependent(obj)} src={EditIcon.src} />
+                        <img onClick={() => handleDeleteDependent(obj)} src={TrashIcon.src} />
                       </div>
                     </DependenteCell>)
                   }
@@ -787,6 +811,7 @@ const UserData = () => {
       )}
       { viewingAddDependent && <AddDependentPopup onClose={() => setViewingAddDependent(false)} /> }
       { viewingPopup && <UserDataPopup value={value} onClose={() => setViewingPopup(false)} /> }
+      { editingDependent && <AddDependentPopup onClose={() => setEditingDependent(null)} obj={editingDependent} /> }
     </Container>
   );
 };

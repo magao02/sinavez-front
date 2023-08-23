@@ -278,6 +278,14 @@ export const DependenteCell = styled.div`
   .icons {
     display: flex;
     gap: 8px;
+
+    & img {
+      cursor: pointer;
+
+      &:hover {
+        filter: invert(50%);
+      }
+    }
   }
 `;
 
