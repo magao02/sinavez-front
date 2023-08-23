@@ -658,14 +658,13 @@ const UserData = () => {
   const [viewingPopup, setViewingPopup] = useState(false);
   const [viewingAddDependent, setViewingAddDependent] = useState(false);
   const [editingDependent, setEditingDependent] = useState(null);
+  const [deletingDependent, setDeletingDependent] = useState(null);
 
-  const handleEditDependent = (obj) => {
-    setEditingDependent(obj);
-  };
-
-  const handleDeleteDependent = (obj) => {
-
-  };
+  const handleDeleteDependent = useCallback(async () => {
+    setDependentList(dependentList.filter(value => value.urlDep !== deletingDependent.urlDep));
+    setDeletingDependent(null);
+    await service.removeDependent(authContext.token, deletingDependent.urlDep);
+  }, [authContext.token, deletingDependent]);
 
   return (
     <Container>
@@ -800,8 +799,8 @@ const UserData = () => {
                       <Body2 className="nome">{obj.name}</Body2>
                       <Body2 className="parentesco">{obj.parentesco}</Body2>
                       <div className="icons">
-                        <img onClick={() => handleEditDependent(obj)} src={EditIcon.src} />
-                        <img onClick={() => handleDeleteDependent(obj)} src={TrashIcon.src} />
+                        <img onClick={() => setEditingDependent(obj)} src={EditIcon.src} />
+                        <img onClick={() => setDeletingDependent(obj)} src={TrashIcon.src} />
                       </div>
                     </DependenteCell>)
                   }
@@ -817,6 +816,15 @@ const UserData = () => {
       { viewingAddDependent && <AddDependentPopup onClose={() => setViewingAddDependent(false)} /> }
       { viewingPopup && <UserDataPopup value={value} onClose={() => setViewingPopup(false)} /> }
       { editingDependent && <AddDependentPopup onClose={() => setEditingDependent(null)} obj={editingDependent} /> }
+      { deletingDependent && <BigConfirmPopup
+        title="Excluir Dependente"
+        body={`Tem certeza que deseja excluir o dependente ${deletingDependent.name}?`}
+        image={WomanExclamation.src}
+        cancelText="CANCELAR"
+        confirmText="DELETAR"
+        onCancel={() => setDeletingDependent(null)}
+        onConfirm={handleDeleteDependent}
+      /> }
     </Container>
   );
 };
