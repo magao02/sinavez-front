@@ -10,10 +10,11 @@ import {
 
 import edit_pen from "../../assets/edit_pen.svg";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import trash from "../../assets/trash.svg";
 import Input from "../commom/Input";
 import ConfirmButtons from "../commom/ConfirmButtons";
+import { v4 as uuid } from 'uuid';
 
 const RegrasApto = ({
   title,
@@ -26,30 +27,37 @@ const RegrasApto = ({
   setInputsBase,
 }) => {
   const [edit, setEdit] = useState(false);
-  const [inputId, setInputId] = useState(4);
   const [newRuleInput, setNewRuleInput] = useState("");
 
-  const [oldInput, setOldInput] = useState(inputsBase);
+  const [oldInput, setOldInput] = useState([]);
+  const hasReceivedInputsBase = useRef(false)
+
 
   useEffect(() => {
-    setOldInput(inputsBase);
-  }, []);
+    if(!hasReceivedInputsBase.current && inputsBase.length >= 1){
+      setOldInput(inputsBase)
+      hasReceivedInputsBase.current = true
+    }
+  }, [inputsBase])
+  
+
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    inputsBase.forEach((data) => {
+    const copy = [...inputsBase]
+    copy.forEach((data) => {
       if (data.id == id) {
         data.value = value;
       }
     });
+    setInputsBase(copy)
   };
 
   const addInput = () => {
-    setInputId(1 + inputId);
     setInputsBase([
       ...inputsBase,
       {
-        id: inputId,
+        id: uuid(),
         placeholder:
           "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
         value: newRuleInput,

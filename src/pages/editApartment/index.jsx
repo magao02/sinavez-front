@@ -60,8 +60,8 @@ const editApartment = () => {
   const authContext = useAuth();
   
   
-  useEffect(() => {
-    getApartmentInfo()
+  useEffect(async () => {
+    await getApartmentInfo()
   },[])
 
   // REQUISICAO POST
@@ -149,7 +149,7 @@ const editApartment = () => {
     var obj = []
     rules.forEach((data, key) => {
       var item = {
-        id: key,
+        id: uuid(),
           placeholder:
             "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
           value: data,
@@ -164,7 +164,7 @@ const editApartment = () => {
     var obj = []
       locaisNosArredores.forEach((data, key) => {
         var item = {
-          id: key,
+          id: uuid(),
           placeholder:
             "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
           value: data,

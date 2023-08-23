@@ -10,13 +10,22 @@ import edit_pen from "../../assets/edit_pen.svg";
 import Image from "next/image";
 import Input from "../commom/Input";
 import CheckBox from "../CheckBox";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConfirmButtons from "../commom/ConfirmButtons";
 
 const AptoItens = ({ title, itens, setItens, cautionModal, cancelAll, setCancelAll, setSaveAll, saveAll }) => {
   const [edit, setEdit] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [oldItens, setOldItens] = useState(itens);
+  const hasReceivedItens = useRef(false);
+
+
+  useEffect(() => {
+    if(!hasReceivedItens.current && itens.length >= 1){
+      setOldItens(itens)
+      hasReceivedItens.current = true
+    }
+  }, [itens])
 
   const addItens = () => {
     if (newItem.trim() != "") {
@@ -31,7 +40,6 @@ const AptoItens = ({ title, itens, setItens, cautionModal, cancelAll, setCancelA
   const deleteItem = (item) => {
     var copy = [...itens];
     var copy = copy.filter((data) => data.name != item.id);
-    console.log(item)
     setItens(copy);
   };
 
