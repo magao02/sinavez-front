@@ -359,6 +359,9 @@ export const ColorButton = styled(Subtitle2)`
     color: ${theme.colors.blue.heavy};
     box-shadow: none;
   `}
+  ${props => props.cyan && css`
+    background: #42908a;
+  `}
 
   &:hover {
     filter: brightness(90%);
@@ -367,4 +370,28 @@ export const ColorButton = styled(Subtitle2)`
   &:active {
     filter: brightness(80%);
   }
+`;
+
+export const DependentePopup = styled(DadosPopup)`
+  display: flex;
+  justify-content: center;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+  }
+`;
+
+export const DependenteFormModal = styled.div`
+  border-radius: 4px;
+  border: 1px dashed ${theme.colors.blue.shadow};
+  background: ${theme.colors.blue.light};
+
+  width: 500px;
+
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;

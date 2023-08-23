@@ -23,6 +23,8 @@ import {
   DependenteCell,
   BigCenteredPopup,
   ColorButton,
+  DependenteFormModal,
+  DependentePopup,
 } from "../../styles/usuarioStyles";
 import { Body2, Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -494,9 +496,32 @@ const UserDataPopup = ({ value, onClose }) => {
 };
 
 
-const AddDependentPopup = ({ onClose }) => {
+const AddDependentPopup = ({ onClose, obj }) => {
+  const refs = {
+    name: useRef(null),
+    nascimento: useRef(null),
+    cpf: useRef(null),
+    rg: useRef(null),
+    emissao: useRef(null),
+    parentesco: useRef(null),
+  };
+
+  const authContext = useAuth();
+
+  const handleDone = useCallback(async () => {
+    const valid = (await Promise.all(Object.values(refs).map(ref => ref.current.validate()))).every(x => !!x);    
+    if (valid) {
+      const data = Object.fromEntries(Object.entries(refs).map(([key, value]) => {
+        return [key, value.current.value];
+      }));
+      await service.addDependent(data, authContext.urlUser, authContext.token);
+
+      onClose();
+    }
+  }, [refs, authContext]);
+
   return <>
-    <DadosPopup>
+    <DependentePopup>
       <div className="background" />
       <div className="modal">
         <header>
@@ -504,10 +529,64 @@ const AddDependentPopup = ({ onClose }) => {
           <img src={CancelIcon.src} onClick={() => onClose()} />
         </header>
         <article>
-          <DependentsForm variant="default" submitForm={() => onClose()} />
+          <DependenteFormModal>
+            <Subtitle2>Dados do dependente</Subtitle2>
+            <Input
+              label="Nome Completo"
+              placeholder="Nome"
+              variant="default"
+              initialValue={obj?.name}
+              ref={refs.name}
+              validate={validation.requiredTextField}
+            />
+            <Input
+              label="Data de Nascimento"
+              placeholder="Data de Nascimento"
+              variant="default"
+              initialValue={obj?.nascimento}
+              ref={refs.nascimento}
+              validate={validation.testRequiredData}
+            />
+            <Input
+              label="CPF"
+              placeholder="CPF"
+              variant="default"
+              initialValue={obj?.cpf}
+              ref={refs.cpf}
+              validate={validation.testRequiredCpf}
+            />
+            <Input
+              label="RG"
+              placeholder="RG"
+              variant="default"
+              initialValue={obj?.rg}
+              ref={refs.rg}
+              validate={validation.testRequiredNumbers}
+            />
+            <Input
+              label="Data de Emissão"
+              placeholder="Data de Emissão"
+              variant="default"
+              initialValue={obj?.emissao}
+              ref={refs.emissao}
+              validate={validation.testRequiredData}
+            />
+            <Input
+              label="Parentesco"
+              placeholder="Parentesco"
+              variant="default"
+              initialValue={obj?.parentesco}
+              ref={refs.parentesco}
+              validate={validation.requiredTextField}
+            />
+          </DependenteFormModal>
+          <div className="buttons">
+            <ColorButton onClick={() => onClose()} transparent>CANCELAR</ColorButton>
+            <ColorButton onClick={handleDone} cyan>CONCLUIR</ColorButton>
+          </div>
         </article>
       </div>
-    </DadosPopup>
+    </DependentePopup>
   </>;
 };
 
