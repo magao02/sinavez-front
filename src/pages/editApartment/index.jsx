@@ -3,6 +3,7 @@ import Door from "../../assets/Door.svg";
 import Image from "next/image";
 import InfoAptoForm from "../../components/InfoAptoForm";
 import sucess_img from "../../assets/sucess_img.svg"
+import unsaved from "../../assets/unsaved.svg"
 
 import {
   Container,
@@ -34,7 +35,8 @@ import { v4 as uuid } from "uuid";
 import { Modal } from "../../components/commom/Modal";
 import cancel_img from "../../assets/cancel_alterations.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
-import DarkBackground from "../../components/commom/DarkBackground";
+import { useRouter } from "next/router";
+import AlertModal from "../../components/commom/AlertModal";
 
 const editApartment = () => {
   // INFORMACOES DO APTO
@@ -59,13 +61,19 @@ const editApartment = () => {
 
   // Modal de cancelar e salvar Alteracao
   const [showCancelModal, setShowCancelModal] = useState(false);
-  const [showSaveModal, setShowSaveModal] = useState(false)
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showModalUnsaved, setShowModalUnsaved] = useState(false);
+  const [showModalAlterations, setShowModalAlterations] = useState({
+    boolean: false,
+    text: "Alterações Salvas"
+  });
 
   // ITENS
   const [itensApto, setItensApto] = useState([]);
   const [commumArea, setCommunAreas] = useState([]);
 
   const authContext = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     getApartmentInfo();
@@ -267,7 +275,7 @@ const editApartment = () => {
     setCancelAll(true);
     setShowCautionMsg(false);
     modelData(oldData);
-    setShowCancelModal(!showCancelModal)
+    setShowCancelModal(false)
   };
 
   const handleSaveAll = () => {
@@ -275,13 +283,21 @@ const editApartment = () => {
     setShowCautionMsg(false);
   };
 
+  const checkAlterations = () => {
+    if(showCautionMsg){
+      setShowModalUnsaved(true)
+    }else{
+      router.push("/manageReservations")
+    }
+  }
+
   return (
     <Container>
       <Header>
         <Navigation variant={"admin"} />
       </Header>
       <Main>
-        <RedirectArea onClick={postRequisicaoApto}>
+        <RedirectArea onClick={checkAlterations}>
           <Button
             variant={"image"}
             style={{
@@ -396,6 +412,7 @@ const editApartment = () => {
             </InfoBox>
           </RightSide>
         </InfoApto>
+
         {showCautionMsg && (
           <CautionBox>
             <h3 style={{ color: "#3C3E45" }}>
@@ -429,6 +446,39 @@ const editApartment = () => {
               setShowSaveModal(true)
             }}
           />
+        )}
+
+        {showModalUnsaved && (
+          <Modal
+            title="Alterações Não Salvas"
+            img={unsaved.src}
+            asideText="Deseja sair sem salvar as alterações?"
+            ConfirmText="SIM"
+            ConfirmColor="Green"
+            CancelText="NÃO"
+            handleCancel={() => {
+              handleSaveAll()
+              setShowModalUnsaved(false)
+              setShowModalAlterations({boolean: true, text: "Alterações Salvas"})
+              setTimeout(() => {
+                router.push("/manageReservations")
+              ,[2000]})
+            }}
+            handleSave={() => {
+              handleCancelAll()
+              setShowModalUnsaved(false)
+              setShowModalAlterations({boolean: true, text: "Alterações não Salvas"})
+              setTimeout(() => {
+                router.push("/manageReservations")
+              ,[1000]})
+            }}
+          />
+        )}
+
+        {showModalAlterations.boolean && (
+            <AlertModal
+              title={showModalAlterations.text}
+            />
         )}
 
         {

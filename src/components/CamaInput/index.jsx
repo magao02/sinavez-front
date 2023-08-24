@@ -36,7 +36,10 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
           title="Excluir Cama"
           asideText="Deseja excluir uma das camas cadastradas?"
           handleSave={() => setShowModal(!showModal)}
-          handleCancel={() => deleteCama(id)}
+          handleCancel={() => {
+            deleteCama(id)
+            setShowModal(!showModal)
+          }}
           img={modal_img.src}
         />
       }
