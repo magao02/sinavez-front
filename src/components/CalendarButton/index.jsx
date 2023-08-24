@@ -1,7 +1,11 @@
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
-import { CalendarWrapper, Container, ReservarButton } from "./styles";
+import { CalendarWrapper, CalendarContainer, ReservarButton, BusyButton, Container, AvailableButton } from "./styles";
 import { useEffect, useState } from "react";
+import { ButtonArea } from "../../styles/apartamentoStyles";
+import Door from "../../assets/Door.svg";
+import Image from "next/image";
+import open_door from "../../assets/open_door.svg"
 
 const CalendarButton = ({ datas, setDatas }) => {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -34,9 +38,21 @@ const CalendarButton = ({ datas, setDatas }) => {
   };
 
   return (
-    <>
+    <Container>
+      {
+        showCalendar ?    
+        <BusyButton>
+          <Image src={Door} />
+          OCUPADO
+        </BusyButton>
+        :
+        <AvailableButton>
+          <Image src={open_door} />
+          DISPONÍVEL
+        </AvailableButton>
+      }
       {showCalendar ? (
-        <Container>
+        <CalendarContainer>
           <CalendarWrapper>
             {errorMsg ? (
               <p style={{ color: "red" }}>Preencha a Data Corretamente</p>
@@ -65,16 +81,17 @@ const CalendarButton = ({ datas, setDatas }) => {
             />
           </CalendarWrapper>
           <ReservarButton onClick={() => setShowCalendar(!showCalendar)}>RESERVAR</ReservarButton>
-        </Container>
+        </CalendarContainer>
       ) : (
-        <ReservarButton
-          style={{ fontSize: "18px" }}
-          onClick={() => setShowCalendar(!showCalendar)}
-        >
-          RESERVAR
-        </ReservarButton>
+          <ReservarButton
+            style={{ fontSize: "18px" }}
+            onClick={() => setShowCalendar(!showCalendar)}
+          >
+            RESERVAR
+          </ReservarButton>
+
       )}
-    </>
+   </Container>
   );
 };
 

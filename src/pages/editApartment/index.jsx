@@ -323,13 +323,7 @@ const editApartment = () => {
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>
             <ButtonArea>
-              <BusyButton>
-                <Image src={Door} />
-                OCUPADO
-              </BusyButton>
-              <CalendarWrapper onClick={() => setShowCautionMsg(true)}>
                 <CalendarButton datas={datas} setDatas={setDatas} />
-              </CalendarWrapper>
             </ButtonArea>
             <InfoBox>
               <InfoAptoForm
@@ -462,7 +456,7 @@ const editApartment = () => {
               setShowModalAlterations({boolean: true, text: "Alterações Salvas"})
               setTimeout(() => {
                 router.push("/manageReservations")
-              ,[2000]})
+              ,[3000]})
             }}
             handleSave={() => {
               handleCancelAll()
