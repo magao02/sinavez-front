@@ -50,6 +50,7 @@ const editApartment = () => {
   const [regras, setRegras] = useState([]);
   const [fotos, setFotos] = useState([]);
   const [datas, setDatas] = useState([]);
+  const [urlApto, setUrlApto] = useState("");
 
   // State para funcao de cancelar alteracoes e salvar Alteracoes
   const [oldData, setOldData] = useState([]);
@@ -80,7 +81,7 @@ const editApartment = () => {
   }, []);
 
   // REQUISICAO POST
-  const postRequisicaoApto = () => {
+  const updateRequisicaoApto = () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -115,6 +116,15 @@ const editApartment = () => {
       }
     });
 
+    var beds = []
+    camas.forEach((data) => {
+      var obj = {
+        tipo: data.tipo,
+        Quantidade: parseInt(data.Quantidade)
+      }
+      beds.push(obj)
+    })
+
     var req = {
       titulo: aptoTitle,
       endereco: address,
@@ -124,7 +134,7 @@ const editApartment = () => {
       wifi: radioInputs.wifi,
       animais: radioInputs.animais,
       diaria: parseFloat(dailyRate),
-      camas: camas,
+      camas: beds,
       descricao: description,
       itens: itens,
       areasComuns: areas,
@@ -143,11 +153,13 @@ const editApartment = () => {
 
     console.log(req);
 
-    //service.createApartament(req, authContext.urlUser, authContext.token);
+    service.updateApartment(authContext.token, req, urlApto);
   };
+
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
     var { data } = await service.getAllApartaments(authContext.token);
+    setUrlApto(data[3].urlApt)
 
     modelData(data[3]);
     setOldData(data[3]);
@@ -281,6 +293,7 @@ const editApartment = () => {
   const handleSaveAll = () => {
     setSaveAll(true);
     setShowCautionMsg(false);
+    updateRequisicaoApto()
   };
 
   const checkAlterations = () => {
@@ -456,7 +469,7 @@ const editApartment = () => {
               setShowModalAlterations({boolean: true, text: "Alterações Salvas"})
               setTimeout(() => {
                 router.push("/manageReservations")
-              ,[3000]})
+              ,[10000]})
             }}
             handleSave={() => {
               handleCancelAll()

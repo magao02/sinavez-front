@@ -21,3 +21,16 @@ export async function getAllApartaments(token){
     )
     return requisition;
 }
+
+export async function updateApartment(token, data, urlApt){
+    const requisition = await api.put(
+        `/apartment/updateApartment/${urlApt}`,
+        data,
+        {
+            headers: {
+                authorization: token
+            }
+        }
+    )
+    return requisition;
+}
