@@ -6,7 +6,7 @@ const ModalButtons = ({ handleCancel , handleSave , ConfirmColor, ConfirmText, C
 
 
   return (
-    <Container onClick={closeModal}>
+    <Container>
       <Button variant={"text"} onClick={handleCancel}>
         {CancelText ? CancelText : "CANCELAR"}
       </Button>

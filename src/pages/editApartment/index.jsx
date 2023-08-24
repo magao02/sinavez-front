@@ -2,6 +2,7 @@ import Navigation from "../../components/commom/Nav";
 import Door from "../../assets/Door.svg";
 import Image from "next/image";
 import InfoAptoForm from "../../components/InfoAptoForm";
+import sucess_img from "../../assets/sucess_img.svg"
 
 import {
   Container,
@@ -29,10 +30,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import * as service from "../../services/Apto";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
 import CalendarButton from "../../components/CalendarButton";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
+import { Modal } from "../../components/commom/Modal";
+import cancel_img from "../../assets/cancel_alterations.svg";
+import { ModalOneButton } from "../../components/commom/ModalOneButton";
+import DarkBackground from "../../components/commom/DarkBackground";
 
 const editApartment = () => {
-
   // INFORMACOES DO APTO
   const [description, setDescription] = useState("");
   const [dailyRate, setDailyRate] = useState("");
@@ -43,26 +47,29 @@ const editApartment = () => {
   const [locais, setLocais] = useState([]);
   const [regras, setRegras] = useState([]);
   const [fotos, setFotos] = useState([]);
-  const [datas, setDatas] = useState([])
-  
-  // Modal de Alteracao
+  const [datas, setDatas] = useState([]);
+
+  // State para funcao de cancelar alteracoes e salvar Alteracoes
+  const [oldData, setOldData] = useState([]);
+
+  // Modal de alertar alteracao
   const [showCautionMsg, setShowCautionMsg] = useState(false);
   const [cancelAll, setCancelAll] = useState(false);
   const [saveAll, setSaveAll] = useState(false);
-  const [alterations, setAlterations] = useState([false, false, false, false]);
-  
-  
+
+  // Modal de cancelar e salvar Alteracao
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false)
+
   // ITENS
   const [itensApto, setItensApto] = useState([]);
   const [commumArea, setCommunAreas] = useState([]);
-  
 
   const authContext = useAuth();
-  
-  
-  useEffect(async () => {
-    await getApartmentInfo()
-  },[])
+
+  useEffect(() => {
+    getApartmentInfo();
+  }, []);
 
   // REQUISICAO POST
   const postRequisicaoApto = () => {
@@ -116,12 +123,14 @@ const editApartment = () => {
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
       images: images,
-      reservas: [{
-        dataInicial:  datas[0]
-        },{
-          dataFinal: datas[1] ? datas[1] : datas[0] 
-        }
-      ]
+      reservas: [
+        {
+          dataInicial: datas[0],
+        },
+        {
+          dataFinal: datas[1] ? datas[1] : datas[0],
+        },
+      ],
     };
 
     console.log(req);
@@ -130,169 +139,142 @@ const editApartment = () => {
   };
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
-    var {data} = await service.getAllApartaments(authContext.token);
-    
+    var { data } = await service.getAllApartaments(authContext.token);
+
+    modelData(data[3]);
+    setOldData(data[3]);
+  };
+
+  const modelData = (data) => {
     // Itens
-  
-    var itens = data[3].itens
-    var objItens = getItens(itens)
-    setItensApto(objItens)
-    
+    var itens = data.itens;
+    var objItens = getItens(itens);
+    setItensApto(objItens);
 
     // Areas
-    var areas = getItens(data[3].areasComuns)
-    setCommunAreas(areas)
+    var areas = getItens(data.areasComuns);
+    setCommunAreas(areas);
 
-    
     // Regras
-    var rules = data[3].regrasConvivencia
-    var obj = []
+    var rules = data.regrasConvivencia;
+    var obj = [];
     rules.forEach((data, key) => {
       var item = {
         id: uuid(),
-          placeholder:
-            "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-          value: data,
-        }
-      obj.push(item)    
-    })
-    setRegras(obj)
+        placeholder:
+          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+        value: data,
+      };
+      obj.push(item);
+    });
+    setRegras(obj);
 
-    
     // Locais nos arredores
-    var locaisNosArredores = data[3].locaisArredores
-    var obj = []
-      locaisNosArredores.forEach((data, key) => {
-        var item = {
-          id: uuid(),
-          placeholder:
-            "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-          value: data,
-        }
-        obj.push(item)
-      })
-    setLocais(obj) 
+    var locaisNosArredores = data.locaisArredores;
+    var obj = [];
+    locaisNosArredores.forEach((data, key) => {
+      var item = {
+        id: uuid(),
+        placeholder:
+          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+        value: data,
+      };
+      obj.push(item);
+    });
+    setLocais(obj);
 
     // Descricao
-    var descricao = data[3].descricao
-    setDescription(descricao)
-
+    var descricao = data.descricao;
+    setDescription(descricao);
 
     // Valor da diaria
-    var diaria = data[3].diaria
-    setDailyRate(diaria)
-    
+    var diaria = data.diaria;
+    setDailyRate(diaria);
 
     // CAMAS
-    var descricao = data[3].camas
-    var obj = []
+    var descricao = data.camas;
+    var obj = [];
     descricao.forEach((data) => {
       var item = {
         id: uuid(),
         tipo: data.tipo,
-        Quantidade: data.quantidade ? data.quantidade : 1
-      }
-      obj.push(item)
-    })
-    setCamas(obj)
-
+        Quantidade: data.quantidade ? data.quantidade : 1,
+      };
+      obj.push(item);
+    });
+    setCamas(obj);
 
     // TITULO
-    var title = data[3].titulo
-    setAptoTitle(title)
-    
-    
+    var title = data.titulo;
+    setAptoTitle(title);
+
     // ENDERECO
-    var endereco = data[3].endereco
-    setAddress(endereco)
-    
-    
+    var endereco = data.endereco;
+    setAddress(endereco);
+
     // RADIOS INPUTS
-    var tipo = data[3].tipo
-    var andar = data[3].andar
-    var wifi = data[3].wifi
-    var animais = data[3].animais
-    var suite = data[3].suite
+    var tipo = data.tipo;
+    var andar = data.andar;
+    var wifi = data.wifi;
+    var animais = data.animais;
+    var suite = data.suite;
     var obj = {
       tipo: tipo,
       andar: andar,
       suite: suite,
       wifi: wifi,
       animais: animais,
-    }
-    setRadioInputs(obj)
+    };
+    setRadioInputs(obj);
 
     // Datas
-    if(data[3].reservas.length > 0){
-      var dates = data[3].reservas 
-      var obj = []
-      obj.push(dates.dataInicial)
-      obj.push(dates.dataFinal)
-      setDatas(obj)
+    if (data.reservas.length > 0) {
+      var dates = data.reservas;
+      var obj = [];
+      obj.push(dates.dataInicial);
+      obj.push(dates.dataFinal);
+      setDatas(obj);
     }
 
     // Images
-    var imgs = data[3].images
-    var obj = []
+    var imgs = data.images;
+    var obj = [];
     for (let idx = 0; idx < 7; idx++) {
-      var item =  {
+      var item = {
         id: idx,
         name: "",
         file: imgs[idx] != undefined ? imgs[idx] : "",
-      }
-      obj.push(item)
+      };
+      obj.push(item);
     }
-    setFotos(obj)
+    setFotos(obj);
   };
 
-  
   // MODELA OS DADOS DOS ITENS
   const getItens = (itens) => {
-    var obj = []
+    var obj = [];
     itens.forEach((data) => {
       obj.push({
         name: data,
-        checked: true
-      })
-    })
-    return obj
-  }
+        checked: true,
+      });
+    });
+    return obj;
+  };
 
-  // FUNCOES RELACIONADAS AO MODAL DE ALTERACOES
-  const checkAlterations = (title, value) => {
-    var copy = [...alterations];
-    
-    if (title == "Itens do apartamento") {
-      copy[0] = value;
-      } else if (title == "Areas Comuns") {
-        copy[1] = value;
-      } else if (title == "Regras de convivencia") {
-        copy[2] = value;
-      } else {
-        copy[3] = value;
-      }
-      
-      var result = copy.every((data) => data == false);
-      if (result) {
-        setShowCautionMsg(false);
-      } else {
-        setShowCautionMsg(true);
-      }
-      setAlterations(copy)
-    }
-
-  // FUNCOES RELACIONADAS AOS BOTOES DO MODAL DE CUIDADo
+  // FUNCOES RELACIONADAS AOS BOTOES DO MODAL DE CUIDADO
   const handleCancelAll = () => {
     setCancelAll(true);
-    setAlterations([false,false,false,false])
+    setShowCautionMsg(false);
+    modelData(oldData);
+    setShowCancelModal(!showCancelModal)
   };
 
   const handleSaveAll = () => {
     setSaveAll(true);
-    setAlterations([false,false,false,false])
-  }
+    setShowCautionMsg(false);
+  };
 
-  
   return (
     <Container>
       <Header>
@@ -318,18 +300,20 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
-        <FotosArea>
+        <FotosArea onChange={() => setShowCautionMsg(true)}>
           <h3>Adicionar Fotos do apartamento</h3>
           <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
         </FotosArea>
-        <InfoApto>
+        <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>
             <ButtonArea>
               <BusyButton>
                 <Image src={Door} />
                 OCUPADO
               </BusyButton>
-              <CalendarWrapper><CalendarButton datas={datas} setDatas={setDatas}/></CalendarWrapper>
+              <CalendarWrapper onClick={() => setShowCautionMsg(true)}>
+                <CalendarButton datas={datas} setDatas={setDatas} />
+              </CalendarWrapper>
             </ButtonArea>
             <InfoBox>
               <InfoAptoForm
@@ -360,7 +344,6 @@ const editApartment = () => {
                 title={"Itens do apartamento"}
                 itens={itensApto}
                 setItens={setItensApto}
-                cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
@@ -383,7 +366,6 @@ const editApartment = () => {
                 title={"Areas Comuns"}
                 itens={commumArea}
                 setItens={setCommunAreas}
-                cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
@@ -393,7 +375,6 @@ const editApartment = () => {
             <InfoBox>
               <RegrasApto
                 title={"Regras de convivencia"}
-                cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
@@ -405,7 +386,6 @@ const editApartment = () => {
             <InfoBox>
               <RegrasApto
                 title={"Locais nos Arredores"}
-                cautionModal={checkAlterations}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
@@ -421,9 +401,45 @@ const editApartment = () => {
             <h3 style={{ color: "#3C3E45" }}>
               Cuidado - você tem alterações que não foram salvas!
             </h3>
-            <ConfirmButtons handleCancel={handleCancelAll} save={handleSaveAll}></ConfirmButtons>
+            <ConfirmButtons
+              handleCancel={() => setShowCancelModal(true)}
+              save={() => {
+                setShowSaveModal(true)
+                handleSaveAll()
+              }}
+            ></ConfirmButtons>
           </CautionBox>
         )}
+
+        {showCancelModal && (
+          <Modal
+            title="Cancelar Alterações"
+            img={cancel_img.src}
+            asideText="Deseja realmente cancelar as alterações não salvas?"
+            ConfirmText="SALVAR ALTERAÇÕES"
+            ConfirmColor="Green"
+            CancelText="CANCELAR ALTERAÇÕES"
+            handleCancel={() => {
+              handleCancelAll()
+              setShowCancelModal(false)
+            }}
+            handleSave={() => {
+              handleSaveAll()
+              setShowCancelModal(false)
+              setShowSaveModal(true)
+            }}
+          />
+        )}
+
+        {
+          showSaveModal && (
+              <ModalOneButton
+                title={"SUCESSO"}
+                asideText={"Alterações salvas com sucesso!"}
+                img={sucess_img.src}>
+              </ModalOneButton>
+          )
+        }
       </Main>
     </Container>
   );

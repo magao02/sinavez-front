@@ -76,18 +76,18 @@ const RegrasApto = ({
   const HandleSave = () => {
     setOldInput(inputsBase);
     setEdit(!edit);
-    cautionModal(title, !edit);
+  
   };
 
   const handleCancel = (data) => {
     setInputsBase(data);
     setEdit(!edit);
-    cautionModal(title, !edit);
+  
   };
 
   const showEdit = () => {
     setEdit(!edit);
-    cautionModal(title, !edit);
+  
     setCancelAll(false);
     setSaveAll(false);
   };

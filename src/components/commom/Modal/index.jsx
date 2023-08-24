@@ -1,12 +1,13 @@
+import DarkBackground from "../DarkBackground";
 import ModalButtons from "../ModalButtons";
 import { Container, ModalContent, Main, TextAside } from "./styles";
 
-export const Modal = ({ title, asideText, actionFunction , closeModal, id, img}) => {
-
+export const Modal = ({ title, asideText, handleSave , handleCancel, id, img, ConfirmColor, ConfirmText, CancelText}) => {
 
 
   return (
     <Container>
+      <DarkBackground></DarkBackground>
       <ModalContent id={id}>
         <h2>{title}</h2>
         <Main>
@@ -16,12 +17,11 @@ export const Modal = ({ title, asideText, actionFunction , closeModal, id, img})
           </TextAside>
         </Main>
         <ModalButtons
-          ConfirmColor={"orange"}
-          ConfirmText={"CANCELAR"}
-          CancelText={"EXCLUIR"}
-          handleCancel={actionFunction}
-          handleSave={closeModal}
-          closeModal={closeModal}
+          ConfirmColor={ConfirmColor ? ConfirmColor : "orange"}
+          ConfirmText={ConfirmText ? ConfirmText : "CANCELAR"}
+          CancelText={CancelText ? CancelText : "EXCLUIR"}
+          handleCancel={handleCancel}
+          handleSave={handleSave}
         />
       </ModalContent>
     </Container>

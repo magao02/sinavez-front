@@ -56,18 +56,15 @@ const AptoItens = ({ title, itens, setItens, cautionModal, cancelAll, setCancelA
   const handleCancel = () => {
     setItens(oldItens);
     setEdit(!edit);
-    cautionModal(title, !edit);
   };
 
   const HandleSave = () => {
     setOldItens(itens);
     setEdit(!edit);
-    cautionModal(title, !edit);
   };
 
   const showEdit = () => {
     setEdit(!edit) 
-    cautionModal(title, !edit);
     setCancelAll(false);
     setSaveAll(false)
   }
