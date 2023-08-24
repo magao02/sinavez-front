@@ -206,7 +206,7 @@ const UserDataPopup = ({ value, onClose }) => {
         <article>
           <header>
             <div className="perfil">
-              <img src="https://source.unsplash.com/random/300x300?abstract" />
+              <img src={value.profilePic} />
               <div>
                 <Title2>{value.name}</Title2>
                 <Subtitle2>{value.profissao}</Subtitle2>
@@ -690,7 +690,7 @@ const UserData = () => {
             <Card>
               <Title2>Meus Dados</Title2>
               <div className="card">
-                <img src="https://source.unsplash.com/random/300x300?abstract" />
+                <img src={value.profilePic} />
                 <Subtitle1>{value.name}</Subtitle1>
                 <Tabs>
                   {
