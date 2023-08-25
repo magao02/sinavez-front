@@ -241,7 +241,7 @@ const UserDataPopup = ({ value, onClose }) => {
                 <img src={localImage ?? value.profilePic} />
                 { editing && <UploadPhotoButton onClick={triggerImagePopup}><img src={AddPhotoIcon.src} /></UploadPhotoButton>}
               </div>
-              <input type="file" ref={fileInput} onChange={onImageInputChange} />
+              <input type="file" accept="image/*" ref={fileInput} onChange={onImageInputChange} />
               <div>
                 <Title2>{value.name}</Title2>
                 <Subtitle2>{value.profissao}</Subtitle2>
