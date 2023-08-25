@@ -25,6 +25,7 @@ import {
   ColorButton,
   DependenteFormModal,
   DependentePopup,
+  UploadPhotoButton,
 } from "../../styles/usuarioStyles";
 import { Body2, Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -35,6 +36,7 @@ import EditIcon from "../../assets/edit.svg";
 import TrashIcon from "../../assets/trash.svg";
 import WomanExclamation from "../../assets/woman_exclamation.svg";
 import ManTrashCan from "../../assets/man_deleting_trash_can.svg";
+import AddPhotoIcon from "../../assets/add_photo.svg";
 
 
 const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfirm, onCancel }) => {
@@ -233,9 +235,11 @@ const UserDataPopup = ({ value, onClose }) => {
         <article>
           <header>
             <div className="perfil">
-              <img src={localImage ?? value.profilePic} />
+              <div className="img-container">
+                <img src={localImage ?? value.profilePic} />
+                { editing && <UploadPhotoButton onClick={triggerImagePopup}><img src={AddPhotoIcon.src} /></UploadPhotoButton>}
+              </div>
               <input type="file" ref={fileInput} onChange={onImageInputChange} />
-              { editing && <Button onClick={triggerImagePopup}>enviar img</Button>}
               <div>
                 <Title2>{value.name}</Title2>
                 <Subtitle2>{value.profissao}</Subtitle2>

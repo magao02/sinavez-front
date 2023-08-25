@@ -195,11 +195,16 @@ export const DadosPopup = styled.div`
           display: flex;
           gap: 30px;
 
-          img {
-            width: 140px;
-            height: 140px;
-            border-radius: 140px;
+          .img-container {
+            position: relative;
+
+            & > img {
+              width: 140px;
+              height: 140px;
+              border-radius: 140px;
+            }
           }
+
 
           input[type=file] {
             display: none;
@@ -408,4 +413,25 @@ export const DependenteFormModal = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+export const UploadPhotoButton = styled.div`
+  position: absolute;
+  display: flex;
+
+  padding: 4px;
+  border-radius: 4px;
+  background: ${theme.colors.blue.light};
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+
+  right: 3px;
+  top: 0;
+
+  cursor: pointer;
+
+  transition: 0.05s;
+
+  &:hover {
+    filter: brightness(90%);
+  }
 `;
