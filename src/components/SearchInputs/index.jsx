@@ -1,11 +1,11 @@
-import { Input, CounterInputContainer, CounterInputButton, Label, Select, RangeInput, RangeValues } from "./styles";
+import { Input, CounterInputContainer, CounterInputButton, Label, Select, RangeInput, RangeValues, SliderTooltipContainer, SliderTooltip } from "./styles";
 
 import Image from "next/image";
 
 import MinusCircle from "../../assets/minus-circle.svg";
 import PlusCircle from "../../assets/plus-circle.svg";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Body3, Subtitle2 } from "../../styles/commonStyles";
 import { dateToYMD } from "../../utils/date";
 
@@ -99,13 +99,21 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
 };
 
 export const SliderInput = ({ label, min, max, value, onChange }) => {
+  const [localValue, setLocalValue] = useState(value);
   const handleChange = (ev) => {
     if (onChange)
       onChange(parseInt(ev.target.value));
+    setLocalValue(parseInt(ev.target.value));
   };
+  const percent = useMemo(() => {
+    return (localValue - min) / (max - min) * 100;
+  }, [localValue]);
   return (
     <Label>
       <Subtitle2>{label}</Subtitle2>
+      <SliderTooltipContainer>
+        <SliderTooltip percent={`${percent}%`}>{localValue}</SliderTooltip>
+      </SliderTooltipContainer>
       <RangeInput type="range" min={min} max={max} value={value} onChange={handleChange} />
       <RangeValues>
         <span>{min}</span>

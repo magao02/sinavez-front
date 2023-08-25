@@ -125,3 +125,29 @@ export const RangeValues = styled.div`
     justify-content: space-between;
     user-select: none;
 `;
+
+export const SliderTooltipContainer = styled.div`
+    width: calc(100% - 16px);
+    position: relative;
+    display: flex;
+    align-self: center;
+`;
+
+export const SliderTooltip = styled.div`
+    position: relative;
+    left: ${props => props.percent};
+    transform: translateX(-50%);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: ${theme.colors.gray.default};
+    color: white;
+    padding: 4px 0;
+    width: 32px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+
+    user-select: none;
+`;
