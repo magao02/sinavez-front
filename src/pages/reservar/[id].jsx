@@ -60,6 +60,7 @@ const Page = () => {
   };
 
   const formatTime = (time) => {
+    if (!time) return '';
     const hour = parseInt(time.split(':')[0]);
     if (hour >= 18) {
       return `${time} noite`;
