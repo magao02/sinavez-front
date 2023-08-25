@@ -179,3 +179,13 @@ export async function removeUser(userUrl, token) {
     });
     return requisition;
 }
+
+export async function setPhoto(file, urlUser, token) {
+    const data = new FormData();
+    data.append('photo', file);
+    return await api.post(
+        `/user/setPhoto/${urlUser}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}

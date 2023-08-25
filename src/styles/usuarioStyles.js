@@ -200,6 +200,10 @@ export const DadosPopup = styled.div`
             height: 140px;
             border-radius: 140px;
           }
+
+          input[type=file] {
+            display: none;
+          }
         }
       }
 

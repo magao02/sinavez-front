@@ -183,7 +183,11 @@ const UserDataPopup = ({ value, onClose }) => {
       }));
       try {
         await service.setData(authContext.urlUser, data, authContext.token);
+        if (fileInput?.current?.files && fileInput?.current?.files[0]) {
+          await service.setPhoto(fileInput.current.files[0], authContext.urlUser, authContext.token);
+        }
         setEditing(false);
+        setLocalImage(null);
         router.reload();
         onClose();
       } catch (err) {
@@ -194,6 +198,29 @@ const UserDataPopup = ({ value, onClose }) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [authContext, router]);
+
+  const fileInput = useRef(null);
+  const [localImage, setLocalImage] = useState(null);
+
+  const triggerImagePopup = () => {
+    if (fileInput?.current) {
+      fileInput.current.click();
+    }
+  };
+
+  const onImageInputChange = () => {
+    if (fileInput?.current) {
+      if (fileInput.current.files[0]) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setLocalImage(reader.result);
+        });
+        reader.readAsDataURL(fileInput.current.files[0]);
+      } else {
+        setLocalImage(null);
+      }
+    }
+  };
 
   return <>
     <DadosPopup>
@@ -206,7 +233,9 @@ const UserDataPopup = ({ value, onClose }) => {
         <article>
           <header>
             <div className="perfil">
-              <img src={value.profilePic} />
+              <img src={localImage ?? value.profilePic} />
+              <input type="file" ref={fileInput} onChange={onImageInputChange} />
+              { editing && <Button onClick={triggerImagePopup}>enviar img</Button>}
               <div>
                 <Title2>{value.name}</Title2>
                 <Subtitle2>{value.profissao}</Subtitle2>
