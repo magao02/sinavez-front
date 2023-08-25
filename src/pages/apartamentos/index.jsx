@@ -209,8 +209,8 @@ const Page = () => {
       criancas,
       bebes,
       animais,
-      chegadaDate: dateToYMD(chegadaDate),
-      saidaDate: dateToYMD(saidaDate),
+      chegadaDate: dateToYMD(chegadaDate ?? (new Date())),
+      saidaDate: dateToYMD(saidaDate ?? (new Date())),
       chegadaTime,
       saidaTime,
     }

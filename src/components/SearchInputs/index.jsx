@@ -92,7 +92,7 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
       <Subtitle2>{label}</Subtitle2>
       <div className="container">
         { innerLabel && <Body3 className="innerLabel">{innerLabel}</Body3> }
-        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} value={processValue(value)} onChange={update} />
+        <Input type={type} placeholder={placeholder} onClick={onClick} disabled={!!disabled} value={processValue(value)} onChange={update} required />
       </div>
     </Label>
   );
