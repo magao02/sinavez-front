@@ -162,6 +162,8 @@ const UserDataPopup = ({ value, onClose }) => {
   const authContext = useAuth();
   const router = useRouter();
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSave = useCallback(async () => {
     setTriedCancel(false);
     setTriedClose(false);
@@ -184,14 +186,14 @@ const UserDataPopup = ({ value, onClose }) => {
         }
       }));
       try {
+        setIsSaving(true);
+
         await service.setData(authContext.urlUser, data, authContext.token);
         if (fileInput?.current?.files && fileInput?.current?.files[0]) {
           await service.setPhoto(fileInput.current.files[0], authContext.urlUser, authContext.token);
         }
-        setEditing(false);
-        setLocalImage(null);
+        
         router.reload();
-        onClose();
       } catch (err) {
         setShowError(true);
       }
@@ -493,7 +495,7 @@ const UserDataPopup = ({ value, onClose }) => {
               </Dados>
             </div>
           </div>
-          { editing && <div className="confirm-buttons">
+          { editing && !isSaving && <div className="confirm-buttons">
             <div className="cancel" onClick={() => setTriedCancel(true)}>CANCELAR</div>
             <Button onClick={handleSave}>SALVAR ALTERAÇÕES</Button>
           </div> }
