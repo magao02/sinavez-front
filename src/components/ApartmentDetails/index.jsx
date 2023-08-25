@@ -146,6 +146,10 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     ].join('; ');
   }, [defaultedQuery]);
 
+  const typeDescription = useMemo(() => {
+    return model?.tipo?.toLowerCase()?.trim() === "pcd" ? "Apartamento Adaptado (com adaptação para PCD)" : "Apartamento Padrão (sem adaptação para PCD)";
+  }, [model]);
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
@@ -166,8 +170,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             </div>
           </ImageGallery>
           <Title1>{model.titulo}</Title1>
-          {/* i dont think this is correct */}
-          <Body1>{model.tipo}, {model.andar}º andar</Body1>
+          <Body1>{typeDescription}, {model.andar}º andar</Body1>
         </Header>
         <Details>
           <Column className="features-column">
