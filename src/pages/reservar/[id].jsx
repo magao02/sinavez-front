@@ -111,7 +111,7 @@ const Page = () => {
 
   return (
     <div>
-      <Navigation selectedPage="apartamentos" variant="admin" />
+      <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
       <Content>
         <Breadcrumbs>
