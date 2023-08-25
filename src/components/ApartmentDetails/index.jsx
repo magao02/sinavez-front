@@ -49,6 +49,7 @@ import { dayDifference } from "../../utils/date";
 const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
   const [model, setModel] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const authContext = useAuth();
 
@@ -59,6 +60,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     const req = area ? await getRecreationArea(authContext.token, objectUrl) : await getApartment(authContext.token, objectUrl);
     const data = req.data;
     setModel(data);
+    setIsLoaded(true);
   }, [area, objectUrl, authContext]);
 
   const rulesCard = useMemo(() => (
@@ -148,7 +150,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     <div>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
-      <Content>
+      { isLoaded && <Content>
         <Breadcrumbs>
           <Image onClick={goBack} src={IconArrowLeft} className="button" />
           { !area && <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1> }
@@ -301,7 +303,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
           <Title2>Veja a localização no mapa</Title2>
           <Image src={MapaImage} />
         </MapContainer>
-      </Content>
+      </Content> }
 
       { viewingImages && <FullImageGallery>
         <div className="background" onClick={_ => setViewingImages(false)} />
