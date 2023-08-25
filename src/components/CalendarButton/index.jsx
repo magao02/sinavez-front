@@ -2,7 +2,6 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { CalendarWrapper, CalendarContainer, ReservarButton, BusyButton, Container, AvailableButton } from "./styles";
 import { useEffect, useState } from "react";
-import { ButtonArea } from "../../styles/apartamentoStyles";
 import Door from "../../assets/Door.svg";
 import Image from "next/image";
 import open_door from "../../assets/open_door.svg"
@@ -27,7 +26,7 @@ const CalendarButton = ({ datas, setDatas }) => {
 
   const verifyData = () => {
     if (datas.length > 0) {
-      return datas;
+      return [datas[0].dataInicial, datas[0].dataFinal] ;
     } else {
       return "today";
     }
@@ -36,6 +35,8 @@ const CalendarButton = ({ datas, setDatas }) => {
   const defaultDate = () => {
     return verifyData();
   };
+
+  console.log(datas)
 
   return (
     <Container>

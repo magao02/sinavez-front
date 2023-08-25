@@ -10,11 +10,9 @@ import {
   Main,
   Header,
   FotosArea,
-  BusyButton,
   LeftSide,
   InfoApto,
   RightSide,
-  CalendarWrapper,
   ButtonArea,
   InfoBox,
   RedirectArea,
@@ -120,7 +118,7 @@ const editApartment = () => {
     camas.forEach((data) => {
       var obj = {
         tipo: data.tipo,
-        Quantidade: parseInt(data.Quantidade)
+        quantidade: parseInt(data.Quantidade)
       }
       beds.push(obj)
     })
@@ -144,8 +142,6 @@ const editApartment = () => {
       reservas: [
         {
           dataInicial: datas[0],
-        },
-        {
           dataFinal: datas[1] ? datas[1] : datas[0],
         },
       ],
@@ -250,10 +246,15 @@ const editApartment = () => {
     // Datas
     if (data.reservas.length > 0) {
       var dates = data.reservas;
-      var obj = [];
-      obj.push(dates.dataInicial);
-      obj.push(dates.dataFinal);
-      setDatas(obj);
+      var array = [];
+      dates.forEach(( data ) => {
+        var obj = {
+          dataInicial: data.dataInicial,
+          dataFinal: data.dataFinal
+        }
+        array.push(obj) 
+      })
+      setDatas(array);
     }
 
     // Images
