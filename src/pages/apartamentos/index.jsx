@@ -45,7 +45,7 @@ import { getAllRecreationAreas } from "../../services/recreationArea";
 import { dateToYMD } from "../../utils/date";
 import { Body3, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 
-const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
+const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime, setEspacoType, numPessoas, setNumPessoas }) => {
   return (
     <ColumnContent>
       <Card>
@@ -54,7 +54,7 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
           <Tab selected={tabIndex === 1} onClick={() => setTabIndex(1)}>Áreas de Lazer</Tab>
         </Tabs>
         {
-          tabIndex === 1 && <DropdownInput label="Espaço" options={["Piscina"]} />
+          tabIndex === 1 && <DropdownInput label="Espaço" options={["Piscina", "Churrasqueira", "Área Gourmet", "Auditório"]} onChange={setEspacoType} />
         }
 
         <Row>
@@ -82,7 +82,7 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
         }
 
         {
-          tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={4} />
+          tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={numPessoas} onChange={setNumPessoas} />
         }
       </Card>
       <Button>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
@@ -186,6 +186,9 @@ const Page = () => {
   const [bebes, setBebes] = useState(0);
   const [animais, setAnimais] = useState(0);
 
+  const [espacoType, setEspacoType] = useState("Piscina");
+  const [numPessoas, setNumPessoas] = useState(4);
+
   const authContext = useAuth();
 
   useEffect(async () => {
@@ -228,6 +231,8 @@ const Page = () => {
             animais={animais} setAnimais={setAnimais}
             chegadaTime={chegadaTime} setChegadaTime={setChegadaTime}
             saidaTime={saidaTime} setSaidaTime={setSaidaTime}
+            setEspacoType={setEspacoType}
+            numPessoas={numPessoas} setNumPessoas={setNumPessoas}
           />
           <SearchHelpContainer>
             <Title2>Faça sua reserva!</Title2>

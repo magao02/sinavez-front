@@ -47,11 +47,15 @@ export const CounterInput = ({ label, min, max, value, onChange }) => {
   );
 };
   
-export const DropdownInput = ({ label, options, variant, disabled }) => {
+export const DropdownInput = ({ label, options, variant, disabled, onChange }) => {
+  const handleChange = (ev) => {
+    if (onChange)
+      onChange(ev.target.options[ev.target.options.selectedIndex].value);
+  }
   return (
     <Label>
       <Subtitle2>{label}</Subtitle2>
-      <Select disabled={!!disabled} variant={variant}>
+      <Select disabled={!!disabled} variant={variant} onChange={handleChange}>
         {
           options.map(opt => 
             <option value={opt} key={opt}>{opt}</option>
@@ -94,11 +98,15 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
   );
 };
 
-export const SliderInput = ({ label, min, max, value }) => {
+export const SliderInput = ({ label, min, max, value, onChange }) => {
+  const handleChange = (ev) => {
+    if (onChange)
+      onChange(parseInt(ev.target.value));
+  };
   return (
     <Label>
       <Subtitle2>{label}</Subtitle2>
-      <RangeInput type="range" min={min} max={max} value={value} />
+      <RangeInput type="range" min={min} max={max} value={value} onChange={handleChange} />
       <RangeValues>
         <span>{min}</span>
         <span>{max}</span>
