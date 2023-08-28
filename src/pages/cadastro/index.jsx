@@ -21,6 +21,7 @@ import {
   StepNumber,
   ButtonContainer,
   SubmitError,
+  FormRow,
 } from "../../styles/cadastroStyles";
 
 import { GenericForm, GenericFormValue } from "../../components/GenericForm";
@@ -52,10 +53,13 @@ const CadastroPage = () => {
   // Inputs for the second step
   const profissaoRef = useRef(null);
   const phoneRef = useRef(null);
+  const telefoneFixoRef = useRef(null);
   const ruaRef = useRef(null);
   const bairroRef = useRef(null);
   const numeroResRef = useRef(null);
   const complementoRef = useRef(null);
+  const cidadeRef = useRef(null);
+  const estadoRef = useRef(null);
 
   // Inputs for the third step
   const emailRef = useRef(null);
@@ -76,7 +80,7 @@ const CadastroPage = () => {
         refs = [nameRef, birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef];
         break;
       case 1:
-        refs = [profissaoRef, phoneRef, ruaRef, bairroRef, numeroResRef, complementoRef];
+        refs = [profissaoRef, phoneRef, telefoneFixoRef, ruaRef, bairroRef, numeroResRef, complementoRef, cidadeRef, estadoRef];
         break;
       case 2:
         refs = [emailRef, passwordRef, passwordConfRef];
@@ -120,8 +124,12 @@ const CadastroPage = () => {
         complemento: complementoRef.current.value,
         numero: numeroResRef.current.value,
       },
+      telefoneFixo: telefoneFixoRef.current.value,
+      regional: {
+        municipio: cidadeRef.current.value,
+        estado: estadoRef.current.value,
+      },
       // TODO: should these be added?
-      regional: "",
       numInscricao: "",
       dataAfiliacao: "",
       formacaoSuperior: "",
@@ -136,8 +144,8 @@ const CadastroPage = () => {
     setApiError("");
 
     try {
-      const response = await service.signUp(data);
-      router.push("/");
+      await service.signUp(data);
+      router.push("/login");
     } catch (error) {
       const err = error.response.data;
       if (typeof err === 'string') {
@@ -233,19 +241,37 @@ const CadastroPage = () => {
                 placeholder="Sua profissão"
                 ref={profissaoRef}
               />
-              <GenericFormValue
-                label="Celular"
-                placeholder="(00) 00000-0000"
-                description="Digite o número em uso do seu celular."
-                ref={phoneRef}
-                validate={validation.testRequiredPhone}
-              />
-              <GenericFormValue
-                label="Rua"
-                variant="default-optional"
-                description="Digite o nome da rua da sua residência."
-                ref={ruaRef}
-              />
+              <FormRow>
+                <GenericFormValue
+                  label="Celular"
+                  placeholder="(00) 00000-0000"
+                  description="Digite o número em uso do seu celular."
+                  ref={phoneRef}
+                  validate={validation.testRequiredPhone}
+                />
+                <GenericFormValue
+                  label="Telefone Fixo"
+                  placeholder="(00) 00000-0000"
+                  variant="default-optional"
+                  description="Digite o número em uso do seu telefone fixo."
+                  ref={telefoneFixoRef}
+                  validate={validation.testPhone}
+                />
+              </FormRow>
+              <FormRow>
+                <GenericFormValue
+                  label="Rua"
+                  variant="default-optional"
+                  description="Digite o nome da rua da sua residência."
+                  ref={ruaRef}
+                />
+                <GenericFormValue
+                  label="Número de Residência"
+                  variant="default-optional"
+                  description="Digite o número de sua residência."
+                  ref={numeroResRef}
+                />
+              </FormRow>
               <GenericFormValue
                 label="Bairro"
                 variant="default-optional"
@@ -253,17 +279,25 @@ const CadastroPage = () => {
                 ref={bairroRef}
               />
               <GenericFormValue
-                label="Número de Residência"
-                variant="default-optional"
-                description="Digite o número de sua residência."
-                ref={numeroResRef}
-              />
-              <GenericFormValue
                 label="Complemento"
                 variant="default-optional"
                 description="Digite o complemento de seu endereço."
                 ref={complementoRef}
               />
+              <FormRow>
+                <GenericFormValue
+                  label="Cidade"
+                  variant="default-optional"
+                  description="Digite a cidade em que você reside."
+                  ref={cidadeRef}
+                />
+                <GenericFormValue
+                  label="Estado"
+                  variant="default-optional"
+                  description="Digite o Estado em que você reside."
+                  ref={estadoRef}
+                />
+              </FormRow>
             </GenericForm>
           </FormBox>
         )}
