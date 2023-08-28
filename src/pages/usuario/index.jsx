@@ -145,6 +145,7 @@ const UserDataPopup = ({ value, onClose }) => {
       complemento: useRef(null),
     },
     telefone: useRef(null),
+    telefoneFixo: useRef(null),
     email: useRef(null),
     formacaoSuperior: useRef(null),
     dataFormacao: useRef(null),
@@ -358,6 +359,9 @@ const UserDataPopup = ({ value, onClose }) => {
                   <Input
                     label="Telefone Fixo"
                     variant="default-optional"
+                    initialValue={value.telefoneFixo}
+                    ref={refs.telefoneFixo}
+                    validate={validation.testPhone}
                     disabled={!editing}
                   />
                 </Row>
@@ -747,7 +751,7 @@ const UserData = () => {
                   <Input
                     label="Telefone Fixo"
                     variant="default-optional"
-                    initialValue=""
+                    initialValue={value.telefoneFixo}
                     disabled
                   />
                   <Row>
