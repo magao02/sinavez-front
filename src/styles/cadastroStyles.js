@@ -156,3 +156,10 @@ export const SubmitError = styled.p`
     align-self: flex-end;
     margin-top: 15px;
 `;
+
+export const FormRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 38px;
+`;
