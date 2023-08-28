@@ -234,7 +234,7 @@ const CadastroPage = () => {
                 ref={profissaoRef}
               />
               <GenericFormValue
-                label="Telefone"
+                label="Celular"
                 placeholder="(00) 00000-0000"
                 description="Digite o número em uso do seu celular."
                 ref={phoneRef}
@@ -242,28 +242,24 @@ const CadastroPage = () => {
               />
               <GenericFormValue
                 label="Rua"
-                placeholder="sei la"
                 variant="default-optional"
                 description="Digite o nome da rua da sua residência."
                 ref={ruaRef}
               />
               <GenericFormValue
                 label="Bairro"
-                placeholder="sei la"
                 variant="default-optional"
                 description="Digite o bairro em que você reside."
                 ref={bairroRef}
               />
               <GenericFormValue
                 label="Número de Residência"
-                placeholder="sei la"
                 variant="default-optional"
                 description="Digite o número de sua residência."
                 ref={numeroResRef}
               />
               <GenericFormValue
                 label="Complemento"
-                placeholder="sei la"
                 variant="default-optional"
                 description="Digite o complemento de seu endereço."
                 ref={complementoRef}
@@ -299,7 +295,7 @@ const CadastroPage = () => {
               <GenericFormValue
                 label="Confirmar senha"
                 placeholder="**********"
-                description="Digite exatamente a mesma senha"
+                description="Digite exatamente a mesma senha anterior."
                 type="password"
                 ref={passwordConfRef}
                 validate={value => validation.testRequiredMatchingPassword(value, passwordRef.current.value)}
