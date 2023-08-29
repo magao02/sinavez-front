@@ -215,7 +215,7 @@ const Page = () => {
       chegadaTime,
       saidaTime,
     }
-  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais]);
+  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais, chegadaTime, saidaTime]);
 
   const filteredApartments = useMemo(() => {
     return apartamentos.filter(apt => {

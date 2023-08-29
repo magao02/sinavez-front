@@ -13,3 +13,11 @@ export async function getApartment(token, url) {
         { headers: { authorization: token } }
     );
 }
+
+export async function reserveApartment(token, urlApt, urlUser, data) {
+    return await api.post(
+        `/apartment/reserveApartment/${urlApt}/${urlUser}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}

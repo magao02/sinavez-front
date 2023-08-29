@@ -28,9 +28,9 @@ import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dayDifference } from "../../utils/date";
+import { dateToDMY, dayDifference } from "../../utils/date";
 import { getRecreationArea } from "../../services/recreationArea";
-import { getApartment } from "../../services/apartments";
+import { getApartment, reserveApartment } from "../../services/apartments";
 
 const Page = () => {
   const authContext = useAuth();
@@ -92,12 +92,27 @@ const Page = () => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate));
+    return Math.max(1, dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate)));
   }, [model, router]);
 
   const totalDiarias = useMemo(() => {
     return formatPrice((model.diaria ?? 0) * numDiarias);
   }, [valorDiaria, numDiarias]);
+
+  const doThing = async () => {
+    const data = {
+      dataChegada: router.query.chegadaDate,
+      dataSaida: router.query.saidaDate,
+      horarioChegada: router.query.chegadaTime,
+      horarioSaida: router.query.saidaTime,
+      adultos: +router.query.adultos,
+      criancas: +router.query.criancas,
+      bebes: +router.query.bebes,
+      animais: +router.query.animais,
+    };
+    console.log("data is", data);
+    await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
+  }
 
   const rulesCard = useMemo(() => (
     <RulesCard>
@@ -194,7 +209,7 @@ const Page = () => {
 
             </ReservationDetailsCard>
 
-            <Button>RESERVE AGORA</Button>
+            <Button onClick={doThing}>RESERVE AGORA</Button>
           </Column>
         </Details>
 
