@@ -43,7 +43,13 @@ const editApartment = () => {
   const [aptoTitle, setAptoTitle] = useState("");
   const [address, setAddress] = useState("");
   const [capacity, setCapacity] = useState(0)
-  const [radioInputs, setRadioInputs] = useState([]);
+  const [radioInputs, setRadioInputs] = useState({
+    tipo: "PCD",
+    andar: 0,
+    suite: false,
+    wifi: false,
+    animais: false,
+  });
   const [locais, setLocais] = useState([
     {
       id: 1,
@@ -192,6 +198,7 @@ const editApartment = () => {
     if(aptoTitle == "" || address == "" || capacity == 0){
       console.log("entrou")
     }else{
+      setShowSaveModal(true)
 
     var req = {
       titulo: aptoTitle,
@@ -542,7 +549,7 @@ const editApartment = () => {
           showSaveModal && (
               <ModalOneButton
                 title={"SUCESSO"}
-                asideText={"Alterações salvas com sucesso!"}
+                asideText={"Area de lazer criada com sucesso!"}
                 img={sucess_img.src}>
               </ModalOneButton>
           )
