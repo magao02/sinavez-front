@@ -317,12 +317,12 @@ const createApartment = () => {
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos os Apartamentos </a>
             <a>/</a>
-            <a>Dados do Apartamentos </a>
+            <a>Dados do Apartamento </a>
             <a>/</a>
-            <a>Editar Apartamento </a>
+            <a>Criar Apartamento </a>
           </Button>
         </RedirectArea>
-        <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
+        <h2 style={{ marginBottom: "3vh" }}>Criar Apartamento</h2>
         <FotosArea onChange={() => setShowCautionMsg(true)}>
           <h3>Adicionar Fotos do apartamento</h3>
           <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
