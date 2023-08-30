@@ -141,16 +141,6 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           </AddBedButton>
         </CamaInputContainer>
         :
-<<<<<<< HEAD
-        <Input
-          variant="default"
-          name="Capacidade Máxima*"
-          type="number"
-          placeholder="Capacidade Máxima*"
-          value={capacity}
-          onChange={(e) => setCapacity(e.target.value)}
-        />
-=======
         <InputBox>
           <Input
             variant="default"
@@ -165,7 +155,6 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             <ErrorMsg>Campo Obrigatorio</ErrorMsg>
           }
         </InputBox>
->>>>>>> feat/create-recreationArea-page
         }
         <InputBox>
           <Input
