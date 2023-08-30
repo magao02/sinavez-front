@@ -36,7 +36,6 @@ const CalendarButton = ({ datas, setDatas }) => {
     return verifyData();
   };
 
-  console.log(datas)
 
   return (
     <Container>

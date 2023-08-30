@@ -78,8 +78,16 @@ const editApartment = () => {
     getApartmentInfo();
   }, []);
 
-  // REQUISICAO POST
+  const validaCamas = () => camas.every((data) => data.Quantidade > 0)
+
+  // REQUISICAO PUT
   const updateRequisicaoApto = () => {
+
+    if(aptoTitle == "" || address == "" || !validaCamas){
+      console.log("entrou")
+    }else{
+      setShowSaveModal(true)
+
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -150,6 +158,7 @@ const editApartment = () => {
     console.log(req);
 
     service.updateApartment(authContext.token, req, urlApto);
+  }
   };
 
   // REQUISICAO GET DO APARTAMENTO
@@ -297,11 +306,17 @@ const editApartment = () => {
     updateRequisicaoApto()
   };
 
-  const checkAlterations = () => {
+  const checkAlterations = ( page ) => {
     if(showCautionMsg){
       setShowModalUnsaved(true)
     }else{
-      router.push("/manageReservations")
+      if(page == "todos"){
+        router.push("/manageReservations")
+      }else if(page == "dados"){
+        router.push("/aptoInfo")
+      }else{
+        router.push("/manageReservations")
+      }
     }
   }
 
@@ -311,7 +326,7 @@ const editApartment = () => {
         <Navigation variant={"admin"} />
       </Header>
       <Main>
-        <RedirectArea onClick={checkAlterations}>
+        <RedirectArea onClick={() => checkAlterations("")}>
           <Button
             variant={"image"}
             style={{
@@ -322,9 +337,9 @@ const editApartment = () => {
             }}
           >
             <Image src={leftArrow} alt={"arrow"}></Image>
-            <a>Todos os Apartamentos </a>
+            <a onClick={() => checkAlterations("todos")}>Todos os Apartamentos </a>
             <a>/</a>
-            <a>Dados do Apartamentos </a>
+            <a onClick={() => checkAlterations("dados")} >Dados do Apartamentos </a>
             <a>/</a>
             <a>Editar Apartamento </a>
           </Button>
@@ -429,7 +444,6 @@ const editApartment = () => {
             <ConfirmButtons
               handleCancel={() => setShowCancelModal(true)}
               save={() => {
-                setShowSaveModal(true)
                 handleSaveAll()
               }}
             ></ConfirmButtons>
