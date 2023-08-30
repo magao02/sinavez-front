@@ -50,4 +50,5 @@ export const Select = styled.select`
     outline: none;
     background: none;
     padding: 5px;
+    color: black;
 `

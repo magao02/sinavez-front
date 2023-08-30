@@ -41,6 +41,8 @@ export const CalendarWrapper = styled.div`
             border: none;
             font-size: calc(100% - 20%);
             outline: none;
+            color: black;
+            background-color: white;
         }
 `
 
