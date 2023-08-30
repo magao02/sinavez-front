@@ -18,7 +18,7 @@ export const Main = styled.div`
     gap: 1vh;
     margin-bottom: 20px;
 
-    @media (max-width: 1379px) {
+    @media (max-width: 1478px) {
         width: 80vw;
     }
 `

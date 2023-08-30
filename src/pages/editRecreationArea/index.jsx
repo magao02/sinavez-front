@@ -114,6 +114,9 @@ const editApartment = () => {
       }
     });
 
+    if(aptoTitle == "" || address == "" || capacity == 0){
+      console.log("entrou")
+    }else{
 
     var req = {
       titulo: aptoTitle,
@@ -133,15 +136,15 @@ const editApartment = () => {
       images: images,
       reservas: [
         {
-          dataInicial: datas[0],
+          dataInicial: datas[0] ? datas[0] : "",
           dataFinal: datas[1] ? datas[1] : datas[0],
         },
       ],
     };
-
     console.log(req);
 
     service.updateRecreationArea(authContext.token, req, urlRec);
+  }
   };
 
   // REQUISICAO GET DO AREA
@@ -401,7 +404,6 @@ const editApartment = () => {
             <ConfirmButtons
               handleCancel={() => setShowCancelModal(true)}
               save={() => {
-                setShowSaveModal(true)
                 handleSaveAll()
               }}
             ></ConfirmButtons>

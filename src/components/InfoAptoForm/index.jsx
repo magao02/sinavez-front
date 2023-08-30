@@ -104,7 +104,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
   const addRadioInfo = (item) => {
     setRadioInput({ ...radioInput, [item.title]: item.value });
   };
-
+  
   return (
     <Container>
       <h3>{mainTitle ? mainTitle : "Informacoes do Apartamento"}</h3>
@@ -147,7 +147,13 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             name="Capacidade Máxima*"
             type="number"
             placeholder="Capacidade Máxima*"
+            value={capacity}
+            onChange={(e) => setCapacity(e.target.value)}
           />
+          {
+            capacity == 0 && 
+            <ErrorMsg>Campo Obrigatorio</ErrorMsg>
+          }
         </InputBox>
         }
         <InputBox>
