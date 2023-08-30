@@ -5,6 +5,8 @@ import {
   Container,
   InputContainer,
   CheckBoxInputs,
+  InputBox,
+  ErrorMsg
 } from "./styles";
 import RadioInput from "../commom/RadioInput";
 import { useEffect, useState } from "react";
@@ -44,8 +46,8 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
   const addCamas = () => {
       setCamaInfo([...camaInfo, {
         id: uuid(),
-        tipo: "",
-        Quantidade: ""
+        tipo: "Solteiro",
+        Quantidade: 1
       }])
   };
 
@@ -107,47 +109,65 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
     <Container>
       <h3>Informacoes do Apartamento</h3>
       <InputContainer>
-        <Input
-          variant="default"
-          name="Título"
-          type="text"
-          placeholder="Título do apartamento"
-          onChange={handleTitle}
-          value={title}
-        />
+      <InputBox>
+          <Input
+            variant="default"
+            name="Título"
+            type="text"
+            placeholder="Título do apartamento"
+            onChange={handleTitle}
+            value={title}
+          />
+          {
+            title.length == 0 &&
+            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+          }
+         </InputBox>
         {camas ? 
         <CamaInputContainer>
-          {camaInfo.map((data) => {
-            return (
-              <CamaInput
-                id={data.id}
-                deleteCama={deleteCama}
-                handleCama={handleCama}
-                option={data.tipo}
-                value={data.Quantidade}
-              />
-            );
-          })}
+            {camaInfo.map((data) => {
+              return (
+                <CamaInput
+                  id={data.id}
+                  deleteCama={deleteCama}
+                  handleCama={handleCama}
+                  option={data.tipo}
+                  value={data.Quantidade}
+                />
+              );
+            })}
           <AddBedButton onClick={addCamas}>
             +<span>ADICIONAR CAMA</span>
           </AddBedButton>
         </CamaInputContainer>
         :
-        <Input
-          variant="default"
-          name="Capacidade Máxima*"
-          type="number"
-          placeholder="Capacidade Máxima*"
-        />
+        <InputBox>
+          <Input
+            variant="default"
+            name="Capacidade Máxima*"
+            type="number"
+            placeholder="Capacidade Máxima*"
+          />
+          {
+            true &&
+            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+          }
+        </InputBox>
         }
-        <Input
-          variant="default"
-          name="Endereço"
-          type="text"
-          placeholder="Endereço"
-          onChange={handleAddress}
-          value={address}
-        />
+        <InputBox>
+          <Input
+            variant="default"
+            name="Endereço"
+            type="text"
+            placeholder="Endereço"
+            onChange={handleAddress}
+            value={address}
+          />
+          {
+            address.length == 0  &&
+            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+          }
+        </InputBox>
         <CheckBoxInputs>
           <RadioInput
             title={"Tipo"}

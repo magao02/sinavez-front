@@ -1,4 +1,4 @@
-import { Container, DeleteBedButton, Select, } from "./styles"
+import { Container, DeleteBedButton, ErrorMsg, InputBox, Select, } from "./styles"
 import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
@@ -15,6 +15,7 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
 
     return (
       <>
+      <InputBox>
         <Container onChange={(e) => handleCama(id, e)}>
             <Select name="tipo" id="selectCama">
                 <option value="Tipo de Cama" disabled hidden>{"Tipo de Cama"}</option>
@@ -31,6 +32,11 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
             />
             <DeleteBedButton onClick={() => setShowModal(!showModal)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
         </Container>
+            {
+              value == 0 && 
+              <ErrorMsg>Preencha a Quantidade</ErrorMsg>
+            }
+        </InputBox>
       {showModal &&
         <Modal
           title="Excluir Cama"

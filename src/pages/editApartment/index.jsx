@@ -78,8 +78,16 @@ const editApartment = () => {
     getApartmentInfo();
   }, []);
 
-  // REQUISICAO POST
+  const validaCamas = () => camas.every((data) => data.Quantidade > 0)
+
+  // REQUISICAO PUT
   const updateRequisicaoApto = () => {
+
+    if(aptoTitle == "" || address == "" || !validaCamas){
+      console.log("entrou")
+    }else{
+      setShowSaveModal(true)
+
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -150,6 +158,7 @@ const editApartment = () => {
     console.log(req);
 
     service.updateApartment(authContext.token, req, urlApto);
+  }
   };
 
   // REQUISICAO GET DO APARTAMENTO
@@ -429,7 +438,6 @@ const editApartment = () => {
             <ConfirmButtons
               handleCancel={() => setShowCancelModal(true)}
               save={() => {
-                setShowSaveModal(true)
                 handleSaveAll()
               }}
             ></ConfirmButtons>
