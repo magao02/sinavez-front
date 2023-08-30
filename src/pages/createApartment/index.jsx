@@ -45,7 +45,13 @@ const createApartment = () => {
     
   }]);
 
-  const [radioInputs, setRadioInputs] = useState([]);
+  const [radioInputs, setRadioInputs] = useState({
+    tipo: "Comum",
+    andar: 0,
+    suite: false,
+    wifi: false,
+    animais: false,
+  });
 
   const [locais, setLocais] = useState([
     {
@@ -319,10 +325,10 @@ const createApartment = () => {
             <a>/</a>
             <a>Dados do Apartamentos </a>
             <a>/</a>
-            <a>Editar Apartamento </a>
+            <a>Criar Apartamento </a>
           </Button>
         </RedirectArea>
-        <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
+        <h2 style={{ marginBottom: "3vh" }}>Criar Apartamento</h2>
         <FotosArea onChange={() => setShowCautionMsg(true)}>
           <h3>Adicionar Fotos do apartamento</h3>
           <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
@@ -485,7 +491,7 @@ const createApartment = () => {
           showSaveModal && (
               <ModalOneButton
                 title={"SUCESSO"}
-                asideText={"Alterações salvas com sucesso!"}
+                asideText={"Apartamento criado com sucesso!"}
                 img={sucess_img.src}>
               </ModalOneButton>
           )
