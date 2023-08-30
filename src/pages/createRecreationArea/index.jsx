@@ -44,8 +44,50 @@ const editApartment = () => {
   const [address, setAddress] = useState("");
   const [capacity, setCapacity] = useState(0)
   const [radioInputs, setRadioInputs] = useState([]);
-  const [locais, setLocais] = useState([]);
-  const [regras, setRegras] = useState([]);
+  const [locais, setLocais] = useState([
+    {
+      id: 1,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 2,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 3,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 4,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    }
+  ]);
+  const [regras, setRegras] = useState([
+    {
+      id: 5,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 6,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 7,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 8,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    }
+  ]);
   const [fotos, setFotos] = useState([]);
   const [datas, setDatas] = useState([]);
   const [urlRec, setUrlRec] = useState("");
@@ -69,17 +111,50 @@ const editApartment = () => {
 
   // ITENS
   const [itensApto, setItensApto] = useState([]);
-  const [commumArea, setCommunAreas] = useState([]);
+  const [commumArea, setCommunAreas] = useState([
+    {
+      name: "Piscina",
+      checked: false,
+    },
+    {
+      name: "Hidro",
+      checked: false,
+    },
+    {
+      name: "Sauna",
+      checked: false,
+    },
+    {
+      name: "Geladeira",
+      checked: false,
+    },
+    {
+      name: "Freezer",
+      checked: false,
+    },
+    {
+      name: "2 pias",
+      checked: false,
+    },
+    {
+      name: "4 churrasqueira eletrica",
+      checked: false,
+    },
+    {
+      name: "Mesa 8 lugares",
+      checked: false,
+    },
+    {
+      name: "Ar condicionado",
+      checked: false,
+    },
+  ]);
 
   const authContext = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    getRecreationInfo();
-  }, []);
-
   // REQUISICAO POST
-  const updateRequisicaoRA = () => {
+  const postRequisicaoRA = () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -143,7 +218,7 @@ const editApartment = () => {
     };
     console.log(req);
 
-    service.updateRecreationArea(authContext.token, req, urlRec);
+    service.createRecreationArea(req, authContext.token);
   }
   };
 
@@ -280,7 +355,7 @@ const editApartment = () => {
   const handleSaveAll = () => {
     setSaveAll(true);
     setShowCautionMsg(false);
-    updateRequisicaoRA()
+    postRequisicaoRA()
   };
 
   const checkAlterations = () => {

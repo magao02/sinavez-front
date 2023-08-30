@@ -104,7 +104,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
   const addRadioInfo = (item) => {
     setRadioInput({ ...radioInput, [item.title]: item.value });
   };
-
+  
   return (
     <Container>
       <h3>{mainTitle ? mainTitle : "Informacoes do Apartamento"}</h3>
@@ -141,6 +141,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           </AddBedButton>
         </CamaInputContainer>
         :
+<<<<<<< HEAD
         <Input
           variant="default"
           name="Capacidade Máxima*"
@@ -149,6 +150,22 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           value={capacity}
           onChange={(e) => setCapacity(e.target.value)}
         />
+=======
+        <InputBox>
+          <Input
+            variant="default"
+            name="Capacidade Máxima*"
+            type="number"
+            placeholder="Capacidade Máxima*"
+            value={capacity}
+            onChange={(e) => setCapacity(e.target.value)}
+          />
+          {
+            capacity == 0 && 
+            <ErrorMsg>Campo Obrigatorio</ErrorMsg>
+          }
+        </InputBox>
+>>>>>>> feat/create-recreationArea-page
         }
         <InputBox>
           <Input

@@ -1,5 +1,4 @@
 import Navigation from "../../components/commom/Nav";
-import Door from "../../assets/Door.svg";
 import Image from "next/image";
 import InfoAptoForm from "../../components/InfoAptoForm";
 import sucess_img from "../../assets/sucess_img.svg"
@@ -26,29 +25,77 @@ import leftArrow from "../../assets/leftArrow.svg";
 import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos";
 import { useAuth } from "../../contexts/AuthContext";
-import * as service from "../../services/recreationArea";
+import * as service from "../../services/Apto";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
 import CalendarButton from "../../components/CalendarButton";
-import { v4 as uuid } from "uuid";
 import { Modal } from "../../components/commom/Modal";
 import cancel_img from "../../assets/cancel_alterations.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
 
-const editApartment = () => {
+const createApartment = () => {
+
   // INFORMACOES DO APTO
   const [description, setDescription] = useState("");
   const [dailyRate, setDailyRate] = useState("");
   const [aptoTitle, setAptoTitle] = useState("");
   const [address, setAddress] = useState("");
-  const [capacity, setCapacity] = useState(0)
+  const [camas, setCamas] = useState([{
+    
+  }]);
+
   const [radioInputs, setRadioInputs] = useState([]);
-  const [locais, setLocais] = useState([]);
-  const [regras, setRegras] = useState([]);
+
+  const [locais, setLocais] = useState([
+    {
+      id: 1,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 2,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 3,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 4,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    }
+  ]);
+  
+  const [regras, setRegras] = useState([
+    {
+      id: 5,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 6,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 7,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    },
+    {
+      id: 8,
+      placeholder: "Informe uma regra de convivência para reforçar aos hospedes que sigam enquanto estiverem usando o serviço.",
+      value: "",
+    }
+  ]);
+
+
   const [fotos, setFotos] = useState([]);
   const [datas, setDatas] = useState([]);
-  const [urlRec, setUrlRec] = useState("");
 
   // State para funcao de cancelar alteracoes e salvar Alteracoes
   const [oldData, setOldData] = useState([]);
@@ -67,19 +114,89 @@ const editApartment = () => {
     text: "Alterações Salvas"
   });
 
+
   // ITENS
-  const [itensApto, setItensApto] = useState([]);
-  const [commumArea, setCommunAreas] = useState([]);
+  const [commumArea, setCommunAreas] = useState([
+    {
+      name: "Garagem",
+      checked: false,
+    },
+    {
+      name: "Churrasqueira",
+      checked: false,
+    },
+    {
+      name: "Auditório",
+      checked: false,
+    },
+    {
+      name: "Churrasqueira",
+      checked: false,
+    },
+    {
+      name: "Área Gourmet",
+      checked: false,
+    },
+    {
+      name: "Lavanderia",
+      checked: false,
+    },
+    {
+      name: "Cozinha Compartilhada",
+      checked: false,
+    },
+    {
+      name: "Recreação Infantil",
+      checked: false,
+    }
+  ]);
+
+  const [itensApto, setItensApto] = useState([
+    {
+      name: "Piscina",
+      checked: false,
+    },
+    {
+      name: "Hidro",
+      checked: false,
+    },
+    {
+      name: "Sauna",
+      checked: false,
+    },
+    {
+      name: "Geladeira",
+      checked: false,
+    },
+    {
+      name: "Freezer",
+      checked: false,
+    },
+    {
+      name: "2 pias",
+      checked: false,
+    },
+    {
+      name: "4 churrasqueira eletrica",
+      checked: false,
+    },
+    {
+      name: "Mesa 8 lugares",
+      checked: false,
+    },
+    {
+      name: "Ar condicionado",
+      checked: false,
+    },
+  ]);
 
   const authContext = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    getRecreationInfo();
-  }, []);
+  const validaCamas = () => camas.every((data) => data.Quantidade > 0 && data.tipo != undefined)
 
   // REQUISICAO POST
-  const updateRequisicaoRA = () => {
+  const createRequisicaoApto = () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -114,20 +231,32 @@ const editApartment = () => {
       }
     });
 
-    if(aptoTitle == "" || address == "" || capacity == 0){
-      console.log("entrou")
+    var beds = []
+    camas.forEach((data) => {
+      var obj = {
+        tipo: data.tipo,
+        quantidade: parseInt(data.Quantidade)
+      }
+      beds.push(obj)
+    })
+
+    if(aptoTitle == "" || address  == "" || !validaCamas()){
+
+      return;
     }else{
+  
+      setShowSaveModal(true)
 
     var req = {
       titulo: aptoTitle,
       endereco: address,
-      tipo: radioInputs.tipo,
+      tipo: radioInputs.tipo != undefined ? radioInputs.tipo : false,
       andar: radioInputs.andar == "Terreo" ? 0 : 1,
-      suite: radioInputs.suite,
-      wifi: radioInputs.wifi,
-      animais: radioInputs.animais,
-      diaria: parseFloat(dailyRate),
-      capacidadeMaxima: capacity,
+      suite: radioInputs.suite != undefined ? radioInputs.suite : false,
+      wifi: radioInputs.wifi != undefined ? radioInputs.wifi : false,
+      animais: radioInputs.animais != undefined ? radioInputs.animais : false,
+      diaria: !isNaN(parseFloat(dailyRate)) ? parseFloat(dailyRate) : 0,
+      camas: beds,
       descricao: description,
       itens: itens,
       areasComuns: areas,
@@ -141,146 +270,24 @@ const editApartment = () => {
         },
       ],
     };
+
     console.log(req);
 
-    service.updateRecreationArea(authContext.token, req, urlRec);
+    service.createApartament(req, authContext.token);
   }
-  };
-
-  // REQUISICAO GET DO AREA
-  const getRecreationInfo = async () => {
-    var { data } = await service.getAllRecreationAreas(authContext.token);
-    setUrlRec(data[0].urlRec)
-
-    modelData(data[0]);
-    setOldData(data[0]);
-  };
-
-  const modelData = (data) => {
-    // Itens
-    var itens = data.itens;
-    var objItens = getItens(itens);
-    setItensApto(objItens);
-
-    // Areas
-    var areas = getItens(data.areasComuns);
-    setCommunAreas(areas);
-
-    // Regras
-    var rules = data.regrasConvivencia;
-    var obj = [];
-    rules.forEach((data, key) => {
-      var item = {
-        id: uuid(),
-        placeholder:
-          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-        value: data,
-      };
-      obj.push(item);
-    });
-    setRegras(obj);
-
-    // Locais nos arredores
-    var locaisNosArredores = data.locaisArredores;
-    var obj = [];
-    locaisNosArredores.forEach((data, key) => {
-      var item = {
-        id: uuid(),
-        placeholder:
-          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-        value: data,
-      };
-      obj.push(item);
-    });
-    setLocais(obj);
-
-    // Descricao
-    var descricao = data.descricao;
-    setDescription(descricao);
-
-    // Valor da diaria
-    var diaria = data.diaria;
-    setDailyRate(diaria);
-
-    // CAPACIDADE MAXIMA
-    setCapacity(data.capacidadeMaxima)
-
-
-    // TITULO
-    var title = data.titulo;
-    setAptoTitle(title);
-
-    // ENDERECO
-    var endereco = data.endereco;
-    setAddress(endereco);
-
-    // RADIOS INPUTS
-    var tipo = data.tipo;
-    var andar = data.andar;
-    var wifi = data.wifi;
-    var animais = data.animais;
-    var suite = data.suite;
-    var obj = {
-      tipo: tipo,
-      andar: andar,
-      suite: suite,
-      wifi: wifi,
-      animais: animais,
-    };
-    setRadioInputs(obj);
-
-    // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
-
-    // Images
-    var imgs = data.imageUrl;
-    var obj = [];
-    for (let idx = 0; idx < 7; idx++) {
-      var item = {
-        id: idx,
-        name: "",
-        file: imgs[idx] != undefined ? imgs[idx] : "",
-      };
-      obj.push(item);
-    }
-    setFotos(obj);
-  };
-
-  // MODELA OS DADOS DOS ITENS
-  const getItens = (itens) => {
-    var obj = [];
-    itens.forEach((data) => {
-      obj.push({
-        name: data,
-        checked: true,
-      });
-    });
-    return obj;
   };
 
   // FUNCOES RELACIONADAS AOS BOTOES DO MODAL DE CUIDADO
   const handleCancelAll = () => {
     setCancelAll(true);
     setShowCautionMsg(false);
-    modelData(oldData);
     setShowCancelModal(false)
   };
 
   const handleSaveAll = () => {
     setSaveAll(true);
     setShowCautionMsg(false);
-    updateRequisicaoRA()
+    createRequisicaoApto()
   };
 
   const checkAlterations = () => {
@@ -327,22 +334,33 @@ const editApartment = () => {
             </ButtonArea>
             <InfoBox>
               <InfoAptoForm
-                mainTitle={"Informações do Espaço"}
                 setAptoTitle={setAptoTitle}
                 setAddress={setAddress}
+                camaInfo={camas ? camas : []}
+                setCamaInfo={setCamas}
                 radioInput={radioInputs}
                 setRadioInput={setRadioInputs}
+                camas={true}
                 title={aptoTitle}
                 address={address}
-                capacity={capacity}
-                setCapacity={setCapacity}
+              />
+            </InfoBox>
+            <InfoBox>
+              <AptoTexts
+                title={"Descrição do apartamento"}
+                placeholder={
+                  "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
+                }
+                setText={setDescription}
+                text={description}
+                required
               />
             </InfoBox>
             <InfoBox>
               <AptoItens
-                title={"Itens do Espaço"}
-                itens={commumArea}
-                setItens={setCommunAreas}
+                title={"Itens do apartamento"}
+                itens={itensApto}
+                setItens={setItensApto}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
@@ -351,7 +369,7 @@ const editApartment = () => {
             </InfoBox>
             <InfoBox>
               <AptoTexts
-                title={"Adicione Valor da Diária desse espaço"}
+                title={"Adicione o Valor da Diária do Apartamento"}
                 placeholder={"Valor por Diária"}
                 type={"number"}
                 setText={setDailyRate}
@@ -361,14 +379,14 @@ const editApartment = () => {
           </LeftSide>
           <RightSide>
             <InfoBox>
-              <AptoTexts
-                title={"Descrição"}
-                placeholder={
-                  "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
-                }
-                setText={setDescription}
-                text={description}
-                required
+              <AptoItens
+                title={"Areas Comuns"}
+                itens={commumArea}
+                setItens={setCommunAreas}
+                cancelAll={cancelAll}
+                setCancelAll={setCancelAll}
+                setSaveAll={setSaveAll}
+                saveAll={saveAll}
               />
             </InfoBox>
             <InfoBox>
@@ -477,4 +495,4 @@ const editApartment = () => {
   );
 };
 
-export default editApartment;
+export default createApartment;
