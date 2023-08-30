@@ -40,6 +40,14 @@ export const RedirectArea = styled.div`
     width: 70%;
     margin-top: 20px;
     margin-bottom: 30px;
+    
+    a{
+        color: black;
+    }
+
+    a:hover{
+        text-decoration: underline;
+    }
 `
 
 export const InfoApto = styled.div`

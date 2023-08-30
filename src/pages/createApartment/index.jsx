@@ -114,10 +114,6 @@ const createApartment = () => {
     text: "Alterações Salvas"
   });
 
-  const [showAlertEmpty, setShowAlertEmpty] = useState({
-    boolean: false,
-    text: "Preencha todos os campos de informacoes do Apartamento"
-  });
 
   // ITENS
   const [commumArea, setCommunAreas] = useState([
@@ -197,6 +193,7 @@ const createApartment = () => {
   const authContext = useAuth();
   const router = useRouter();
 
+  const validaCamas = () => camas.every((data) => data.Quantidade > 0 && data.tipo != undefined)
 
   // REQUISICAO POST
   const createRequisicaoApto = () => {
@@ -243,14 +240,11 @@ const createApartment = () => {
       beds.push(obj)
     })
 
-    if(aptoTitle == "" || address  == "" || camas.length == 0){
-        setShowAlertEmpty({
-          boolean: true,
-          text: "Preencha os campos obrigatorios"
-        })
-        return;
-    }else{
+    if(aptoTitle == "" || address  == "" || !validaCamas()){
 
+      return;
+    }else{
+  
       setShowSaveModal(true)
 
     var req = {
@@ -261,7 +255,7 @@ const createApartment = () => {
       suite: radioInputs.suite != undefined ? radioInputs.suite : false,
       wifi: radioInputs.wifi != undefined ? radioInputs.wifi : false,
       animais: radioInputs.animais != undefined ? radioInputs.animais : false,
-      diaria: parseFloat(dailyRate),
+      diaria: !isNaN(parseFloat(dailyRate)) ? parseFloat(dailyRate) : 0,
       camas: beds,
       descricao: description,
       itens: itens,
@@ -271,7 +265,7 @@ const createApartment = () => {
       images: images,
       reservas: [
         {
-          dataInicial: datas[0],
+          dataInicial: datas[0] ? datas[0] : "",
           dataFinal: datas[1] ? datas[1] : datas[0],
         },
       ],
@@ -279,7 +273,7 @@ const createApartment = () => {
 
     console.log(req);
 
-    service.createApartament(authContext.token, req);
+    service.createApartament(req, authContext.token);
   }
   };
 
@@ -484,12 +478,6 @@ const createApartment = () => {
         {showModalAlterations.boolean && (
             <AlertModal
               title={showModalAlterations.text}
-            />
-        )}
-
-        {showAlertEmpty.boolean && (
-            <AlertModal
-              title={showAlertEmpty.text}
             />
         )}
 

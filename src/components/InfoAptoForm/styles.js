@@ -24,6 +24,17 @@ export const CamaInputContainer = styled.div`
     gap: 5px;
 `
 
+export const InputBox = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+`
+
+export const ErrorMsg = styled.span`
+    color: red;
+    font-size: 13px;
+`
 
 export const CheckBoxInputs = styled.div`
     display: flex;
