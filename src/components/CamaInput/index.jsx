@@ -32,7 +32,7 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
             />
             <DeleteBedButton onClick={() => setShowModal(!showModal)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
         </Container>
-            {
+          {
               option == undefined ? (
                 <ErrorMsg>Preencha o tipo de cama</ErrorMsg>
               )
