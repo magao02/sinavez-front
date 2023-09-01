@@ -52,6 +52,20 @@ export const InputArea = styled.div`
     border-radius: 10px;
     padding-left: ${(props) => props.paddingLeft};
     height: 100%;
+
+    input{
+        background-color: white;
+    }
+`
+
+export const DropdownArea = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 25%;
+    gap: 0px;
+    padding-left: 0px;
+    height: 100%;
 `
 
 export const Select = styled.select`

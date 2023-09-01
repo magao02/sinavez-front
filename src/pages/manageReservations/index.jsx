@@ -15,7 +15,8 @@ import {
   AmbientsArea,
   AmbientWrapper,
   LoadItens,
-  VerMaisButtons
+  VerMaisButtons,
+  DropdownArea
 } from "../../styles/manageReservations";
 import Input from "../../components/commom/Input";
 import filter from "../../assets/filter.svg";
@@ -25,6 +26,7 @@ import * as serviceApto from "../../services/Apto";
 import * as serviceArea from "../../services/RecreationArea";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
+import SelectDropdown from "../../components/commom/SelectDropdown";
 
 const ManageReserVations = () => {
 
@@ -107,18 +109,13 @@ const ManageReserVations = () => {
               <Input
                 variant={"searchApto"}
                 placeholder="Procure pelo nome"
-                style={{ border: "none", outline: "none" }}
+                style={{ border: "none", backgroundColor: "#FAFBFF", outline: "none"}}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
             </InputArea>
-            <InputArea width={"25%"} gap={"0px"} paddingLeft={"0px"}>
-            <img src={filter.src}></img>
-              <Select name="tipo" id="selectAmbiente" onChange={(e) => console.log(e.target.value)}>
-                <option value="Filtrar Busca" disabled hidden selected>Filtrar Busca</option>
-                <option value="ocupados">Ocupados (neste mês)</option>
-                <option value="disponiveis">Disponíveis (neste mês)</option>
-              </Select>
-            </InputArea>
+            <DropdownArea>
+                <SelectDropdown></SelectDropdown>
+            </DropdownArea>
           </FiltersArea>
           <Button><span style={{fontSize:"22px"}}>+</span> ADICIONAR AMBIENTE</Button>
         </SearchArea>
