@@ -15,86 +15,35 @@ import AddPhotoIcon from "../../../assets/icon_add_picture.svg";
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
-import DependentsContainer from "../../DependentsContainer";
 
 import Image from 'next/image.js';
+import DependentsForm from '../../DependentsContainer';
 
 const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
-  const cidadeRef = useRef();
-  const estadoRef = useRef();
 
-  const brasileiroRef = useRef(true);
-  const numeroInscricaoRef = useRef();
-  const dataAfiliacaoRef = useRef();
-  const formacaoSuperiorRef = useRef();
-  const instituicaoSuperiorRef = useRef();
-  const dataFormacaoRef = useRef();
-  const numRegistroConselhoRef = useRef();
-  const dataRegistroConselhoRef = useRef();
-  const empresaRef = useRef();
-  const salarioRef = useRef();
-  const naturalidadeRef = useRef();
-  const nacionalidadeRef = useRef("Brasileiro");
+  const [dataDependent, setDataDependent] = useState([]);
 
-  const [dataDependent, setDataDependent] = useState({});
+  const [newData, setNewData] = useState({});
 
   const takeDataDependents = (data) => {
-    setDataDependent(data);
-};
+    setDataDependent((prevDataDependent) => prevDataDependent.concat(data));
+  };
 
-  const allFieldsAreValid = useCallback(async () => {
+  const [countDependents, setCountDependents] = useState(0);
 
-    if (brasileiroRef === false) {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-        nacionalidadeRef, numeroInscricaoRef,
-        dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef, salarioRef];
 
-      const validationResults = await Promise.all(
-        inputRefs.map((inputRef) => inputRef.current?.validate()),
-      )
-      return validationResults.every((result) => result === true);
-    }
 
-    else {
-      const inputRefs = [cidadeRef, estadoRef, naturalidadeRef,
-        numeroInscricaoRef, dataAfiliacaoRef, formacaoSuperiorRef,
-        instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef, salarioRef];
+const takeNewData = (data) => {
+  setNewData(data);
+}; 
 
-      const validationResults = await Promise.all(
-        inputRefs.map((inputRef) => inputRef.current?.validate()),
-      )
-      return validationResults.every((result) => result === true);
-    }
-  });
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-    const isValidSubmit = await allFieldsAreValid();
-
-    if (!isValidSubmit) return;
-
-    const salario = Number(salarioRef.current?.value.replace(",", "."));
-
-    const [municipio, estado, naturalidade, nacionalidade, numInscricao,
-      dataAfiliacao, formacaoSuperior, instituicaoSuperior, dataFormacao,
-      numRegistroConselho, dataRegistroConselho, empresa] =
-      [cidadeRef, estadoRef, naturalidadeRef,
-        nacionalidadeRef, numeroInscricaoRef,
-        dataAfiliacaoRef, formacaoSuperiorRef, instituicaoSuperiorRef,
-        dataFormacaoRef, numRegistroConselhoRef, dataRegistroConselhoRef,
-        empresaRef].map(
-          (inputRef) => inputRef.current?.value,);
 
     dataCollector({
-      regional: { municipio, estado, naturalidade, nacionalidade },
-      numInscricao, dataAfiliacao, formacaoSuperior, instituicaoSuperior,
-      dataFormacao, numRegistroConselho, dataRegistroConselho, empresa, salario, 
-      dependentes: dataDependent
-    })
+      dependentes: dataDependent,
+    });
 
   });
 
@@ -115,15 +64,13 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
   // referencia do input
   const fileInputRef = useRef(null);
 
-  const [countDependents, setCountDependents] = useState(0);
-  const [initialNumber, setInitialNumber] = useState(1);
-
-
   const handleAddMoreDependents = () => {
     setCountDependents(countDependents + 1);
+    //setDependents([...dependents, dataDependent]);
+    //dataDependents(dependents);
+    //console.log(dependents);
   };
 
-console.log(dataDependentes);
   return (
 
     <Container onSubmit={handleSubmit}>
@@ -175,17 +122,32 @@ console.log(dataDependentes);
           </MainHead>
           <SubContainerDependents>
 
-            <DependentsContainer variant="default" handleDataDependentes={handleDataDependentes} number={countDependents > 0 ? initialNumber : 0} submitForm={dataCollector} previousData={previousData}/>
-            {[...Array(countDependents)].map((_, index) => (
-              <DependentsContainer key={index} variant="default" number={index + 2} marginTop={true} handleDataDependentes={handleDataDependentes} previousData={previousData} takeDataDependents={takeDataDependents}/>
+            <DependentsForm 
+              takeNewData={takeNewData} 
+              variant="default" 
+              submitForm={dataCollector} 
+              previousData={previousData} 
+              takeDataDependents={takeDataDependents}
+              number={countDependents}
+              />
+              {[...Array(countDependents)].map((_, index) => (
+              <DependentsForm
+                key={index} 
+                takeNewData={takeNewData} 
+                variant="default" 
+                number={index + 2} 
+                marginTop={true} 
+                previousData={previousData} 
+                takeDataDependents={takeDataDependents}/>
             ))}
 
             <Footer>
-              <Button variant={"default"} onClick={handleAddMoreDependents}>
-                <Image src={AddIcon} />
-                Adicionar outro dependente
+              <Button variant={"default"} width={'280px'} height={'45px'} marginTop={"15px"} onClick={handleAddMoreDependents}>
+                <Image src={AddIcon} /> 
+                Adicionar Dependente
               </Button>
             </Footer>
+
           </SubContainerDependents>
         </Main>
       </Body>

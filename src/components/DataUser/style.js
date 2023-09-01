@@ -21,7 +21,8 @@ export const BoxData = styled.div`
     height: 1381px;
     padding: 0px 0px 32px 0px;
     gap: 24px;
-    top: 117px
+    top: 117px;
+    z-index: 99;
 `;
 
 export const LinkPage = styled.div`
@@ -126,6 +127,7 @@ export const ContainerButtons = styled.div`
     justify-content: center;
     align-items: center;
     gap: 24px;
+    margin-top: ${props => props.margin ? '40px' : '0px'};
 `;
 
 export const ContainerPageDependents = styled.div`
@@ -266,4 +268,21 @@ export const ContainerButtonsDependent = styled.div`
     gap: 24px;
     padding: 24px;
     height: 111px;
+`;
+
+export const Dependent = styled.div`
+    position: abolute;
+
+    display: grid;
+    grid-template-columns: 54% 41% 5%;
+    justify-content: center;
+    align-items: center;
+    width: 1216px;
+    border-bottom: 1px solid var(--divider, rgba(0, 0, 0, 0.12));
+
+    height: 5vh;
+
+    padding: 1.5vh;
+
+    background: ${props => props.color == "white" ? `var(--background, ${theme.colors.white.default})` : `var(--background, ${theme.colors.blue.light})`};
 `;

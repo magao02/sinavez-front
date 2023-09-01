@@ -30,6 +30,7 @@ function getStyleByVariant(variant) {
         color: var(--primary-contrast, ${theme.colors.white.default});
         font-size: 18px;
         font-weight: 500;
+        margin-top: ${props => props.marginTop};
 
         &:hover {
           filter: brightness(80%);

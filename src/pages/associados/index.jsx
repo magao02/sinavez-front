@@ -40,6 +40,7 @@ const Associados = () => {
   const [admToggle, setAdmToggle] = useState(false);
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
+  const [userDependents, setUserDependents] = useState([]);
 
   const [associadoData, setAssociadoData] = useState([]);
   const [removeAssociateToggle, setRemoveAssociateToggle] = useState();
@@ -93,19 +94,34 @@ const Associados = () => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
+      console.log(addAssociateResponse.data);
+
+      if (collectedData.dependentes.length !== 0) {
+        console.log(collectedData.dependentes)
+        collectedData.dependentes.map( (data) => {
+          addDependente(data, addAssociateResponse.data.user.urlUser);
+        });   
+      }
+
       setCurrentStep(1);
       toggleAddAssociate();
+     
     } catch (error) { 
       setGlobalMessage(error.response.data.message);
     } 
   }, [associados, collectedData]);
 
+console.log(collectedData)
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
     setRemoveAssociateToggle((p) => !p);
     setAssociadoName(data.name);
     setUrlUser(data.urlUser);
   }, []);
+
+  const dataDependents = (data) => {
+    setUserDependents(data);
+  };
 
   // pega dos dados do usuário
   const takeDataUser = useCallback(async (data) => {
@@ -121,17 +137,29 @@ const Associados = () => {
     }
   });
 
+  
   // editando dados do usuário
   const handleEditUser = useCallback(async(dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
       //setAssociados((p) => [...p, editResponse.data.user]);
-      setDataUser(editResponse.data.user);
+      setDataUser(prevDataUser => ({
+        ...prevDataUser,
+        ...editResponse.data.user
+      }));
+      setAssociados((p) => [...p, editResponse.data.user]);
+  
       console.log(editResponse.data);
+      console.log(dataNova);
     } catch (error) {
       console.log("Deu erro");
     }
-  }, [associados]);
+  }, [associados, dataUser]);
+
+  useEffect(() => {
+    console.log("Estado atualizado:", dataUser);
+  }, [dataUser]);
+
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -190,7 +218,7 @@ const Associados = () => {
   });
 
   // remover dependente
-  const removeDependente = useCallback(async (urlDependente, urlAssociado) => {
+  const removeDependente = useCallback(async (urlDependente) => {
     try {
       const removeDependentResponse = await service.removeDependent(authContext.token, urlDependente);
       console.log(removeDependentResponse.data);
@@ -218,10 +246,7 @@ const Associados = () => {
     }
   };
 
-  const editDependente = useCallback((urlAssociado, associadoName) => {
-    setAssociadoData([urlAssociado, associadoName]);
-    setDependentesToggle(true);
-  }, [])
+  
 
   const nextStepAddAssociate = useCallback(() => {
     setCurrentStep((p) => ++p);
@@ -260,8 +285,8 @@ const Associados = () => {
             {currentStep == 2 && (
               <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
-            {currentStep == 3 && (
-              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate}/>
+            {currentStep >= 3 && (
+              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents}/>
             )}
           </AddAssociateBox>
         </>
@@ -294,7 +319,17 @@ const Associados = () => {
 
           { dataUserToggle && (
           <>
-            <DataUser  back={toggleDataUser} data={dataUser} cancelForm={toggleRemoveAssociate} urlUser={urlUser} authContext={authContext} handleEditUser={handleEditUser} dataCollector={dataCollector} addDependente={addDependente}/>
+            <DataUser  
+              back={toggleDataUser} 
+              data={dataUser} 
+              cancelForm={toggleRemoveAssociate} 
+              urlUser={urlUser} 
+              authContext={authContext} 
+              handleEditUser={handleEditUser} 
+              dataCollector={dataCollector} 
+              addDependente={addDependente}
+              removeDependente={removeDependente}
+              />
           </>
           )}
         </>

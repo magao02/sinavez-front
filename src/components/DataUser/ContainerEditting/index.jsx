@@ -5,7 +5,6 @@ import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 
-
 const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, dataCollector}) => {
  
     const [dataNova, setDataNova] = useState(data);
@@ -18,6 +17,16 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
         setDataNova(data);
     }, [data]);
 
+    useEffect(() => {
+        if (mexeu) {
+          setToggleContainerButtons(true);
+        }
+      }, [mexeu]);
+
+      useEffect(() => {
+        console.log("Estado atualizado:", valorData);
+      }, [valorData]);
+
     const handleSubmit = useCallback(async (event) => {
         event.preventDefault();
         
@@ -29,7 +38,7 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
         }
         
         
-      }, [valorData, urlUser]);
+      }, [valorData, urlUser, handleEditUser]);
 
       const handleCancelData = () => {
         if (mexeu){

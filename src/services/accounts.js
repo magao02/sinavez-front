@@ -27,6 +27,15 @@ export async function removeDependent(token, dependentUrl) {
     return requisition;
 }
 
+export async function updateDependent(data, dependentUrl, token) {
+    const requisition = await api.put(
+        `/dependente/updateDep/${dependentUrl}`,
+        data,
+        { headers: { authorization: token } }
+    );
+    return requisition;
+}
+
 //Home Page Routes:
 
 export async function signUp(userValue) {
