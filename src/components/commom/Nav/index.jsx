@@ -29,6 +29,7 @@ function NavVariant({ variant, selectedPage }) {
   const [admin, setAdmin] = useState();
   const [name, setName] = useState("");
   const [openedMenu, setOpenedMenu] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
 
   const authContext = useAuth();
   const router = useRouter();
@@ -60,6 +61,7 @@ function NavVariant({ variant, selectedPage }) {
     try {
       const responseData = await getUserData();
       setName(responseData.name);
+      setProfilePic(responseData.profilePic);
       setIsLoaded(true);
     } catch (err) {}
   }, [getUserData]);
@@ -90,7 +92,7 @@ function NavVariant({ variant, selectedPage }) {
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
-                <DropDownMenu name={name} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
+                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
               </UserFeaturesRight>
             </>
           )}
@@ -111,7 +113,7 @@ function NavVariant({ variant, selectedPage }) {
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
-                <DropDownMenu name={name} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
+                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
               </UserFeaturesRight>
             </>
           )}

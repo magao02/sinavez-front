@@ -25,6 +25,7 @@ import {
   ColorButton,
   DependenteFormModal,
   DependentePopup,
+  UploadPhotoButton,
 } from "../../styles/usuarioStyles";
 import { Body2, Subtitle1, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 import Input from "../../components/commom/Input";
@@ -35,6 +36,7 @@ import EditIcon from "../../assets/edit.svg";
 import TrashIcon from "../../assets/trash.svg";
 import WomanExclamation from "../../assets/woman_exclamation.svg";
 import ManTrashCan from "../../assets/man_deleting_trash_can.svg";
+import AddPhotoIcon from "../../assets/add_photo.svg";
 
 
 const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfirm, onCancel }) => {
@@ -161,6 +163,8 @@ const UserDataPopup = ({ value, onClose }) => {
   const authContext = useAuth();
   const router = useRouter();
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleSave = useCallback(async () => {
     setTriedCancel(false);
     setTriedClose(false);
@@ -183,10 +187,14 @@ const UserDataPopup = ({ value, onClose }) => {
         }
       }));
       try {
+        setIsSaving(true);
+
         await service.setData(authContext.urlUser, data, authContext.token);
-        setEditing(false);
+        if (fileInput?.current?.files && fileInput?.current?.files[0]) {
+          await service.setPhoto(fileInput.current.files[0], authContext.urlUser, authContext.token);
+        }
+        
         router.reload();
-        onClose();
       } catch (err) {
         setShowError(true);
       }
@@ -195,6 +203,29 @@ const UserDataPopup = ({ value, onClose }) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [authContext, router]);
+
+  const fileInput = useRef(null);
+  const [localImage, setLocalImage] = useState(null);
+
+  const triggerImagePopup = () => {
+    if (fileInput?.current) {
+      fileInput.current.click();
+    }
+  };
+
+  const onImageInputChange = () => {
+    if (fileInput?.current) {
+      if (fileInput.current.files[0]) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setLocalImage(reader.result);
+        });
+        reader.readAsDataURL(fileInput.current.files[0]);
+      } else {
+        setLocalImage(null);
+      }
+    }
+  };
 
   return <>
     <DadosPopup>
@@ -207,7 +238,11 @@ const UserDataPopup = ({ value, onClose }) => {
         <article>
           <header>
             <div className="perfil">
-              <img src="https://source.unsplash.com/random/300x300?abstract" />
+              <div className="img-container">
+                <img src={localImage ?? value.profilePic} />
+                { editing && <UploadPhotoButton onClick={triggerImagePopup}><img src={AddPhotoIcon.src} /></UploadPhotoButton>}
+              </div>
+              <input type="file" accept="image/*" ref={fileInput} onChange={onImageInputChange} />
               <div>
                 <Title2>{value.name}</Title2>
                 <Subtitle2>{value.profissao}</Subtitle2>
@@ -464,7 +499,7 @@ const UserDataPopup = ({ value, onClose }) => {
               </Dados>
             </div>
           </div>
-          { editing && <div className="confirm-buttons">
+          { editing && !isSaving && <div className="confirm-buttons">
             <div className="cancel" onClick={() => setTriedCancel(true)}>CANCELAR</div>
             <Button onClick={handleSave}>SALVAR ALTERAÇÕES</Button>
           </div> }
@@ -694,7 +729,7 @@ const UserData = () => {
             <Card>
               <Title2>Meus Dados</Title2>
               <div className="card">
-                <img src="https://source.unsplash.com/random/300x300?abstract" />
+                <img src={value.profilePic} />
                 <Subtitle1>{value.name}</Subtitle1>
                 <Tabs>
                   {
