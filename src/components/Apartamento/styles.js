@@ -60,16 +60,6 @@ export const Details = styled.div`
   gap: 10px;
 `;
 
-export const Title = styled.h1`
-  font-size: 24px;
-  color: #444;
-`;
-
-export const Reserva = styled.span`
-  color: #777;
-  font-size: ${props => props.small ? "16px" : "18px"};
-`;
-
 export const Features = styled.div`
   margin-top: calc(32px - 10px);
   display: flex;

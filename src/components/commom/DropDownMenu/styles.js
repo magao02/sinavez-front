@@ -14,14 +14,22 @@ export const MenuBox = styled.div`
 
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    gap: 30px; 
+    
+    /* gap: 30px;  */
+    justify-content: space-between;
+    padding: 0 16px;
+    
 
     color: var(--text-primary, ${theme.colors.gray.menu});
     font-size: 18px;
     font-family: Roboto;
     line-height: 22px;
+
+    .profile-pic {
+        width: 32px;
+        height: 32px;
+        border-radius: 100px;
+    }
 `
 
 export const OpenedMenuBox = styled.div`

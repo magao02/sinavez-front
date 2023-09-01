@@ -29,7 +29,7 @@ export const CounterInput = ({ label, min, max, value, onChange }) => {
   
   return (
     <Label>
-      {label}
+      <Subtitle2>{label}</Subtitle2>
       <div>
         <CounterInputContainer>
           <CounterInputButton onClick={decrease}>
@@ -97,7 +97,7 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
 export const SliderInput = ({ label, min, max, value }) => {
   return (
     <Label>
-      {label}
+      <Subtitle2>{label}</Subtitle2>
       <RangeInput type="range" min={min} max={max} value={value} />
       <RangeValues>
         <span>{min}</span>

@@ -29,8 +29,10 @@ function NavVariant({ variant, selectedPage }) {
   const [admin, setAdmin] = useState();
   const [name, setName] = useState("");
   const [openedMenu, setOpenedMenu] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
 
   const authContext = useAuth();
+  const router = useRouter();
 
   const handleSelectPage = useCallback(async () => {
     switch (selectedPage) {
@@ -48,22 +50,20 @@ function NavVariant({ variant, selectedPage }) {
   })
 
   const getUserData = useCallback(async () => {
-    try {
-      const responseData = await services.getUserData(
-        authContext.urlUser,
-        authContext.token
-      );
-      return responseData.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    const responseData = await services.getUserData(
+      authContext.urlUser,
+      authContext.token
+    );
+    return responseData.data;
   }, [authContext.token, authContext.urlUser]);
 
   const handleUserData = useCallback(async () => {
-    const responseData = await getUserData();
-    setName(responseData.name);
-    setIsLoaded(true);
+    try {
+      const responseData = await getUserData();
+      setName(responseData.name);
+      setProfilePic(responseData.profilePic);
+      setIsLoaded(true);
+    } catch (err) {}
   }, [getUserData]);
 
   const handleChangeMenu = useCallback(async () => {
@@ -92,7 +92,7 @@ function NavVariant({ variant, selectedPage }) {
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
-                <DropDownMenu name={name} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
+                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
               </UserFeaturesRight>
             </>
           )}
@@ -102,15 +102,21 @@ function NavVariant({ variant, selectedPage }) {
     case "logged": {
       return (
         <NavBar>
-          <UserFeaturesLeft>
-            <Image src={SinavezLogo} />
-            <Link href="/usuario">Meus Dados</Link>
-            <Link href="/dependentes">Meus Dependentes</Link>
-            <Link href="/impostos">Baixar Imposto de Renda</Link>
-            <Link legacybehavior={false} onClick={() => localStorage.setItem("urlAssociado", authContext.urlUser)} href="/redefinir">Redefinir Dados</Link>
-          </UserFeaturesLeft>
-          <UserFeaturesRight>
-          </UserFeaturesRight>
+          {isLoaded && (
+            <>
+              <UserFeaturesLeft>
+                <LogoSinavez>
+                  <Image src={SinavezLogo} />
+                  <Image src={SinavezName} />
+                </LogoSinavez>
+                <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
+                <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
+              </UserFeaturesLeft>
+              <UserFeaturesRight>
+                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
+              </UserFeaturesRight>
+            </>
+          )}
         </NavBar>
       );
     }

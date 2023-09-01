@@ -11,7 +11,7 @@ import Image from "next/image.js";
 import { useRouter } from "next/router.js";
 import { useAuth } from "../../../contexts/AuthContext.jsx";
 
-const DropDownMenu = ({ name, opened, onClickDo }) => {
+const DropDownMenu = ({ name, opened, onClickDo, image }) => {
     const authContext = useAuth();
 
     const router = useRouter();
@@ -29,6 +29,7 @@ const DropDownMenu = ({ name, opened, onClickDo }) => {
                     <MenuBox onClick={onClickDo}>
                         <Image src={caretUp} />
                         Olá, {name}
+                        { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
                     </MenuBox>
                     <OpenedMenuBox>
                         <Option onClick={() => router.push("/usuario")}>
@@ -48,6 +49,7 @@ const DropDownMenu = ({ name, opened, onClickDo }) => {
             <MenuBox onClick={onClickDo}>
                 <Image src={caretDown} />
                 Olá, {name}
+                { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
             </MenuBox>
         )
     }

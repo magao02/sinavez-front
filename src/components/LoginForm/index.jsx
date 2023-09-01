@@ -49,7 +49,7 @@ const LoginForm = ({ onValidSubmit, globalMessage }) => {
           variant="default"
           label="Usuário"
           name="cpf"
-          placeholder="000.000.000-0"
+          placeholder="000.000.000-00"
           ref={cpfRef}
           validate={validateCpf}
         />

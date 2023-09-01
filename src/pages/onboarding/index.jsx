@@ -45,10 +45,6 @@ const OnBoardingPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [isAdmin, setIsAdmin] = useState(false);
 
-    const checkAdmin = () => {
-        if (authContext.admin == "true") setIsAdmin(true);
-    }
-
     const router = useRouter();
 
     const nextStep = useCallback(async () => {
@@ -73,7 +69,6 @@ const OnBoardingPage = () => {
             return responseData.data;
         } catch (error) {
             console.log(error);
-            console.log(error.response.data);
         }
     }, [authContext.token, authContext.urlUser]);
 
@@ -97,8 +92,8 @@ const OnBoardingPage = () => {
             return;
         }
         handleUserData();
-        checkAdmin();
-    }, [])
+        setIsAdmin(authContext.admin);
+    }, [authContext])
 
     if (isAdmin) {
         return (
