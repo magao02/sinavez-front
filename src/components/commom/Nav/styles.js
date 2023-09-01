@@ -8,7 +8,7 @@ export const NavBar = styled.nav`
     justify-content: center;
     height: 8.3vh;
     position: absolute;
-    z-index: 100;
+    z-index: 110;
 
     box-shadow: 0px 4px 4px rgba(7, 96, 186, 0.44);
     background-color: ${theme.colors.white.default};

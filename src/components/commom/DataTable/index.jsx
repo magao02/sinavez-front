@@ -9,11 +9,10 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ searchTerm, headers, data }) => {
+const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
     /*     <DataTable nextAssociates={() => currentIndexes[0] + 20 <= associados.length ? changeAssociates(true) : undefined} previousAssociates={() => currentIndexes[0] > 0 ? changeAssociates(false) : undefined} currentIndex={currentIndexes[0]} totalQuantity={associados.length} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={currentAssociados.map((associado) => [associado[1].name, associado[1].profissao, associado[1].cpf])} totalData={associados.map((associado) => [associado.name, associado.profissao, associado.cpf])} paginate={paginate} />
     
 
-    
         const paginate = useCallback((page) => {
             setCurrentIndexes(prev => [prev[0] + page * 20, prev[0] + page * 20]);
             sliceData();
@@ -36,6 +35,11 @@ const DataTable = ({ searchTerm, headers, data }) => {
         */
     const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
     const [currentAssociates, setCurrentAssociates] = useState(data.slice(currentIndexes[0], currentIndexes[1]));
+    useEffect(() => {
+        // Atualizar 'currentAssociates' sempre que 'data' ou 'currentIndexes' mudarem
+        const updatedAssociates = data.slice(currentIndexes[0], currentIndexes[1]);
+        setCurrentAssociates(updatedAssociates);
+      }, [data, currentIndexes]);
 
     const paginate = useCallback((page) => {
         setCurrentIndexes((prev) => [prev[0] + page, prev[1] + page]);
@@ -46,9 +50,6 @@ const DataTable = ({ searchTerm, headers, data }) => {
         setCurrentAssociates(data.slice(currentIndexes[0], currentIndexes[1]));
     }, [currentAssociates, currentIndexes]);
 
-    useEffect(() => {
-        changeCurrentAssociates();
-    }, [currentIndexes]);
 
     if (searchTerm == "") {
         return (
@@ -60,12 +61,12 @@ const DataTable = ({ searchTerm, headers, data }) => {
                     {currentAssociates.map((d, i) => {
                         if (i % 2 == 0) {
                             return (
-                                <Associate color={"blue"}>
-                                    <Name>{d.name}</Name>
+                                <Associate color={"blue"} key={d.cpf}>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
-                                        <Image src={TrashIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )
@@ -73,11 +74,11 @@ const DataTable = ({ searchTerm, headers, data }) => {
                         else {
                             return (
                                 <Associate color={"white"}>
-                                    <Name>{d.name}</Name>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
-                                        <Image src={TrashIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                        <Image src={TrashIcon} onClick={() => takeData(d)}  />
                                     </Buttons>
                                 </Associate>
                             )
@@ -111,24 +112,24 @@ const DataTable = ({ searchTerm, headers, data }) => {
                     }).map((d, i) => {
                         if (i % 2 == 0) {
                             return (
-                                <Associate color={"blue"}>
-                                    <Name>{d.name}</Name>
+                                <Associate color={"blue"} key={d.cpf}>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
-                                        <Image src={TrashIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )
                         }
                         else {
                             return (
-                                <Associate color={"white"}>
-                                    <Name>{d.name}</Name>
+                                <Associate color={"white"} key={d.cpf}>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
-                                        <Image src={EditIcon} />
-                                        <Image src={TrashIcon} />
+                                        <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     </Buttons>
                                 </Associate>
                             )

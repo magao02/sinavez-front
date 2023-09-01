@@ -13,10 +13,11 @@ export const Table = styled.div`
 export const TableHead = styled.div`
     display: flex;
     align-items: center;
-    gap: 50%;
-    margin-left: 0.5vw;
+    gap: ${props => props.gap ? "45%" : "50%"}};
+    margin-top: ${props => props.marginTop ? "10px" : "0"};
+    padding: ${props => props.padding ? "7px 8px" : "0"};
 
-    width: 100%;
+    width: ${props => props.width ? "1216px" : "100%"};
     
     color: var(--text-primary, ${theme.colors.gray.menu});
     font-size: 18px;
@@ -66,6 +67,7 @@ export const Name = styled.div`
     font-size: 14px;
     font-family: Roboto;
     line-height: 18px;
+    cursor: pointer;
 `
 
 export const Profession = styled.div`
