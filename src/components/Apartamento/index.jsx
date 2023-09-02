@@ -48,9 +48,6 @@ const Feature = ({ type }) => {
 
 const Apartamento = ({ obj, queryData }) => {
   const isReservado = !!obj.reservado;
-  // TODO: figure out how reservatins should work
-  const reserva = { from: '??', to: '??' };
-  const proxReserva = { from: '??', to: '??' };
 
   const image = (obj.pictures ?? [])[0] ?? Placeholder.src;
 
@@ -85,8 +82,8 @@ const Apartamento = ({ obj, queryData }) => {
       <CardInner>
         <Details>
           <Title2>{obj.titulo}</Title2>
-          <Body1>Reserva mais proxima: De {reserva.from} até {reserva.to}</Body1>
-          <Body2>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Body2>
+          <Body1>Reserva mais proxima: {obj.closestReserva ? `De ${obj.closestReserva.chegada} até ${obj.closestReserva.saida}` : "Nenhuma"}</Body1>
+          <Body2>Proxima reserva: {obj.nextClosestReserva ? `De ${obj.nextClosestReserva.chegada} até ${obj.nextClosestReserva.saida}` : "Nenhuma"}</Body2>
           <Features>
             {features.map(f => (
               <Feature type={f} key={f} />
