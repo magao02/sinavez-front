@@ -19,6 +19,7 @@ import IconWind from "../../assets/apartamento/wind.svg";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { Body1, Body2, Title2 } from "../../styles/commonStyles";
+import Placeholder from "../../assets/apartamento/placeholder.png";
 
 const Feature = ({ type }) => {
   let image = IconWifi;
@@ -51,7 +52,7 @@ const Apartamento = ({ obj, queryData }) => {
   const reserva = { from: '??', to: '??' };
   const proxReserva = { from: '??', to: '??' };
 
-  const image = obj.images[0];
+  const image = (obj.pictures ?? [])[0] ?? Placeholder.src;
 
   const isArea = !!obj.urlRec;
   const isApt = !isArea;
@@ -78,7 +79,7 @@ const Apartamento = ({ obj, queryData }) => {
     <Card>
       <CardImage reservado={isReservado}>
         <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
-        <img src={image.src} alt="Imagem do apartamento" />
+        <img src={image} alt="Imagem do apartamento" />
       </CardImage>
 
       <CardInner>

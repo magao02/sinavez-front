@@ -5,7 +5,6 @@ import Apartamento from "../../components/Apartamento";
 import Button from "../../components/commom/Button";
 import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
 
-import Placeholder from "../../assets/apartamento/placeholder.png";
 import CaretLeft from "../../assets/caret_left_white.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import WomanSunglasses from "../../assets/woman_sunglasses.svg";
@@ -258,7 +257,7 @@ const Page = () => {
             <Title1>Apartamentos Disponíveis</Title1>
             {filteredApartments.map(apt => (
               <Apartamento
-                obj={{...apt, images: [Placeholder]}}
+                obj={{...apt}}
                 key={apt.urlApt}
                 queryData={queryData}
               />
@@ -280,7 +279,7 @@ const Page = () => {
             <Title1>Áreas Disponíveis</Title1>
             {areas.map(apt => (
               <Apartamento
-                obj={{...apt, images: [Placeholder]}}
+                obj={{...apt}}
                 key={apt.urlRec}
               />
             ))}
