@@ -46,8 +46,8 @@ const Feature = ({ type }) => {
 };
 
 const Apartamento = ({ obj, queryData }) => {
-  // TODO: figure out how reservations should work
-  const isReservado = false;
+  const isReservado = !!obj.reservado;
+  // TODO: figure out how reservatins should work
   const reserva = { from: '??', to: '??' };
   const proxReserva = { from: '??', to: '??' };
 

@@ -41,12 +41,14 @@ const Page = () => {
   };
 
   const [model, setModel] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(async () => {
     if (!router.query.id) return;
     const req = router.query.area == 'true' ? await getRecreationArea(authContext.token, router.query.id) : await getApartment(authContext.token, router.query.id);
     const data = req.data;
     setModel(data);
+    setIsLoaded(true);
   }, [router, authContext]);
   
   const applyPlural = (count, str) => {
@@ -126,10 +128,10 @@ const Page = () => {
   ), [model]);
 
   return (
-    <div>
+    <>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
-      <Content>
+      { isLoaded && <Content>
         <Breadcrumbs>
           <Image src={IconArrowLeft} onClick={goBack} className="button" />
           <Title1>Pedir pra reservar</Title1>
@@ -213,8 +215,8 @@ const Page = () => {
           </Column>
         </Details>
 
-      </Content>
-    </div>
+      </Content> }
+    </>
   )
 };
 
