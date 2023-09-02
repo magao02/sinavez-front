@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import theme from './theme';
-import createGlobalStyle from "styled-components";
 
 
 export const Container = styled.div`

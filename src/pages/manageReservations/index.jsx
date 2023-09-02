@@ -16,17 +16,18 @@ import {
   AmbientWrapper,
   LoadItens,
   VerMaisButtons,
-  DropdownArea
+  DropdownArea,
+  AddAmbienteArea
 } from "../../styles/manageReservations";
 import Input from "../../components/commom/Input";
-import filter from "../../assets/filter.svg";
 import { useEffect, useState } from "react";
 import AmbientModal from "../../components/AmbientModal";
 import * as serviceApto from "../../services/Apto";
 import * as serviceArea from "../../services/RecreationArea";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
-import SelectDropdown from "../../components/commom/SelectDropdown";
+import SelectDropdown from "../../components/commom/FilterDropdown";
+import AmbientDropdown from "../../components/commom/AmbientDropdown";
 
 const ManageReserVations = () => {
 
@@ -117,7 +118,9 @@ const ManageReserVations = () => {
                 <SelectDropdown></SelectDropdown>
             </DropdownArea>
           </FiltersArea>
-          <Button><span style={{fontSize:"22px"}}>+</span> ADICIONAR AMBIENTE</Button>
+          <AddAmbienteArea>
+            <AmbientDropdown></AmbientDropdown>
+          </AddAmbienteArea>
         </SearchArea>
         <ToggleArea>
             <SelectAmbient>

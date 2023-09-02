@@ -17,12 +17,16 @@ export const Header = styled.div`
 `
 
 export const MainContent = styled.div`
-    width: 80vw;
+    width: 60vw;
     display: flex;
     flex-direction: column;
     flex: 1;
     gap: 3vh;
     margin-top: 2vh;
+
+    @media (max-width: 1187px) {
+        width: 80vw;
+    }
 `
 
 export const SearchArea = styled.div`
@@ -40,6 +44,14 @@ export const FiltersArea = styled.div`
     width: 60%;
     height: 40px;
     gap: .5vw;
+`
+
+export const AddAmbienteArea = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 20%;
+    height: 40px;
 `
 
 export const InputArea = styled.div`
