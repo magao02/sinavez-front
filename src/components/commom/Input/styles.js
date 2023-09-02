@@ -73,23 +73,7 @@ function getStyleByVariant(variant) {
                 input::placeholder {
                     color: var(--text-secundary, ${theme.colors.gray.heavy});
                 }
-
-                input {
-                    padding: 0;
-                    border-radius: 0;
-                    border: none;
-                    background-color: ${theme.colors.blue.light};
-
-                    color: var(--text-secundary, ${theme.colors.gray.default});
-                    font-size: 18px;
-                    font-family: Roboto;
-                    line-height: 22px;
-                    outline: none;
-                    
-                    border-bottom: 1px solid ${theme.colors.gray.menu};;
-                    padding-bottom: 5px;
-                    width: 100%;
-                }
+                
                 ${
                     variant !== 'default-optional' ? css`
                         label::after {
