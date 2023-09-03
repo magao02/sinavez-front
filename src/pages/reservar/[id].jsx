@@ -14,7 +14,7 @@ import {
   ReservationDetailsCard,
   CardWithName,
   Breadcrumbs,
-  TripDetails
+  TripDetails,
 } from "../../styles/reservaStyles";
 
 
@@ -22,6 +22,9 @@ import IconRedWarning from "../../assets/icon_red_warning.svg";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import PiscinaImage from "../../assets/apartamento/piscina.png";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
+import LoadingSpinner from "../../assets/loading_spinner.svg";
+import PersonConfirm from "../../assets/person_confirm.svg";
+import WomanExclamation from "../../assets/woman_exclamation.svg";
 import Button from "../../components/commom/Button";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -31,6 +34,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { dateToDMY, dayDifference } from "../../utils/date";
 import { getRecreationArea, reserveRecreationArea } from "../../services/recreationArea";
 import { getApartment, reserveApartment } from "../../services/apartments";
+import BigConfirmPopup from "../../components/BigConfirmPopup";
 
 const Page = () => {
   const authContext = useAuth();
@@ -120,7 +124,7 @@ const Page = () => {
     console.log("data is", data);
     setIsMakingRequest(true);
     try {
-      if (router.query.area) {
+      if (router.query.area === "true") {
         await reserveRecreationArea(authContext.token, router.query.id, authContext.urlUser, data);
       } else {
         await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
@@ -130,6 +134,7 @@ const Page = () => {
       console.log(err);
       setRequestErrored(true);
     }
+    setIsMakingRequest(false);
   }
 
   const rulesCard = useMemo(() => (
@@ -227,11 +232,28 @@ const Page = () => {
 
             </ReservationDetailsCard>
 
-            <Button onClick={doRequest}>RESERVE AGORA</Button>
+            { isMakingRequest ?
+              <Button>RESERVE AGORA <Image src={LoadingSpinner} /></Button> : 
+              <Button onClick={doRequest}>RESERVE AGORA</Button>
+            }
           </Column>
         </Details>
 
       </Content> }
+      { isRequestDone && <BigConfirmPopup
+        title="Sucesso"
+        body="Reserva foi feita com sucesso"
+        image={PersonConfirm.src}
+        cancelText="OK"
+        onCancel={() => setIsRequestDone(false)}
+      /> }
+      { requestErrored && <BigConfirmPopup
+        title="Erro ao fazer a reserva"
+        body="Houve um erro fazendo a reserva. Talvez alguma reserva com esse horario já existe."
+        image={WomanExclamation.src}
+        cancelText="OK"
+        onCancel={() => setRequestErrored(false)}
+      /> }
     </>
   )
 };
