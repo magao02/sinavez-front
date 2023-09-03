@@ -28,8 +28,6 @@ import { useState } from "react";
 import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
-import PlaceholderImage from "../../assets/apartamento/placeholder.png";
-import PlaceholderImageHD from "../../assets/apartamento/placeholderhd.png";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";

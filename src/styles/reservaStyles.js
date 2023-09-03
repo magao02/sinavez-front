@@ -120,8 +120,9 @@ export const CardWithName = styled.div`
 
   img {
     border-radius: 8px;
-    object-fit: fill;
+    object-fit: cover;
     width: 40%;
+    aspect-ratio: 1.77;
   }
 
   .text {
