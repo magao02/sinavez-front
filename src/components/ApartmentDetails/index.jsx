@@ -166,14 +166,14 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
           { area && <Body1 primary>Todos apartamentos / <u>Detalhes da área de lazer</u></Body1> }
         </Breadcrumbs>
         <Header>
-          <ImageGallery>
-            <img src={PlaceholderImage.src} />
-            <img src={PlaceholderImage.src} />
-            <img src={PlaceholderImage.src} />
+          { !!model.pictures && !!model.pictures.length && <ImageGallery>
+            {
+              model.pictures.slice(0, 3).map(url => <img src={url} />)
+            }
             <div className="button">
               <Button onClick={_ => setViewingImages(true)}>VER TODAS AS FOTOS</Button>
             </div>
-          </ImageGallery>
+          </ImageGallery> }
           <Title1>{model.titulo}</Title1>
           <Body1>{typeDescription}, {model.andar}º andar</Body1>
         </Header>
@@ -316,10 +316,9 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       { viewingImages && <FullImageGallery>
         <div className="background" onClick={_ => setViewingImages(false)} />
         <div className="images">
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
+          {
+            model.pictures.map(url => <img src={url} />)
+          }
         </div>
       </FullImageGallery> }
     </div>
