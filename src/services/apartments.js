@@ -1,8 +1,9 @@
 import api from "../api";
 
-export async function getAllApartments(token) {
+export async function getAllApartments(token, data) {
+    const qs = new URLSearchParams(data);
     return await api.get(
-        `/apartment/getAllApartments`,
+        `/apartment/getAllApartments?${qs}`,
         { headers: { authorization: token } }
     );
 }

@@ -29,7 +29,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { dateToDMY, dayDifference } from "../../utils/date";
-import { getRecreationArea } from "../../services/recreationArea";
+import { getRecreationArea, reserveRecreationArea } from "../../services/recreationArea";
 import { getApartment, reserveApartment } from "../../services/apartments";
 
 const Page = () => {
@@ -101,7 +101,11 @@ const Page = () => {
     return formatPrice((model.diaria ?? 0) * numDiarias);
   }, [valorDiaria, numDiarias]);
 
-  const doThing = async () => {
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+  const [isRequestDone, setIsRequestDone] = useState(false);
+  const [requestErrored, setRequestErrored] = useState(false);
+
+  const doRequest = async () => {
     const data = {
       dataChegada: router.query.chegadaDate,
       dataSaida: router.query.saidaDate,
@@ -111,9 +115,21 @@ const Page = () => {
       criancas: +router.query.criancas,
       bebes: +router.query.bebes,
       animais: +router.query.animais,
+      pessoas: +router.query.pessoas,
     };
     console.log("data is", data);
-    await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
+    setIsMakingRequest(true);
+    try {
+      if (router.query.area) {
+        await reserveRecreationArea(authContext.token, router.query.id, authContext.urlUser, data);
+      } else {
+        await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
+      }
+      setIsRequestDone(true);
+    } catch (err) {
+      console.log(err);
+      setRequestErrored(true);
+    }
   }
 
   const rulesCard = useMemo(() => (
@@ -211,7 +227,7 @@ const Page = () => {
 
             </ReservationDetailsCard>
 
-            <Button onClick={doThing}>RESERVE AGORA</Button>
+            <Button onClick={doRequest}>RESERVE AGORA</Button>
           </Column>
         </Details>
 

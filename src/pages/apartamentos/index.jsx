@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Apartamento from "../../components/Apartamento";
 
@@ -44,7 +44,7 @@ import { getAllRecreationAreas } from "../../services/recreationArea";
 import { dateToYMD } from "../../utils/date";
 import { Body3, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 
-const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime, setEspacoType, numPessoas, setNumPessoas, setAptType }) => {
+const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime, setEspacoType, numPessoas, setNumPessoas, setAptType, onSearch }) => {
   return (
     <ColumnContent>
       <Card>
@@ -84,7 +84,7 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
           tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={numPessoas} onChange={setNumPessoas} />
         }
       </Card>
-      <Button>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
+      <Button onClick={onSearch}>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
     </ColumnContent>
   );
 };
@@ -223,6 +223,22 @@ const Page = () => {
     });
   }, [apartamentos, aptType]);
 
+  const onSearch = useCallback(async () => {
+    const data = {
+      dataChegada: queryData.chegadaDate,
+      dataSaida: queryData.saidaDate,
+      horarioChegada: queryData.chegadaTime,
+      horarioSaida: queryData.saidaTime
+    };
+    if (tabIndex === 0) {
+      const req = await getAllApartments(authContext.token, data);
+      setApartamentos(req.data);
+    } else {
+      const req = await getAllRecreationAreas(authContext.token, data);
+      setAreas(req.data);
+    }
+  }, [queryData]);
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
@@ -241,6 +257,7 @@ const Page = () => {
             setEspacoType={setEspacoType}
             numPessoas={numPessoas} setNumPessoas={setNumPessoas}
             setAptType={setAptType}
+            onSearch={onSearch}
           />
           <SearchHelpContainer>
             <Title2>Faça sua reserva!</Title2>
