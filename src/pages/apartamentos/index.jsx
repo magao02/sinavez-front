@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import Apartamento from "../../components/Apartamento";
 
 import Button from "../../components/commom/Button";
 import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
 
-import Placeholder from "../../assets/apartamento/placeholder.png";
 import CaretLeft from "../../assets/caret_left_white.svg";
 import CaretRight from "../../assets/caret_right_white.svg";
 import WomanSunglasses from "../../assets/woman_sunglasses.svg";
@@ -45,7 +44,7 @@ import { getAllRecreationAreas } from "../../services/recreationArea";
 import { dateToYMD } from "../../utils/date";
 import { Body3, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 
-const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
+const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime, setEspacoType, numPessoas, setNumPessoas, setAptType, onSearch }) => {
   return (
     <ColumnContent>
       <Card>
@@ -54,7 +53,7 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
           <Tab selected={tabIndex === 1} onClick={() => setTabIndex(1)}>Áreas de Lazer</Tab>
         </Tabs>
         {
-          tabIndex === 1 && <DropdownInput label="Espaço" options={["Piscina"]} />
+          tabIndex === 1 && <DropdownInput label="Espaço" options={["Piscina", "Churrasqueira", "Área Gourmet", "Auditório"]} onChange={setEspacoType} />
         }
 
         <Row>
@@ -78,14 +77,14 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
         }
         
         {
-          tabIndex === 0 && <DropdownInput label="Tipo de Apartamento" options={["Comum", "PCD"]} />
+          tabIndex === 0 && <DropdownInput label="Tipo de Apartamento" options={["Comum", "PCD"]} onChange={setAptType} />
         }
 
         {
-          tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={4} />
+          tabIndex === 1 && <SliderInput label="Quantidade de Pessoas" min={1} max={25} value={numPessoas} onChange={setNumPessoas} />
         }
       </Card>
-      <Button>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
+      <Button onClick={onSearch}>BUSCAR {tabIndex === 0 ? "APARTAMENTOS" : "ÁREAS"}</Button>
     </ColumnContent>
   );
 };
@@ -186,6 +185,10 @@ const Page = () => {
   const [bebes, setBebes] = useState(0);
   const [animais, setAnimais] = useState(0);
 
+  const [aptType, setAptType] = useState("Comum");
+  const [espacoType, setEspacoType] = useState("Piscina");
+  const [numPessoas, setNumPessoas] = useState(4);
+
   const authContext = useAuth();
 
   useEffect(async () => {
@@ -206,16 +209,40 @@ const Page = () => {
       criancas,
       bebes,
       animais,
-      chegadaDate: dateToYMD(chegadaDate),
-      saidaDate: dateToYMD(saidaDate),
+      pessoas: numPessoas,
+      chegadaDate: dateToYMD(chegadaDate ?? (new Date())),
+      saidaDate: dateToYMD(saidaDate ?? (new Date())),
       chegadaTime,
       saidaTime,
     }
-  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais]);
+  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais, chegadaTime, saidaTime, numPessoas]);
+
+  const filteredApartments = useMemo(() => {
+    return apartamentos.filter(apt => {
+      const isPCD = (x) => x.trim().toLowerCase() === "pcd";
+      return aptType === "PCD" ? isPCD(apt.tipo) : true;
+    });
+  }, [apartamentos, aptType]);
+
+  const onSearch = useCallback(async () => {
+    const data = {
+      dataChegada: queryData.chegadaDate,
+      dataSaida: queryData.saidaDate,
+      horarioChegada: queryData.chegadaTime,
+      horarioSaida: queryData.saidaTime
+    };
+    if (tabIndex === 0) {
+      const req = await getAllApartments(authContext.token, data);
+      setApartamentos(req.data);
+    } else {
+      const req = await getAllRecreationAreas(authContext.token, data);
+      setAreas(req.data);
+    }
+  }, [queryData]);
 
   return (
     <div>
-      <Navigation selectedPage="apartamentos" variant="admin" />
+      <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
       <Content>
         <Blue>
@@ -228,6 +255,10 @@ const Page = () => {
             animais={animais} setAnimais={setAnimais}
             chegadaTime={chegadaTime} setChegadaTime={setChegadaTime}
             saidaTime={saidaTime} setSaidaTime={setSaidaTime}
+            setEspacoType={setEspacoType}
+            numPessoas={numPessoas} setNumPessoas={setNumPessoas}
+            setAptType={setAptType}
+            onSearch={onSearch}
           />
           <SearchHelpContainer>
             <Title2>Faça sua reserva!</Title2>
@@ -240,19 +271,19 @@ const Page = () => {
         </Blue>
 
         {
-          tabIndex === 0 && (apartamentos.length ? [
-            <Title1>Apartamentos Disponíveis</Title1>,
-            apartamentos.map(apt => (
+          tabIndex === 0 && (filteredApartments.length ? <>
+            <Title1>Apartamentos Disponíveis</Title1>
+            {filteredApartments.map(apt => (
               <Apartamento
-                obj={{...apt, images: [Placeholder]}}
+                obj={{...apt}}
                 key={apt.urlApt}
                 queryData={queryData}
               />
-            )),
+            ))}
             <NoMoreResults>
               <Image src={SmileySad} /> <Subtitle2 gray>Não há mais resultados a exibir.</Subtitle2>
             </NoMoreResults>
-          ] : 
+          </> : 
           <NoResults>
             <h1>Não há apartamentos para sua busca!</h1>
             <Image src={WomanSunglasses} />
@@ -262,18 +293,19 @@ const Page = () => {
 
 
         {
-          tabIndex === 1 && (areas.length ? [
-            <Title1>Áreas Disponíveis</Title1>,
-            areas.map(apt => (
+          tabIndex === 1 && (areas.length ? <>
+            <Title1>Áreas Disponíveis</Title1>
+            {areas.map(apt => (
               <Apartamento
-                obj={{...apt, images: [Placeholder]}}
+                obj={{...apt}}
                 key={apt.urlRec}
+                queryData={queryData}
               />
-            )),
+            ))}
             <NoMoreResults>
               <Image src={SmileySad} /> <Subtitle2 gray>Não há mais resultados a exibir.</Subtitle2>
             </NoMoreResults>
-          ] :
+          </> :
           <NoResults>
             <h1>Não há espaços que correspondem à sua busca!</h1>
             <Image src={WomanSunglasses} />

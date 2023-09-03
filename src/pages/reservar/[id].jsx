@@ -14,7 +14,7 @@ import {
   ReservationDetailsCard,
   CardWithName,
   Breadcrumbs,
-  TripDetails
+  TripDetails,
 } from "../../styles/reservaStyles";
 
 
@@ -22,15 +22,19 @@ import IconRedWarning from "../../assets/icon_red_warning.svg";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import PiscinaImage from "../../assets/apartamento/piscina.png";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
+import LoadingSpinner from "../../assets/loading_spinner.svg";
+import PersonConfirm from "../../assets/person_confirm.svg";
+import WomanExclamation from "../../assets/woman_exclamation.svg";
 import Button from "../../components/commom/Button";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { dayDifference } from "../../utils/date";
-import { getRecreationArea } from "../../services/recreationArea";
-import { getApartment } from "../../services/apartments";
+import { dateToDMY, dayDifference } from "../../utils/date";
+import { getRecreationArea, reserveRecreationArea } from "../../services/recreationArea";
+import { getApartment, reserveApartment } from "../../services/apartments";
+import BigConfirmPopup from "../../components/BigConfirmPopup";
 
 const Page = () => {
   const authContext = useAuth();
@@ -41,13 +45,19 @@ const Page = () => {
   };
 
   const [model, setModel] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const isArea = useMemo(() => {
+    return router.query.area == "true";
+  }, [router.query]);
 
   useEffect(async () => {
     if (!router.query.id) return;
-    const req = router.query.area == 'true' ? await getRecreationArea(authContext.token, router.query.id) : await getApartment(authContext.token, router.query.id);
+    const req = isArea ? await getRecreationArea(authContext.token, router.query.id) : await getApartment(authContext.token, router.query.id);
     const data = req.data;
     setModel(data);
-  }, [router, authContext]);
+    setIsLoaded(true);
+  }, [router, authContext, isArea]);
   
   const applyPlural = (count, str) => {
     if (count == 1) {
@@ -72,13 +82,17 @@ const Page = () => {
   };
 
   const hospedesStr = useMemo(() => {
-    return [
-      applyPlural(+router.query.adultos, "adulto"),
-      applyPlural(+router.query.criancas, "criança"),
-      applyPlural(+router.query.bebes, "bebê"),
-      `${applyPlural(+router.query.animais, "animal")} de estimação`
-    ].join('; ');
-  }, [router]);
+    if (isArea) {
+      return applyPlural(+router.query.pessoas, "pessoa");
+    } else {
+      return [
+        applyPlural(+router.query.adultos, "adulto"),
+        applyPlural(+router.query.criancas, "criança"),
+        applyPlural(+router.query.bebes, "bebê"),
+        `${applyPlural(+router.query.animais, "animal")} de estimação`
+      ].join('; ');
+    }
+  }, [router, isArea]);
 
   const formatPrice = value => {
     return value.toLocaleString('pt-BR', {
@@ -92,12 +106,44 @@ const Page = () => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate));
+    return Math.max(1, dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate)) + 1);
   }, [model, router]);
 
   const totalDiarias = useMemo(() => {
     return formatPrice((model.diaria ?? 0) * numDiarias);
   }, [valorDiaria, numDiarias]);
+
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+  const [isRequestDone, setIsRequestDone] = useState(false);
+  const [requestErrored, setRequestErrored] = useState(false);
+
+  const doRequest = async () => {
+    const data = {
+      dataChegada: router.query.chegadaDate,
+      dataSaida: router.query.saidaDate,
+      horarioChegada: router.query.chegadaTime,
+      horarioSaida: router.query.saidaTime,
+      adultos: +router.query.adultos,
+      criancas: +router.query.criancas,
+      bebes: +router.query.bebes,
+      animais: +router.query.animais,
+      pessoas: +router.query.pessoas,
+    };
+    console.log("data is", data);
+    setIsMakingRequest(true);
+    try {
+      if (router.query.area === "true") {
+        await reserveRecreationArea(authContext.token, router.query.id, authContext.urlUser, data);
+      } else {
+        await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
+      }
+      setIsRequestDone(true);
+    } catch (err) {
+      console.log(err);
+      setRequestErrored(true);
+    }
+    setIsMakingRequest(false);
+  }
 
   const rulesCard = useMemo(() => (
     <RulesCard>
@@ -111,10 +157,10 @@ const Page = () => {
   ), [model]);
 
   return (
-    <div>
-      <Navigation selectedPage="apartamentos" variant="admin" />
+    <>
+      <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
-      <Content>
+      { isLoaded && <Content>
         <Breadcrumbs>
           <Image src={IconArrowLeft} onClick={goBack} className="button" />
           <Title1>Pedir pra reservar</Title1>
@@ -165,7 +211,7 @@ const Page = () => {
               <CardWithName>
                 <img src={PiscinaImage.src} />
                 <div className="text">
-                  <Body3>Espaço inteiro: apartamento</Body3>
+                  <Body3>Espaço inteiro: { isArea ? "area de lazer" : "apartamento" }</Body3>
                   <Body1 strong>{model.titulo ?? '?'}</Body1>
                 </div>
               </CardWithName>
@@ -194,12 +240,29 @@ const Page = () => {
 
             </ReservationDetailsCard>
 
-            <Button>RESERVE AGORA</Button>
+            { isMakingRequest ?
+              <Button>RESERVE AGORA <Image src={LoadingSpinner} /></Button> : 
+              <Button onClick={doRequest}>RESERVE AGORA</Button>
+            }
           </Column>
         </Details>
 
-      </Content>
-    </div>
+      </Content> }
+      { isRequestDone && <BigConfirmPopup
+        title="Sucesso"
+        body="Reserva foi feita com sucesso"
+        image={PersonConfirm.src}
+        cancelText="OK"
+        onCancel={() => setIsRequestDone(false)}
+      /> }
+      { requestErrored && <BigConfirmPopup
+        title="Erro ao fazer a reserva"
+        body="Houve um erro fazendo a reserva. Talvez alguma reserva com esse horario já existe."
+        image={WomanExclamation.src}
+        cancelText="OK"
+        onCancel={() => setRequestErrored(false)}
+      /> }
+    </>
   )
 };
 

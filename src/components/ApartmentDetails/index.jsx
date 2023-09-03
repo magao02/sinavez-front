@@ -49,6 +49,7 @@ import { dayDifference } from "../../utils/date";
 const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
   const [model, setModel] = useState({});
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const authContext = useAuth();
 
@@ -59,6 +60,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     const req = area ? await getRecreationArea(authContext.token, objectUrl) : await getApartment(authContext.token, objectUrl);
     const data = req.data;
     setModel(data);
+    setIsLoaded(true);
   }, [area, objectUrl, authContext]);
 
   const rulesCard = useMemo(() => (
@@ -88,6 +90,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       criancas: query.criancas ?? 0,
       bebes: query.bebes ?? 0,
       animais: query.animais ?? 0,
+      pessoas: query.pessoas ?? 4,
       chegadaTime: query.chegadaTime ?? '11:00',
       saidaTime: query.saidaTime ?? '11:00',
     };
@@ -98,7 +101,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate));
+    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate)) + 1;
   }, [model, defaultedQuery]);
 
   const totalDiarias = useMemo(() => {
@@ -136,36 +139,43 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   };
 
   const hospedesStr = useMemo(() => {
-    return [
-      applyPlural(defaultedQuery.adultos, "adulto"),
-      applyPlural(defaultedQuery.criancas, "criança"),
-      applyPlural(defaultedQuery.bebes, "bebê"),
-      `${applyPlural(defaultedQuery.animais, "animal")} de estimação`
-    ].join('; ');
-  }, [defaultedQuery]);
+    if (area) {
+      return applyPlural(defaultedQuery.pessoas, "pessoa");
+    } else {
+      return [
+        applyPlural(defaultedQuery.adultos, "adulto"),
+        applyPlural(defaultedQuery.criancas, "criança"),
+        applyPlural(defaultedQuery.bebes, "bebê"),
+        `${applyPlural(defaultedQuery.animais, "animal")} de estimação`
+      ].join('; ');
+    }
+  }, [defaultedQuery, area]);
+
+  const typeDescription = useMemo(() => {
+    return model?.tipo?.toLowerCase()?.trim() === "pcd" ? "Apartamento Adaptado (com adaptação para PCD)" : "Apartamento Padrão (sem adaptação para PCD)";
+  }, [model]);
 
   return (
     <div>
-      <Navigation selectedPage="apartamentos" variant="admin" />
+      <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
-      <Content>
+      { isLoaded && <Content>
         <Breadcrumbs>
           <Image onClick={goBack} src={IconArrowLeft} className="button" />
           { !area && <Body1 primary>Todos apartamentos / Detalhes de reservas do apartamento / <u>Detalhes do apartamento</u></Body1> }
           { area && <Body1 primary>Todos apartamentos / <u>Detalhes da área de lazer</u></Body1> }
         </Breadcrumbs>
         <Header>
-          <ImageGallery>
-            <img src={PlaceholderImage.src} />
-            <img src={PlaceholderImage.src} />
-            <img src={PlaceholderImage.src} />
+          { !!model.pictures && !!model.pictures.length && <ImageGallery>
+            {
+              model.pictures.slice(0, 3).map(url => <img src={url} />)
+            }
             <div className="button">
               <Button onClick={_ => setViewingImages(true)}>VER TODAS AS FOTOS</Button>
             </div>
-          </ImageGallery>
+          </ImageGallery> }
           <Title1>{model.titulo}</Title1>
-          {/* i dont think this is correct */}
-          <Body1>{model.tipo}, {model.andar}º andar</Body1>
+          <Body1>{typeDescription}, {model.andar}º andar</Body1>
         </Header>
         <Details>
           <Column className="features-column">
@@ -301,15 +311,14 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
           <Title2>Veja a localização no mapa</Title2>
           <Image src={MapaImage} />
         </MapContainer>
-      </Content>
+      </Content> }
 
       { viewingImages && <FullImageGallery>
         <div className="background" onClick={_ => setViewingImages(false)} />
         <div className="images">
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
-          <img src={PlaceholderImageHD.src} />
+          {
+            model.pictures.map(url => <img src={url} />)
+          }
         </div>
       </FullImageGallery> }
     </div>

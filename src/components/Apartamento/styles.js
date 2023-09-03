@@ -32,6 +32,7 @@ export const CardImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    aspect-ratio: 1.77
   }
   & > p {
     position: absolute;
@@ -61,7 +62,7 @@ export const Details = styled.div`
 `;
 
 export const Features = styled.div`
-  margin-top: calc(32px - 10px);
+  margin-top: auto;
   display: flex;
   gap: 16px;
 `;

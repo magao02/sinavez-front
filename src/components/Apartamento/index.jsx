@@ -19,6 +19,7 @@ import IconWind from "../../assets/apartamento/wind.svg";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { Body1, Body2, Title2 } from "../../styles/commonStyles";
+import Placeholder from "../../assets/apartamento/placeholder.png";
 
 const Feature = ({ type }) => {
   let image = IconWifi;
@@ -46,12 +47,9 @@ const Feature = ({ type }) => {
 };
 
 const Apartamento = ({ obj, queryData }) => {
-  // TODO: figure out how reservations should work
-  const isReservado = false;
-  const reserva = { from: '??', to: '??' };
-  const proxReserva = { from: '??', to: '??' };
+  const isReservado = !!obj.reservado;
 
-  const image = obj.images[0];
+  const image = (obj.pictures ?? [])[0] ?? Placeholder.src;
 
   const isArea = !!obj.urlRec;
   const isApt = !isArea;
@@ -78,14 +76,14 @@ const Apartamento = ({ obj, queryData }) => {
     <Card>
       <CardImage reservado={isReservado}>
         <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
-        <img src={image.src} alt="Imagem do apartamento" />
+        <img src={image} alt="Imagem do apartamento" />
       </CardImage>
 
       <CardInner>
         <Details>
           <Title2>{obj.titulo}</Title2>
-          <Body1>Reserva mais proxima: De {reserva.from} até {reserva.to}</Body1>
-          <Body2>Proxima reserva: {proxReserva.from} até {proxReserva.to}</Body2>
+          <Body1>Reserva mais proxima: {obj.closestReserva ? `De ${obj.closestReserva.chegada} até ${obj.closestReserva.saida}` : "Nenhuma"}</Body1>
+          <Body2>Proxima reserva: {obj.nextClosestReserva ? `De ${obj.nextClosestReserva.chegada} até ${obj.nextClosestReserva.saida}` : "Nenhuma"}</Body2>
           <Features>
             {features.map(f => (
               <Feature type={f} key={f} />
