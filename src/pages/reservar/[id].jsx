@@ -47,13 +47,17 @@ const Page = () => {
   const [model, setModel] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const isArea = useMemo(() => {
+    return router.query.area == "true";
+  }, [router.query]);
+
   useEffect(async () => {
     if (!router.query.id) return;
-    const req = router.query.area == 'true' ? await getRecreationArea(authContext.token, router.query.id) : await getApartment(authContext.token, router.query.id);
+    const req = isArea ? await getRecreationArea(authContext.token, router.query.id) : await getApartment(authContext.token, router.query.id);
     const data = req.data;
     setModel(data);
     setIsLoaded(true);
-  }, [router, authContext]);
+  }, [router, authContext, isArea]);
   
   const applyPlural = (count, str) => {
     if (count == 1) {
@@ -78,13 +82,17 @@ const Page = () => {
   };
 
   const hospedesStr = useMemo(() => {
-    return [
-      applyPlural(+router.query.adultos, "adulto"),
-      applyPlural(+router.query.criancas, "criança"),
-      applyPlural(+router.query.bebes, "bebê"),
-      `${applyPlural(+router.query.animais, "animal")} de estimação`
-    ].join('; ');
-  }, [router]);
+    if (isArea) {
+      return applyPlural(+router.query.pessoas, "pessoa");
+    } else {
+      return [
+        applyPlural(+router.query.adultos, "adulto"),
+        applyPlural(+router.query.criancas, "criança"),
+        applyPlural(+router.query.bebes, "bebê"),
+        `${applyPlural(+router.query.animais, "animal")} de estimação`
+      ].join('; ');
+    }
+  }, [router, isArea]);
 
   const formatPrice = value => {
     return value.toLocaleString('pt-BR', {
@@ -98,7 +106,7 @@ const Page = () => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return Math.max(1, dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate)));
+    return Math.max(1, dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate)) + 1);
   }, [model, router]);
 
   const totalDiarias = useMemo(() => {
@@ -203,7 +211,7 @@ const Page = () => {
               <CardWithName>
                 <img src={PiscinaImage.src} />
                 <div className="text">
-                  <Body3>Espaço inteiro: apartamento</Body3>
+                  <Body3>Espaço inteiro: { isArea ? "area de lazer" : "apartamento" }</Body3>
                   <Body1 strong>{model.titulo ?? '?'}</Body1>
                 </div>
               </CardWithName>

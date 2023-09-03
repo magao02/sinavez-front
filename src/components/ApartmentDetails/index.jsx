@@ -90,6 +90,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       criancas: query.criancas ?? 0,
       bebes: query.bebes ?? 0,
       animais: query.animais ?? 0,
+      pessoas: query.pessoas ?? 4,
       chegadaTime: query.chegadaTime ?? '11:00',
       saidaTime: query.saidaTime ?? '11:00',
     };
@@ -100,7 +101,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate));
+    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate)) + 1;
   }, [model, defaultedQuery]);
 
   const totalDiarias = useMemo(() => {
@@ -138,13 +139,17 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   };
 
   const hospedesStr = useMemo(() => {
-    return [
-      applyPlural(defaultedQuery.adultos, "adulto"),
-      applyPlural(defaultedQuery.criancas, "criança"),
-      applyPlural(defaultedQuery.bebes, "bebê"),
-      `${applyPlural(defaultedQuery.animais, "animal")} de estimação`
-    ].join('; ');
-  }, [defaultedQuery]);
+    if (area) {
+      return applyPlural(defaultedQuery.pessoas, "pessoa");
+    } else {
+      return [
+        applyPlural(defaultedQuery.adultos, "adulto"),
+        applyPlural(defaultedQuery.criancas, "criança"),
+        applyPlural(defaultedQuery.bebes, "bebê"),
+        `${applyPlural(defaultedQuery.animais, "animal")} de estimação`
+      ].join('; ');
+    }
+  }, [defaultedQuery, area]);
 
   const typeDescription = useMemo(() => {
     return model?.tipo?.toLowerCase()?.trim() === "pcd" ? "Apartamento Adaptado (com adaptação para PCD)" : "Apartamento Padrão (sem adaptação para PCD)";

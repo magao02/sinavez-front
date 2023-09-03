@@ -209,12 +209,13 @@ const Page = () => {
       criancas,
       bebes,
       animais,
+      pessoas: numPessoas,
       chegadaDate: dateToYMD(chegadaDate ?? (new Date())),
       saidaDate: dateToYMD(saidaDate ?? (new Date())),
       chegadaTime,
       saidaTime,
     }
-  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais, chegadaTime, saidaTime]);
+  }, [chegadaDate, saidaDate, adultos, criancas, bebes, animais, chegadaTime, saidaTime, numPessoas]);
 
   const filteredApartments = useMemo(() => {
     return apartamentos.filter(apt => {
@@ -298,6 +299,7 @@ const Page = () => {
               <Apartamento
                 obj={{...apt}}
                 key={apt.urlRec}
+                queryData={queryData}
               />
             ))}
             <NoMoreResults>
