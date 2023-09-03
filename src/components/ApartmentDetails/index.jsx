@@ -112,7 +112,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   };
 
   const goBack = () => {
-    router.push(`/apartamentos`);
+    router.back();
   };
 
   const applyPlural = (count, str) => {
@@ -173,7 +173,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             </div>
           </ImageGallery> }
           <Title1>{model.titulo}</Title1>
-          <Body1>{typeDescription}, {model.andar}º andar</Body1>
+          { !area && <Body1>{typeDescription}, {model.andar}º andar</Body1> }
         </Header>
         <Details>
           <Column className="features-column">
