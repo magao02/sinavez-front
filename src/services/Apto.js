@@ -21,3 +21,13 @@ export async function getAllApartaments(token){
     )
     return requisition;
 }
+
+export async function getApartament(token, urlApt){
+    const requisition = await api.get(
+        `/apartment/getApartment/${urlApt}`,
+        {headers: {
+            authorization: token
+        }}
+    )
+    return requisition;
+}

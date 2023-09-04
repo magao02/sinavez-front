@@ -14,6 +14,7 @@ export const Container = styled.div`
 
     span{
         color: gray;
+        font-size: 13.5px;
     }
 `
 
@@ -30,6 +31,7 @@ export const ContainerSelect = styled.div`
 
     span{
         color: gray;
+        font-size: 12px;
     }
 `
 

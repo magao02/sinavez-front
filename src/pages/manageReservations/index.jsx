@@ -96,6 +96,8 @@ const ManageReserVations = () => {
     },[authContext.auth])
 
 
+
+
   return (
     <Container>
       <Header>
@@ -136,7 +138,7 @@ const ManageReserVations = () => {
                     AptoFiltrado.map((data) => {
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)}>
+                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)} url={data.urlApt} showVerMais={true}>
                                 </AmbientModal>
                             </AmbientWrapper>
                         )
@@ -145,7 +147,7 @@ const ManageReserVations = () => {
                     RecreationAreaFiltrada.map((data) => {
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)}>
+                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)} url={data.urlRec} showVerMais={true}>
                                 </AmbientModal>
                             </AmbientWrapper>
                         )

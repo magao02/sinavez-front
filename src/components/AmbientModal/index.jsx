@@ -4,8 +4,25 @@ import wifi_icon from "../../assets/wifi_icon.svg"
 import dog_paw from "../../assets/dog_paw.svg"
 import wind from "../../assets/wind.svg"
 import suite from "../../assets/suite.svg"
+import { useRouter } from "next/router";
 
-export const AmbientModal = ({title, datas, itens, status}) => {
+
+export const AmbientModal = ({title, datas, itens, status, url, showVerMais}) => {
+
+    const router = useRouter();
+
+    const handleRedirectVerMais = () => {
+        router.push(`/ambienteDados?url=${url}`)
+        localStorage.setItem("urlAmbient", url)
+    }
+
+
+    const handleRedirect = () => {
+        router.push(`/ambienteDados?url=${url}`)
+        localStorage.setItem("urlAmbient", url)
+    }
+
+
 
     return (
         <Container>
@@ -17,7 +34,12 @@ export const AmbientModal = ({title, datas, itens, status}) => {
                 <MainInfo>
                     <TitleAndButtonArea>
                         <h2>{title}</h2>
-                        <Button>VER MAIS</Button>
+                        {
+                            showVerMais ?
+                            <Button onClick={handleRedirectVerMais}>VER MAIS</Button>
+                            :
+                            <Button onClick={handleRedirect}>EDITAR DADOS</Button>
+                        }
                     </TitleAndButtonArea>
                     <SpanArea>
                         <span>Reserva mais próxima: De 05/04/2023 até 10/05/2023</span>
