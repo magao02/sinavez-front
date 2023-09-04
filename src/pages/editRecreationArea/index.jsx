@@ -316,16 +316,16 @@ const editApartment = () => {
             }}
           >
             <Image onClick={() => checkAlterations()} src={leftArrow} alt={"arrow"}></Image>
-            <a onClick={() => checkAlterations()}> Todos os Apartamentos </a>
+            <a onClick={() => checkAlterations()}> Todos as Áreas de Lazer </a>
             <a>/</a>
-            <a onClick={() => routeToAmbientData()}>Dados do Apartamentos </a>
+            <a onClick={() => routeToAmbientData()}>Dados da Área de Lazer </a>
             <a>/</a>
-            <a>Editar Apartamento </a>
+            <a>Editar Área de Lazer </a>
           </Button>
         </RedirectArea>
-        <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
+        <h2 style={{ marginBottom: "3vh" }}>Editar a Área de Lazer</h2>
         <FotosArea onChange={() => setShowCautionMsg(true)}>
-          <h3>Adicionar Fotos do apartamento</h3>
+          <h3>Adicionar Fotos da Áreas de Lazer</h3>
           <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
