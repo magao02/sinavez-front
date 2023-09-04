@@ -82,7 +82,6 @@ function getStyleByVariant(variant) {
                         }
                     ` : ""
                 }
-                
         `;
         }
 
@@ -125,6 +124,15 @@ function getStyleByVariant(variant) {
                     padding-bottom: 1.6rem;
                     }
             `;
+        }
+
+        case 'searchApto' : {
+            return css`
+                width: 100%;
+                border: none;
+                outline: none;
+                padding: 10px;
+            `
         }
 
         case 'search': {

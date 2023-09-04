@@ -326,6 +326,31 @@ function getStyleByVariant(variant) {
       `
     }
 
+    case "save": {
+      return css`
+        background-color: green;
+        border: none;
+        padding: 5px 10px;
+        font-size: 15px;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px;
+        box-shadow: 0px 4px 4px 0px rgba(7, 96, 186, 0.45);
+      `
+    }
+
+    case "trash": {
+      return css`
+        height: 80%;
+        border-radius: 5px;
+        padding: 5px;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EDF6FF;
+      `
+    }
     case "cancelRemove": {
       return css`
       background: none;

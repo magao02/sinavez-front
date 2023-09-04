@@ -1,9 +1,14 @@
-import { Container } from './styles';
+import { Container } from "./styles";
 
-const Button = ({ variant, children, ...rest }) => 
-
-<Container disabledButton={props => props.disabledButton} blue={props => props.blue} variant={variant}{...rest}>
+const Button = ({ variant, children, ...rest }) => (
+  <Container
+    disabledButton={(props) => props.disabledButton}
+    blue={(props) => props.blue}
+    variant={variant}
+    {...rest}
+  >
     {children}
-</Container>
+  </Container>
+);
 
 export default Button;
