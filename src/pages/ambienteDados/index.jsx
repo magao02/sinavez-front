@@ -120,7 +120,7 @@ const checkBusy = (datas) => {
               </MonthsArea>
               <ReservasContent>
                 {
-                  reservas.length != 0 ?
+                  reservas.length == 0 ?
                     <NoReservations>
                       <MsgArea>
                         <h2>Ainda não há reservas</h2>
