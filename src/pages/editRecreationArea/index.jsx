@@ -79,7 +79,7 @@ const editApartment = () => {
   }, []);
 
   // REQUISICAO POST
-  const updateRequisicaoApto = () => {
+  const updateRequisicaoRA = () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -280,7 +280,7 @@ const editApartment = () => {
   const handleSaveAll = () => {
     setSaveAll(true);
     setShowCautionMsg(false);
-    updateRequisicaoApto()
+    updateRequisicaoRA()
   };
 
   const checkAlterations = () => {
