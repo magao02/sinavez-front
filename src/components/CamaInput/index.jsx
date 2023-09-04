@@ -18,7 +18,7 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
       <InputBox>
         <Container onChange={(e) => handleCama(id, e)}>
             <Select name="tipo" id="selectCama">
-                <option value="Tipo de Cama" disabled hidden>{"Tipo de Cama"}</option>
+                <option value="Tipo de Cama" disabled hidden selected={option == undefined}>{"Tipo de Cama"}</option>
                 <option value="Solteiro" selected={option == "Solteiro"}>Solteiro</option>
                 <option value="Casal" selected={option == "Casal"}>Casal</option>
             </Select>

@@ -14,7 +14,7 @@ import CamaInput from "../CamaInput";
 import { v4 as uuid } from 'uuid';
 
 
-const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInput, setRadioInput, camas, title, address}) => {
+const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInput, setRadioInput, camas, title, address, capacity, setCapacity, mainTitle}) => {
 
   // CAMAS
   /*const [camaInfo, setCamaInfo] = useState([{
@@ -104,10 +104,10 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
   const addRadioInfo = (item) => {
     setRadioInput({ ...radioInput, [item.title]: item.value });
   };
-
+  
   return (
     <Container>
-      <h3>Informacoes do Apartamento</h3>
+      <h3>{mainTitle ? mainTitle : "Informacoes do Apartamento"}</h3>
       <InputContainer>
       <InputBox>
           <Input
@@ -147,10 +147,12 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             name="Capacidade Máxima*"
             type="number"
             placeholder="Capacidade Máxima*"
+            value={capacity}
+            onChange={(e) => setCapacity(e.target.value)}
           />
           {
-            true &&
-            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+            capacity == 0 && 
+            <ErrorMsg>Campo Obrigatorio</ErrorMsg>
           }
         </InputBox>
         }
