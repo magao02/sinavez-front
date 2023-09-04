@@ -34,3 +34,14 @@ export async function updateRecreationArea(token, data, urlApt){
     )
     return requisition;
 }
+
+
+export async function getApartament(token, urlRec){
+    const requisition = await api.get(
+        `/recreationArea/getRecreationArea/${urlRec}`,
+        {headers: {
+            authorization: token
+        }}
+    )
+    return requisition;
+}
