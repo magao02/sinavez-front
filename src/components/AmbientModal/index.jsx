@@ -7,19 +7,22 @@ import suite from "../../assets/suite.svg"
 import { useRouter } from "next/router";
 
 
-export const AmbientModal = ({title, datas, itens, status, url, showVerMais}) => {
+export const AmbientModal = ({title, datas, itens, status, url, showVerMais, ambientType}) => {
 
     const router = useRouter();
 
     const handleRedirectVerMais = () => {
         router.push(`/ambienteDados?url=${url}`)
         localStorage.setItem("urlAmbient", url)
+        localStorage.setItem("ambientType", ambientType)
     }
 
-
-    const handleRedirect = () => {
-        router.push(`/ambienteDados?url=${url}`)
-        localStorage.setItem("urlAmbient", url)
+    const handleRedirectEdit = () => {
+        if(localStorage.getItem("ambientType") == "apto"){
+            router.push(`/editApartment?url=${url}`)
+        }else{
+            router.push(`/editRecreationArea?url=${url}`)
+        }
     }
 
 
@@ -38,7 +41,7 @@ export const AmbientModal = ({title, datas, itens, status, url, showVerMais}) =>
                             showVerMais ?
                             <Button onClick={handleRedirectVerMais}>VER MAIS</Button>
                             :
-                            <Button onClick={handleRedirect}>EDITAR DADOS</Button>
+                            <Button onClick={handleRedirectEdit}>EDITAR DADOS</Button>
                         }
                     </TitleAndButtonArea>
                     <SpanArea>

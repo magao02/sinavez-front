@@ -141,7 +141,6 @@ const editApartment = () => {
         },
       ],
     };
-    console.log(req);
 
     service.updateRecreationArea(authContext.token, req, urlRec);
   }
@@ -149,11 +148,11 @@ const editApartment = () => {
 
   // REQUISICAO GET DO AREA
   const getRecreationInfo = async () => {
-    var { data } = await service.getAllRecreationAreas(authContext.token);
-    setUrlRec(data[0].urlRec)
+    var { data } = await service.getRecreationArea(authContext.token, localStorage.urlAmbient);
+    setUrlRec(localStorage.urlAmbient)
 
-    modelData(data[0]);
-    setOldData(data[0]);
+    modelData(data);
+    setOldData(data);
   };
 
   const modelData = (data) => {
@@ -291,14 +290,23 @@ const editApartment = () => {
     }
   }
 
+  const routeToAmbientData = () => {
+    if(showCautionMsg){
+      setShowModalUnsaved(true)
+    }else{
+      router.push("/ambienteDados")
+    }
+  }
+
   return (
     <Container>
       <Header>
         <Navigation variant={"admin"} />
       </Header>
       <Main>
-        <RedirectArea onClick={checkAlterations}>
+        <RedirectArea>
           <Button
+            onClick={() => checkAlterations()}
             variant={"image"}
             style={{
               display: "flex",
@@ -307,10 +315,10 @@ const editApartment = () => {
               alignItens: "center",
             }}
           >
-            <Image src={leftArrow} alt={"arrow"}></Image>
-            <a>Todos os Apartamentos </a>
+            <Image onClick={() => checkAlterations()} src={leftArrow} alt={"arrow"}></Image>
+            <a onClick={() => checkAlterations()}> Todos os Apartamentos </a>
             <a>/</a>
-            <a>Dados do Apartamentos </a>
+            <a onClick={() => routeToAmbientData()}>Dados do Apartamentos </a>
             <a>/</a>
             <a>Editar Apartamento </a>
           </Button>

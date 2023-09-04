@@ -155,7 +155,6 @@ const editApartment = () => {
       ],
     };
 
-    console.log(req);
 
     service.updateApartment(authContext.token, req, urlApto);
   }
@@ -163,11 +162,11 @@ const editApartment = () => {
 
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
-    var { data } = await service.getAllApartaments(authContext.token);
-    setUrlApto(data[3].urlApt)
+    var { data } = await service.getApartament(authContext.token, localStorage.urlAmbient);
+    setUrlApto(localStorage.urlAmbient)
 
-    modelData(data[3]);
-    setOldData(data[3]);
+    modelData(data);
+    setOldData(data);
   };
 
   const modelData = (data) => {
@@ -306,17 +305,19 @@ const editApartment = () => {
     updateRequisicaoApto()
   };
 
-  const checkAlterations = ( page ) => {
+  const checkAlterations = () => {
     if(showCautionMsg){
       setShowModalUnsaved(true)
     }else{
-      if(page == "todos"){
         router.push("/manageReservations")
-      }else if(page == "dados"){
-        router.push("/aptoInfo")
-      }else{
-        router.push("/manageReservations")
-      }
+    }
+  }
+
+  const routeToAmbientData = () => {
+    if(showCautionMsg){
+      setShowModalUnsaved(true)
+    }else{
+      router.push("/ambienteDados")
     }
   }
 
@@ -326,8 +327,9 @@ const editApartment = () => {
         <Navigation variant={"admin"} />
       </Header>
       <Main>
-        <RedirectArea onClick={() => checkAlterations("")}>
+        <RedirectArea>
           <Button
+            onClick={() => checkAlterations()}
             variant={"image"}
             style={{
               display: "flex",
@@ -336,10 +338,10 @@ const editApartment = () => {
               alignItens: "center",
             }}
           >
-            <Image src={leftArrow} alt={"arrow"}></Image>
-            <a onClick={() => checkAlterations("todos")}>Todos os Apartamentos </a>
+            <Image onClick={() => checkAlterations()} src={leftArrow} alt={"arrow"}></Image>
+            <a onClick={() => checkAlterations()}>Todos os Apartamentos </a>
             <a>/</a>
-            <a onClick={() => checkAlterations("dados")} >Dados do Apartamentos </a>
+            <a onClick={() => routeToAmbientData()} >Dados do Apartamentos </a>
             <a>/</a>
             <a>Editar Apartamento </a>
           </Button>

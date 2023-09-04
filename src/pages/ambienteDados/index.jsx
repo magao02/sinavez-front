@@ -23,7 +23,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import * as serviceApto from "../../services/Apto";
-import * as serviceArea from "../../services/RecreationArea";
+import * as serviceArea from "../../services/RecreationArea"
 import AmbientModal from "../../components/AmbientModal";
 import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
@@ -53,7 +53,7 @@ const ambienteDados = () => {
         setReservas(data.reservas)
         setAmbientData(data)
       }catch{
-        const { data } = await serviceArea.getApartament(authContext.token, localStorage.getItem("urlAmbient"))
+        const { data } = await serviceArea.getRecreationArea(authContext.token, localStorage.getItem("urlAmbient"))
         setAmbientData(data)
         setReservas(data.reservas)
       }

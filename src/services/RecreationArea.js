@@ -36,7 +36,7 @@ export async function updateRecreationArea(token, data, urlApt){
 }
 
 
-export async function getApartament(token, urlRec){
+export async function getRecreationArea(token, urlRec){
     const requisition = await api.get(
         `/recreationArea/getRecreationArea/${urlRec}`,
         {headers: {
