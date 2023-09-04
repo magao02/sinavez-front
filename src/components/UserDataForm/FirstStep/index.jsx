@@ -301,7 +301,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               placeholder={"email@domínio.com"}
               initialValue={previousData.email}
               ref={emailRef}
-              validate={validation.testEmail}
+              validate={validation.testRequiredEmail}
             />
             <Input
               variant="default"
@@ -311,7 +311,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               initialValue={previousData.password}
               ref={passwordRef}
               type="password"
-              validate={validation.testPassword}
+              validate={validation.testRequiredPassword}
             />
             <Input 
               variant="default"
@@ -320,7 +320,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               placeholder={"(XX) YYYY-ZZZZ"}
               initialValue={previousData.telefone}
               ref={telefoneRef}
-              validate={validation.testtelefone}
+              validate={validation.testRequiredPhone}
             />
           </SubContainer>
         </Main>
