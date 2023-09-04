@@ -28,8 +28,6 @@ import { useState } from "react";
 import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
-import PlaceholderImage from "../../assets/apartamento/placeholder.png";
-import PlaceholderImageHD from "../../assets/apartamento/placeholderhd.png";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
@@ -114,7 +112,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   };
 
   const goBack = () => {
-    router.push(`/apartamentos`);
+    router.back();
   };
 
   const applyPlural = (count, str) => {
@@ -175,7 +173,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             </div>
           </ImageGallery> }
           <Title1>{model.titulo}</Title1>
-          <Body1>{typeDescription}, {model.andar}º andar</Body1>
+          { !area && <Body1>{typeDescription}, {model.andar}º andar</Body1> }
         </Header>
         <Details>
           <Column className="features-column">

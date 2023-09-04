@@ -20,7 +20,7 @@ import {
 
 import IconRedWarning from "../../assets/icon_red_warning.svg";
 import MapaImage from "../../assets/apartamento/mapa.png";
-import PiscinaImage from "../../assets/apartamento/piscina.png";
+import PlaceholderImage from "../../assets/apartamento/placeholder.png";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import LoadingSpinner from "../../assets/loading_spinner.svg";
 import PersonConfirm from "../../assets/person_confirm.svg";
@@ -209,7 +209,7 @@ const Page = () => {
               </div>
 
               <CardWithName>
-                <img src={PiscinaImage.src} />
+                <img src={(model.pictures ?? [])[0] ?? PlaceholderImage.src} />
                 <div className="text">
                   <Body3>Espaço inteiro: { isArea ? "area de lazer" : "apartamento" }</Body3>
                   <Body1 strong>{model.titulo ?? '?'}</Body1>
