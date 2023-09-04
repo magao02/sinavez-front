@@ -4,29 +4,36 @@ import * as validation from "../../../utils/validation";
 import { useAuth } from "../../../contexts/AuthContext";
 import * as service from "../../../services/accounts";
 
-import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle } from "./styles.js";
+import { Container, InputsContainer, Head, Body, Description, Main, Footer, SubContainer, SubTitle, Profile, ProfileTitle, ProfileDescription, ProfileAvatar, ProfileContainerImage, ProfileArguments, ProfileAvatarAdicionar, ProfileAvatarAddPicture } from "../styles.js";
 
 import CancelIcon from "../../../assets/cancel_icon.svg";
+import PersonFilled from "../../../assets/person_filled.svg";
+import AddIcon from "../../../assets/icon_add_picture.svg";
+
+
 
 import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
 
-const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
+
+const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
   const rgRef = useRef(null);
   const dataEmissaoRef = useRef(null);
-  const streetRef = useRef(null);
-  const neighborhoodRef = useRef(null);
-  const numberRef = useRef(null);
-  const cityRef = useRef(null);
-  const complementRef = useRef(null);
+  const ruaRef = useRef(null);
+  const bairroRef = useRef(null);
+  const numeroRef = useRef(null);
+  const municipioRef = useRef(null);
+  const estadoRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const phoneRef = useRef(null);
+  const telefoneRef = useRef(null);
+  const naturalidadeRef = useRef(null);
+  const nacionalidadeRef = useRef("Brasileiro");
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
@@ -37,7 +44,9 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       dataEmissaoRef,
       emailRef,
       passwordRef,
-      phoneRef,
+      telefoneRef,
+      naturalidadeRef,
+      nacionalidadeRef 
     ];
 
     const validationResults = await Promise.all(
@@ -59,28 +68,32 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       nascimento,
       rg,
       emissao,
-      street,
-      neighborhood,
-      number,
-      city,
-      complement,
+      rua,
+      bairro,
+      numero,
+      municipio,
+      estado,
       email,
       password,
       telefone,
+      naturalidade,
+      nacionalidade,
     ] = [
       nameRef,
       cpfRef,
       birthdayRef,
       rgRef,
       dataEmissaoRef,
-      streetRef,
-      neighborhoodRef,
-      numberRef,
-      cityRef,
-      complementRef,
+      ruaRef,
+      bairroRef,
+      numeroRef,
+      municipioRef,
+      estadoRef,
       emailRef,
       passwordRef,
-      phoneRef,
+      telefoneRef,
+      naturalidadeRef,
+      nacionalidadeRef, 
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
@@ -89,12 +102,31 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
       nascimento,
       rg,
       emissao,
-      endereco: { street, neighborhood, number, city, complement },
+      endereco: { rua, bairro, numero, municipio, estado },
       email,
       password,
       telefone,
+      regional: {municipio, estado, naturalidade, nacionalidade},
     });
   });
+
+  // imagem do perfil
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    const file = event.target.files?.[0];
+    setSelectedFile(file);
+
+  };
+
+  // upload da imagem
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // referencia do input
+  const fileInputRef = useRef(null);
+
 
   return (
     <Container onSubmit={handleSubmit}>
@@ -102,6 +134,34 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
         Adicionar Associado
         <Image src={CancelIcon} onClick={cancelForm} />
       </Head>
+      <Profile>
+
+        <ProfileContainerImage>
+            <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
+              <Image src={PersonFilled} />
+              <ProfileAvatarAddPicture onClick={handleUploadClick}>
+                <Image src={AddIcon} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleFileSelect}
+                    ref={fileInputRef}
+                />
+              </ProfileAvatarAddPicture>
+            </ProfileAvatar>
+        </ProfileContainerImage>
+
+        <ProfileArguments>
+          <ProfileTitle>
+            Adicionar foto
+          </ProfileTitle>
+          <ProfileDescription>
+            *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
+          </ProfileDescription>
+        </ProfileArguments>
+
+      </Profile>
       <Body>
         <Description>
           Passo 1 de 3
@@ -117,6 +177,7 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               name={"nome"}
               placeholder={"Digite seu nome completo"}
               ref={nameRef}
+              initialValue={previousData.name}
               validate={validation.requiredTextField}
             />
             <InputsContainer>
@@ -125,78 +186,106 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
                 label={"CPF"}
                 name={"cpf"}
                 placeholder={"000.000.000-0"}
+                initialValue={previousData.cpf}
                 ref={cpfRef}
                 validate={validation.testRequiredCpf}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Data de Nascimento"}
                 name={"nascimento"}
+                initialValue={previousData.nascimento}
                 ref={birthdayRef}
                 placeholder={"DD/MM/AAAA"}
-                validate={validation.testDate}
+                validate={validation.requiredTextField}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Registro Geral (RG)"}
                 name={"rg"}
                 placeholder={"Digite o seu RG"}
+                initialValue={previousData.rg}
                 ref={rgRef}
-                validate={validation.testNumbers}
+                validate={validation.requiredTextField}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Data de Emissão"}
                 name={"data_de_emissão"}
                 placeholder={"DD/MM/AAAA"}
+                initialValue={previousData.emissao}
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
+                <Input
+                variant="default-optional"
+                label={"Naturalidade"}
+                name={"naturalidade"}
+                placeholder={"Digite sua naturalidade"}
+                initialValue={previousData.regional ? previousData.regional.naturalidade :  ""}
+                ref={naturalidadeRef}
+                validate={validation.TextField}
+              />
+              <Input
+                variant="default-optional"
+                label={"Nacionalidade"}
+                name={"nacionalidade"}
+                placeholder={"Digite sua nacionalidade"}
+                initialValue={previousData.regional ? previousData.regional.nacionalidade : ""}
+                ref={nacionalidadeRef}
+                validate={validation.TextField}
+              />
             </InputsContainer>
           </SubContainer>
-          <SubContainer>
+
+          <SubContainer marginTop = {true}>
             <SubTitle>
               Endereço
             </SubTitle>
             <Input
-              variant="default-optional"
+              variant="default"
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
-              ref={streetRef}
+              initialValue={previousData.endereco ? previousData.endereco.rua : ""}
+              ref={ruaRef}
               validate={validation.TextField}
             />
             <InputsContainer>
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Bairro"}
                 name={"Bairro"}
                 placeholder={"Bairro"}
-                ref={neighborhoodRef}
+                initialValue={previousData.endereco ? previousData.endereco.bairro : ""}
+                ref={bairroRef}
                 validate={validation.TextField}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Número"}
                 name={"Número"}
                 placeholder={"Número"}
-                ref={numberRef}
+                initialValue={previousData.endereco ? previousData.endereco.numero : ""}
+                ref={numeroRef}
                 validate={validation.testNumbers}
               />
               <Input
-                variant="default-optional"
+                variant="default"
                 label={"Cidade"}
-                name={"Cidade"}
+                name={"Município"}
                 placeholder={"Cidade"}
-                ref={cityRef}
+                initialValue={previousData.endereco ? previousData.regional.municipio : ""}
+                ref={municipioRef}
                 validate={validation.TextField}
               />
               <Input
                 variant="default-optional"
-                label={"Complemento"}
-                name={"Complemento"}
-                placeholder={"Complemento"}
-                ref={complementRef}
+                label={"Estado"}
+                name={"Estado"}
+                placeholder={"Estado"}
+                initialValue={previousData.endereco ? previousData.regional.estado : ""}
+                ref={estadoRef}
                 validate={validation.TextField}
               />
             </InputsContainer>
@@ -206,29 +295,32 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
               Dados cadastrais
             </SubTitle>
             <Input
-              variant="default-optional"
+              variant="default"
               label={"E-mail"}
               name={"E-mail"}
               placeholder={"email@domínio.com"}
+              initialValue={previousData.email}
               ref={emailRef}
               validate={validation.testEmail}
             />
             <Input
-              variant="default-optional"
+              variant="default"
               label={"Senha"}
               name={"senha"}
               placeholder={"********"}
+              initialValue={previousData.password}
               ref={passwordRef}
               type="password"
               validate={validation.testPassword}
             />
-            <Input
-              variant="default-optional"
+            <Input 
+              variant="default"
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}
-              ref={phoneRef}
-              validate={validation.testPhone}
+              initialValue={previousData.telefone}
+              ref={telefoneRef}
+              validate={validation.testtelefone}
             />
           </SubContainer>
         </Main>
@@ -237,11 +329,11 @@ const FirstStepForm = ({ dataCollector, globalMessage, cancelForm }) => {
         <Button variant={"text"} onClick={cancelForm}>
           CANCELAR
         </Button>
-        {globalMessage && <span>{globalMessage}</span>}
         <Button variant={"light"} >
           CONTINUAR
         </Button>
       </Footer>
+      {globalMessage && <span style={{color: 'red', fontWeight: 'bold'}}>{globalMessage}</span>}
     </Container>
   );
 };

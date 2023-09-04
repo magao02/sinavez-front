@@ -32,6 +32,7 @@ function getStyleByVariant(variant) {
 
                 div {
                     display: flex;
+                    flex-direction: column;
                     justify-items: center;
                     width: 100%;
 
@@ -57,6 +58,7 @@ function getStyleByVariant(variant) {
                     font-size: 18px;
                     font-family: Roboto;
                     line-height: 22px;
+                    outline: none;
                     
                     border-bottom: 1px solid ${theme.colors.gray.menu};
                     padding-bottom: 5px;
@@ -71,7 +73,7 @@ function getStyleByVariant(variant) {
                 input::placeholder {
                     color: var(--text-secundary, ${theme.colors.gray.heavy});
                 }
-
+                
                 ${
                     variant !== 'default-optional' ? css`
                         label::after {

@@ -16,11 +16,16 @@ export const useAuth = () => {
   return contextValue;
 };
 
+function toBool(value) {
+  // if the value is false, "false", or anything else, it will be false
+  return value === true || value === "true";
+}
+
 export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState(readFromLocalStorage("token"));
   const [urlUser, setUrlUser] = useState(readFromLocalStorage("urlUser"));
   const [auth, setAuth] = useState(readFromLocalStorage("auth"));
-  const [admin, setAdmin] = useState(readFromLocalStorage("admin"));
+  const [admin, setAdmin] = useState(toBool(readFromLocalStorage("admin")));
   const [dependent, setDependent] = useState();
 
   const handleLoginToken = (recivedData) => {

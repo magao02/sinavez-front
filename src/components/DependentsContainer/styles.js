@@ -9,20 +9,12 @@ function getStyleByVariant(variant) {
   switch (variant) {
     case "default": {
       return css`
-        width: 80%;
-        height: 80%;
-
-        display: grid;
-
+        display: flex;
         flex-direction: column;
-        align-items: start;
-
-        margin: 1.9rem 13.9rem;
-
-        background-color: black;
-
-        border: 1px solid black;
-        border-radius: 2.4rem;
+        align-items: flex-start;
+        gap: ${props => props.gap ? '11px' : '16px'};
+        align-self: stretch;
+        padding: ${props => props.padding ? '0px 24px' : '0px'};
       `;
     }
 
@@ -48,10 +40,6 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.h1`
-  align-self: center;
-`;
-
-export const SubTitle = styled.h2`
   align-self: center;
 `;
 
@@ -86,3 +74,14 @@ export const FormContainer = styled.div`
     font-weight: bold;
   }
 `;
+
+
+export const SubTitle = styled.h3`
+    color: var(--text-primary, ${theme.colors.gray.menu});
+
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: ${props => props.marginTop ? `25px` : `0px`}; 
+`

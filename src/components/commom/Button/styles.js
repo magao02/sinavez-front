@@ -7,7 +7,7 @@ export const Container = styled.button`
 `;
 
 function getStyleByVariant(variant) {
-  switch (variant) {
+  switch (variant ?? "default") {
     case "default": {
       return css`
         display: flex;
@@ -18,6 +18,9 @@ function getStyleByVariant(variant) {
         align-self: stretch;
         gap: 0.7vw;
 
+        height: ${props => props.height};
+        width: ${props => props.width};
+
         border-radius: 4px;
         border: none;
         background: var(--azul-0, ${theme.colors.blue.heavy});
@@ -27,6 +30,7 @@ function getStyleByVariant(variant) {
         color: var(--primary-contrast, ${theme.colors.white.default});
         font-size: 18px;
         font-weight: 500;
+        margin-top: ${props => props.marginTop};
 
         &:hover {
           filter: brightness(80%);
@@ -347,5 +351,169 @@ function getStyleByVariant(variant) {
         background-color: #EDF6FF;
       `
     }
+    case "cancelRemove": {
+      return css`
+      background: none;
+      border: none;
+
+      color: var(--primary-main, ${theme.colors.blue.button});
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+
+      display: flex;
+      padding: 8px 11px;
+      justify-content: center;
+      align-items: center;
+      `
+    }
+
+    case "remove": {
+      return css`
+      background: #CB4242 ;
+      border: none;
+
+      color: white;
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      border-radius: 4px;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20);
+
+      display: flex;
+      padding: 12px 25px;
+      justify-content: center;
+      align-items: center;
+      `
+    }
+
+    case "buttonBasic": {
+      return css`
+      background: none;
+      border: none;
+      outline: none;
+      color: #747880;
+      border-radius: 4px; 
+      font-family: Roboto;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px; 
+      gap:4px;
+    `
+  }
+
+  case "removeBut": {
+    return css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+
+      background: transparent;
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+    `
+    }
+
+    case "editButton": {
+      return css`
+      display: flex;
+      padding: 8px 22px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      border-radius: 4px;
+      background: #0760BA;
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20);    
+      
+      
+      color: #FDFDFD;
+      font-feature-settings: 'clig' off, 'liga' off;
+
+      font-family: Roboto;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 26px; 
+      letter-spacing: 0.46px;
+      text-transform: uppercase;
+      border: none;
+      `
+      }
+
+      case "default-sucess": {
+        return css`
+          display: flex;
+          padding: 12px 22px;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          align-self: stretch;
+          gap: 0.7vw;
+  
+          height: ${props => props.height};
+          width: ${props => props.width};
+  
+          border-radius: 4px;
+          border: none;
+          background: #2E7D32;
+  
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+          
+          color: var(--primary-contrast, ${theme.colors.white.default});
+          font-size: 18px;
+          font-weight: 500;
+  
+          &:hover {
+            filter: brightness(80%);
+          }
+        `;
+      }
+
+      case "dependente": {
+        return css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+  
+          background: transparent;
+  
+          text-decoration: none;
+          font-size: 1.6rem;
+          color:#2196F3;
+        `;
+      }
+
+      case "dependenteConcluir": {
+        return css`
+          
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+  
+          background: #52B4AD;
+          padding: 4px 10px;
+          border-radius: 6px;
+          width: 100px;
+  
+          text-decoration: none;
+          font-size: 1.6rem;
+          color: ${theme.colors.white.default};
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        `;
+      }
   }
 }
