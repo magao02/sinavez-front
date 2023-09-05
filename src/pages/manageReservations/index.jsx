@@ -22,8 +22,8 @@ import {
 import Input from "../../components/commom/Input";
 import { useEffect, useState } from "react";
 import AmbientModal from "../../components/AmbientModal";
-import * as serviceApto from "../../services/Apto";
-import * as serviceArea from "../../services/RecreationArea";
+import * as serviceApto from "../../services/apartments";
+import * as serviceArea from "../../services/recreationArea";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
 import SelectDropdown from "../../components/commom/FilterDropdown";
@@ -47,7 +47,7 @@ const ManageReserVations = () => {
     };
 
     const getAptos = async () => {
-        var {data} = await serviceApto.getAllApartaments(authContext.token);
+        var {data} = await serviceApto.getAllApartments(authContext.token);
         setAptos(data)
     }
 
@@ -61,7 +61,7 @@ const ManageReserVations = () => {
             "suite": data.suite,
             "wifi": data.wifi,
             "animais": data.animais,
-            "arCondicionado": data.itens.includes("ar condicionado") ? true : false 
+            "arCondicionado": (data.itens ?? []).includes("ar condicionado") ? true : false 
         }
         return obj;
     }

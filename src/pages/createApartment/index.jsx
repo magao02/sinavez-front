@@ -25,7 +25,7 @@ import leftArrow from "../../assets/leftArrow.svg";
 import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos";
 import { useAuth } from "../../contexts/AuthContext";
-import * as service from "../../services/Apto";
+import * as service from "../../services/apartments";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
 import CalendarButton from "../../components/CalendarButton";
 import { Modal } from "../../components/commom/Modal";

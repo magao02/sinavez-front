@@ -22,3 +22,34 @@ export async function reserveApartment(token, urlApt, urlUser, data) {
         { headers: { authorization: token } }
     );
 }
+
+export async function getReservations(token, urlApt){
+    return await api.get(
+        `/apartment/getReservations/${urlApt}`,
+        {headers: {
+            authorization: token
+        }}
+    )
+}
+
+export async function createApartament(data, token){
+    return await api.post(
+        `/apartment/createApartment`,
+        data,
+        {headers: {
+            authorization: token
+        }}
+    )
+}
+
+export async function updateApartment(token, data, urlApt){
+    return await api.put(
+        `/apartment/updateApartment/${urlApt}`,
+        data,
+        {
+            headers: {
+                authorization: token
+            }
+        }
+    )
+}

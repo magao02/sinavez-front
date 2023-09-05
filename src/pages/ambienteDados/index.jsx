@@ -22,8 +22,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import * as serviceApto from "../../services/Apto";
-import * as serviceArea from "../../services/RecreationArea"
+import * as serviceApto from "../../services/apartments";
+import * as serviceArea from "../../services/recreationArea"
 import AmbientModal from "../../components/AmbientModal";
 import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
@@ -49,13 +49,15 @@ const ambienteDados = () => {
     
     useEffect(async () => {
       try{
-        var {data} = await serviceApto.getApartament(authContext.token, localStorage.getItem("urlAmbient"))
-        setReservas(data.reservas)
+        var { data } = await serviceApto.getApartment(authContext.token, localStorage.getItem("urlAmbient"))
+        const reqReservas = await serviceApto.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
         setAmbientData(data)
+        setReservas(reqReservas.data)
       }catch{
         const { data } = await serviceArea.getRecreationArea(authContext.token, localStorage.getItem("urlAmbient"))
+        const reqReservas = await serviceArea.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
         setAmbientData(data)
-        setReservas(data.reservas)
+        setReservas(reqReservas.data);
       }
     },[]);
   

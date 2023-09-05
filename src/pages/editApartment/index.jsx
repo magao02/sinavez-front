@@ -26,7 +26,7 @@ import leftArrow from "../../assets/leftArrow.svg";
 import Button from "../../components/commom/Button";
 import GridFotos from "../../components/GridFotos";
 import { useAuth } from "../../contexts/AuthContext";
-import * as service from "../../services/Apto";
+import * as service from "../../services/apartments";
 import ConfirmButtons from "../../components/commom/ConfirmButtons";
 import CalendarButton from "../../components/CalendarButton";
 import { v4 as uuid } from "uuid";
@@ -162,7 +162,7 @@ const editApartment = () => {
 
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
-    var { data } = await service.getApartament(authContext.token, localStorage.urlAmbient);
+    var { data } = await service.getApartment(authContext.token, localStorage.urlAmbient);
     setUrlApto(localStorage.urlAmbient)
 
     modelData(data);
