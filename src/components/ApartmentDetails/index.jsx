@@ -161,6 +161,11 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     }
   }, [model.andar]);
 
+  const closeViewingImages = () => {
+    setViewingImages(false);
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
@@ -320,7 +325,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       </Content> }
 
       { viewingImages && <FullImageGallery>
-        <div className="background" onClick={_ => setViewingImages(false)} />
+        <div className="background" onClick={closeViewingImages} />
         <div className="images">
           {
             model.pictures.map(url => <img src={url} />)
