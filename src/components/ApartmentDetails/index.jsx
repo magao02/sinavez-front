@@ -153,6 +153,14 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
     return model?.tipo?.toLowerCase()?.trim() === "pcd" ? "Apartamento Adaptado (com adaptação para PCD)" : "Apartamento Padrão (sem adaptação para PCD)";
   }, [model]);
 
+  const andar = useMemo(() => {
+    if (model.andar == 0) {
+      return "térreo";
+    } else {
+      return `${model.andar}º andar`;
+    }
+  }, [model.andar]);
+
   return (
     <div>
       <Navigation selectedPage="apartamentos" variant={authContext?.admin ? "admin" : "logged"} />
@@ -173,7 +181,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             </div>
           </ImageGallery> }
           <Title1>{model.titulo}</Title1>
-          { !area && <Body1>{typeDescription}, {model.andar}º andar</Body1> }
+          { !area && <Body1>{typeDescription}, {andar}</Body1> }
         </Header>
         <Details>
           <Column className="features-column">
