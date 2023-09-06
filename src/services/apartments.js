@@ -1,18 +1,19 @@
 import api from "../api";
+import { handleUnauthorized } from "../utils/loginCheck";
 
 export async function getAllApartments(token, data) {
     const qs = new URLSearchParams(data);
-    return await api.get(
+    return await handleUnauthorized(api.get(
         `/apartment/getAllApartments?${qs}`,
         { headers: { authorization: token } }
-    );
+    ));
 }
 
 export async function getApartment(token, url) {
-    return await api.get(
+    return await handleUnauthorized(api.get(
         `/apartment/getApartment/${url}`,
         { headers: { authorization: token } }
-    );
+    ));
 }
 
 export async function reserveApartment(token, urlApt, urlUser, data) {
