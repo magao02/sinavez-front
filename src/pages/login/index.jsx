@@ -41,13 +41,17 @@ const LoginPage = () => {
     authContext.handleLoginToken(responseData.data);
   }, [authContext]);
 
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+
   const handleValidFormSubmit = useCallback(async ({ cpf, password }) => {
     try {
+      setIsMakingRequest(true);
       await loginAccount({ cpf, password });
       router.push("/home");
     } catch (error) {
       setGlobalMessage(error.response.data.message);
     }
+    setIsMakingRequest(false);
   }, [loginAccount, router]);
 
   const [errorMsg, setErrorMsg] = useState(null);
@@ -84,7 +88,7 @@ const LoginPage = () => {
             Login
           </Title>
           <LoginAssociadoForm onValidSubmit={handleValidFormSubmit}
-            globalMessage={globalMessage} />
+            globalMessage={globalMessage} makingRequest={isMakingRequest} />
         </LoginBox>
       </RightContent>
     </WhiteContainer>
