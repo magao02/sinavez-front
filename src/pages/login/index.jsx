@@ -24,6 +24,10 @@ import {
 } from "../../styles/loginStyles";
 
 import LoginAssociadoForm from "../../components/LoginAssociadoForm";
+import { useMemo } from "react";
+import { readFromLocalStorage, removeFromLocalStorage } from "../../utils/local";
+import BigConfirmPopup from "../../components/BigConfirmPopup";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -46,7 +50,20 @@ const LoginPage = () => {
     }
   }, [loginAccount, router]);
 
-  return (
+  const [errorMsg, setErrorMsg] = useState(null);
+  
+  useEffect(() => {
+    let x = readFromLocalStorage("unauthorizedMsg");
+    if (x)
+      setErrorMsg(x);
+  }, []);
+
+  const closeErrorMsg = () => {
+    setErrorMsg(null);
+    removeFromLocalStorage("unauthorizedMsg");
+  }
+
+  return <>
     <WhiteContainer>
       <Details>
         <Image src={Ilustration} />
@@ -71,7 +88,13 @@ const LoginPage = () => {
         </LoginBox>
       </RightContent>
     </WhiteContainer>
-  );
+    { errorMsg && <BigConfirmPopup
+      title="Erro"
+      body={errorMsg}
+      cancelText="OK"
+      onCancel={closeErrorMsg}
+    /> }
+  </>;
 };
 
 export default LoginPage;
