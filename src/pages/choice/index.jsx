@@ -22,7 +22,7 @@ const ChoicePage = () => {
     const router = useRouter();
 
     const redirectSindicato = () => {
-        router.push("/login");
+        router.push("/usuario");
     };
 
     return (
