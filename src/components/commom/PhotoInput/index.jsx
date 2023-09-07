@@ -38,7 +38,7 @@ const PhotoInput = ({ getPhoto, id, File, deletePhoto }) => {
           </Form>
         ) : (
           <PhotoArea>
-            <Img src={URL.createObjectURL(File)} alt={File.name} />
+            <Img src={File} alt={File.name} />
             <EditButton onClick={modal}>
               <Image src={edit_pen} alt="EditPen" />
             </EditButton>
@@ -50,8 +50,13 @@ const PhotoInput = ({ getPhoto, id, File, deletePhoto }) => {
           title={"Excluir Foto"}
           img={modal_img.src}
           asideText={"Deseja excluir a foto?"}
-          actionFunction={deletePhoto}
-          closeModal={modal}
+          handleSave={() => {
+            modal()
+          }}
+          handleCancel={(e) => {
+            deletePhoto(e)
+            modal()
+          }}
           id={id}
         ></Modal>
       )}

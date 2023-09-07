@@ -102,6 +102,7 @@ export const ReservasContent = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
+    min-height: 550px;
 `
 
 export const ReservasInfo = styled.div`

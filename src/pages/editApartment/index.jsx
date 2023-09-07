@@ -117,7 +117,7 @@ const editApartment = () => {
     var images = [];
     fotos.forEach((data) => {
       if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
+        var img = data.file;
         images.push(img);
       }
     });
@@ -147,12 +147,6 @@ const editApartment = () => {
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
       images: images,
-      reservas: [
-        {
-          dataInicial: datas[0],
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
     };
 
 
@@ -251,22 +245,8 @@ const editApartment = () => {
     };
     setRadioInputs(obj);
 
-    // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
-
     // Images
-    var imgs = data.images;
+    var imgs = data.pictures;
     var obj = [];
     for (let idx = 0; idx < 7; idx++) {
       var item = {

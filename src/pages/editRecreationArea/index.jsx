@@ -109,13 +109,13 @@ const editApartment = () => {
     var images = [];
     fotos.forEach((data) => {
       if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
+        var img = data.file;
         images.push(img);
       }
     });
 
     if(aptoTitle == "" || address == "" || capacity == 0){
-      console.log("entrou")
+      
     }else{
 
     var req = {
@@ -133,13 +133,7 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
-      reservas: [
-        {
-          dataInicial: datas[0] ? datas[0] : "",
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
+      images: images
     };
 
     service.updateRecreationArea(authContext.token, req, urlRec);
@@ -228,22 +222,8 @@ const editApartment = () => {
     };
     setRadioInputs(obj);
 
-    // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
-
     // Images
-    var imgs = data.imageUrl;
+    var imgs = data.pictures;
     var obj = [];
     for (let idx = 0; idx < 7; idx++) {
       var item = {
@@ -324,7 +304,7 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Editar a Área de Lazer</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea onClick={() => setShowCautionMsg(true)}>
           <h3>Adicionar Fotos da Áreas de Lazer</h3>
           <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
         </FotosArea>
