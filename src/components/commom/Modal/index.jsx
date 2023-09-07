@@ -17,9 +17,9 @@ export const Modal = ({ title, asideText, handleSave , handleCancel, id, img, Co
           </TextAside>
         </Main>
         <ModalButtons
-          ConfirmColor={ConfirmColor ? ConfirmColor : "orange"}
-          ConfirmText={ConfirmText ? ConfirmText : "CANCELAR"}
-          CancelText={CancelText ? CancelText : "EXCLUIR"}
+          ConfirmColor={ConfirmColor ?? "orange"}
+          ConfirmText={ConfirmText ?? "EXCLUIR"}
+          CancelText={CancelText ?? "CANCELAR"}
           handleCancel={handleCancel}
           handleSave={handleSave}
         />

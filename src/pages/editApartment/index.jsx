@@ -146,13 +146,7 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
-      reservas: [
-        {
-          dataInicial: datas[0],
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
+      images: images
     };
 
 
@@ -252,31 +246,21 @@ const editApartment = () => {
     setRadioInputs(obj);
 
     // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
+    // if (data.reservas.length > 0) {
+    //   var dates = data.reservas;
+    //   var array = [];
+    //   dates.forEach(( data ) => {
+    //     var obj = {
+    //       dataInicial: data.dataInicial,
+    //       dataFinal: data.dataFinal
+    //     }
+    //     array.push(obj) 
+    //   })
+    //   setDatas(array);
+    // }
 
     // Images
-    var imgs = data.images;
-    var obj = [];
-    for (let idx = 0; idx < 7; idx++) {
-      var item = {
-        id: idx,
-        name: "",
-        file: imgs[idx] != undefined ? imgs[idx] : "",
-      };
-      obj.push(item);
-    }
-    setFotos(obj);
+    setFotos(data.pictures);
   };
 
   // MODELA OS DADOS DOS ITENS
@@ -349,7 +333,7 @@ const editApartment = () => {
         <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
         <FotosArea onChange={() => setShowCautionMsg(true)}>
           <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos}></GridFotos>
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>

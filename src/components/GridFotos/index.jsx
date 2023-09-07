@@ -11,10 +11,10 @@ import {
 import editPen from "../../assets/edit_pen.svg";
 import Image from "next/image";
 
-const GridFotos = ( {Images, setImages }) => {
+const GridFotos = ({ images, setImages }) => {
 
   const getPhoto = ({ target: { files } }, id) => {
-    var fotos = [...Images];
+    var fotos = [...images];
 
     fotos.map((item) => {
       if (item.id == id) {
@@ -26,45 +26,36 @@ const GridFotos = ( {Images, setImages }) => {
     setImages(fotos);
   };
 
-  const deletePhoto = (event) => {
-    var itemId = event.target.parentNode.parentNode.id;
+  const deletePhoto = (id) => {
+    console.log("removendo", id);
 
-    var Fotos = [...Images]; 
-    
-      Fotos.forEach((data) => {
-      if(data.id == itemId){
-        data.name = "";
-        data.file = "";
-      }
-    })
-
-    setImages(Fotos)
+    setImages(images.filter((_, i) => i != id));
   }
 
   return (
     <Container>
       <FotosContainer>
         <PhotoArea width={"40%"}>
-          <PhotoInput  id={0} getPhoto={getPhoto} File={Images.length > 0 ? Images[0].file : ""} deletePhoto={deletePhoto}/>
+          <PhotoInput id={0} getPhoto={getPhoto} url={images[0]} deletePhoto={deletePhoto}/>
         </PhotoArea>
         <PhotoList>
           <PhotoAreaSmaller>
-            <PhotoInput  id={1} getPhoto={getPhoto} File={Images.length > 0 ? Images[1].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={1} getPhoto={getPhoto} url={images[1]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={2} getPhoto={getPhoto} File={Images.length > 0 ? Images[2].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={2} getPhoto={getPhoto} url={images[2]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={3} getPhoto={getPhoto} File={Images.length > 0 ? Images[3].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={3} getPhoto={getPhoto} url={images[3]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={4} getPhoto={getPhoto} File={Images.length > 0 ? Images[4].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={4} getPhoto={getPhoto} url={images[4]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={5} getPhoto={getPhoto} File={Images.length > 0 ? Images[5].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={5} getPhoto={getPhoto} url={images[5]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
           <PhotoAreaSmaller>
-            <PhotoInput  id={6} getPhoto={getPhoto} File={Images.length > 0 ? Images[6].file : ""} deletePhoto={deletePhoto}/>
+            <PhotoInput id={6} getPhoto={getPhoto} url={images[6]} deletePhoto={deletePhoto}/>
           </PhotoAreaSmaller>
         </PhotoList>
       </FotosContainer>
