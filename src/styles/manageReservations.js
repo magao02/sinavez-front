@@ -154,7 +154,6 @@ export const AmbientsArea = styled.div`
 
 export const AmbientWrapper = styled.div`
     width: 100%;
-    height: 200px;
 `
 
 export const LoadItens = styled.div`

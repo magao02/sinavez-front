@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../styles/theme";
 
 
 // PARTE REDUZIDA
@@ -29,6 +30,12 @@ export const FotoBox = styled.div`
     background-color: blue;
     height: 90%;
     border-radius: 50%;
+
+    img{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+    }
 `
 
 export const InfoArea = styled.div`
@@ -69,7 +76,7 @@ export const PagamentoArea = styled.div`
 
 export const PagamentoInfo = styled.div`
     display: flex;
-    background-color: ${(props) => props.color};
+    background-color: ${(props) => props.pagamento ? theme.colors.green.default : theme.colors.orange.default};
     color: white;
     padding: 8px 15px 8px 15px;
     font-size: 13px;

@@ -2,9 +2,31 @@ import { Button, Container, FotoArea, FotoBox, InfoArea, PagamentoArea, PersonIn
 import arrow_down from "../../assets/arrow_down_blue.svg"
 import { useState } from "react";
 
-const ReservaModal = () => {
+const ReservaModal = ( {obj} ) => {
 
     const [showInfo, setShowInfo] = useState(false)
+
+    const formatDate = (data, style) => {
+        const newDate = new Date(data)
+        newDate.setDate(newDate.getDate() + 1)
+        
+        var optionsShort = {
+            short: {
+                month: "numeric",
+                day: "numeric",
+            },
+            full: {
+                dateStyle: "short"
+            }
+        }
+        
+
+        const estilo = style == "short" ? optionsShort.short : optionsShort.full
+        const formatter = Intl.DateTimeFormat('pt-br', estilo)
+
+        return formatter.format(newDate)
+
+    }
 
         if(showInfo) {
             return (
@@ -12,20 +34,20 @@ const ReservaModal = () => {
                     <DataMainContent>
                         <FotoArea>
                             <FotoBox>
-                                <img></img>
+                                <img src={obj.associado.profilePic}></img>
                             </FotoBox>
                         </FotoArea>
                         <InfoArea>
                             <PersonInfoArea>
-                                <h3>Aldemar Martins Guerra Cunha Almeida</h3>
-                                <p>Engenheiro Agrônomo</p>
+                                <h3>{obj.associado.nome}</h3>
+                                <p>{obj.associado.profissao}</p>
                             </PersonInfoArea>
                             <ReservaInfoArea>
-                                <p>Reservou este apartamento para os dias 12/04 à 18/04</p>
+                                <p>Reservou este apartamento para os dias {formatDate(obj.dataChegada , "short")} à {formatDate(obj.dataSaida , "short")}</p>
                             </ReservaInfoArea>
                         </InfoArea>
                         <PagamentoArea>
-                            <PagamentoInfo color="#FF730E">Pagamento pendente</PagamentoInfo>
+                            <PagamentoInfo pagamento={obj.pagamento.pago}>Pagamento {obj.pagamento.pago ? "efetuado" : "pendente"}</PagamentoInfo>
                             <Button onClick={() => setShowInfo(!showInfo)}>VER DADOS DA RESERVA <img src={arrow_down.src} alt="arrow" /></Button>
                         </PagamentoArea>
                     </DataMainContent>
@@ -38,15 +60,15 @@ const ReservaModal = () => {
                                     <DataContentWrapper>    
                                         <h4>Chegada: </h4>
                                         <DataSecondArea>
-                                            <span>08/06/2023</span>
-                                            <span>10:00 Manhã</span>
+                                            <span>{formatDate(obj.dataChegada, "full")}</span>
+                                            <span>{obj.horarioChegada}</span>
                                         </DataSecondArea>
                                     </DataContentWrapper>
                                     <DataContentWrapper>    
                                         <h4>Saída:</h4>
                                         <DataSecondArea>
-                                            <span>10/06/2023</span>
-                                            <span>18:00 Noite</span>
+                                            <span>{formatDate(obj.dataSaida , "full")}</span>
+                                            <span>{obj.horarioSaida}</span>
                                         </DataSecondArea>
                                     </DataContentWrapper>
                                 </DataRowContainer>
@@ -57,14 +79,14 @@ const ReservaModal = () => {
                                     <DataContentWrapper>    
                                         <h4>Quantidade: </h4>
                                         <DataSecondArea>
-                                            <span>2 adultos; </span>
-                                            <span>3 crianças;</span>
+                                            <span>{obj.hospedes.adultos} adultos; </span>
+                                            <span>{obj.hospedes.criancas} crianças;</span>
                                         </DataSecondArea>
                                     </DataContentWrapper>
                                     <DataContentWrapper>    
                                         <DataSecondArea>
-                                            <span>0 bebês;</span>
-                                            <span>0 animais;</span>
+                                            <span>{obj.hospedes.bebes} bebês;</span>
+                                            <span>{obj.hospedes.animais} animais;</span>
                                         </DataSecondArea>
                                     </DataContentWrapper>
                                 </DataRowContainer>
@@ -74,17 +96,18 @@ const ReservaModal = () => {
                                 <DataCollumContainer>
                                     <DataContentWrapper>    
                                         <h4>Valor da diária: </h4>
-                                        <DataSecondArea><span>R$ 40,00</span></DataSecondArea>
+                                        <DataSecondArea><span>R$ {obj.diaria}</span></DataSecondArea>
                                     </DataContentWrapper>
                                     <DataContentWrapper>    
                                         <h4>Quantidade de diárias: </h4>
-                                        <DataSecondArea><span>3 dias</span></DataSecondArea>
+                                        <DataSecondArea><span>{obj.dias} dias</span></DataSecondArea>
                                     </DataContentWrapper>
                                 </DataCollumContainer>
                             </GeralDataContainer>
                         </DataMainInfo>
                     </DataDiv>
-                    <Border></Border>   
+                    <Border></Border>
+                    
                 </DataContainer>
             )
         }else{
@@ -92,20 +115,20 @@ const ReservaModal = () => {
                 <Container>
                     <FotoArea>
                         <FotoBox>
-                            <img></img>
+                            <img src={obj.associado.profilePic}></img>
                         </FotoBox>
                     </FotoArea>
                     <InfoArea>
                         <PersonInfoArea>
-                            <h3>Aldemar Martins Guerra Cunha Almeida</h3>
-                            <p>Engenheiro Agrônomo</p>
+                            <h3>{obj.associado.nome}</h3>
+                            <p>{obj.associado.profissao}</p>
                         </PersonInfoArea>
                         <ReservaInfoArea>
-                            <p>Reservou este apartamento para os dias 12/04 à 18/04</p>
+                            <p>Reservou este apartamento para os dias {formatDate(obj.dataChegada , "short")} à {formatDate(obj.dataSaida , "short")}</p>
                         </ReservaInfoArea>
                     </InfoArea>
                     <PagamentoArea>
-                        <PagamentoInfo color="#FF730E">Pagamento pendente</PagamentoInfo>
+                        <PagamentoInfo pagamento={obj.pagamento.pago}>Pagamento {obj.pagamento.pago ? "efetuado" : "pendente"}</PagamentoInfo>
                         <Button onClick={() => setShowInfo(!showInfo)}>VER DADOS DA RESERVA <img src={arrow_down.src} alt="arrow" /></Button>
                     </PagamentoArea>
                 </Container>

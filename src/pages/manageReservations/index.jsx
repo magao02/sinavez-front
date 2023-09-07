@@ -7,8 +7,6 @@ import {
   InputArea,
   MainContent,
   SearchArea,
-  Select,
-  Button,
   ToggleArea,
   AmbienteTitle,
   SelectAmbient,
@@ -21,13 +19,13 @@ import {
 } from "../../styles/manageReservations";
 import Input from "../../components/commom/Input";
 import { useEffect, useState } from "react";
-import AmbientModal from "../../components/AmbientModal";
 import * as serviceApto from "../../services/apartments";
 import * as serviceArea from "../../services/recreationArea";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/router";
-import SelectDropdown from "../../components/commom/FilterDropdown";
+import FilterDropdown from "../../components/commom/FilterDropdown";
 import AmbientDropdown from "../../components/commom/AmbientDropdown";
+import ApartmentCard from "../../components/commom/ApartmentCard";
 
 const ManageReserVations = () => {
 
@@ -37,6 +35,7 @@ const ManageReserVations = () => {
     const [recreationArea, setRecreationArea] = useState([])
     const [searchValue, setSearchValue] = useState("")
     const [itensPerPage, setItensPerPage] = useState(3);
+    const [filterReserva, setFilterReserva] = useState("")
 
     const authContext = useAuth();
     const router = useRouter();
@@ -56,34 +55,21 @@ const ManageReserVations = () => {
         setRecreationArea(data)
     }
 
-    const getIcons = (data) => {
-        var obj = {
-            "suite": data.suite,
-            "wifi": data.wifi,
-            "animais": data.animais,
-            "arCondicionado": (data.itens ?? []).includes("ar condicionado") ? true : false 
-        }
-        return obj;
+    const filterAmbients = ( ambient) => {
+      if(filterReserva == "ocupados"){
+        return ambient.filter((data) => data.reservado)
+      }else if(filterReserva == "disponiveis"){
+        return ambient.filter((data) => !data.reservado)
+      }else{
+        return ambient
+      }
     }
-
-    const checkBusy = (datas) => {
-        const data1 = new Date("05/04/2023")
-        const data2 = new Date("10/05/2023")
-        const today = new Date()
-
-        if(data1 < today && data2 > today){
-          return true
-        }else{
-          return false
-        }
-    }
-
 
     const lowerSearch = searchValue.toLowerCase(); 
 
-    const AptoFiltrado = aptos.slice(0, itensPerPage).filter((data) => data.titulo.toLowerCase().includes(lowerSearch))
+    const AptoFiltrado = filterAmbients(aptos).slice(0, itensPerPage).filter((data) => data.titulo.toLowerCase().includes(lowerSearch))
 
-    const RecreationAreaFiltrada = recreationArea.slice(0, itensPerPage).filter((RecreationArea) => RecreationArea.titulo. toLowerCase().includes(lowerSearch));
+    const RecreationAreaFiltrada = filterAmbients(recreationArea).slice(0, itensPerPage).filter((RecreationArea) => RecreationArea.titulo. toLowerCase().includes(lowerSearch));
 
     useEffect(() => {
         getAptos()
@@ -94,8 +80,6 @@ const ManageReserVations = () => {
           return;
         }
     },[authContext.auth])
-
-
 
 
   return (
@@ -117,7 +101,7 @@ const ManageReserVations = () => {
               />
             </InputArea>
             <DropdownArea>
-                <SelectDropdown></SelectDropdown>
+                <FilterDropdown filterReserva={setFilterReserva}></FilterDropdown>
             </DropdownArea>
           </FiltersArea>
           <AddAmbienteArea>
@@ -136,10 +120,10 @@ const ManageReserVations = () => {
             <AmbientsArea>
                 {toShow ?
                     AptoFiltrado.map((data) => {
+                      console.log(data)
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)} url={data.urlApt} ambientType={"apto"} showVerMais={true}>
-                                </AmbientModal>
+                                <ApartmentCard obj={data} url={data.urlApt}></ApartmentCard>
                             </AmbientWrapper>
                         )
                     })
@@ -147,8 +131,7 @@ const ManageReserVations = () => {
                     RecreationAreaFiltrada.map((data) => {
                         return (
                             <AmbientWrapper>
-                                <AmbientModal title={data.titulo} itens={getIcons(data)} status={checkBusy(data.reservas)} url={data.urlRec} ambientType={"rec"} showVerMais={true}>
-                                </AmbientModal>
+                               <ApartmentCard obj={data} url={data.urlRec}></ApartmentCard>
                             </AmbientWrapper>
                         )
                     })
@@ -161,11 +144,11 @@ const ManageReserVations = () => {
           toShow ?
           <>
               {AptoFiltrado.length == aptos.length ?
-                <span>Nao ha mais resultados</span>
+                <span>Não há mais resultados</span>
                 
                 :
                 <>
-                  <span>Exibindo {AptoFiltrado.length} itens de {aptos.length}</span>
+                  <span>Exibindo {AptoFiltrado.length} itens de {AptoFiltrado.length}</span>
                   <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Apartamentos</VerMaisButtons>
                 </>
               }
@@ -174,11 +157,11 @@ const ManageReserVations = () => {
 
           <>
             {RecreationAreaFiltrada.length == recreationArea.length ?
-              <span>Nao ha mais resultados</span>
+              <span>Não há mais resultados</span>
               
               :
               <>
-                <span>Exibindo {RecreationAreaFiltrada.length} itens de {recreationArea.length}</span>
+                <span>Exibindo {RecreationAreaFiltrada.length} itens de {RecreationAreaFiltrada.length}</span>
                 <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Areas</VerMaisButtons>
               </>
             }

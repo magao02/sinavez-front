@@ -24,19 +24,18 @@ import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import * as serviceApto from "../../services/apartments";
 import * as serviceArea from "../../services/recreationArea"
-import AmbientModal from "../../components/AmbientModal";
+import ApartmentCard from "../../components/commom/ApartmentCard";
 import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
-import ReservaModal from "../../components/ReservaModal";
+import ReservaCard from "../../components/ReservaCard";
 
 const ambienteDados = () => {
-  
-  
     const authContext = useAuth();
     const router = useRouter();
     
     const [ambientData, setAmbientData] = useState([]);
     const [reservas, setReservas] = useState([])
+    const [url, setUrl] = useState("")
     
     
     const redirectPage = () => {
@@ -53,6 +52,7 @@ const ambienteDados = () => {
         const reqReservas = await serviceApto.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
         setAmbientData(data)
         setReservas(reqReservas.data)
+        setUrl(localStorage.getItem("urlAmbient"))
       }catch{
         const { data } = await serviceArea.getRecreationArea(authContext.token, localStorage.getItem("urlAmbient"))
         const reqReservas = await serviceArea.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
@@ -60,28 +60,7 @@ const ambienteDados = () => {
         setReservas(reqReservas.data);
       }
     },[]);
-  
-    const getIcons = (data) => {
-        var obj = {
-            "suite": data.suite,
-            "wifi": data.wifi,
-            "animais": data.animais,
-            "arCondicionado": data.itens && data.itens.includes("ar condicionado") ? true : false 
-        }
-        return obj;
-    }
 
-const checkBusy = (datas) => {
-    const data1 = new Date("05/04/2023")
-    const data2 = new Date("10/05/2023")
-    const today = new Date()
-
-    if(data1 < today && data2 > today){
-      return true
-    }else{
-      return false
-    }
-}
 
   return (
     <Container>
@@ -109,8 +88,7 @@ const checkBusy = (datas) => {
           <h2>Dados do ambiente</h2>
         </TitleArea>
         <AmbientWrapper>
-            <AmbientModal title={ambientData.titulo} itens={getIcons(ambientData)} status={checkBusy(ambientData.reservas)} url={ambientData.urlApt} showVerMais={false}>
-            </AmbientModal>
+            <ApartmentCard obj={ambientData} url={url} showEditButton={true}></ApartmentCard>
         </AmbientWrapper>
         <ReservasArea>
             <TitleArea>
@@ -133,8 +111,13 @@ const checkBusy = (datas) => {
                     </NoReservations>
                   :
                   <ReservasInfo>
-                    <ReservaModal></ReservaModal>
-                    <ReservaModal></ReservaModal>
+                    {
+                      reservas.map(( reserva ) => {
+                        return (
+                          <ReservaCard obj={reserva}></ReservaCard>
+                        )
+                      })
+                    }
                   </ReservasInfo>
                 }
               </ReservasContent>

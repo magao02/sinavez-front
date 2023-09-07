@@ -2,14 +2,15 @@ import { Container, ContainerSelect, OpenedMenuBox, Select, Option, OptionContai
 import filter from "../../../assets/filter.svg"
 import { useState } from "react";
 
-const SelectDropdown = ( ) => {
+const SelectDropdown = ( {filterReserva}) => {
 
     const [showOptions , setShowOptions] = useState(false)
     const [text, setText] = useState("Filtrar Buscas")
 
 
-    const handleClick = (text) => {
+    const handleClick = (text, value) => {
         setText(text)
+        filterReserva(value)
         setShowOptions(!showOptions)
     }
     
@@ -22,9 +23,9 @@ const SelectDropdown = ( ) => {
                 </ContainerSelect>
                 <OpenedMenuBox>
                     <OptionContainer>
-                        <Option onClick={() => handleClick("Ocupados (neste mês)")}> Ocupados (neste mês)</Option>
-                        <Option onClick={() => handleClick("Disponíveis (neste mês)")}> Disponíveis (neste mês)</Option>
-                        <Option onClick={() => handleClick("Filtrar Buscas")} style={{justifyContent:"end", color: "#2473C3"}}>Limpar Filtro</Option>
+                        <Option onClick={() => handleClick("Ocupados (neste mês)", "ocupados" )}> Ocupados (neste mês)</Option>
+                        <Option onClick={() => handleClick("Disponíveis (neste mês)", "disponiveis")}> Disponíveis (neste mês)</Option>
+                        <Option onClick={() => handleClick("Filtrar Buscas", "")} style={{justifyContent:"end", color: "#2473C3"}}>Limpar Filtro</Option>
                     </OptionContainer>
                 </OpenedMenuBox>
             </Select>
