@@ -202,7 +202,7 @@ const createApartment = () => {
   const validaCamas = () => camas.every((data) => data.Quantidade > 0 && data.tipo != undefined)
 
   // REQUISICAO POST
-  const createRequisicaoApto = () => {
+  const createRequisicaoApto = async () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -229,14 +229,6 @@ const createApartment = () => {
       }
     });
 
-    var images = [];
-    fotos.forEach((data) => {
-      if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
-        images.push(img);
-      }
-    });
-
     var beds = []
     camas.forEach((data) => {
       var obj = {
@@ -251,7 +243,6 @@ const createApartment = () => {
       return;
     }else{
   
-      setShowSaveModal(true)
 
     var req = {
       titulo: aptoTitle,
@@ -268,18 +259,21 @@ const createApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
-      reservas: [
-        {
-          dataInicial: datas[0] ? datas[0] : "",
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
     };
 
-    console.log(req);
+    const res = await service.createApartament(req, authContext.token);
+    const url = res.data.url;
 
-    service.createApartament(req, authContext.token);
+    const pictures = await Promise.all(fotos.map(async (f, i) => {
+      let req = await fetch(f, {
+        mode: "no-cors"
+      });
+      const type = req.headers.get("Content-Type");
+      let blob = await req.blob();
+      return new File([blob], `upload${i}`, { type });
+    }));
+    await service.setApartmentPhotos(pictures, url, authContext.token);
+    setShowSaveModal(true)
   }
   };
 
@@ -329,9 +323,9 @@ const createApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Criar Apartamento</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea>
           <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>

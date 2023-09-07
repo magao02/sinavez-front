@@ -12,7 +12,7 @@ import editPen from "../../assets/edit_pen.svg";
 import Image from "next/image";
 
 const GridFotos = ({ images, setImages, onChange }) => {
-
+  images = images ?? [];
   const getPhoto = ({ target: { files } }, id) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => {
