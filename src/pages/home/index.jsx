@@ -157,7 +157,7 @@ const Home = () => {
                 </TextsBottom>
               </Button>
             </Link>
-            <Link href={"/apartamentos"}>
+            <Link href={"/manageReservations"}>
               <Button variant="home">
                 <Image src={BrawerIcon} />
                 <TextsBottom>
