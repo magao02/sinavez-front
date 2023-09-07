@@ -54,3 +54,15 @@ export async function updateApartment(token, data, urlApt){
         }
     ))
 }
+
+export async function setApartmentPhotos(files, urlApt, token) {
+    const data = new FormData();
+    for (let file of files) {
+        data.append('photos', file);
+    }
+    return await api.put(
+        `/apartment/setApartmentPhotos/${urlApt}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}

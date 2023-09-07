@@ -35,6 +35,7 @@ import cancel_img from "../../assets/cancel_alterations.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
+import isEqual from "lodash.isequal";
 
 const editApartment = () => {
   // INFORMACOES DO APTO
@@ -114,14 +115,6 @@ const editApartment = () => {
       }
     });
 
-    var images = [];
-    fotos.forEach((data) => {
-      if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
-        images.push(img);
-      }
-    });
-
     var beds = []
     camas.forEach((data) => {
       var obj = {
@@ -146,11 +139,22 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images
     };
 
 
     service.updateApartment(authContext.token, req, urlApto);
+
+    if (!isEqual(fotos, oldData.pictures)) {
+      console.log("updating photos");
+      (async () => {
+        const pictures = await Promise.all(fotos.map(async f => {
+          return await (await fetch(f, {
+            mode: "no-cors"
+          })).blob();
+        }));
+        await service.setApartmentPhotos(pictures, urlApto, authContext.token);
+      })();
+    }
   }
   };
 
@@ -331,9 +335,9 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea>
           <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>

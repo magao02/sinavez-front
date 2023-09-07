@@ -11,12 +11,13 @@ import {
 import editPen from "../../assets/edit_pen.svg";
 import Image from "next/image";
 
-const GridFotos = ({ images, setImages }) => {
+const GridFotos = ({ images, setImages, onChange }) => {
 
   const getPhoto = ({ target: { files } }, id) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => {
       setImages([...images, reader.result]);
+      onChange();
     });
     reader.readAsDataURL(files[0]);
 
@@ -24,6 +25,7 @@ const GridFotos = ({ images, setImages }) => {
 
   const deletePhoto = (id) => {
     setImages(images.filter((_, i) => i != id));
+    onChange();
   }
 
   return (
