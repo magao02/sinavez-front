@@ -32,9 +32,10 @@ const PhotoInput = ({ getPhoto, id, url, deletePhoto }) => {
             </Label>
             <Input
               id="file"
+              type="file"
               accept="image/*"
               onChange={(e) => getPhoto(e, id)}
-            ></Input>
+            />
           </Form>
         ) : (
           <PhotoArea>

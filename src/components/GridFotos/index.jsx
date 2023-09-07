@@ -14,21 +14,15 @@ import Image from "next/image";
 const GridFotos = ({ images, setImages }) => {
 
   const getPhoto = ({ target: { files } }, id) => {
-    var fotos = [...images];
-
-    fotos.map((item) => {
-      if (item.id == id) {
-        item.file = files[0];
-        item.name = files[0].name;
-      }
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      setImages([...images, reader.result]);
     });
+    reader.readAsDataURL(files[0]);
 
-    setImages(fotos);
   };
 
   const deletePhoto = (id) => {
-    console.log("removendo", id);
-
     setImages(images.filter((_, i) => i != id));
   }
 
