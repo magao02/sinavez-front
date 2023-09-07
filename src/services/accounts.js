@@ -134,10 +134,10 @@ export async function getYears(urlUser, token) {
 }
 
 export async function getAssociados(token) {
-    const requisition = await api.get(
+    const requisition = await handleUnauthorized(api.get(
         "/user/getUsers", {
         headers: { authorization: token },
-    });
+    }));
     return requisition;
 }
 

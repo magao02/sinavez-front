@@ -17,34 +17,34 @@ export async function getApartment(token, url) {
 }
 
 export async function reserveApartment(token, urlApt, urlUser, data) {
-    return await api.post(
+    return await handleUnauthorized(api.post(
         `/apartment/reserveApartment/${urlApt}/${urlUser}`,
         data,
         { headers: { authorization: token } }
-    );
+    ));
 }
 
 export async function getReservations(token, urlApt){
-    return await api.get(
+    return await handleUnauthorized(api.get(
         `/apartment/getReservations/${urlApt}`,
         {headers: {
             authorization: token
         }}
-    )
+    ));
 }
 
 export async function createApartament(data, token){
-    return await api.post(
+    return await handleUnauthorized(api.post(
         `/apartment/createApartment`,
         data,
         {headers: {
             authorization: token
         }}
-    )
+    ));
 }
 
 export async function updateApartment(token, data, urlApt){
-    return await api.put(
+    return await handleUnauthorized(api.put(
         `/apartment/updateApartment/${urlApt}`,
         data,
         {
@@ -52,5 +52,5 @@ export async function updateApartment(token, data, urlApt){
                 authorization: token
             }
         }
-    )
+    ))
 }
