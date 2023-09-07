@@ -72,7 +72,7 @@ const ApartamentCard = ({ obj, url, showEditButton }) => {
 
   const handleRedirectEdit = () => {
     let url = ""
-    isApt ? url = `/editApartment?url=${url}` : url = `/editRecreationArea?url=${url}` 
+    isApt ? url = `/editApartment?url=${localStorage.getItem("urlAmbient")}` : url = `/editRecreationArea?url=${localStorage.getItem("urlAmbient")}` 
     router.push(url)
   }
 
