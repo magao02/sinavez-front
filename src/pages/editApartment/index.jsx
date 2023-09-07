@@ -32,6 +32,7 @@ import CalendarButton from "../../components/CalendarButton";
 import { v4 as uuid } from "uuid";
 import { Modal } from "../../components/commom/Modal";
 import cancel_img from "../../assets/cancel_alterations.svg";
+import UserComputer from "../../assets/user_computer.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
@@ -81,8 +82,12 @@ const editApartment = () => {
 
   const validaCamas = () => camas.every((data) => data.Quantidade > 0)
 
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+  const [isUploadingPhotos, setIsUploadingPhotos] = useState(false);
+
   // REQUISICAO PUT
-  const updateRequisicaoApto = () => {
+  const updateRequisicaoApto = async () => {
+    setIsMakingRequest(true);
 
     if(aptoTitle == "" || address == "" || !validaCamas){
       console.log("entrou")
@@ -141,20 +146,23 @@ const editApartment = () => {
       regrasConvivencia: regrasValues,
     };
 
-
-    service.updateApartment(authContext.token, req, urlApto);
+    await service.updateApartment(authContext.token, req, urlApto);
 
     if (!isEqual(fotos, oldData.pictures)) {
-      console.log("updating photos");
-      (async () => {
-        const pictures = await Promise.all(fotos.map(async f => {
-          return await (await fetch(f, {
-            mode: "no-cors"
-          })).blob();
-        }));
-        await service.setApartmentPhotos(pictures, urlApto, authContext.token);
-      })();
+      setIsUploadingPhotos(true);
+      const pictures = await Promise.all(fotos.map(async (f, i) => {
+        let req = await fetch(f, {
+          mode: "no-cors"
+        });
+        const type = req.headers.get("Content-Type");
+        let blob = await req.blob();
+        return new File([blob], `upload${i}`, { type });
+      }));
+      await service.setApartmentPhotos(pictures, urlApto, authContext.token);
     }
+
+    setIsUploadingPhotos(false);
+    setIsMakingRequest(false);
   }
   };
 
@@ -494,7 +502,16 @@ const editApartment = () => {
         )}
 
         {
-          showSaveModal && (
+          isMakingRequest && <ModalOneButton
+            title="Aguarde"
+            asideText={isUploadingPhotos ? "Fazendo upload das fotos..." : "Guardando seus dados..."}
+            hideButton={true}
+            img={UserComputer.src}
+          />
+        }
+
+        {
+          (!isMakingRequest && showSaveModal) && (
               <ModalOneButton
                 title={"SUCESSO"}
                 asideText={"Alterações salvas com sucesso!"}
