@@ -36,6 +36,7 @@ const ambienteDados = () => {
     const [ambientData, setAmbientData] = useState([]);
     const [reservas, setReservas] = useState([])
     const [url, setUrl] = useState("")
+    const [month, setMonth] = useState(1)
     
     
     const redirectPage = () => {
@@ -45,6 +46,21 @@ const ambienteDados = () => {
     const redirectToReservas = () => {
       router.push("/reservas")
     }
+
+    const getMonth = ( data ) => {
+      if(data == "") return;
+
+      const newDate = new Date(data);
+      newDate.setDate(newDate.getDate() + 1);
+
+      const formatter = Intl.DateTimeFormat("pt-br", {
+        month: "numeric"
+      })
+
+      return formatter.format(newDate)
+    }
+
+    var reservasFiltered = reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : []
     
     useEffect(async () => {
       try{
@@ -58,6 +74,7 @@ const ambienteDados = () => {
         const reqReservas = await serviceArea.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
         setAmbientData(data)
         setReservas(reqReservas.data);
+        setUrl(localStorage.getItem("urlAmbient"))
       }
     },[]);
 
@@ -96,11 +113,11 @@ const ambienteDados = () => {
             </TitleArea>
             <DataArea>
               <MonthsArea>
-                <MonthsOptions></MonthsOptions>
+                <MonthsOptions setMonth={setMonth}></MonthsOptions>
               </MonthsArea>
               <ReservasContent>
                 {
-                  reservas.length == 0 ?
+                  reservasFiltered.length == 0 ?
                     <NoReservations>
                       <MsgArea>
                         <h2>Ainda não há reservas</h2>
@@ -112,7 +129,7 @@ const ambienteDados = () => {
                   :
                   <ReservasInfo>
                     {
-                      reservas.map(( reserva ) => {
+                      reservasFiltered.map(( reserva ) => {
                         return (
                           <ReservaCard obj={reserva}></ReservaCard>
                         )

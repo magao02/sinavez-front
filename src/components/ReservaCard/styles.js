@@ -106,7 +106,7 @@ export const DataContainer = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 600px;
+    height: 700px;
     border: 1px solid #C5DBF2;
     background-color: #FAFBFF;
     border-radius: 5px;
@@ -191,4 +191,83 @@ export const DataContentWrapper = styled.div`
     display: flex;
     align-items: start;
     gap: 4px;
+`
+
+export const NotaFiscalContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+`
+
+export const InfoNotaFiscal = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #C5DBF2;
+    border-radius: 5px;
+    padding: 20px;
+    gap: 10px;
+`
+
+
+export const InputComprovanteArea = styled.div`
+    width: 100%;
+    height: 150px;
+    border: 2px dotted #5D9BDA;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+`
+
+export const TextArea = styled.div`
+    display: flex;
+    align-items: first baseline;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 35%;
+
+    h3{
+        color: #494B51;
+    }
+
+    span{
+        color: #0660BA;
+        font-size: 1em;
+        font-weight: 500;
+    }
+`
+
+export const LoadFileArea = styled.div`
+    height: 30px;
+    border: 1px solid #C5DBF2;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 15px;
+    border-bottom: 4px solid #0660BA;
+`
+
+export const RadioInputArea = styled.div`
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    width: 100%;
+    height: 20px;
+    gap: 5px;
+`
+
+export const RadioInputsContainer = styled.div`
+    display: flex;
+    align-items: row;
+    gap: 5px;
+`
+
+export const RadioInputWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 `
