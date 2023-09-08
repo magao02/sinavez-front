@@ -1,0 +1,9 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Garage">
+<path id="Vector" d="M3 24.0898H29" stroke="#0A645E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M27 24.0898V12.6309C27.0003 12.4818 26.9632 12.3348 26.892 12.2032C26.8209 12.0716 26.7178 11.9595 26.5921 11.8767L16.5088 5.24197C16.3581 5.14278 16.1811 5.08984 16 5.08984C15.8189 5.08984 15.6419 5.14278 15.4912 5.24197L5.40792 11.8767C5.28219 11.9595 5.17915 12.0716 5.10798 12.2032C5.03681 12.3348 4.99971 12.4818 5 12.6309V24.0898" stroke="#0A645E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M10 24.0898V16.0898H22V24.0898" stroke="#0A645E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M16 16.0898V24.0898" stroke="#0A645E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M10 20.0898H22" stroke="#0A645E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

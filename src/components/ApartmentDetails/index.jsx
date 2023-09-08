@@ -29,7 +29,6 @@ import Navigation from "../../components/commom/Nav";
 import Image from "next/image";
 
 import MapaImage from "../../assets/apartamento/mapa.png";
-import IconWifi from "../../assets/apartamento/wifi.svg";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import IconRedWarning from "../../assets/icon_red_warning.svg";
@@ -43,6 +42,53 @@ import { useMemo } from "react";
 import { useRouter } from "next/router";
 import { getRecreationArea } from "../../services/recreationArea";
 import { dayDifference } from "../../utils/date";
+
+
+import IconWifi from "../../assets/apartamento/wifi.svg";
+import IconWind from "../../assets/apartamento/wind.svg";
+import IconLoop from "../../assets/apartamento/loop.svg";
+import IconFerro from "../../assets/apartamento/ferro_passar.svg";
+import IconArchiveBox from "../../assets/apartamento/archive_box.svg";
+import IconForkKnife from "../../assets/apartamento/fork_knife.svg";
+import IconIceCream from "../../assets/apartamento/ice_cream.svg";
+import IconPillow from "../../assets/apartamento/pillow.svg";
+import IconScribbleLoop from "../../assets/apartamento/scribble_loop.svg";
+import IconTelevision from "../../assets/apartamento/television.svg";
+
+function iconForItem(item) {
+  item = item.toString().toLowerCase().replace(/[-,]/g, '');
+  if (item.match(/wifi/)) return IconWifi;
+  if (item.match(/frigobar/)) return IconIceCream;
+  if (item.match(/condicionado/)) return IconWind;
+  if (item.match(/travesseiro/)) return IconPillow;
+  if (item.match(/ferro/)) return IconFerro;
+  if (item.match(/lençol|lencol/)) return IconLoop;
+  if (item.match(/armário|armario/)) return IconArchiveBox;
+  if (item.match(/tv|televisão|televisao/)) return IconTelevision;
+  if (item.match(/talheres|pratos/)) return IconForkKnife;
+
+  return IconScribbleLoop;
+}
+
+import IconGarage from "../../assets/apartamento/area_garage.svg";
+import IconAbstract from "../../assets/apartamento/area_abstract.svg";
+import IconChurrasqueira from "../../assets/apartamento/area_churrasqueira.svg";
+import IconKitchen from "../../assets/apartamento/area_kitchen.svg";
+import IconPeople from "../../assets/apartamento/area_people.svg";
+import IconPool from "../../assets/apartamento/area_pool.svg";
+import IconWashing from "../../assets/apartamento/area_washing.svg";
+
+function iconForArea(item) {
+  item = item.toString().toLowerCase().replace(/[-,]/g, '');
+  if (item.match(/garagem/)) return IconGarage;
+  if (item.match(/auditorio|auditório/)) return IconPeople;
+  if (item.match(/cozinha/)) return IconKitchen;
+  if (item.match(/piscina/)) return IconPool;
+  if (item.match(/lavanderia/)) return IconWashing;
+  if (item.match(/churrasqueira/)) return IconChurrasqueira;
+
+  return IconAbstract;
+}
 
 const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
@@ -206,7 +252,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
               <Features>
                 {
                   model.itens?.map(item => <FeatureCard>
-                    <Image src={IconWifi} width="32" height="32" />
+                    <Image src={iconForItem(item)} width="32" height="32" />
                     <Body2>{item}</Body2>
                   </FeatureCard>)
                 }
@@ -221,7 +267,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
               <Features>
                 {
                   model.areasComuns?.map(text => <FeatureCard>
-                    <Image src={IconWifi} width="32" height="32" />
+                    <Image src={iconForArea(text)} width="32" height="32" />
                     <Body2>{text}</Body2>
                   </FeatureCard>)
                 }
