@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import theme from './theme';
 
 export const Container = styled.div`
@@ -176,3 +176,36 @@ export const Sublime = styled.div`
     position: relative;
     bottom: 6px;
 `
+
+const FadeIn = keyframes`
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+`;
+
+export const InfoToolTip = styled.div`
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-left: 10px;
+
+    display: flex;
+    padding: 4px 8px;
+    align-items: center;
+    border-radius: 4px;
+    background: ${theme.colors.orange.default};
+
+    color: white;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 400;
+
+    width: max-content;
+    max-width: 80vw;
+    transform: translateY(-25%);
+
+    animation: 0.1s linear 0s ${FadeIn};
+`;
