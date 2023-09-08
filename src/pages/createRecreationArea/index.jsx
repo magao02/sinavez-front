@@ -160,7 +160,7 @@ const editApartment = () => {
   const router = useRouter();
 
   // REQUISICAO POST
-  const postRequisicaoRA = () => {
+  const postRequisicaoRA = async () => {
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -187,18 +187,9 @@ const editApartment = () => {
       }
     });
 
-    var images = [];
-    fotos.forEach((data) => {
-      if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
-        images.push(img);
-      }
-    });
-
     if(aptoTitle == "" || address == "" || capacity == 0){
       console.log("entrou")
     }else{
-      setShowSaveModal(true)
 
     var req = {
       titulo: aptoTitle,
@@ -215,17 +206,21 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
-      reservas: [
-        {
-          dataInicial: datas[0] ? datas[0] : "",
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
     };
-    console.log(req);
 
-    service.createRecreationArea(req, authContext.token);
+    const res = await service.createRecreationArea(req, authContext.token);
+    const url = res.data.url;
+
+    const pictures = await Promise.all(fotos.map(async (f, i) => {
+      let req = await fetch(f, {
+        mode: "no-cors"
+      });
+      const type = req.headers.get("Content-Type");
+      let blob = await req.blob();
+      return new File([blob], `upload${i}`, { type });
+    }));
+    await service.setRecreationAreaPhotos(pictures, url, authContext.token);
+    setShowSaveModal(true)
   }
   };
 
@@ -311,20 +306,6 @@ const editApartment = () => {
     };
     setRadioInputs(obj);
 
-    // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
-
     // Images
     var imgs = data.imageUrl;
     var obj = [];
@@ -398,9 +379,9 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Cria a Área de Lazer</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea>
           <h3>Adicionar Fotos da Área de Lazer</h3>
-          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>

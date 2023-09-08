@@ -32,9 +32,11 @@ import CalendarButton from "../../components/CalendarButton";
 import { v4 as uuid } from "uuid";
 import { Modal } from "../../components/commom/Modal";
 import cancel_img from "../../assets/cancel_alterations.svg";
+import UserComputer from "../../assets/user_computer.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
+import isEqual from "lodash.isequal";
 
 const editApartment = () => {
   // INFORMACOES DO APTO
@@ -78,8 +80,13 @@ const editApartment = () => {
     getRecreationInfo();
   }, []);
 
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+  const [isUploadingPhotos, setIsUploadingPhotos] = useState(false);
+
   // REQUISICAO POST
-  const updateRequisicaoRA = () => {
+  const updateRequisicaoRA = async () => {
+    setIsMakingRequest(true);
+
     var itens = [];
     itensApto.map((data) => {
       if (data.checked) {
@@ -106,14 +113,6 @@ const editApartment = () => {
       }
     });
 
-    var images = [];
-    fotos.forEach((data) => {
-      if (data.name != "") {
-        var img = URL.createObjectURL(data.file);
-        images.push(img);
-      }
-    });
-
     if(aptoTitle == "" || address == "" || capacity == 0){
       console.log("entrou")
     }else{
@@ -133,7 +132,6 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
       reservas: [
         {
           dataInicial: datas[0] ? datas[0] : "",
@@ -142,7 +140,25 @@ const editApartment = () => {
       ],
     };
 
-    service.updateRecreationArea(authContext.token, req, urlRec);
+    await service.updateRecreationArea(authContext.token, req, urlRec);
+
+    if (!isEqual(fotos, oldData.pictures)) {
+      setIsUploadingPhotos(true);
+      const pictures = await Promise.all(fotos.map(async (f, i) => {
+        let req = await fetch(f, {
+          mode: "no-cors"
+        });
+        const type = req.headers.get("Content-Type");
+        let blob = await req.blob();
+        return new File([blob], `upload${i}`, { type });
+      }));
+      await service.setRecreationAreaPhotos(pictures, urlRec, authContext.token);
+    }
+
+    setIsUploadingPhotos(false);
+    setIsMakingRequest(false);
+
+    setShowSaveModal(true);
   }
   };
 
@@ -229,31 +245,21 @@ const editApartment = () => {
     setRadioInputs(obj);
 
     // Datas
-    if (data.reservas.length > 0) {
-      var dates = data.reservas;
-      var array = [];
-      dates.forEach(( data ) => {
-        var obj = {
-          dataInicial: data.dataInicial,
-          dataFinal: data.dataFinal
-        }
-        array.push(obj) 
-      })
-      setDatas(array);
-    }
+    // if (data.reservas.length > 0) {
+    //   var dates = data.reservas;
+    //   var array = [];
+    //   dates.forEach(( data ) => {
+    //     var obj = {
+    //       dataInicial: data.dataInicial,
+    //       dataFinal: data.dataFinal
+    //     }
+    //     array.push(obj) 
+    //   })
+    //   setDatas(array);
+    // }
 
     // Images
-    var imgs = data.imageUrl;
-    var obj = [];
-    for (let idx = 0; idx < 7; idx++) {
-      var item = {
-        id: idx,
-        name: "",
-        file: imgs[idx] != undefined ? imgs[idx] : "",
-      };
-      obj.push(item);
-    }
-    setFotos(obj);
+    setFotos(data.pictures);
   };
 
   // MODELA OS DADOS DOS ITENS
@@ -324,9 +330,9 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Editar a Área de Lazer</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea>
           <h3>Adicionar Fotos da Áreas de Lazer</h3>
-          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>
@@ -472,7 +478,16 @@ const editApartment = () => {
         )}
 
         {
-          showSaveModal && (
+          isMakingRequest && <ModalOneButton
+            title="Aguarde"
+            asideText={isUploadingPhotos ? "Fazendo upload das fotos..." : "Guardando seus dados..."}
+            hideButton={true}
+            img={UserComputer.src}
+          />
+        }
+
+        {
+          (!isMakingRequest && showSaveModal) && (
               <ModalOneButton
                 title={"SUCESSO"}
                 asideText={"Alterações salvas com sucesso!"}

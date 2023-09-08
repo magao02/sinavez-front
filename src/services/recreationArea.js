@@ -55,3 +55,15 @@ export async function updateRecreationArea(token, data, urlApt){
         }
     )
 }
+
+export async function setRecreationAreaPhotos(files, urlApt, token) {
+    const data = new FormData();
+    for (let file of files) {
+        data.append('photos', file);
+    }
+    return await api.put(
+        `/recreationArea/setRecreationAreaPhotos/${urlApt}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}
