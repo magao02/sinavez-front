@@ -254,6 +254,7 @@ export const FullImageGallery = styled.div`
   }
 
   .images {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -263,6 +264,28 @@ export const FullImageGallery = styled.div`
       border-radius: 8px;
       height: auto;
       width: 100%;
+    }
+
+    .icon {
+      position: absolute;
+      margin-top: 26px;
+      margin-left: 26px;
+
+      display: inline-flex;
+      padding: 4px;
+
+      background: ${theme.colors.blue.light};
+      border-radius: 4px;
+
+      box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+
+      &:hover {
+        filter: brightness(90%);
+      }
     }
   }
 `;
