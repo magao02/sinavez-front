@@ -34,6 +34,7 @@ import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
 import IconSingleBed from "../../assets/apartamento/icon_single_bed.svg";
 import IconRedWarning from "../../assets/icon_red_warning.svg";
 import IconLocation from "../../assets/icon_gray_location.svg";
+import IconCloseBlack from "../../assets/icon_close_black.svg";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
 import Button from "../../components/commom/Button";
 import { getApartment } from "../../services/apartments";
@@ -389,6 +390,9 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       { viewingImages && <FullImageGallery>
         <div className="background" onClick={closeViewingImages} />
         <div className="images">
+          <div className="icon" onClick={closeViewingImages}>
+            <Image src={IconCloseBlack} />
+          </div>
           {
             model.pictures.map(url => <img src={url} />)
           }
