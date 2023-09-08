@@ -31,6 +31,7 @@ import Image from "next/image";
 import MapaImage from "../../assets/apartamento/mapa.png";
 import IconArrowLeft from "../../assets/icon_arrow_left.svg";
 import IconDoubleBed from "../../assets/apartamento/icon_double_bed.svg";
+import IconSingleBed from "../../assets/apartamento/icon_single_bed.svg";
 import IconRedWarning from "../../assets/icon_red_warning.svg";
 import IconLocation from "../../assets/icon_gray_location.svg";
 import { DropdownInput, SearchInput } from "../../components/SearchInputs";
@@ -89,6 +90,9 @@ function iconForArea(item) {
 
   return IconAbstract;
 }
+
+import IconBathtub from "../../assets/apartamento/bathtub_blue.svg";
+import IconPets from "../../assets/apartamento/pets_blue.svg";
 
 const ApartmentDetails = ({ area, objectUrl, query }) => {
   const [viewingImages, setViewingImages] = useState(false);
@@ -239,9 +243,21 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
             { !area && <BlueFeatures>
               {
                 model.camas?.map((cama, i) => <BlueFeatureCard key={i}>
-                  <Image src={IconDoubleBed} />
+                  <Image src={cama.tipo.toString().toLowerCase() === "casal" ? IconDoubleBed : IconSingleBed} />
                   {cama.quantidade} Cama {cama.tipo}
                 </BlueFeatureCard>)
+              }
+              {
+                model.suite && <BlueFeatureCard>
+                  <Image src={IconBathtub} />
+                  1 banheiro
+                </BlueFeatureCard>
+              }
+              {
+                model.animais && <BlueFeatureCard>
+                  <Image src={IconPets} />
+                  Aceita pets
+                </BlueFeatureCard>
               }
             </BlueFeatures> }
 

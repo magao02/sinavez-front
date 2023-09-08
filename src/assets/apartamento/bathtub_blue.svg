@@ -1,0 +1,14 @@
+<svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Bathtub" clip-path="url(#clip0_1660_111192)">
+<path id="Vector" d="M14 36V40.5" stroke="#032E58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M35 36V40.5" stroke="#032E58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M38 18H26V27H38V18Z" stroke="#032E58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M38 19.5H44C44.3978 19.5 44.7794 19.658 45.0607 19.9393C45.342 20.2206 45.5 20.6022 45.5 21V27C45.5 29.3869 44.5518 31.6761 42.864 33.364C41.1761 35.0518 38.8869 36 36.5 36H12.5C10.1131 36 7.82387 35.0518 6.13604 33.364C4.44821 31.6761 3.5 29.3869 3.5 27V21C3.5 20.6022 3.65804 20.2206 3.93934 19.9393C4.22064 19.658 4.60218 19.5 5 19.5H26" stroke="#032E58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M11 19.5V9.75001C11 8.75545 11.3951 7.80162 12.0983 7.09836C12.8016 6.3951 13.7554 6.00001 14.75 6.00001C15.6233 5.99796 16.4712 6.29425 17.1532 6.83982C17.8351 7.38539 18.3103 8.14752 18.5 9.00001" stroke="#032E58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_1660_111192">
+<rect width="48" height="48" fill="white" transform="translate(0.5)"/>
+</clipPath>
+</defs>
+</svg>
