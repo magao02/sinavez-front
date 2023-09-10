@@ -106,8 +106,8 @@ export const WarningCard = styled(BlueBackgroundCard)`
 export const MapContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  img {
+  gap: 16px;
+  iframe, img {
     border-radius: 16px;
   }
 `;
