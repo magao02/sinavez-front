@@ -216,7 +216,16 @@ const Page = () => {
             <MapContainer>
               <Title2>Veja a localização no mapa</Title2>
               { hasReserved ? <>
-                <Body2 strong>Endereço: <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{model.endereco}</a></Body2>
+                <div>
+                  <Subtitle2>Endereço</Subtitle2>
+                  <ul style={{listStylePosition: 'inside'}}>
+                    <li>
+                      <Body2 strong>
+                        <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{model.endereco}</a>
+                      </Body2>
+                    </li>
+                  </ul>
+                </div>
                 <iframe
                   width="100%"
                   height="300"
