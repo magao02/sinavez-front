@@ -149,6 +149,7 @@ const UserDataPopup = ({ value, onClose }) => {
     telefone: useRef(null),
     telefoneFixo: useRef(null),
     email: useRef(null),
+    password: useRef(null),
     formacaoSuperior: useRef(null),
     dataFormacao: useRef(null),
     empresa: useRef(null),
@@ -407,13 +408,15 @@ const UserDataPopup = ({ value, onClose }) => {
                     initialValue={value.email}
                     disabled={!editing}
                     ref={refs.email}
-                    validate={validation.testEmail}
+                    validate={validation.testRequiredEmail}
                   />
                   <Input
                     label="Senha"
                     variant={variantRequired}
-                    initialValue="oxente"
+                    initialValue={value.password}
                     disabled={!editing}
+                    ref={refs.password}
+                    validate={validation.testRequiredPassword}
                   />
                 </Row>
               </Dados>
@@ -799,7 +802,7 @@ const UserData = () => {
                     <Input
                       label="Senha"
                       variant="default-optional"
-                      initialValue="????? oxe"
+                      initialValue={value.password}
                       disabled
                     />
                   </Row>
