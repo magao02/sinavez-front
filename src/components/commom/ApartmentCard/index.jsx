@@ -47,7 +47,7 @@ const Feature = ({ type }) => {
   );
 };
 
-const ApartamentCard = ({ obj, url, showEditButton }) => {
+const ApartmentCard = ({ obj, url, showEditButton }) => {
   const isReservado = !!obj.reservado;
 
   const image = (obj.pictures ?? [])[0] ?? Placeholder.src;
@@ -66,13 +66,11 @@ const ApartamentCard = ({ obj, url, showEditButton }) => {
   }, [obj]);
 
   const handleRedirectVerMais = () => {
-    router.push(`/ambienteDados?url=${url}`)
-    localStorage.setItem("urlAmbient", url)
+    router.push(`/ambienteDados?url=${url}&ambientType=${isApt ? "apto" : "recreationArea"}`)
   }
 
   const handleRedirectEdit = () => {
-    let url = ""
-    isApt ? url = `/editApartment?url=${localStorage.getItem("urlAmbient")}` : url = `/editRecreationArea?url=${localStorage.getItem("urlAmbient")}` 
+    isApt ? url = `/editApartment?url=${router.query.url}` : url = `/editRecreationArea?url=${router.query.url}` 
     router.push(url)
   }
 
@@ -111,4 +109,4 @@ const ApartamentCard = ({ obj, url, showEditButton }) => {
   );
 };
 
-export default ApartamentCard;
+export default ApartmentCard;

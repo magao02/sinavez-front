@@ -75,8 +75,10 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
-    getApartmentInfo();
-  }, []);
+    if(router.isReady){
+      getApartmentInfo();
+    }
+  }, [router.isReady]);
 
   const validaCamas = () => camas.every((data) => data.Quantidade > 0)
 
@@ -84,7 +86,7 @@ const editApartment = () => {
   const updateRequisicaoApto = () => {
 
     if(aptoTitle == "" || address == "" || !validaCamas){
-      console.log("entrou")
+      
     }else{
       setShowSaveModal(true)
 
@@ -156,8 +158,8 @@ const editApartment = () => {
 
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
-    var { data } = await service.getApartment(authContext.token, localStorage.urlAmbient);
-    setUrlApto(localStorage.urlAmbient)
+    var { data } = await service.getApartment(authContext.token, router.query.url);
+    setUrlApto(router.query.url)
 
     modelData(data);
     setOldData(data);

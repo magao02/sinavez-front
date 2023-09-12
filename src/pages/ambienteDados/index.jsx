@@ -94,17 +94,17 @@ const ambienteDados = () => {
     
     useEffect(async () => {
       if(router.isReady){
-        try{
+        if(router.query.ambientType == "apto") {
           var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
           const reqReservas = await serviceApto.getReservations(authContext.token, router.query.url)
           setAmbientData(data)
           setReservas(reqReservas.data)
           setUrl(router.query.url)
-        }catch{
+        }else{
           const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
           const reqReservas = await serviceArea.getReservations(authContext.token, router.query.url)
           setAmbientData(data)
-          setReservas(reqReservas.data);
+          setReservas(reqReservas.data)
           setUrl(router.query.url)
         }
       }

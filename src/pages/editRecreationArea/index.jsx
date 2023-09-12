@@ -75,8 +75,10 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
-    getRecreationInfo();
-  }, []);
+    if(router.isReady){
+      getRecreationInfo();
+    }
+  }, [router.isReady]);
 
   // REQUISICAO POST
   const updateRequisicaoRA = () => {
@@ -142,8 +144,8 @@ const editApartment = () => {
 
   // REQUISICAO GET DO AREA
   const getRecreationInfo = async () => {
-    var { data } = await service.getRecreationArea(authContext.token, localStorage.urlAmbient);
-    setUrlRec(localStorage.urlAmbient)
+    var { data } = await service.getRecreationArea(authContext.token, router.query.url);
+    setUrlRec(router.query.url)
 
     modelData(data);
     setOldData(data);
