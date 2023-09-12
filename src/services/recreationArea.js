@@ -54,3 +54,23 @@ export async function updateRecreationArea(token, data, urlApt){
         }
     )
 }
+
+export async function updatePayment(token, urlApt, reservaId, pagoValue) {
+    return await api.put(
+        `/recreationArea/updatePayment/${urlApt}/${reservaId}`,
+        {pago: pagoValue},
+        { headers: { authorization: token } }
+    )
+}
+
+export async function uploadPayment(token, urlApt, reservaId, files){
+    const data = new FormData();
+    for (let file of files) {
+        data.append('file', file);
+    }
+    return await api.put(
+        `/recreationArea/uploadPayment/${urlApt}/${reservaId}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}

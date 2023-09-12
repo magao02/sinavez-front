@@ -26,16 +26,19 @@ import {
   LoadFileArea,
   RadioInputArea,
   RadioInputsContainer,
-  RadioInputWrapper
+  RadioInputWrapper,
+  ProgressBar
 } from "./styles";
 import arrow_down from "../../assets/arrow_down_blue.svg";
 import { useState } from "react";
 import upload_cloud from "../../assets/upload_cloud.svg"
-import { useEffect } from "react";
+import excluir_comprovante from "../../assets/excluir_comprovante.svg"
 
+const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
 
-const ReservaModal = ({ obj }) => {
   const [showInfo, setShowInfo] = useState(false);
+  const [file, setFile] = useState(obj.pagamento.files);
+  const [progress, setProgress] = useState(0);
 
   const formatDate = (data, style) => {
     const newDate = new Date(data);
@@ -57,9 +60,33 @@ const ReservaModal = ({ obj }) => {
     return formatter.format(newDate);
   };
 
-  useEffect(() => {
-    () => radioChecked()
-  }, [])
+  const getFile = ( event ) => {
+    const file = event.target.files[0]
+    const reader = new FileReader();
+
+    reader.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percentage = (event.loaded / event.total) * 100;
+        setProgress(percentage);
+      }
+    }
+
+    setFile(file)
+    handleFile(id, file)
+    reader.readAsDataURL(file)
+  }
+
+  const formatHora = ( horario ) => {
+    var hora = parseInt(horario.slice(0,2))
+    if(hora >= 0 && hora <= 12){
+      return `${horario} manhã`
+    }else if (hora <= 18){
+      return `${horario} tarde`
+    }else{
+      return `${horario} noite`
+    }
+  }
+
 
   if (showInfo) {
     return (
@@ -102,14 +129,14 @@ const ReservaModal = ({ obj }) => {
                   <h4>Chegada: </h4>
                   <DataSecondArea>
                     <span>{formatDate(obj.dataChegada, "full")}</span>
-                    <span>{obj.horarioChegada}</span>
+                    <span>{formatHora(obj.horarioChegada)}</span>
                   </DataSecondArea>
                 </DataContentWrapper>
                 <DataContentWrapper>
                   <h4>Saída:</h4>
                   <DataSecondArea>
                     <span>{formatDate(obj.dataSaida, "full")}</span>
-                    <span>{obj.horarioSaida}</span>
+                    <span>{formatHora(obj.horarioSaida)}</span>
                   </DataSecondArea>
                 </DataContentWrapper>
               </DataRowContainer>
@@ -158,29 +185,39 @@ const ReservaModal = ({ obj }) => {
                     <h3>Informações do pagamento</h3>
                 </DataTitleArea>
                 <InputComprovanteArea>
-                    <img src={upload_cloud.src} />
-                    <TextArea>
-                        <h3>Adicione um comprovante de pagamento</h3>
-                        <span>Formatos aceitos: JPEG, PNG, PDF</span>
-                    </TextArea>
+                    <label key={id}>
+                      <input type="file" key={id} name="file" accept="image/jpg, image/jpeg ,image/png, application/pdf" onChange={(e) => getFile(e)}/>
+                      <img src={upload_cloud.src} />
+                      <TextArea>
+                          <h3>Adicione um comprovante de pagamento</h3>
+                          <span>Formatos aceitos: JPEG, PNG, PDF</span>
+                      </TextArea>
+                    </label>
                 </InputComprovanteArea>
                 <LoadFileArea>
-                    <span>file</span>
+                    <span>{file[file?.length - 1]?.name}</span>
+                    {
+                      file && file?.length > 0 &&
+                      <img src={excluir_comprovante.src} onClick={() => {
+                        deleteFile(id, file)
+                        setFile(null)
+                        setProgress(0)
+                      }}></img>
+                    }
                 </LoadFileArea>
+                <ProgressBar width={progress + "%"}></ProgressBar>
                 <RadioInputArea>
                     <span>Atualize a situação do pagamento</span>
-                    <form>
-                        <RadioInputsContainer>
-                            <RadioInputWrapper>
-                                <input type="radio" name="pagamento" value="pago" id="pago"/>
-                                <label htmlFor="pago">Pago</label>
-                            </RadioInputWrapper>
-                            <RadioInputWrapper>
-                                <input type="radio" name="pagamento" value="pendente" id="pendente"/>
-                                <label htmlFor="pendente">Pendente</label>
-                            </RadioInputWrapper>
+                        <RadioInputsContainer onChange={() => handlePagamento(id)}>
+                              <RadioInputWrapper>
+                                <input type="radio" id={id} name={id}  checked={obj.pagamento.pago == true}/>
+                                <label htmlFor={"pago"}>{"Pago"}</label>
+                              </RadioInputWrapper>
+                              <RadioInputWrapper>
+                                <input type="radio" id={id} name={id} checked={obj.pagamento.pago == false}/>
+                                <label htmlFor={"pendente"}>{"Pendente"}</label>
+                              </RadioInputWrapper>
                         </RadioInputsContainer>
-                    </form>
                 </RadioInputArea>
             </InfoNotaFiscal>
         </NotaFiscalContainer>
@@ -220,4 +257,4 @@ const ReservaModal = ({ obj }) => {
   }
 };
 
-export default ReservaModal;
+export default ReservaCard;

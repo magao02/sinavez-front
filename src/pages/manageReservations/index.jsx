@@ -120,7 +120,6 @@ const ManageReserVations = () => {
             <AmbientsArea>
                 {toShow ?
                     AptoFiltrado.map((data) => {
-                      console.log(data)
                         return (
                             <AmbientWrapper>
                                 <ApartmentCard obj={data} url={data.urlApt}></ApartmentCard>

@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Container, Option, OptionArea } from "./styles"
 
-const MonthsOptions = ( { setMonth } ) => {
+const MonthsOptions = ( { month ,setMonth } ) => {
 
-    const [selectedMonth, setSelectedMonth] = useState(1)
+    const [selectedMonth, setSelectedMonth] = useState(month)
 
     const handleClick = (month) => {
         setSelectedMonth(month)
@@ -24,8 +24,6 @@ const MonthsOptions = ( { setMonth } ) => {
         {name: "Novembro", month: 11 },
         {name: "Dezembro", month: 12 },
     ]
-
-    console.log(selectedMonth)
     
     return (
         <Container>

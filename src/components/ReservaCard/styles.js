@@ -222,6 +222,23 @@ export const InputComprovanteArea = styled.div`
     align-items: center;
     justify-content: center;
     gap: 20px;
+
+    input{
+        display: none;
+    }
+
+    label{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 20px;
+        transition: color 300ms ease-in-out;
+
+
+        &:hover{
+            background-color: #f2f3f5;
+        }
+    }
 `
 
 export const TextArea = styled.div`
@@ -248,7 +265,24 @@ export const LoadFileArea = styled.div`
     border-radius: 5px;
     padding: 5px;
     padding-left: 15px;
-    border-bottom: 4px solid #0660BA;
+    //border-bottom: 4px solid #0660BA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
+
+    img:hover{
+        transform: scale(1.1);
+    }
+`
+
+export const ProgressBar = styled.div`
+    height: 4px;
+    background-color: #0660BA;
+    width: ${(prop) => prop.width};
+    margin-top: -14px;
+    border-radius: 0px 0px 5px 5px;
 `
 
 export const RadioInputArea = styled.div`
