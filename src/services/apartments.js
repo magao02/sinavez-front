@@ -52,7 +52,7 @@ export async function updateApartment(token, data, urlApt){
                 authorization: token
             }
         }
-    )
+    ));
 }
 
 
@@ -65,7 +65,7 @@ export async function updatePayment(token, urlApt, reservaId, pagoValue){
                 authorization: token
             }
         }
-    )
+    );
 }
 
 export async function uploadPayment(token, urlApt, reservaId, files){
@@ -83,13 +83,13 @@ export async function uploadPayment(token, urlApt, reservaId, files){
 export async function deletePayment(token, urlApt, reservaId, url){
     return await api.delete(
         `/apartment/deletePayment/${urlApt}/${reservaId}`,
-        { headers: { authorization: token },
-        data: {
-            url: url
+        {
+            headers: { authorization: token },
+            data: {
+                url: url
+            }
         }
-    }
-    )
-    ))
+    );
 }
 
 export async function setApartmentPhotos(files, urlApt, token) {

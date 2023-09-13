@@ -53,7 +53,7 @@ export async function updateRecreationArea(token, data, urlApt){
                 authorization: token
             }
         }
-    )
+    );
 }
 
 export async function updatePayment(token, urlApt, reservaId, pagoValue) {
@@ -61,7 +61,7 @@ export async function updatePayment(token, urlApt, reservaId, pagoValue) {
         `/recreationArea/updatePayment/${urlApt}/${reservaId}`,
         {pago: pagoValue},
         { headers: { authorization: token } }
-    )
+    );
 }
 
 export async function uploadPayment(token, urlApt, reservaId, files){
@@ -79,12 +79,14 @@ export async function uploadPayment(token, urlApt, reservaId, files){
 export async function deletePayment(token, urlApt, reservaId, url){
     return await api.delete(
         `/apartment/deletePayment/${urlApt}/${reservaId}`,
-        { headers: { authorization: token },
-        data: {
-            url: url
+        {
+            headers: { authorization: token },
+            data: {
+                url: url
+            }
         }
-    }
-    )
+    );
+}
 
 export async function setRecreationAreaPhotos(files, urlApt, token) {
     const data = new FormData();
