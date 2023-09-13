@@ -77,8 +77,10 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
-    getApartmentInfo();
-  }, []);
+    if(router.isReady){
+      getApartmentInfo();
+    }
+  }, [router.isReady]);
 
   const validaCamas = () => camas.every((data) => data.Quantidade > 0)
 
@@ -90,7 +92,7 @@ const editApartment = () => {
     setIsMakingRequest(true);
 
     if(aptoTitle == "" || address == "" || !validaCamas){
-      console.log("entrou")
+      
     }else{
       setShowSaveModal(true)
 
@@ -152,7 +154,8 @@ const editApartment = () => {
       setIsUploadingPhotos(true);
       const pictures = await Promise.all(fotos.map(async (f, i) => {
         let req = await fetch(f, {
-          mode: "no-cors"
+          // mode: "no-cors",
+          cache: "no-cache",
         });
         const type = req.headers.get("Content-Type");
         let blob = await req.blob();
@@ -168,8 +171,8 @@ const editApartment = () => {
 
   // REQUISICAO GET DO APARTAMENTO
   const getApartmentInfo = async () => {
-    var { data } = await service.getApartment(authContext.token, localStorage.urlAmbient);
-    setUrlApto(localStorage.urlAmbient)
+    var { data } = await service.getApartment(authContext.token, router.query.url);
+    setUrlApto(router.query.url)
 
     modelData(data);
     setOldData(data);
@@ -256,20 +259,6 @@ const editApartment = () => {
       animais: animais,
     };
     setRadioInputs(obj);
-
-    // Datas
-    // if (data.reservas.length > 0) {
-    //   var dates = data.reservas;
-    //   var array = [];
-    //   dates.forEach(( data ) => {
-    //     var obj = {
-    //       dataInicial: data.dataInicial,
-    //       dataFinal: data.dataFinal
-    //     }
-    //     array.push(obj) 
-    //   })
-    //   setDatas(array);
-    // }
 
     // Images
     setFotos(data.pictures);

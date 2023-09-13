@@ -24,7 +24,7 @@ export const MainContent = styled.div`
     gap: 3vh;
     margin-top: 2vh;
 
-    @media (max-width: 1187px) {
+    @media (max-width: 1372px) {
         width: 80vw;
     }
 `
@@ -78,6 +78,10 @@ export const DropdownArea = styled.div`
     gap: 0px;
     padding-left: 0px;
     height: 100%;
+
+    @media (max-width: 1372px) {
+        width: 35%;
+    }
 `
 
 export const Select = styled.select`
@@ -154,7 +158,6 @@ export const AmbientsArea = styled.div`
 
 export const AmbientWrapper = styled.div`
     width: 100%;
-    height: 200px;
 `
 
 export const LoadItens = styled.div`

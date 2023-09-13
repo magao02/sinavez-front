@@ -29,12 +29,13 @@ export const Option = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #EDF6FF;
+    background-color: ${(props) => props.selected ? "#032E58" : "#EDF6FF"};;
     padding: 2px 8px 2px 8px;
     height: 20%;
     width: 20%;
     border-radius: 25px;
     font-size: 14px;
+    color: ${(props) => props.selected ? "white" : "black"};
     
     cursor: pointer;
     &:hover{

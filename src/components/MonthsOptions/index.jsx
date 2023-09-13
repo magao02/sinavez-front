@@ -1,22 +1,39 @@
+import { useState } from "react"
 import { Container, Option, OptionArea } from "./styles"
 
-const MonthsOptions = () => {
+const MonthsOptions = ( { month ,setMonth } ) => {
+
+    const [selectedMonth, setSelectedMonth] = useState(month)
+
+    const handleClick = (month) => {
+        setSelectedMonth(month)
+        setMonth(month)
+    }
+
+    const months = [
+        {name: "Janeiro", month: 1 },
+        {name: "Fevereiro", month: 2 },
+        {name: "Março", month: 3 },
+        {name: "Abril", month: 4 },
+        {name: "Maio", month: 5 },
+        {name: "Junho", month: 6 },
+        {name: "Julho", month: 7 },
+        {name: "Agosto", month: 8 },
+        {name: "Setembro", month: 9 },
+        {name: "Outubro", month: 10 },
+        {name: "Novembro", month: 11 },
+        {name: "Dezembro", month: 12 },
+    ]
+    
     return (
         <Container>
             <span>Reservas do mês de:</span>
-            <OptionArea>
-                <Option>Janeiro</Option>
-                <Option>Fevereiro</Option>
-                <Option>Março</Option>
-                <Option>Abril</Option>
-                <Option>Maio</Option>
-                <Option>Junho</Option>
-                <Option>Julho</Option>
-                <Option>Agosto</Option>
-                <Option>Setembro</Option>
-                <Option>Outubro</Option>
-                <Option>Novembro</Option>
-                <Option>Dezembro</Option>
+            <OptionArea onClick={(e) => handleClick(e.target.id)}>
+                {months.map((item) => {
+                    return (
+                        <Option id={item.month} selected={selectedMonth == item.month}>{item.name}</Option>
+                    )
+                })}
             </OptionArea>
         </Container>
     )

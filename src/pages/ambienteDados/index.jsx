@@ -19,24 +19,34 @@ import Button from "../../components/commom/Button";
 import Image from "next/image";
 import leftArrow from "../../assets/leftArrow.svg";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import * as serviceApto from "../../services/apartments";
 import * as serviceArea from "../../services/recreationArea"
-import AmbientModal from "../../components/AmbientModal";
+import ApartmentCard from "../../components/commom/ApartmentCard";
 import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
-import ReservaModal from "../../components/ReservaModal";
+import ReservaCard from "../../components/ReservaCard";
+import { dateFromDMY } from "../../utils/date";
 
 const ambienteDados = () => {
-  
   
     const authContext = useAuth();
     const router = useRouter();
     
     const [ambientData, setAmbientData] = useState([]);
     const [reservas, setReservas] = useState([])
+    const [url, setUrl] = useState("")
+
+    const isApt = !!ambientData.urlApt 
+
+    const getMonth = ( data ) => {
+      if(data == "") return;
+      return dateFromDMY(data).getUTCMonth();
+    }
+
+    const [month, setMonth] = useState((new Date()).getUTCMonth());
     
     
     const redirectPage = () => {
@@ -44,44 +54,56 @@ const ambienteDados = () => {
     };
 
     const redirectToReservas = () => {
-      router.push("/reservas")
+      router.push(`/associadosReservar/urlAmbient=${url}`)
     }
+
+    const handlePagamento = ( id ) => {
+        var copy = [...reservas]
+        var reserva  = copy.filter((reservas) => reservas.id == id)[0]
+        reserva.pagamento.pago = !reserva.pagamento.pago
+        setReservas(copy)
+
+        isApt ? serviceApto.updatePayment(authContext.token, ambientData.urlApt, id, reserva.pagamento.pago) : serviceArea.updatePayment(authContext.token, ambientData.urlRec, id, reserva.pagamento.pago)
+    }
+
+    const handleFile = ( id, file ) => {
+        var copy = [...reservas]
+        var reserva  = copy.filter((reservas) => reservas.id == id)[0]
+        reserva.pagamento.files.push(file)
+        setReservas(copy)
+
+        isApt ? serviceApto.uploadPayment(authContext.token, ambientData.urlApt, id, reserva.pagamento.files) : serviceArea.updatePayment(authContext.token, ambientData.urlRec, id, reserva.pagamento.files)
+    }
+
+    const deleteFile = (id, file) => {
+        var copy = [...reservas]
+        var reserva = copy.filter((reservas) => reservas.id == id)[0]
+        var idx = reserva.pagamento.files.indexOf(file)
+        reserva.pagamento.files.slice(idx)
+        setReservas(copy)
+        isApt ? serviceApto.deletePayment(authContext.token, ambientData.urlApt, id, file.url) : serviceArea.deletePayment(authContext.token, ambientData.urlApt, id, file.url)
+    }
+
+    var reservasFiltered = reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : []
     
     useEffect(async () => {
-      try{
-        var { data } = await serviceApto.getApartment(authContext.token, localStorage.getItem("urlAmbient"))
-        const reqReservas = await serviceApto.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
-        setAmbientData(data)
-        setReservas(reqReservas.data)
-      }catch{
-        const { data } = await serviceArea.getRecreationArea(authContext.token, localStorage.getItem("urlAmbient"))
-        const reqReservas = await serviceArea.getReservations(authContext.token, localStorage.getItem("urlAmbient"))
-        setAmbientData(data)
-        setReservas(reqReservas.data);
-      }
-    },[]);
-  
-    const getIcons = (data) => {
-        var obj = {
-            "suite": data.suite,
-            "wifi": data.wifi,
-            "animais": data.animais,
-            "arCondicionado": data.itens && data.itens.includes("ar condicionado") ? true : false 
+      if(router.isReady){
+        if(router.query.ambientType == "apto") {
+          var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
+          const reqReservas = await serviceApto.getReservations(authContext.token, router.query.url)
+          setAmbientData(data)
+          setReservas(reqReservas.data)
+          setUrl(router.query.url)
+        }else{
+          const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
+          const reqReservas = await serviceArea.getReservations(authContext.token, router.query.url)
+          setAmbientData(data)
+          setReservas(reqReservas.data)
+          setUrl(router.query.url)
         }
-        return obj;
-    }
+      }
+    },[router.isReady]);
 
-const checkBusy = (datas) => {
-    const data1 = new Date("05/04/2023")
-    const data2 = new Date("10/05/2023")
-    const today = new Date()
-
-    if(data1 < today && data2 > today){
-      return true
-    }else{
-      return false
-    }
-}
 
   return (
     <Container>
@@ -109,8 +131,7 @@ const checkBusy = (datas) => {
           <h2>Dados do ambiente</h2>
         </TitleArea>
         <AmbientWrapper>
-            <AmbientModal title={ambientData.titulo} itens={getIcons(ambientData)} status={checkBusy(ambientData.reservas)} url={ambientData.urlApt} showVerMais={false}>
-            </AmbientModal>
+            <ApartmentCard obj={ambientData} url={url} showEditButton={true}></ApartmentCard>
         </AmbientWrapper>
         <ReservasArea>
             <TitleArea>
@@ -118,11 +139,11 @@ const checkBusy = (datas) => {
             </TitleArea>
             <DataArea>
               <MonthsArea>
-                <MonthsOptions></MonthsOptions>
+                <MonthsOptions month={month} setMonth={setMonth}></MonthsOptions>
               </MonthsArea>
               <ReservasContent>
                 {
-                  reservas.length == 0 ?
+                  reservasFiltered.length == 0 ?
                     <NoReservations>
                       <MsgArea>
                         <h2>Ainda não há reservas</h2>
@@ -133,8 +154,13 @@ const checkBusy = (datas) => {
                     </NoReservations>
                   :
                   <ReservasInfo>
-                    <ReservaModal></ReservaModal>
-                    <ReservaModal></ReservaModal>
+                    {
+                      reservasFiltered.map(( reserva ) => {
+                        return (
+                          <ReservaCard obj={reserva} id={reserva.id} handlePagamento={handlePagamento} handleFile={handleFile} deleteFile={deleteFile}></ReservaCard>
+                        )
+                      })
+                    }
                   </ReservasInfo>
                 }
               </ReservasContent>

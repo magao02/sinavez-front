@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../styles/theme";
 
 
 // PARTE REDUZIDA
@@ -29,6 +30,12 @@ export const FotoBox = styled.div`
     background-color: blue;
     height: 90%;
     border-radius: 50%;
+
+    img{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+    }
 `
 
 export const InfoArea = styled.div`
@@ -69,7 +76,7 @@ export const PagamentoArea = styled.div`
 
 export const PagamentoInfo = styled.div`
     display: flex;
-    background-color: ${(props) => props.color};
+    background-color: ${(props) => props.pagamento ? theme.colors.green.default : theme.colors.orange.default};
     color: white;
     padding: 8px 15px 8px 15px;
     font-size: 13px;
@@ -99,7 +106,7 @@ export const DataContainer = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 600px;
+    height: 700px;
     border: 1px solid #C5DBF2;
     background-color: #FAFBFF;
     border-radius: 5px;
@@ -184,4 +191,117 @@ export const DataContentWrapper = styled.div`
     display: flex;
     align-items: start;
     gap: 4px;
+`
+
+export const NotaFiscalContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+`
+
+export const InfoNotaFiscal = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #C5DBF2;
+    border-radius: 5px;
+    padding: 20px;
+    gap: 10px;
+`
+
+
+export const InputComprovanteArea = styled.div`
+    width: 100%;
+    height: 150px;
+    border: 2px dotted #5D9BDA;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    input{
+        display: none;
+    }
+
+    label{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 20px;
+        transition: color 300ms ease-in-out;
+
+
+        &:hover{
+            background-color: #f2f3f5;
+        }
+    }
+`
+
+export const TextArea = styled.div`
+    display: flex;
+    align-items: first baseline;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 35%;
+
+    h3{
+        color: #494B51;
+    }
+
+    span{
+        color: #0660BA;
+        font-size: 1em;
+        font-weight: 500;
+    }
+`
+
+export const LoadFileArea = styled.div`
+    height: 30px;
+    border: 1px solid #C5DBF2;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 15px;
+    //border-bottom: 4px solid #0660BA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
+
+    img:hover{
+        transform: scale(1.1);
+    }
+`
+
+export const ProgressBar = styled.div`
+    height: 4px;
+    background-color: #0660BA;
+    width: ${(prop) => prop.width};
+    margin-top: -14px;
+    border-radius: 0px 0px 5px 5px;
+`
+
+export const RadioInputArea = styled.div`
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    width: 100%;
+    height: 20px;
+    gap: 5px;
+`
+
+export const RadioInputsContainer = styled.div`
+    display: flex;
+    align-items: row;
+    gap: 5px;
+`
+
+export const RadioInputWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 `

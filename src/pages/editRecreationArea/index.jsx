@@ -77,8 +77,10 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
-    getRecreationInfo();
-  }, []);
+    if(router.isReady){
+      getRecreationInfo();
+    }
+  }, [router.isReady]);
 
   const [isMakingRequest, setIsMakingRequest] = useState(false);
   const [isUploadingPhotos, setIsUploadingPhotos] = useState(false);
@@ -114,7 +116,7 @@ const editApartment = () => {
     });
 
     if(aptoTitle == "" || address == "" || capacity == 0){
-      console.log("entrou")
+      
     }else{
 
     var req = {
@@ -132,12 +134,6 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      reservas: [
-        {
-          dataInicial: datas[0] ? datas[0] : "",
-          dataFinal: datas[1] ? datas[1] : datas[0],
-        },
-      ],
     };
 
     await service.updateRecreationArea(authContext.token, req, urlRec);
@@ -146,7 +142,8 @@ const editApartment = () => {
       setIsUploadingPhotos(true);
       const pictures = await Promise.all(fotos.map(async (f, i) => {
         let req = await fetch(f, {
-          mode: "no-cors"
+          // mode: "no-cors",
+          cache: "no-cache",
         });
         const type = req.headers.get("Content-Type");
         let blob = await req.blob();
@@ -164,8 +161,8 @@ const editApartment = () => {
 
   // REQUISICAO GET DO AREA
   const getRecreationInfo = async () => {
-    var { data } = await service.getRecreationArea(authContext.token, localStorage.urlAmbient);
-    setUrlRec(localStorage.urlAmbient)
+    var { data } = await service.getRecreationArea(authContext.token, router.query.url);
+    setUrlRec(router.query.url)
 
     modelData(data);
     setOldData(data);
@@ -243,20 +240,6 @@ const editApartment = () => {
       animais: animais,
     };
     setRadioInputs(obj);
-
-    // Datas
-    // if (data.reservas.length > 0) {
-    //   var dates = data.reservas;
-    //   var array = [];
-    //   dates.forEach(( data ) => {
-    //     var obj = {
-    //       dataInicial: data.dataInicial,
-    //       dataFinal: data.dataFinal
-    //     }
-    //     array.push(obj) 
-    //   })
-    //   setDatas(array);
-    // }
 
     // Images
     setFotos(data.pictures);

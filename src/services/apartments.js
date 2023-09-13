@@ -52,7 +52,44 @@ export async function updateApartment(token, data, urlApt){
                 authorization: token
             }
         }
-    ))
+    ));
+}
+
+
+export async function updatePayment(token, urlApt, reservaId, pagoValue){
+    return await api.put(
+        `/apartment/updatePayment/${urlApt}/${reservaId}`,
+        {pago: pagoValue},
+        {
+            headers: {
+                authorization: token
+            }
+        }
+    );
+}
+
+export async function uploadPayment(token, urlApt, reservaId, files){
+    const data = new FormData();
+    for (let file of files) {
+        data.append('file', file);
+    }
+    return await api.put(
+        `/apartment/uploadPayment/${urlApt}/${reservaId}`,
+        data,
+        { headers: { authorization: token } }
+    );
+}
+
+export async function deletePayment(token, urlApt, reservaId, url){
+    return await api.delete(
+        `/apartment/deletePayment/${urlApt}/${reservaId}`,
+        {
+            headers: { authorization: token },
+            data: {
+                url: url
+            }
+        }
+    );
 }
 
 export async function setApartmentPhotos(files, urlApt, token) {

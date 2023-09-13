@@ -65,7 +65,6 @@ export const MainContent = styled.div`
 
 export const AmbientWrapper = styled.div`
     width: 100%;
-    height: 200px;
 `
 
 export const TitleArea = styled.div`
@@ -103,6 +102,7 @@ export const ReservasContent = styled.div`
     align-items: center;
     flex-direction: column;
     width: 100%;
+    min-height: 550px;
 `
 
 export const ReservasInfo = styled.div`
@@ -137,5 +137,4 @@ export const ButtonReserva = styled.button`
     border: 1px solid #0660BA;
     border-radius: 5px;
     font-weight: 600;
-
 `

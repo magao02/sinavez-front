@@ -266,7 +266,8 @@ const createApartment = () => {
 
     const pictures = await Promise.all(fotos.map(async (f, i) => {
       let req = await fetch(f, {
-        mode: "no-cors"
+        // mode: "no-cors",
+        cache: "no-cache",
       });
       const type = req.headers.get("Content-Type");
       let blob = await req.blob();
