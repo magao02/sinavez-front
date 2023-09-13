@@ -28,6 +28,7 @@ import ApartmentCard from "../../components/commom/ApartmentCard";
 import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
 import ReservaCard from "../../components/ReservaCard";
+import { dateFromDMY } from "../../utils/date";
 
 const ambienteDados = () => {
   
@@ -42,18 +43,10 @@ const ambienteDados = () => {
 
     const getMonth = ( data ) => {
       if(data == "") return;
-
-      const newDate = new Date(data);
-      newDate.setDate(newDate.getDate() + 1);
-
-      const formatter = Intl.DateTimeFormat("pt-br", {
-        month: "numeric"
-      })
-
-      return formatter.format(newDate)
+      return dateFromDMY(data).getUTCMonth();
     }
 
-    const [month, setMonth] = useState(parseInt(getMonth(new Date())))
+    const [month, setMonth] = useState((new Date()).getUTCMonth());
     
     
     const redirectPage = () => {

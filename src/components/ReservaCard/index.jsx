@@ -33,6 +33,7 @@ import arrow_down from "../../assets/arrow_down_blue.svg";
 import { useState } from "react";
 import upload_cloud from "../../assets/upload_cloud.svg"
 import excluir_comprovante from "../../assets/excluir_comprovante.svg"
+import { dateFromDMY } from "../../utils/date";
 
 const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
 
@@ -41,8 +42,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
   const [progress, setProgress] = useState(0);
 
   const formatDate = (data, style) => {
-    const newDate = new Date(data);
-    newDate.setDate(newDate.getDate() + 1);
+    const newDate = dateFromDMY(data);
 
     var optionsShort = {
       short: {

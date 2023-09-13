@@ -18,3 +18,10 @@ export function dayDifference(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000;
     return Math.round(Math.abs((date2 - date1) / oneDay));
 }
+
+export function dateFromDMY(data) {
+    data = data.split("/");
+    return new Date(
+      `${data[2]}-${data[1].padStart(2, '0')}-${data[0].padStart(2, '0')}T01:00:00+01:00`
+    );
+}
