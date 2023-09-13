@@ -78,3 +78,14 @@ export async function uploadPayment(token, urlApt, reservaId, files){
         { headers: { authorization: token } }
     );
 }
+
+export async function deletePayment(token, urlApt, reservaId, url){
+    return await api.delete(
+        `/apartment/deletePayment/${urlApt}/${reservaId}`,
+        { headers: { authorization: token },
+        data: {
+            url: url
+        }
+    }
+    )
+}

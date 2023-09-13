@@ -199,8 +199,8 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
                     {
                       file && file?.length > 0 &&
                       <img src={excluir_comprovante.src} onClick={() => {
-                        deleteFile(id, file)
-                        setFile(null)
+                        deleteFile(id, file[file?.length - 1])
+                        setFile([])
                         setProgress(0)
                       }}></img>
                     }

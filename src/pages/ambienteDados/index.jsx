@@ -88,6 +88,7 @@ const ambienteDados = () => {
         var idx = reserva.pagamento.files.indexOf(file)
         reserva.pagamento.files.slice(idx)
         setReservas(copy)
+        isApt ? serviceApto.deletePayment(authContext.token, ambientData.urlApt, id, file.url) : serviceArea.deletePayment(authContext.token, ambientData.urlApt, id, file.url)
     }
 
     var reservasFiltered = reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : []
