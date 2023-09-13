@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -48,12 +48,15 @@ const Associados = () => {
 
   const [dataUser, setDataUser] = useState();
   const [newDataUser, setNewDataUser] = useState();
-  
+
   const [associadoName, setAssociadoName] = useState();
   const [urlUser, setUrlUser] = useState();
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
+
+  const [image, setImage] = useState(null);
+  const file = useRef(null);
 
   const router = useRouter();
 
@@ -82,15 +85,47 @@ const Associados = () => {
     setDataToSubmit(data);
   }
 
+
   //  coletando dados do usuário
   const dataCollector = (data) => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
 
+  const saveImage = useCallback(async (fileInput, urlUser) => {
+    try {
+      const temporaryFile = dataURLtoFile(fileInput, "temp_image.png");
+    
+    // Chama a função de serviço com o arquivo temporário
+      await service.setPhoto(temporaryFile, urlUser, authContext.token);
+    } catch (error) {
+      console.log(error)
+      console.log("Erro ao salvar imagem");
+    }
+
+  });
+
+  function dataURLtoFile(dataURL, filename) {
+    const arr = dataURL.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+  
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+  
+    return new File([u8arr], filename, { type: mime });
+  }
+  
+
+  const takeImage = (localImage) => {
+    setImage(localImage);
+  };
 
   // adicionando usuário
-  const handleAddAssociate = useCallback(async () => {
+  const handleAddAssociate = useCallback(async (file) => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
@@ -98,20 +133,26 @@ const Associados = () => {
 
       if (collectedData.dependentes.length !== 0) {
         console.log(collectedData.dependentes)
-        collectedData.dependentes.map( (data) => {
+        collectedData.dependentes.map((data) => {
           addDependente(data, addAssociateResponse.data.user.urlUser);
-        });   
+        });
       }
+
+      if (file) {
+        saveImage(file, addAssociateResponse.data.user.urlUser);
+      };
 
       setCurrentStep(1);
       toggleAddAssociate();
-     
-    } catch (error) { 
+      setLocalImage(null);
+
+    } catch (error) {
       setGlobalMessage(error.response.data.message);
-    } 
+      console.log("deu erro")
+    }
   }, [associados, collectedData]);
 
-console.log(collectedData)
+  console.log(collectedData)
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
     setRemoveAssociateToggle((p) => !p);
@@ -126,7 +167,7 @@ console.log(collectedData)
   // pega dos dados do usuário
   const takeDataUser = useCallback(async (data) => {
     try {
-      const dataUserResponse =  await service.getUserData(data.urlUser, authContext.token);
+      const dataUserResponse = await service.getUserData(data.urlUser, authContext.token);
       setDataUser(dataUserResponse.data);
       setUrlUser(data.urlUser);
       setAssociadoName(data.name);
@@ -137,9 +178,9 @@ console.log(collectedData)
     }
   });
 
-  
+
   // editando dados do usuário
-  const handleEditUser = useCallback(async(dataNova, urlUser) => {
+  const handleEditUser = useCallback(async (dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
       //setAssociados((p) => [...p, editResponse.data.user]);
@@ -148,17 +189,13 @@ console.log(collectedData)
         ...editResponse.data.user
       }));
       setAssociados((p) => [...p, editResponse.data.user]);
-  
+
       console.log(editResponse.data);
       console.log(dataNova);
     } catch (error) {
       console.log("Deu erro");
     }
   }, [associados, dataUser]);
-
-  useEffect(() => {
-    console.log("Estado atualizado:", dataUser);
-  }, [dataUser]);
 
 
   const handleErrorAssociados = useCallback(
@@ -187,7 +224,7 @@ console.log(collectedData)
       await handleErrorAssociados(error);
     }
   }, [authContext.token, handleErrorAssociados]);
- 
+
 
   // removendo usuário
   const userRemove = useCallback(async (userUrl) => {
@@ -196,9 +233,9 @@ console.log(collectedData)
       setAssociados((p) => p.filter((associado) => associado.urlUser !== userUrl));
       toggleRemoveAssociate();
 
-     {dataUserToggle ? toggleDataUser() : null};
+      { dataUserToggle ? toggleDataUser() : null };
 
-      } catch (error) {
+    } catch (error) {
       console.log("Erro ao remover usuario:", error.response.data.message);
       setAssociados((p) => [...p]);
     }
@@ -206,13 +243,13 @@ console.log(collectedData)
 
   // adionar dependente
   const addDependente = useCallback(async (data, urlAssociado) => {
-     try {
-       const addDependentResponse = await service.addDependent(data, urlAssociado, authContext.token);
-       console.log(addDependentResponse.data);
-       
-     } catch (error) {
-       console.log(error.response.data.message);
-     }
+    try {
+      const addDependentResponse = await service.addDependent(data, urlAssociado, authContext.token);
+      console.log(addDependentResponse.data);
+
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
 
     console.log(data);
   });
@@ -246,7 +283,7 @@ console.log(collectedData)
     }
   };
 
-  
+
 
   const nextStepAddAssociate = useCallback(() => {
     setCurrentStep((p) => ++p);
@@ -256,7 +293,6 @@ console.log(collectedData)
     setCurrentStep((p) => --p);
   }, []);
 
-  
 
   useEffect(() => {
     getAssociados();
@@ -270,7 +306,7 @@ console.log(collectedData)
       return;
     }
   }, []);
- 
+
 
   return (
     <Container>
@@ -280,20 +316,20 @@ console.log(collectedData)
           <DarkBackground pageHeight={"200vh"} />
           <AddAssociateBox>
             {currentStep == 1 && (
-              <FirstStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
+              <FirstStepForm previousData={collectedData} takeImage={takeImage} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
             )}
             {currentStep == 2 && (
-              <SecondStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+              <SecondStepForm previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
             {currentStep >= 3 && (
-              <ThirdStepForm previousData={collectedData} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents}/>
+              <ThirdStepForm  saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
             )}
           </AddAssociateBox>
         </>
       )}
       {associados && (
         <>
-      
+
           <MainContainer>
             <Title>
               Gerenciar associados
@@ -306,31 +342,31 @@ console.log(collectedData)
               </Button>
             </MainHead>
             <Main>
-              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser}/>
+              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
             </Main>
 
           </MainContainer>
-          { removeAssociateToggle && (
-          <>
-            <DarkBackground pageHeight={"170vh"} zIndex={true}/>
-            <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser} toggleDataUser={closer}/>
-          </>
+          {removeAssociateToggle && (
+            <>
+              <DarkBackground pageHeight={"170vh"} zIndex={true} />
+              <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser} toggleDataUser={closer} />
+            </>
           )}
 
-          { dataUserToggle && (
-          <>
-            <DataUser  
-              back={toggleDataUser} 
-              data={dataUser} 
-              cancelForm={toggleRemoveAssociate} 
-              urlUser={urlUser} 
-              authContext={authContext} 
-              handleEditUser={handleEditUser} 
-              dataCollector={dataCollector} 
-              addDependente={addDependente}
-              removeDependente={removeDependente}
+          {dataUserToggle && (
+            <>
+              <DataUser
+                back={toggleDataUser}
+                data={dataUser}
+                cancelForm={toggleRemoveAssociate}
+                urlUser={urlUser}
+                authContext={authContext}
+                handleEditUser={handleEditUser}
+                dataCollector={dataCollector}
+                addDependente={addDependente}
+                removeDependente={removeDependente}
               />
-          </>
+            </>
           )}
         </>
       )}

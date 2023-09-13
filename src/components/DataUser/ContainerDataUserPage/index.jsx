@@ -7,7 +7,7 @@ import Button from "../../commom/Button";
 import Image from "next/image";
 import Trash from "../../../assets/trash.svg";
 
-const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, handleEdit, cancel, handleEditUser, dataCollector}) => {
+const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContext, cancelForm, handleEdit, cancel, handleEditUser, dataCollector}) => {
 
     const formatCPF = (cpf) => {
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -251,7 +251,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
         )
     } else {
         return (
-           <ContainerEditting data={data} urlUser={urlUser} authContext={authContext} cancel={cancel} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
+           <ContainerEditting file={file} saveImage={saveImage} data={data} urlUser={urlUser} authContext={authContext} cancel={cancel} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
         )}
         
 };

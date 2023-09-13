@@ -205,7 +205,7 @@ const UserDataPopup = ({ value, onClose }) => {
   }, [authContext, router]);
 
   const fileInput = useRef(null);
-  const [localImage, setLocalImage] = useState(null);
+  const [localImage, setLocalImage] = useState(null); 
 
   const triggerImagePopup = () => {
     if (fileInput?.current) {
