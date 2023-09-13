@@ -24,6 +24,10 @@ import {
 } from "../../styles/loginStyles";
 
 import LoginAssociadoForm from "../../components/LoginAssociadoForm";
+import { useMemo } from "react";
+import { readFromLocalStorage, removeFromLocalStorage } from "../../utils/local";
+import BigConfirmPopup from "../../components/BigConfirmPopup";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -37,16 +41,33 @@ const LoginPage = () => {
     authContext.handleLoginToken(responseData.data);
   }, [authContext]);
 
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+
   const handleValidFormSubmit = useCallback(async ({ cpf, password }) => {
     try {
+      setIsMakingRequest(true);
       await loginAccount({ cpf, password });
       router.push("/home");
     } catch (error) {
       setGlobalMessage(error.response.data.message);
     }
+    setIsMakingRequest(false);
   }, [loginAccount, router]);
 
-  return (
+  const [errorMsg, setErrorMsg] = useState(null);
+  
+  useEffect(() => {
+    let x = readFromLocalStorage("unauthorizedMsg");
+    if (x)
+      setErrorMsg(x);
+  }, []);
+
+  const closeErrorMsg = () => {
+    setErrorMsg(null);
+    removeFromLocalStorage("unauthorizedMsg");
+  }
+
+  return <>
     <WhiteContainer>
       <Details>
         <Image src={Ilustration} />
@@ -67,11 +88,17 @@ const LoginPage = () => {
             Login
           </Title>
           <LoginAssociadoForm onValidSubmit={handleValidFormSubmit}
-            globalMessage={globalMessage} />
+            globalMessage={globalMessage} makingRequest={isMakingRequest} />
         </LoginBox>
       </RightContent>
     </WhiteContainer>
-  );
+    { errorMsg && <BigConfirmPopup
+      title="Erro"
+      body={errorMsg}
+      cancelText="OK"
+      onCancel={closeErrorMsg}
+    /> }
+  </>;
 };
 
 export default LoginPage;

@@ -85,7 +85,7 @@ const ManageReserVations = () => {
   return (
     <Container>
       <Header>
-        <Navigation variant={"admin"} />
+        <Navigation variant={"admin"} selectedPage="apartamentos" />
       </Header>
       <MainContent>
         <h1>Gerencie as Reservas</h1>

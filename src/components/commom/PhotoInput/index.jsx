@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Modal } from "../Modal";
 import modal_img from "../../../assets/delete_cama_modal_img.svg";
 
-const PhotoInput = ({ getPhoto, id, File, deletePhoto }) => {
+const PhotoInput = ({ getPhoto, id, url, deletePhoto }) => {
   const [showModal, setShowModal] = useState();
 
   const modal = () => {
@@ -25,20 +25,21 @@ const PhotoInput = ({ getPhoto, id, File, deletePhoto }) => {
   return (
     <>
       <Container>
-        {File == "" ? (
+        {!url ? (
           <Form style={{ width: "100%", height: "100%" }}>
             <Label for="file">
               <Image src={add}></Image>
             </Label>
             <Input
               id="file"
+              type="file"
               accept="image/*"
               onChange={(e) => getPhoto(e, id)}
-            ></Input>
+            />
           </Form>
         ) : (
           <PhotoArea>
-            <Img src={File} alt={File.name} />
+            <Img src={url} />
             <EditButton onClick={modal}>
               <Image src={edit_pen} alt="EditPen" />
             </EditButton>
@@ -50,14 +51,9 @@ const PhotoInput = ({ getPhoto, id, File, deletePhoto }) => {
           title={"Excluir Foto"}
           img={modal_img.src}
           asideText={"Deseja excluir a foto?"}
-          handleSave={() => {
-            modal()
-          }}
-          handleCancel={(e) => {
-            deletePhoto(e)
-            modal()
-          }}
           id={id}
+          handleCancel={modal}
+          handleSave={() => {modal(); deletePhoto(id);}}
         ></Modal>
       )}
     </>

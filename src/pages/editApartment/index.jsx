@@ -32,9 +32,11 @@ import CalendarButton from "../../components/CalendarButton";
 import { v4 as uuid } from "uuid";
 import { Modal } from "../../components/commom/Modal";
 import cancel_img from "../../assets/cancel_alterations.svg";
+import UserComputer from "../../assets/user_computer.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
+import isEqual from "lodash.isequal";
 
 const editApartment = () => {
   // INFORMACOES DO APTO
@@ -82,8 +84,12 @@ const editApartment = () => {
 
   const validaCamas = () => camas.every((data) => data.Quantidade > 0)
 
+  const [isMakingRequest, setIsMakingRequest] = useState(false);
+  const [isUploadingPhotos, setIsUploadingPhotos] = useState(false);
+
   // REQUISICAO PUT
-  const updateRequisicaoApto = () => {
+  const updateRequisicaoApto = async () => {
+    setIsMakingRequest(true);
 
     if(aptoTitle == "" || address == "" || !validaCamas){
       
@@ -116,14 +122,6 @@ const editApartment = () => {
       }
     });
 
-    var images = [];
-    fotos.forEach((data) => {
-      if (data.name != "") {
-        var img = data.file;
-        images.push(img);
-      }
-    });
-
     var beds = []
     camas.forEach((data) => {
       var obj = {
@@ -148,11 +146,25 @@ const editApartment = () => {
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
-      images: images,
     };
 
+    await service.updateApartment(authContext.token, req, urlApto);
 
-    service.updateApartment(authContext.token, req, urlApto);
+    if (!isEqual(fotos, oldData.pictures)) {
+      setIsUploadingPhotos(true);
+      const pictures = await Promise.all(fotos.map(async (f, i) => {
+        let req = await fetch(f, {
+          mode: "no-cors"
+        });
+        const type = req.headers.get("Content-Type");
+        let blob = await req.blob();
+        return new File([blob], `upload${i}`, { type });
+      }));
+      await service.setApartmentPhotos(pictures, urlApto, authContext.token);
+    }
+
+    setIsUploadingPhotos(false);
+    setIsMakingRequest(false);
   }
   };
 
@@ -248,17 +260,7 @@ const editApartment = () => {
     setRadioInputs(obj);
 
     // Images
-    var imgs = data.pictures;
-    var obj = [];
-    for (let idx = 0; idx < 7; idx++) {
-      var item = {
-        id: idx,
-        name: "",
-        file: imgs[idx] != undefined ? imgs[idx] : "",
-      };
-      obj.push(item);
-    }
-    setFotos(obj);
+    setFotos(data.pictures);
   };
 
   // MODELA OS DADOS DOS ITENS
@@ -329,9 +331,9 @@ const editApartment = () => {
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
-        <FotosArea onChange={() => setShowCautionMsg(true)}>
+        <FotosArea>
           <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos Images={fotos} setImages={setFotos}></GridFotos>
+          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
         </FotosArea>
         <InfoApto onClick={() => setShowCautionMsg(true)}>
           <LeftSide>
@@ -488,7 +490,16 @@ const editApartment = () => {
         )}
 
         {
-          showSaveModal && (
+          isMakingRequest && <ModalOneButton
+            title="Aguarde"
+            asideText={isUploadingPhotos ? "Fazendo upload das fotos..." : "Guardando seus dados..."}
+            hideButton={true}
+            img={UserComputer.src}
+          />
+        }
+
+        {
+          (!isMakingRequest && showSaveModal) && (
               <ModalOneButton
                 title={"SUCESSO"}
                 asideText={"Alterações salvas com sucesso!"}

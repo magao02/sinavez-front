@@ -1,4 +1,5 @@
 import api from "../api";
+import { handleUnauthorized } from "../utils/loginCheck";
 
 //Depedentes Routes:
 
@@ -109,10 +110,10 @@ export async function createNewImpostoByYearDep(urlUser, ano, urlDep, token) {
 //User Routes:
 
 export async function getUserData(urlUser, token) {
-    const requisition = await api.get(
+    const requisition = await handleUnauthorized(api.get(
         `/user/getUser/${urlUser}`, {
         headers: { authorization: token },
-    });
+    }));
     return requisition;
 }
 
@@ -133,10 +134,10 @@ export async function getYears(urlUser, token) {
 }
 
 export async function getAssociados(token) {
-    const requisition = await api.get(
+    const requisition = await handleUnauthorized(api.get(
         "/user/getUsers", {
         headers: { authorization: token },
-    });
+    }));
     return requisition;
 }
 

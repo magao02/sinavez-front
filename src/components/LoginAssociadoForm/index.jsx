@@ -5,8 +5,10 @@ import * as validation from "../../utils/validation";
 
 import Button from "../commom/Button";
 import Input from "../commom/Input";
+import LoadingSpinner from "../../assets/loading_spinner.svg";
+import Image from "next/image";
 
-const LoginAssociadoForm = ({ onValidSubmit, globalMessage }) => {
+const LoginAssociadoForm = ({ onValidSubmit, globalMessage, makingRequest }) => {
   const cpfRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -78,7 +80,10 @@ const LoginAssociadoForm = ({ onValidSubmit, globalMessage }) => {
       <Link href="/loginAdmin">Login Administrador</Link>
       <ButtonContainer>
         {globalMessage && <a>{globalMessage}</a>}
-        <Button variant="default">ENTRAR</Button>
+        { makingRequest ? 
+          <Button variant="default"><Image src={LoadingSpinner} /></Button> :
+          <Button variant="default">ENTRAR</Button>
+        }
       </ButtonContainer>
     </InputContainer>
   );

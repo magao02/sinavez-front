@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const Title = styled.span`
     position: absolute;
-    top: 176px;
+    top: 10vh;
 
     font-size: 32px;
     font-weight: 700;

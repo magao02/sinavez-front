@@ -1,0 +1,13 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ForkKnife" clip-path="url(#clip0_1660_111277)">
+<path id="Vector" d="M10 5.66797V11.668" stroke="#FF730E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10 16.668V28.668" stroke="#FF730E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M26 21.668H19C19 21.668 19 8.66797 26 5.66797V28.668" stroke="#FF730E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M6 5.66797L5 11.668C5 12.9941 5.52678 14.2658 6.46447 15.2035C7.40215 16.1412 8.67392 16.668 10 16.668C11.3261 16.668 12.5979 16.1412 13.5355 15.2035C14.4732 14.2658 15 12.9941 15 11.668L14 5.66797" stroke="#FF730E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_1660_111277">
+<rect width="32" height="32" fill="white" transform="translate(0 0.667969)"/>
+</clipPath>
+</defs>
+</svg>

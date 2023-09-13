@@ -89,7 +89,7 @@ function NavVariant({ variant, selectedPage }) {
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
                 <LinkBox linkText={"/associados"} selected={selectedAssociados} text={"Associados"}></LinkBox>
-                <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
+                <LinkBox linkText={"/manageReservations"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>

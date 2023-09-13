@@ -1,4 +1,5 @@
 import api from "../api";
+import { handleUnauthorized } from "../utils/loginCheck";
 
 export async function getAllRecreationAreas(token, data) {
     const qs = new URLSearchParams(data);
@@ -9,10 +10,10 @@ export async function getAllRecreationAreas(token, data) {
 }
 
 export async function getRecreationArea(token, url) {
-    return await api.get(
+    return await handleUnauthorized(api.get(
         `/recreationArea/getRecreationArea/${url}`,
         { headers: { authorization: token } }
-    );
+    ));
 }
 
 export async function reserveRecreationArea(token, urlRec, urlUser, data) {
@@ -84,4 +85,15 @@ export async function deletePayment(token, urlApt, reservaId, url){
         }
     }
     )
+
+export async function setRecreationAreaPhotos(files, urlApt, token) {
+    const data = new FormData();
+    for (let file of files) {
+        data.append('photos', file);
+    }
+    return await api.put(
+        `/recreationArea/setRecreationAreaPhotos/${urlApt}`,
+        data,
+        { headers: { authorization: token } }
+    );
 }

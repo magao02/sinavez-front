@@ -7,11 +7,10 @@ import { useState, useCallback, useEffect } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
-import * as service from "../../services/accounts";
-
 import userComputer from "../../assets/user_computer.svg";
 import repeatTutorial from "../../assets/repeat.svg";
-import InfoIcon from "../../assets/info_icon.svg";
+import IconInfoOutline from "../../assets/info_icon.svg";
+import IconInfoFilled from "../../assets/info_filled.svg";
 import BuildIcon from "../../assets/white_build_icon.svg";
 import ProfileIcon from "../../assets/white_profile_icon.svg";
 import ConfigIcon from "../../assets/white_config_icon.svg";
@@ -22,8 +21,23 @@ import Navigation from "../../components/commom/Nav";
 import Button from "../../components/commom/Button";
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip
 } from "../../styles/homeStyles";
+
+function InfoIcon({ children }) {
+  const [hovering, setHovering] = useState(false);
+
+  return <>
+    <div
+      style={{position: "relative", display: "flex"}}
+      onMouseOver={() => setHovering(true)}
+      onMouseOut={() => setHovering(false)}
+    >
+      <Image src={hovering ? IconInfoFilled : IconInfoOutline} />
+      {hovering && <InfoToolTip>{children}</InfoToolTip>}
+    </div>
+  </>;
+}
 
 const Home = () => {
   const router = useRouter();
@@ -78,7 +92,10 @@ const Home = () => {
           <Texts>
             <BottonTitle>
               Espaço Pessoal
-              <Image src={InfoIcon} />
+              <InfoIcon>
+                Espaço destinado aos associados. Aqui você terá acesso à página de apartamentos e ao seu perfil!<br/>
+                Basta clicar no botão que você será redirecionado para a página desejada.
+              </InfoIcon>
             </BottonTitle>
           </Texts>
           <BottonMain>
@@ -132,7 +149,10 @@ const Home = () => {
           <Texts>
             <BottonTitle>
               Espaço Administrativo
-              <Image src={InfoIcon} />
+              <InfoIcon>
+                Espaço destinado aos administradores. Aqui você terá acesso à página de gerenciamento de apartamentos e associados!<br/>
+                Basta clicar no botão que você será redirecionado para a página desejada.
+              </InfoIcon>
             </BottonTitle>
           </Texts>
           <BottonMain>
@@ -157,7 +177,7 @@ const Home = () => {
                 </TextsBottom>
               </Button>
             </Link>
-            <Link href={"/apartamentos"}>
+            <Link href={"/manageReservations"}>
               <Button variant="home">
                 <Image src={BrawerIcon} />
                 <TextsBottom>

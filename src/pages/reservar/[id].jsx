@@ -116,6 +116,7 @@ const Page = () => {
   const [isMakingRequest, setIsMakingRequest] = useState(false);
   const [isRequestDone, setIsRequestDone] = useState(false);
   const [requestErrored, setRequestErrored] = useState(false);
+  const [hasReserved, setHasReserved] = useState(false);
 
   const doRequest = async () => {
     const data = {
@@ -129,7 +130,6 @@ const Page = () => {
       animais: +router.query.animais,
       pessoas: +router.query.pessoas,
     };
-    console.log("data is", data);
     setIsMakingRequest(true);
     try {
       if (router.query.area === "true") {
@@ -138,12 +138,28 @@ const Page = () => {
         await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
       }
       setIsRequestDone(true);
+      setHasReserved(true);
     } catch (err) {
       console.log(err);
       setRequestErrored(true);
     }
     setIsMakingRequest(false);
   }
+
+  const googleMapsUrl = useMemo(() => {
+    return `https://maps.google.com/maps/search/${model.endereco}`;
+  }, [model.endereco]);
+
+  const googleMapsFrameUrl = useMemo(() => {
+    const qs = new URLSearchParams({
+      width: '100%',
+      height: '300',
+      hl: 'pt-BR',
+      q: model.endereco,
+      output: 'embed',
+    })
+    return `https://maps.google.com/maps?${qs}`;
+  }, [model.endereco]);
 
   const rulesCard = useMemo(() => (
     <RulesCard>
@@ -199,7 +215,27 @@ const Page = () => {
 
             <MapContainer>
               <Title2>Veja a localização no mapa</Title2>
-              <img src={MapaImage.src} />
+              { hasReserved ? <>
+                <div>
+                  <Subtitle2>Endereço</Subtitle2>
+                  <ul style={{listStylePosition: 'inside'}}>
+                    <li>
+                      <Body2 strong>
+                        <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">{model.endereco}</a>
+                      </Body2>
+                    </li>
+                  </ul>
+                </div>
+                <iframe
+                  width="100%"
+                  height="300"
+                  frameborder="0"
+                  src={googleMapsFrameUrl}
+                />
+              </> : <>
+                <img src={MapaImage.src} />
+              </>
+              }
             </MapContainer>
           </Column>
           <Column>
