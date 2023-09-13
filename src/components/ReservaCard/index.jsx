@@ -71,7 +71,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
       }
     }
 
-    setFile(file)
+    setFile([file])
     handleFile(id, file)
     reader.readAsDataURL(file)
   }
