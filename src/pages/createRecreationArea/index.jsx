@@ -457,8 +457,6 @@ const editApartment = () => {
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos as Áreas de Lazer </a>
             <a>/</a>
-            <a>Dados da Áreas de Lazer </a>
-            <a>/</a>
             <a>Cria Área de Lazer</a>
           </Button>
         </RedirectArea>

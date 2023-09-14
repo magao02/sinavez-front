@@ -494,8 +494,6 @@ const createApartment = () => {
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos os Apartamentos </a>
             <a>/</a>
-            <a>Dados do Apartamento </a>
-            <a>/</a>
             <a>Criar Apartamento </a>
           </Button>
         </RedirectArea>
