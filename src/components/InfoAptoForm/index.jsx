@@ -171,13 +171,24 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           }
         </InputBox>
         <CheckBoxInputs>
-          <RadioInput
-            title={"Tipo"}
-            op1={"Comum"}
-            op2={"PCD"}
-            addRadioInfo={addRadioInfo}
-            value={radioInput.tipo == "Comum" ?  true : false}
-          />
+          {
+            camas ?
+              <RadioInput
+                title={"Tipo"}
+                op1={"Comum"}
+                op2={"PCD"}
+                addRadioInfo={addRadioInfo}
+                value={radioInput.tipo == "Comum" ?  true : false}
+              />
+          :
+              <RadioInput
+                title={"Tipo"}
+                op1={"Lazer"}
+                op2={"Trabalho"}
+                addRadioInfo={addRadioInfo}
+                value={radioInput.tipo == "Lazer" ?  true : false}
+              />
+          }
           <RadioInput
             title={"Andar"}
             op1={"Terreo"}
