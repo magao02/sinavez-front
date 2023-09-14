@@ -43,10 +43,10 @@ const ambienteDados = () => {
 
     const getMonth = ( data ) => {
       if(data == "") return;
-      return dateFromDMY(data).getUTCMonth();
+      return dateFromDMY(data).getUTCMonth() + 1;
     }
 
-    const [month, setMonth] = useState((new Date()).getUTCMonth());
+    const [month, setMonth] = useState(new Date().getUTCMonth() + 1);
     
     
     const redirectPage = () => {
