@@ -33,6 +33,7 @@ import cancel_img from "../../assets/cancel_alterations.svg";
 import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
+import { v4 as uuid } from "uuid";
 
 const createApartment = () => {
 
@@ -104,7 +105,25 @@ const createApartment = () => {
   const [datas, setDatas] = useState([]);
 
   // State para funcao de cancelar alteracoes e salvar Alteracoes
-  const [oldData, setOldData] = useState([]);
+  const [oldData, setOldData] = useState([
+    {
+      titulo: "",
+      endereco: "",
+      tipo: radioInputs.tipo,
+      andar: radioInputs.andar == "Terreo" ? 0 : 1,
+      suite: radioInputs.suite,
+      wifi: radioInputs.wifi,
+      animais: radioInputs.animais,
+      diaria: 0,
+      capacidadeMaxima: 0,
+      descricao: "",
+      itens: [],
+      areasComuns: [],
+      locaisArredores: [0,1,2,3],
+      regrasConvivencia: [0,1,2,3],
+    }
+  ]
+  );
 
   // Modal de alertar alteracao
   const [showCautionMsg, setShowCautionMsg] = useState(false);
@@ -125,10 +144,6 @@ const createApartment = () => {
   const [commumArea, setCommunAreas] = useState([
     {
       name: "Garagem",
-      checked: false,
-    },
-    {
-      name: "Churrasqueira",
       checked: false,
     },
     {
@@ -278,10 +293,171 @@ const createApartment = () => {
   }
   };
 
+  const modelData = (data) => {
+
+    // Itens
+    setItensApto([
+      {
+        name: "Piscina",
+        checked: false,
+      },
+      {
+        name: "Hidro",
+        checked: false,
+      },
+      {
+        name: "Sauna",
+        checked: false,
+      },
+      {
+        name: "Geladeira",
+        checked: false,
+      },
+      {
+        name: "Freezer",
+        checked: false,
+      },
+      {
+        name: "2 pias",
+        checked: false,
+      },
+      {
+        name: "4 churrasqueira eletrica",
+        checked: false,
+      },
+      {
+        name: "Mesa 8 lugares",
+        checked: false,
+      },
+      {
+        name: "Ar condicionado",
+        checked: false,
+      },
+    ]);
+
+    // Areas
+    setCommunAreas([
+      {
+        name: "Garagem",
+        checked: false,
+      },
+      {
+        name: "Churrasqueira",
+        checked: false,
+      },
+      {
+        name: "Auditório",
+        checked: false,
+      },
+      {
+        name: "Churrasqueira",
+        checked: false,
+      },
+      {
+        name: "Área Gourmet",
+        checked: false,
+      },
+      {
+        name: "Lavanderia",
+        checked: false,
+      },
+      {
+        name: "Cozinha Compartilhada",
+        checked: false,
+      },
+      {
+        name: "Recreação Infantil",
+        checked: false,
+      }
+    ])
+
+    // Regras
+    var rules = data.regrasConvivencia;
+    var obj = [];
+    rules.forEach((data, key) => {
+      var item = {
+        id: uuid(),
+        placeholder:
+          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+        value: "",
+      };
+      obj.push(item);
+    });
+    setRegras(obj);
+    
+
+    // Locais nos arredores
+    var locaisNosArredores = data.locaisArredores;
+    var obj = [];
+    locaisNosArredores?.forEach((data, key) => {
+      var item = {
+        id: uuid(),
+        placeholder:
+          "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
+        value: "",
+      };
+      obj.push(item);
+    });
+    setLocais(obj);
+
+    // Descricao
+    var descricao = data.descricao;
+    setDescription(descricao);
+
+    // Valor da diaria
+    var diaria = data.diaria;
+    setDailyRate(diaria);
+
+
+    //CAMAS
+    setCamas([{
+
+      Quantidade: 0
+    }])
+
+
+    // TITULO
+    var title = data.titulo;
+    setAptoTitle(title);
+
+    // ENDERECO
+    var endereco = data.endereco;
+    setAddress(endereco);
+
+    // RADIOS INPUTS
+    var tipo = data.tipo;
+    var andar = data.andar;
+    var wifi = data.wifi;
+    var animais = data.animais;
+    var suite = data.suite;
+    var obj = {
+      tipo: tipo,
+      andar: andar,
+      suite: suite,
+      wifi: wifi,
+      animais: animais,
+    };
+    setRadioInputs(obj);
+
+    // Images
+    /*var imgs = data.imageUrl;
+    var obj = [];
+    for (let idx = 0; idx < 7; idx++) {
+      var item = {
+        id: idx,
+        name: "",
+        file: imgs[idx] != undefined ? imgs[idx] : "",
+      };
+      obj.push(item);
+    }
+    setFotos(obj);*/
+  };
+
   // FUNCOES RELACIONADAS AOS BOTOES DO MODAL DE CUIDADO
   const handleCancelAll = () => {
     setCancelAll(true);
     setShowCautionMsg(false);
+    modelData(oldData[0])
     setShowCancelModal(false)
   };
 
@@ -317,8 +493,6 @@ const createApartment = () => {
           >
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos os Apartamentos </a>
-            <a>/</a>
-            <a>Dados do Apartamento </a>
             <a>/</a>
             <a>Criar Apartamento </a>
           </Button>

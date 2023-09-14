@@ -147,7 +147,7 @@ const ManageReserVations = () => {
                 
                 :
                 <>
-                  <span>Exibindo {AptoFiltrado.length} itens de {AptoFiltrado.length}</span>
+                  <span>Exibindo {AptoFiltrado.length} itens de {aptos.length}</span>
                   <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Apartamentos</VerMaisButtons>
                 </>
               }
@@ -160,7 +160,7 @@ const ManageReserVations = () => {
               
               :
               <>
-                <span>Exibindo {RecreationAreaFiltrada.length} itens de {RecreationAreaFiltrada.length}</span>
+                <span>Exibindo {RecreationAreaFiltrada.length} itens de {recreationArea.length}</span>
                 <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Areas</VerMaisButtons>
               </>
             }

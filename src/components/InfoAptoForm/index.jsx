@@ -102,7 +102,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
 
   // BOTOES DE RADIO
   const addRadioInfo = (item) => {
-    setRadioInput({ ...radioInput, [item.title]: item.value });
+    setRadioInput({ ...radioInput, [item.title == "banheiro" ? "suite" : item.title ]: item.value });
   };
   
   return (
@@ -171,13 +171,24 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           }
         </InputBox>
         <CheckBoxInputs>
-          <RadioInput
-            title={"Tipo"}
-            op1={"Comum"}
-            op2={"PCD"}
-            addRadioInfo={addRadioInfo}
-            value={radioInput.tipo == "Comum" ?  true : false}
-          />
+          {
+            camas ?
+              <RadioInput
+                title={"Tipo"}
+                op1={"Comum"}
+                op2={"PCD"}
+                addRadioInfo={addRadioInfo}
+                value={radioInput.tipo == "Comum" ?  true : false}
+              />
+          :
+              <RadioInput
+                title={"Tipo"}
+                op1={"Lazer"}
+                op2={"Trabalho"}
+                addRadioInfo={addRadioInfo}
+                value={radioInput.tipo == "Lazer" ?  true : false}
+              />
+          }
           <RadioInput
             title={"Andar"}
             op1={"Terreo"}
@@ -185,7 +196,12 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             addRadioInfo={addRadioInfo}
             value={radioInput.andar == 0 || radioInput.andar == "Terreo" ?  true : false}
           />
-          <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+          {
+            camas ?
+              <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+            :
+              <RadioInput title={"Banheiro"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+          }
           <RadioInput title={"Wifi"} addRadioInfo={addRadioInfo}  value={radioInput.wifi == true || radioInput.wifi == "true" ?  true : false}/>
           <RadioInput
             title={"Animais"}

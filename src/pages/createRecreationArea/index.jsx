@@ -44,7 +44,7 @@ const editApartment = () => {
   const [address, setAddress] = useState("");
   const [capacity, setCapacity] = useState(0)
   const [radioInputs, setRadioInputs] = useState({
-    tipo: "PCD",
+    tipo: "Lazer",
     andar: 0,
     suite: false,
     wifi: false,
@@ -99,7 +99,25 @@ const editApartment = () => {
   const [urlRec, setUrlRec] = useState("");
 
   // State para funcao de cancelar alteracoes e salvar Alteracoes
-  const [oldData, setOldData] = useState([]);
+  const [oldData, setOldData] = useState([
+    {
+      titulo: "",
+      endereco: "",
+      tipo: radioInputs.tipo,
+      andar: radioInputs.andar == "Terreo" ? 0 : 1,
+      suite: radioInputs.suite,
+      wifi: radioInputs.wifi,
+      animais: radioInputs.animais,
+      diaria: 0,
+      capacidadeMaxima: 0,
+      descricao: "",
+      itens: [],
+      areasComuns: [],
+      locaisArredores: [0,1,2,3],
+      regrasConvivencia: [0,1,2,3],
+    }
+  ]
+  );
 
   // Modal de alertar alteracao
   const [showCautionMsg, setShowCautionMsg] = useState(false);
@@ -188,7 +206,7 @@ const editApartment = () => {
     });
 
     if(aptoTitle == "" || address == "" || capacity == 0){
-      console.log("entrou")
+      
     }else{
 
     var req = {
@@ -225,24 +243,88 @@ const editApartment = () => {
   }
   };
 
-  // REQUISICAO GET DO AREA
-  const getRecreationInfo = async () => {
-    var { data } = await service.getAllRecreationAreas(authContext.token);
-    setUrlRec(data[0].urlRec)
-
-    modelData(data[0]);
-    setOldData(data[0]);
-  };
 
   const modelData = (data) => {
+
     // Itens
-    var itens = data.itens;
-    var objItens = getItens(itens);
-    setItensApto(objItens);
+    setItensApto([
+      {
+        name: "Piscina",
+        checked: false,
+      },
+      {
+        name: "Hidro",
+        checked: false,
+      },
+      {
+        name: "Sauna",
+        checked: false,
+      },
+      {
+        name: "Geladeira",
+        checked: false,
+      },
+      {
+        name: "Freezer",
+        checked: false,
+      },
+      {
+        name: "2 pias",
+        checked: false,
+      },
+      {
+        name: "4 churrasqueira eletrica",
+        checked: false,
+      },
+      {
+        name: "Mesa 8 lugares",
+        checked: false,
+      },
+      {
+        name: "Ar condicionado",
+        checked: false,
+      },
+    ]);
 
     // Areas
-    var areas = getItens(data.areasComuns);
-    setCommunAreas(areas);
+    setCommunAreas([
+      {
+        name: "Piscina",
+        checked: false,
+      },
+      {
+        name: "Hidro",
+        checked: false,
+      },
+      {
+        name: "Sauna",
+        checked: false,
+      },
+      {
+        name: "Geladeira",
+        checked: false,
+      },
+      {
+        name: "Freezer",
+        checked: false,
+      },
+      {
+        name: "2 pias",
+        checked: false,
+      },
+      {
+        name: "4 churrasqueira eletrica",
+        checked: false,
+      },
+      {
+        name: "Mesa 8 lugares",
+        checked: false,
+      },
+      {
+        name: "Ar condicionado",
+        checked: false,
+      },
+    ])
 
     // Regras
     var rules = data.regrasConvivencia;
@@ -252,21 +334,22 @@ const editApartment = () => {
         id: uuid(),
         placeholder:
           "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-        value: data,
+        value: "",
       };
       obj.push(item);
     });
     setRegras(obj);
+    
 
     // Locais nos arredores
     var locaisNosArredores = data.locaisArredores;
     var obj = [];
-    locaisNosArredores.forEach((data, key) => {
+    locaisNosArredores?.forEach((data, key) => {
       var item = {
         id: uuid(),
         placeholder:
           "Informe uma regra de convivencia para reforcar aos hospedes que sigam enquanto estiverem usando o servico",
-        value: data,
+        value: "",
       };
       obj.push(item);
     });
@@ -308,7 +391,7 @@ const editApartment = () => {
     setRadioInputs(obj);
 
     // Images
-    var imgs = data.imageUrl;
+    /*var imgs = data.imageUrl;
     var obj = [];
     for (let idx = 0; idx < 7; idx++) {
       var item = {
@@ -318,13 +401,13 @@ const editApartment = () => {
       };
       obj.push(item);
     }
-    setFotos(obj);
+    setFotos(obj);*/
   };
 
   // MODELA OS DADOS DOS ITENS
   const getItens = (itens) => {
     var obj = [];
-    itens.forEach((data) => {
+    itens?.forEach((data) => {
       obj.push({
         name: data,
         checked: true,
@@ -337,7 +420,7 @@ const editApartment = () => {
   const handleCancelAll = () => {
     setCancelAll(true);
     setShowCautionMsg(false);
-    modelData(oldData);
+    modelData(oldData[0]);
     setShowCancelModal(false)
   };
 
@@ -373,8 +456,6 @@ const editApartment = () => {
           >
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos as Áreas de Lazer </a>
-            <a>/</a>
-            <a>Dados da Áreas de Lazer </a>
             <a>/</a>
             <a>Cria Área de Lazer</a>
           </Button>
