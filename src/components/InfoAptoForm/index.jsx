@@ -196,7 +196,12 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             addRadioInfo={addRadioInfo}
             value={radioInput.andar == 0 || radioInput.andar == "Terreo" ?  true : false}
           />
-          <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+          {
+            camas ?
+              <RadioInput title={"Suite"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+            :
+              <RadioInput title={"Banheiro"} addRadioInfo={addRadioInfo} value={radioInput.suite == true || radioInput.suite == "true"  ?  true : false}/>
+          }
           <RadioInput title={"Wifi"} addRadioInfo={addRadioInfo}  value={radioInput.wifi == true || radioInput.wifi == "true" ?  true : false}/>
           <RadioInput
             title={"Animais"}
