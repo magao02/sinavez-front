@@ -102,7 +102,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
 
   // BOTOES DE RADIO
   const addRadioInfo = (item) => {
-    setRadioInput({ ...radioInput, [item.title]: item.value });
+    setRadioInput({ ...radioInput, [item.title == "banheiro" ? "suite" : item.title ]: item.value });
   };
   
   return (
