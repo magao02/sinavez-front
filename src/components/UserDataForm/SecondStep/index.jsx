@@ -28,7 +28,8 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
   const numeroInscricaoRef = useRef();
   const dataAfiliacaoRef = useRef();
 
-  const [localImage, setLocalImage] = useState(image);
+  const [localImage1, setLocalImage1] = useState(image);
+  const [localImage, setLocalImage] = useState(null);
 
   /*   const cidadeRef = useRef();
     const estadoRef = useRef(); */
@@ -96,8 +97,11 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
   };
 
   const imageSave = () => {
-    if (localImage){
+    if (localImage1){
+      takeImage(localImage1);
+    } else if (localImage){
       takeImage(localImage);
+      console.log("enviou")
     }
   };
   
@@ -112,8 +116,8 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
 
       <ProfileContainerImage>
           <ProfileAvatar>
-            {(localImage || previousData.profilePic) ? (
-              <img src={localImage ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
+            {(localImage1 || previousData.profilePic) ? (
+              <img src={localImage1 ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
             ) : (
               <img src={PersonFilled.src} />
             )}
@@ -140,7 +144,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
             *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
           </ProfileDescription>
         </ProfileArguments>
-
+ 
       </Profile>
       <Body>
         <Description>
@@ -252,7 +256,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"light"} onclick={imageSave}>
+        <Button variant={"light"} onClick={imageSave}>
           CONTINUAR
         </Button>
       </Footer>

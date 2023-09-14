@@ -22,7 +22,7 @@ import DeleteDependente from "../CancelForm/DeleteDependente";
 
 
 
-const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser, dataCollector, addDependente, removeDependente}) => {
+const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, handleEditUser, dataCollector, addDependente, removeDependente}) => {
 
     const [selectedUser, setSelectedUser] = useState(true);
     const [selectedDependents, setSelectedDependents] = useState(false);
@@ -48,13 +48,14 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
 
 
     const saveImage = useCallback(async(fileInput)  => {
-        try{
-            await service.setPhoto(fileInput.current.files[0], urlUser, authContext.token);
-        } catch (error) {
-            console.log("Erro ao salvar imagem");
-        }
-       
-    });
+        if (fileInput && fileInput.current && fileInput.current.files.length > 0) {
+            try{
+                await service.setPhoto(fileInput.current.files[0], urlUser, authContext.token);
+            } catch (error) {
+                console.log("Erro ao salvar imagem");
+            }
+    }
+    },[urlUser, authContext.token]);
 
     const triggerImagePopup = () => {
         if (fileInput?.current) {
@@ -242,8 +243,8 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
                     <ProfileUser>
                         <ProfileContainerImage>
                             <ProfileAvatar>
-                                {(localImage || data.profilePic) ? (
-                                    <img src={localImage ?? data.profilePic}style={{ width: '115px', height: '115px', borderRadius: '100%' }}/>
+                                {(localImage || perfilImage) ? (
+                                    <img src={localImage ?? perfilImage}style={{ width: '115px', height: '115px', borderRadius: '100%' }}/>
                                     ) : (
                                     <img src={PersonFilled.src}/>
                                     )}

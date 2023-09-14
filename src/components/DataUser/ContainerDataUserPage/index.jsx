@@ -17,6 +17,10 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
         return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
     };
 
+    const formataData = (data) => {
+        return data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
+    };
+
     if (!edit) {
         return (
             <>
@@ -46,7 +50,7 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
                                         label={"Data de Nascimento"}
                                         name={"nascimento"}
                                         readOnly={true}
-                                        value={data.nascimento}
+                                        value={formataData(data.nascimento)}
                                     />
                                     <Input
                                         variant="default-optional"
@@ -60,7 +64,7 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
                                         label={"Data de Emissão"}
                                         name={"data_de_emissão"}
                                         readOnly={true}
-                                        value={data.emissao}
+                                        value={formataData(data.emissao)}
                                     />
                                     <Input
                                         variant="default-optional"
@@ -216,7 +220,7 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
                                     label={"Data de registro no conselho"}
                                     name={"data_de_registro"}
                                     readOnly={true}
-                                    value={data.dataRegistroConselho}
+                                    value={formataData(data.dataRegistroConselho)}
                                 />
                                 <InputsContainer>
                                     <Input
@@ -231,7 +235,7 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
                                         label={"Data de Afiliação"}
                                         name={"data_de_afiliacao"}
                                         readOnly={true}
-                                        value={data.dataAfiliacao}
+                                        value={formataData(data.dataAfiliacao)}
                                     />
                                 </InputsContainer>
                             </SubContainer>

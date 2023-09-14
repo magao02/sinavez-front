@@ -48,7 +48,7 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
       telefoneRef,
       naturalidadeRef,
       nacionalidadeRef,
-     
+      
     ];
 
     const validationResults = await Promise.all(

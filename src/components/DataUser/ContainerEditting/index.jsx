@@ -31,8 +31,8 @@ const ContainerEditting = ({file, saveImage, data, urlUser, authContext, cancel,
         event.preventDefault();
         
         try{
-            handleEditUser(valorData, urlUser);
-            saveImage(file);
+            await handleEditUser(valorData, urlUser);
+            await saveImage(file);
             cancel();
         } catch (error) {
             console.log("Deu erro");

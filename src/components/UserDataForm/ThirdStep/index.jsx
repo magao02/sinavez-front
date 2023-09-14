@@ -31,7 +31,8 @@ const ThirdStep = ({file, saveImage, image, previousData, dataCollector, firstBu
 
   const [countDependents, setCountDependents] = useState(0);
 
-  const [localImage, setLocalImage] = useState(image);
+  const [localImage1, setLocalImage1] = useState(image);
+  const [localImage, setLocalImage] = useState(null);
 
 
 const takeNewData = (data) => {
@@ -81,8 +82,11 @@ const takeNewData = (data) => {
   const verificaFile = () => {
     if (localImage) {
       return localImage;
-    } 
-    return previousData.profilePic;
+    } else if (localImage1) {
+      return localImage1;
+    } else {
+      return previousData.profilePic;
+    }
   }      
 
 
@@ -97,8 +101,8 @@ const takeNewData = (data) => {
 
       <ProfileContainerImage>
           <ProfileAvatar>
-            {(localImage || previousData.profilePic) ? (
-              <img src={localImage ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
+            {(localImage1 || previousData.profilePic || localImage) ? (
+              <img src={localImage?? localImage1 ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
             ) : (
               <img src={PersonFilled.src} />
             )}

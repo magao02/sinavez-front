@@ -58,6 +58,7 @@ const Associados = () => {
   const [image, setImage] = useState(null);
   const file = useRef(null);
 
+  const [perfilImage, setPerfilImage] = useState(null);
   const router = useRouter();
 
   const authContext = useAuth();
@@ -125,34 +126,40 @@ const Associados = () => {
   };
 
   // adicionando usuário
-  const handleAddAssociate = useCallback(async (file) => {
+  const handleAddAssociate = useCallback(async (image) => {
     try {
       const addAssociateResponse = await service.signUp(collectedData);
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
-      console.log(addAssociateResponse.data);
-
-      if (collectedData.dependentes.length !== 0) {
+      const url = addAssociateResponse.data.user.urlUser;
+      console.log(collectedData);
+      
+      if (collectedData.dependentes != undefined && collectedData.dependentes.length !== 0) {
         console.log(collectedData.dependentes)
         collectedData.dependentes.map((data) => {
           addDependente(data, addAssociateResponse.data.user.urlUser);
         });
       }
 
-      if (file) {
-        saveImage(file, addAssociateResponse.data.user.urlUser);
+      if (image) {
+        saveImage(image, url);
+        console.log("enviou")
       };
 
-      setCurrentStep(1);
       toggleAddAssociate();
-      setLocalImage(null);
+      setCollectedData({});
+      setCurrentStep(1);
 
     } catch (error) {
-      setGlobalMessage(error.response.data.message);
+      setCurrentStep(1);
+      console.log(error)
+      
+      //setGlobalMessage(error.response.data.message);
+      
       console.log("deu erro")
     }
   }, [associados, collectedData]);
+  
 
-  console.log(collectedData)
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
     setRemoveAssociateToggle((p) => !p);
@@ -171,6 +178,7 @@ const Associados = () => {
       setDataUser(dataUserResponse.data);
       setUrlUser(data.urlUser);
       setAssociadoName(data.name);
+      setPerfilImage(dataUserResponse.data.profilePic)
       setDataUserToggle((p) => !p);
       console.log(dataUserResponse.data);
     } catch (error) {
@@ -183,15 +191,16 @@ const Associados = () => {
   const handleEditUser = useCallback(async (dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
-      //setAssociados((p) => [...p, editResponse.data.user]);
+      associados.map((associado) => {
+        if (associado.urlUser == urlUser) {
+          associado.name = dataNova.name;
+          associado.profession = dataNova.profession;
+        }
+      });
       setDataUser(prevDataUser => ({
         ...prevDataUser,
-        ...editResponse.data.user
+        ...dataNova
       }));
-      setAssociados((p) => [...p, editResponse.data.user]);
-
-      console.log(editResponse.data);
-      console.log(dataNova);
     } catch (error) {
       console.log("Deu erro");
     }
@@ -365,6 +374,7 @@ const Associados = () => {
                 dataCollector={dataCollector}
                 addDependente={addDependente}
                 removeDependente={removeDependente}
+                perfilImage={perfilImage}
               />
             </>
           )}
