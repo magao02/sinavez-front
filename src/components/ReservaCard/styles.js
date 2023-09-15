@@ -275,6 +275,10 @@ export const LoadFileArea = styled.div`
     img:hover{
         transform: scale(1.1);
     }
+
+    span:hover{
+        cursor: pointer;
+    }
 `
 
 export const ProgressBar = styled.div`
