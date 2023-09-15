@@ -234,7 +234,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           label={"Parentesco"}
           name={"parentesco"}
           placeholder={"Filho/Filha/Neto/etc"}
-          value={dadosDep.parentesco}
+          value={dataNova.parentesco}
           readOnly={false}
           onChange={(e) => onChageData(e.target.value, "parentesco")}
           validate={validation.TextField}
