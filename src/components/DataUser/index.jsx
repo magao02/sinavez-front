@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AddDependent, AddDependentBox, BoxData, ContainerButtons, ContainerButtonsDependent, ContainerData, ContainerDataDependent, ContainerDataUser, ContainerImg, ContainerTable, ContainerWhite, Dependentes, LinkAtual, LinkPage, ProfileTitleUser, ProfileUser, TableAssociate, TextTable } from "./style";
 import Pattern from "../../assets/pattern.svg";
 import Arrow from "../../assets/arrow.svg";
@@ -22,7 +22,7 @@ import DeleteDependente from "../CancelForm/DeleteDependente";
 
 
 
-const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser, dataCollector, addDependente, removeDependente}) => {
+const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, handleEditUser, dataCollector, addDependente, removeDependente}) => {
 
     const [selectedUser, setSelectedUser] = useState(true);
     const [selectedDependents, setSelectedDependents] = useState(false);
@@ -42,6 +42,40 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
     const [dark, setDark] = useState(false);
     const [dataDependentes, setDataDependentes] = useState([]);
     const [dataD, setDataD] = useState();
+
+    const fileInput = useRef(null);
+    const [localImage, setLocalImage] = useState(null); 
+
+
+    const saveImage = useCallback(async(fileInput)  => {
+        if (fileInput && fileInput.current && fileInput.current.files.length > 0) {
+            try{
+                await service.setPhoto(fileInput.current.files[0], urlUser, authContext.token);
+            } catch (error) {
+                console.log("Erro ao salvar imagem");
+            }
+    }
+    },[urlUser, authContext.token]);
+
+    const triggerImagePopup = () => {
+        if (fileInput?.current) {
+        fileInput.current.click();
+        }
+    };
+
+    const onImageInputChange = () => {
+        if (fileInput?.current) {
+        if (fileInput.current.files[0]) {
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+            setLocalImage(reader.result);
+            });
+            reader.readAsDataURL(fileInput.current.files[0]);
+        } else {
+            setLocalImage(null);
+        }
+        }
+    };
 
     const toggleDark = () => {
         setDark(!dark);
@@ -209,15 +243,23 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
                     <ProfileUser>
                         <ProfileContainerImage>
                             <ProfileAvatar>
-                                <Image src={PersonFilled} />
-                                <ProfileAvatarAddPicture>
-                                <Image src={AddPhotoIcon} />
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: 'none' }}
-                                />
-                                </ProfileAvatarAddPicture>
+                                {(localImage || perfilImage) ? (
+                                    <img src={localImage ?? perfilImage}style={{ width: '115px', height: '115px', borderRadius: '100%' }}/>
+                                    ) : (
+                                    <img src={PersonFilled.src}/>
+                                    )}
+                                {edit && (
+                                    <ProfileAvatarAddPicture>
+                                        <Image src={AddPhotoIcon} onClick={triggerImagePopup}/>
+                                        <input
+                                            type="file" 
+                                            accept="image/*" 
+                                            ref={fileInput} 
+                                            onChange={onImageInputChange}
+                                            style={{ display: 'none' }}
+                                        />
+                                    </ProfileAvatarAddPicture>
+                                )}         
                             </ProfileAvatar>
                         </ProfileContainerImage>
 
@@ -246,7 +288,7 @@ const DataUser = ({back, data, cancelForm, urlUser, authContext, handleEditUser,
                     </TableAssociate>
 
                     {containerToggle && (
-                        <ContainerDataUserPage data={data} edit={edit} urlUser={urlUser} authContext={authContext} handleEdit={handleEdit} cancel={handleCancelEdit} cancelForm={cancelForm} back={back} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
+                        <ContainerDataUserPage file={fileInput} saveImage={saveImage} data={data} edit={edit} urlUser={urlUser} authContext={authContext} handleEdit={handleEdit} cancel={handleCancelEdit} cancelForm={cancelForm} back={back} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
                         
                     )}
 

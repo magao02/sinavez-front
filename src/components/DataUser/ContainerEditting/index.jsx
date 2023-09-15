@@ -5,7 +5,7 @@ import Input from "../../commom/Input";
 import Button from "../../commom/Button";
 
 
-const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, dataCollector}) => {
+const ContainerEditting = ({file, saveImage, data, urlUser, authContext, cancel, handleEditUser, dataCollector}) => {
  
     const [dataNova, setDataNova] = useState(data);
     const [valorData, setValorData] = useState({});
@@ -31,7 +31,8 @@ const ContainerEditting = ({data, urlUser, authContext, cancel, handleEditUser, 
         event.preventDefault();
         
         try{
-            handleEditUser(valorData, urlUser);
+            await handleEditUser(valorData, urlUser);
+            await saveImage(file);
             cancel();
         } catch (error) {
             console.log("Deu erro");

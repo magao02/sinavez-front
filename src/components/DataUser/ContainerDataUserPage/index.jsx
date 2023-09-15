@@ -7,7 +7,7 @@ import Button from "../../commom/Button";
 import Image from "next/image";
 import Trash from "../../../assets/trash.svg";
 
-const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, handleEdit, cancel, handleEditUser, dataCollector}) => {
+const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContext, cancelForm, handleEdit, cancel, handleEditUser, dataCollector}) => {
 
     const formatCPF = (cpf) => {
         return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -15,6 +15,10 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
 
     const formataTelefone = (telefone) => {
         return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    };
+
+    const formataData = (data) => {
+        return data.replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1");
     };
 
     if (!edit) {
@@ -46,7 +50,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
                                         label={"Data de Nascimento"}
                                         name={"nascimento"}
                                         readOnly={true}
-                                        value={data.nascimento}
+                                        value={formataData(data.nascimento)}
                                     />
                                     <Input
                                         variant="default-optional"
@@ -60,7 +64,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
                                         label={"Data de Emissão"}
                                         name={"data_de_emissão"}
                                         readOnly={true}
-                                        value={data.emissao}
+                                        value={formataData(data.emissao)}
                                     />
                                     <Input
                                         variant="default-optional"
@@ -216,7 +220,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
                                     label={"Data de registro no conselho"}
                                     name={"data_de_registro"}
                                     readOnly={true}
-                                    value={data.dataRegistroConselho}
+                                    value={formataData(data.dataRegistroConselho)}
                                 />
                                 <InputsContainer>
                                     <Input
@@ -231,7 +235,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
                                         label={"Data de Afiliação"}
                                         name={"data_de_afiliacao"}
                                         readOnly={true}
-                                        value={data.dataAfiliacao}
+                                        value={formataData(data.dataAfiliacao)}
                                     />
                                 </InputsContainer>
                             </SubContainer>
@@ -251,7 +255,7 @@ const ContainerDataUserPage = ({data, edit, urlUser, authContext, cancelForm, ha
         )
     } else {
         return (
-           <ContainerEditting data={data} urlUser={urlUser} authContext={authContext} cancel={cancel} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
+           <ContainerEditting file={file} saveImage={saveImage} data={data} urlUser={urlUser} authContext={authContext} cancel={cancel} handleEditUser={handleEditUser} dataCollector={dataCollector}/>
         )}
         
 };

@@ -19,7 +19,7 @@ import Button from "../../commom/Button";
 import Image from 'next/image.js';
 import DependentsForm from '../../DependentsContainer';
 
-const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
+const ThirdStep = ({file, saveImage, image, previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
 
   const [dataDependent, setDataDependent] = useState([]);
 
@@ -31,6 +31,8 @@ const ThirdStep = ({ previousData, dataCollector, firstButton, globalMessage, ca
 
   const [countDependents, setCountDependents] = useState(0);
 
+  const [localImage1, setLocalImage1] = useState(image);
+  const [localImage, setLocalImage] = useState(null);
 
 
 const takeNewData = (data) => {
@@ -48,21 +50,27 @@ const takeNewData = (data) => {
   });
 
   // imagem do perfil
-  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInput = useRef(null);
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files?.[0];
-    setSelectedFile(file);
-
+  const triggerImagePopup = () => {
+    if (fileInput?.current) {
+      fileInput.current.click();
+    }
   };
 
-  // upload da imagem
-  const handleUploadClick = () => {
-    fileInputRef.current.click();
+  const onImageInputChange = () => {
+    if (fileInput?.current) {
+      if (fileInput.current.files[0]) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setLocalImage(reader.result);
+        });
+        reader.readAsDataURL(fileInput.current.files[0]);
+      } else {
+        setLocalImage(null);
+      }
+    }
   };
-
-  // referencia do input
-  const fileInputRef = useRef(null);
 
   const handleAddMoreDependents = () => {
     setCountDependents(countDependents + 1);
@@ -70,6 +78,17 @@ const takeNewData = (data) => {
     //dataDependents(dependents);
     //console.log(dependents);
   };
+
+  const verificaFile = () => {
+    if (localImage) {
+      return localImage;
+    } else if (localImage1) {
+      return localImage1;
+    } else {
+      return previousData.profilePic;
+    }
+  }      
+
 
   return (
 
@@ -80,19 +99,26 @@ const takeNewData = (data) => {
       </Head>
       <Profile>
 
-        <ProfileContainerImage>
-          <ProfileAvatar style={{ backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})` }}>
-            <Image src={PersonFilled} />
-            <ProfileAvatarAddPicture onClick={handleUploadClick}>
-              <Image src={AddPhotoIcon} />
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={handleFileSelect}
-                ref={fileInputRef}
-              />
-            </ProfileAvatarAddPicture>
+      <ProfileContainerImage>
+          <ProfileAvatar>
+            {(localImage1 || previousData.profilePic || localImage) ? (
+              <img src={localImage?? localImage1 ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
+            ) : (
+              <img src={PersonFilled.src} />
+            )}
+          
+              <ProfileAvatarAddPicture>
+                <Image src={AddPhotoIcon} onClick={triggerImagePopup} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInput}
+                  onChange={onImageInputChange}
+                  style={{ display: 'none' }}
+                  validate={validation.requiredTextField}
+                />
+              </ProfileAvatarAddPicture>
+      
           </ProfileAvatar>
         </ProfileContainerImage>
 
@@ -156,7 +182,7 @@ const takeNewData = (data) => {
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"default"} onClick={handleAddAssociate}>
+        <Button variant={"default"} onClick={() => {handleAddAssociate(verificaFile())}}>
           Finalizar cadastro
         </Button>
       </Footer>

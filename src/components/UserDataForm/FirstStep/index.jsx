@@ -18,7 +18,7 @@ import Button from "../../commom/Button";
 import Image from 'next/image.js';
 
 
-const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm }) => {
+const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, cancelForm }) => {
   const nameRef = useRef(null);
   const cpfRef = useRef(null);
   const birthdayRef = useRef(null);
@@ -34,6 +34,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
   const telefoneRef = useRef(null);
   const naturalidadeRef = useRef(null);
   const nacionalidadeRef = useRef("Brasileiro");
+  const fileInput = useRef(null);
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
@@ -46,7 +47,8 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       passwordRef,
       telefoneRef,
       naturalidadeRef,
-      nacionalidadeRef 
+      nacionalidadeRef,
+      
     ];
 
     const validationResults = await Promise.all(
@@ -78,6 +80,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       telefone,
       naturalidade,
       nacionalidade,
+     
     ] = [
       nameRef,
       cpfRef,
@@ -93,7 +96,8 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       passwordRef,
       telefoneRef,
       naturalidadeRef,
-      nacionalidadeRef, 
+      nacionalidadeRef,
+      
     ].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
@@ -106,26 +110,40 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       email,
       password,
       telefone,
-      regional: {municipio, estado, naturalidade, nacionalidade},
+      regional: { municipio, estado, naturalidade, nacionalidade },
+  
     });
   });
 
-  // imagem do perfil
-  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileSelect = (event) => {
-    const file = event.target.files?.[0];
-    setSelectedFile(file);
+  
+  const [localImage, setLocalImage] = useState(null);
 
+  const triggerImagePopup = () => {
+    if (fileInput?.current) {
+      fileInput.current.click();
+    }
   };
 
-  // upload da imagem
-  const handleUploadClick = () => {
-    fileInputRef.current.click();
+  const onImageInputChange = () => {
+    if (fileInput?.current) {
+      if (fileInput.current.files[0]) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setLocalImage(reader.result);
+        });
+        reader.readAsDataURL(fileInput.current.files[0]);
+      } else {
+        setLocalImage(null);
+      }
+    }
   };
 
-  // referencia do input
-  const fileInputRef = useRef(null);
+  const imageSave = () => {
+    if (localImage){
+      takeImage(localImage);
+    }
+  };
 
 
   return (
@@ -137,19 +155,26 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
       <Profile>
 
         <ProfileContainerImage>
-            <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
-              <Image src={PersonFilled} />
-              <ProfileAvatarAddPicture onClick={handleUploadClick}>
-                <Image src={AddIcon} />
+          <ProfileAvatar>
+            {(localImage || previousData.profilePic) ? (
+              <img src={localImage ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
+            ) : (
+              <img src={PersonFilled.src} />
+            )}
+          
+              <ProfileAvatarAddPicture>
+                <Image src={AddIcon} onClick={triggerImagePopup} />
                 <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    onChange={handleFileSelect}
-                    ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  ref={fileInput}
+                  onChange={onImageInputChange}
+                  style={{ display: 'none' }}
+                  validate={validation.requiredTextField}
                 />
               </ProfileAvatarAddPicture>
-            </ProfileAvatar>
+      
+          </ProfileAvatar>
         </ProfileContainerImage>
 
         <ProfileArguments>
@@ -217,12 +242,12 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
-                <Input
+              <Input
                 variant="default-optional"
                 label={"Naturalidade"}
                 name={"naturalidade"}
                 placeholder={"Digite sua naturalidade"}
-                initialValue={previousData.regional ? previousData.regional.naturalidade :  ""}
+                initialValue={previousData.regional ? previousData.regional.naturalidade : ""}
                 ref={naturalidadeRef}
                 validate={validation.TextField}
               />
@@ -238,7 +263,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
             </InputsContainer>
           </SubContainer>
 
-          <SubContainer marginTop = {true}>
+          <SubContainer marginTop={true}>
             <SubTitle>
               Endereço
             </SubTitle>
@@ -313,7 +338,7 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
               type="password"
               validate={validation.testRequiredPassword}
             />
-            <Input 
+            <Input
               variant="default"
               label={"Telefone"}
               name={"Telefone"}
@@ -329,11 +354,11 @@ const FirstStepForm = ({ previousData, dataCollector, globalMessage, cancelForm 
         <Button variant={"text"} onClick={cancelForm}>
           CANCELAR
         </Button>
-        <Button variant={"light"} >
+        <Button variant={"light"} onClick={imageSave}>
           CONTINUAR
         </Button>
       </Footer>
-      {globalMessage && <span style={{color: 'red', fontWeight: 'bold'}}>{globalMessage}</span>}
+      {globalMessage && <span style={{ color: 'red', fontWeight: 'bold' }}>{globalMessage}</span>}
     </Container>
   );
 };

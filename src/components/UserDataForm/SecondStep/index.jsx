@@ -16,7 +16,7 @@ import Button from "../../commom/Button";
 
 import Image from 'next/image.js';
 
-const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, cancelForm }) => {
+const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstButton, globalMessage, cancelForm }) => {
   const formacaoSuperiorRef = useRef();
   const dataFormacaoRef = useRef();
   const empresaRef = useRef();
@@ -27,6 +27,9 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
   const dataRegistroConselhoRef = useRef();
   const numeroInscricaoRef = useRef();
   const dataAfiliacaoRef = useRef();
+
+  const [localImage1, setLocalImage1] = useState(image);
+  const [localImage, setLocalImage] = useState(null);
 
   /*   const cidadeRef = useRef();
     const estadoRef = useRef(); */
@@ -70,21 +73,37 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
   });
 
   // imagem do perfil
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileSelect = (event) => {
-    const file = event.target.files?.[0];
-    setSelectedFile(file);
-
-  };
-
-  // upload da imagem
-  const handleUploadClick = () => {
-    fileInputRef.current.click();
-  };
-
   // referencia do input
-  const fileInputRef = useRef(null);
+  const fileInput = useRef(null);
+
+  const triggerImagePopup = () => {
+    if (fileInput?.current) {
+      fileInput.current.click();
+    }
+  };
+
+  const onImageInputChange = () => {
+    if (fileInput?.current) {
+      if (fileInput.current.files[0]) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          setLocalImage(reader.result);
+        });
+        reader.readAsDataURL(fileInput.current.files[0]);
+      } else {
+        setLocalImage(null);
+      }
+    }
+  };
+
+  const imageSave = () => {
+    if (localImage1){
+      takeImage(localImage1);
+    } else if (localImage){
+      takeImage(localImage);
+      console.log("enviou")
+    }
+  };
   
 
   return (
@@ -95,22 +114,28 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
       </Head>
       <Profile>
 
-        <ProfileContainerImage>
-              <ProfileAvatar style={{backgroundImage: `url(${selectedFile && URL.createObjectURL(selectedFile)})`}}>
-                <Image src={PersonFilled} />
-                <ProfileAvatarAddPicture onClick={handleUploadClick}>
-                  <Image src={AddIcon} />
-                  <input
-                      type="file"
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      onChange={handleFileSelect}
-                      ref={fileInputRef}
-                  />
-                </ProfileAvatarAddPicture>
-              </ProfileAvatar>
-          </ProfileContainerImage>
-
+      <ProfileContainerImage>
+          <ProfileAvatar>
+            {(localImage1 || previousData.profilePic) ? (
+              <img src={localImage1 ?? previousData.profilePic} style={{ width: '115px', height: '115px', borderRadius: '100%' }} />
+            ) : (
+              <img src={PersonFilled.src} />
+            )}
+          
+              <ProfileAvatarAddPicture>
+                <Image src={AddIcon} onClick={triggerImagePopup} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInput}
+                  onChange={onImageInputChange}
+                  style={{ display: 'none' }}
+                  validate={validation.requiredTextField}
+                />
+              </ProfileAvatarAddPicture>
+      
+          </ProfileAvatar>
+        </ProfileContainerImage>
         <ProfileArguments>
           <ProfileTitle>
             Adicionar foto
@@ -119,7 +144,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
             *Adicione uma foto do associado nos tamanhos x y z até ab kbts.
           </ProfileDescription>
         </ProfileArguments>
-
+ 
       </Profile>
       <Body>
         <Description>
@@ -231,7 +256,7 @@ const SecondStep = ({ previousData, dataCollector, firstButton, globalMessage, c
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"light"} >
+        <Button variant={"light"} onClick={imageSave}>
           CONTINUAR
         </Button>
       </Footer>
