@@ -48,9 +48,11 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
       short: {
         month: "numeric",
         day: "numeric",
+        timeZone: "UTC",
       },
       full: {
         dateStyle: "short",
+        timeZone: "UTC",
       },
     };
 
