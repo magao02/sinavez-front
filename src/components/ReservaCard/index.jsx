@@ -34,6 +34,7 @@ import { useState } from "react";
 import upload_cloud from "../../assets/upload_cloud.svg"
 import excluir_comprovante from "../../assets/excluir_comprovante.svg"
 import { dateFromDMY } from "../../utils/date";
+import Link from "next/link";
 
 const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
 
@@ -197,7 +198,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
                     </label>
                 </InputComprovanteArea>
                 <LoadFileArea>
-                    <span>{file[file?.length - 1]?.name}</span>
+                    <Link href={file[file?.length - 1]?.url}><span>{file[file?.length - 1]?.name}</span></Link>
                     {
                       file && file?.length > 0 &&
                       <img src={excluir_comprovante.src} onClick={() => {
