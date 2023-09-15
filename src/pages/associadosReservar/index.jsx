@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 import { useAdmin } from "../../contexts/AdminContext";
 
-import { CounterInput, DropdownInput, SearchInput, SliderInput } from "../../components/SearchInputs";
+import { SearchInput } from "../../components/SearchInputs";
 
 import { useMemo } from 'react';
 
@@ -41,16 +41,9 @@ import AssociateTable from "../../components/commom/AssociatesTable";
 import Button from "../../components/commom/Button";
 import SearchBar from "../../components/commom/SearchBar";
 import DarkBackground from "../../components/commom/DarkBackground";
-import CheckBoxInput from "../../components/commom/CheckBoxInput";
-import CheckBox from "../../components/CheckBox";
 import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
-import DependentsContainer from "../../components/DependentsContainer";
-import Pattern from "../../assets/pattern.svg"
-import AddIcon from "../../assets/add_icon.svg";
-
-import Image from "next/image";
 
 import {
   Container,
@@ -65,56 +58,30 @@ import DataUser from "../../components/DataUser";
 import { dateToYMD } from "../../utils/date";
 
 import {
-    Blue,
     Card,
     ColumnContent,
     Row,
-    Tab,
-    Tabs,
-    Content,
-    SearchHelp,
-    NavSpacing,
-    SearchHelpContainer,
-    NoResults,
-    BottomPadding,
-    NoMoreResults,
 } from "../../styles/apartamentosStyles";
 
-const associadosservar = (urlApartamento) => {
+const associadosservar = () => {
   const [associados, setAssociados] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [admToggle, setAdmToggle] = useState(false);
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
-  const [userDependents, setUserDependents] = useState([]);
-
-  const [checkedItems, setCheckedItems] = useState([]);
   const [removeAssociateToggle, setRemoveAssociateToggle] = useState();
   const [dataUserToggle, setDataUserToggle] = useState();
-
   const [dataUser, setDataUser] = useState();
-  const [newDataUser, setNewDataUser] = useState();
-  
   const [associadoName, setAssociadoName] = useState();
   const [urlUser, setUrlUser] = useState();
-
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
   const [a, setA] = useState(false);
-
   const router = useRouter();
-
   const authContext = useAuth();
-  const adminContext = useAdmin();
-
   const [associadoSelecionado, setAssociadoSelecionado] = useState(null);
-  const [dataHoraSelecionada, setDataHoraSelecionada] = useState(null); // Estado para armazenar a data e hora selecionada
-
   const [tabIndex, setTabIndex] = useState(0);
-
   const [chegadaDate, setChegadaDate] = useState(new Date());
   const [chegadaTime, setChegadaTime] = useState('11:00');
-
   const [saidaDate, setSaidaDate] = useState((() => {
     let now = new Date();
     now.setDate(now.getDate() + 7);
@@ -151,24 +118,24 @@ const associadosservar = (urlApartamento) => {
     }
   }, [queryData]);
 
-const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate,chegadaTime, setChegadaTime, saidaTime, setSaidaTime, onSearch }) => {
-  return (
-    <ColumnContent>
-      <Card>
-        <Row>
-          <div className="column">
-            <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => setChegadaDate(ev.target.valueAsDate)} />
-            <SearchInput innerLabel="Horário" type="time" initialValue={chegadaTime} onChange={ev => setChegadaTime(ev.target.value)} />
-          </div>
-          <div className="column">
-            <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />
-            <SearchInput innerLabel="Horário" type="time" initialValue={saidaTime} onChange={ev => setSaidaTime(ev.target.value)} />
-          </div>
-        </Row>
-      </Card>
-    </ColumnContent>
-  );
-};
+  const Search = ({ chegadaDate, setChegadaDate, saidaDate, setSaidaDate,chegadaTime, setChegadaTime, saidaTime, setSaidaTime }) => {
+    return (
+      <ColumnContent>
+        <Card>
+          <Row>
+            <div className="column">
+              <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => setChegadaDate(ev.target.valueAsDate)} />
+              <SearchInput innerLabel="Horário" type="time" initialValue={chegadaTime} onChange={ev => setChegadaTime(ev.target.value)} />
+            </div>
+            <div className="column">
+              <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />
+              <SearchInput innerLabel="Horário" type="time" initialValue={saidaTime} onChange={ev => setSaidaTime(ev.target.value)} />
+            </div>
+          </Row>
+        </Card>
+      </ColumnContent>
+    );
+  };
 
   const handleReserveClick = () => {
     if (associadoSelecionado) {
@@ -188,9 +155,10 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
       criancas: 0,
       bebes: 0,
       animais: 0,
-      urlUser: associadoSelecionado.urlUser
+      urlUser: associadoSelecionado.urlUser,
+      area: router.query.ambientType === "recreationArea"
     }
-    router.push(`/reservar/${urlApartamento}?${new URLSearchParams(k)}`)
+    router.push(`/reservar/${router.query.urlAmbient}?${new URLSearchParams(k)}`)
   }
 
   // Toggle para abrir e fechar o modal de adicionar associado
@@ -209,18 +177,11 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
 
   }, []);
 
-  const yearsController = (data, yearVariant) => {
-    setYears({ toggle: true });
-    setYearVariant(yearVariant);
-    setDataToSubmit(data);
-  }
-
   //  coletando dados do usuário
   const dataCollector = (data) => {
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
-
 
   // adicionando usuário
   const handleAddAssociate = useCallback(async () => {
@@ -269,7 +230,6 @@ console.log(collectedData)
       console.log(error.response.data.message);
     }
   });
-
 
   const handleErrorAssociados = useCallback(
     async (error) => {
@@ -337,7 +297,6 @@ console.log(collectedData)
     }
   }, []);
  
-
   return <>
     <Container>
       <Navigation selectedPage={"associados"} variant={checkNav()} />
@@ -378,7 +337,7 @@ console.log(collectedData)
                   takeDataUser={takeDataUser}
                   handleCheckboxChange={handleCheckboxChange}
                   selectedItems={associadoSelecionado}
-                  setCheckedItems={setAssociadoSelecionado} // Passar a função
+                  setCheckedItems={setAssociadoSelecionado}
                 />
             </Main>
           </MainContainer>
@@ -419,8 +378,8 @@ console.log(collectedData)
             <Button onClick={handleReserve}>Reservar</Button>
           </ModalContent>
       </ContainerModal>
-}
-    </>
+    }
+  </>
 };
 
 export default associadosservar;

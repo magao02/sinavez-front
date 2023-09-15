@@ -1,30 +1,19 @@
-import { Table, TableHead, TableBody, Associate, Name, Profession, Buttons, TableFooter, Text } from "./styles.js";
-
-import EditIcon from "../../../assets/edit.svg";
-import TrashIcon from "../../../assets/trash.svg";
-
-import Image from "next/image.js";
+import { Table, TableHead, TableBody, Associate, Name, TableFooter, Text, ImagemAssociado } from "./styles.js";
 
 import Paginator from "../Paginator";
-import CheckBoxInput from "../CheckBoxInput/index.jsx";
 import CheckBoxReserv from "../CheckBoxReserv/index.jsx";
-import CheckBox from "../../CheckBox/index.jsx";
 import { useCallback, useEffect, useState } from "react";
 
 const AssociateTable = ({ 
     searchTerm,
     headers,
     data,
-    takeData,
     takeDataUser,
     handleCheckboxChange,
     selectedItems 
-
 }) => {
     const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
     const [currentAssociates, setCurrentAssociates] = useState(data.slice(currentIndexes[0], currentIndexes[1]));
-    const [checkedItems, setCheckedItems] = useState([]);
-    
 
     useEffect(() => {
         // Atualizar 'currentAssociates' sempre que 'data' ou 'currentIndexes' mudarem
@@ -59,6 +48,9 @@ const AssociateTable = ({
                                         setCheckedItems={handleCheckboxChange}
                                         item={d}
                                     />
+                                    <ImagemAssociado onClick={() => takeDataUser(d)}>
+                                        <img src={d.profilePic}></img>
+                                    </ImagemAssociado>
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 </Associate>
                             )
@@ -72,6 +64,9 @@ const AssociateTable = ({
                                         setCheckedItems={handleCheckboxChange}
                                         item={d}
                                     />
+                                    <ImagemAssociado onClick={() => takeDataUser(d)}>
+                                        <img src={d.profilePic}></img>
+                                    </ImagemAssociado>
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 </Associate>
                             )
@@ -112,6 +107,9 @@ const AssociateTable = ({
                                         setCheckedItems={handleCheckboxChange}
                                         item={d}
                                     />
+                                    <ImagemAssociado onClick={() => takeDataUser(d)}>
+                                        <img src={d.profilePic}></img>
+                                    </ImagemAssociado>
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 </Associate>
                             )
@@ -125,7 +123,10 @@ const AssociateTable = ({
                                         setCheckedItems={handleCheckboxChange}
                                         item={d}
                                     />
-                                    <Name onClick={() => takeDataUser(d)}>{d.name}{d.Image}</Name>
+                                    <ImagemAssociado onClick={() => takeDataUser(d)}>
+                                        <img src={d.profilePic}></img>
+                                    </ImagemAssociado>
+                                    <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 </Associate>
                                 
                             )

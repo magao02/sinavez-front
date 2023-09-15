@@ -45,11 +45,10 @@ export const TableBody = styled.div`
 
 export const Associate = styled.div`
     position: abolute;
-
     display: grid;
-    grid-template-columns: 54% 41% 5%;
+    grid-template-columns: 3% 7% 15% 75%;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     width: 1216px;
     border-bottom: 1px solid var(--divider, rgba(0, 0, 0, 0.12));
 
@@ -63,11 +62,13 @@ export const Associate = styled.div`
 
 export const Name = styled.div`
     color: var(--text-primary, rgba(0, 0, 0, 0.87));
-
-    font-size: 14px;
+    font-size: 16px;
     font-family: Roboto;
     line-height: 18px;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 export const Profession = styled.div`
@@ -102,4 +103,16 @@ export const Text = styled.p`
     font-style: normal;
     font-weight: 400;
     line-height: 18px;
+`
+
+export const ImagemAssociado = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.1px;
+
+    img {
+        max-width: 40px;
+        max-height: 40px;
+        border-radius: 50%;
+    }
 `
