@@ -205,7 +205,7 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
 
                             <ContainerDataDependent>
                                 <Dependentes>
-                                     <DependentsForm variant='default' marginTop={true} pad={true} takeDataDependents={takeDataDependents}/>
+                                     <DependentsForm variant='default' marginTop={true} pad={true} takeNewData={takeNewData} takeDataDependents={takeDataDependents}/>
                                 </Dependentes>     
                             </ContainerDataDependent>
 

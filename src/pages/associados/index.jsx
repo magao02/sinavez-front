@@ -191,12 +191,22 @@ const Associados = () => {
   const handleEditUser = useCallback(async (dataNova, urlUser) => {
     try {
       const editResponse = await service.setUserData(urlUser, dataNova, authContext.token);
-      associados.map((associado) => {
-        if (associado.urlUser == urlUser) {
-          associado.name = dataNova.name;
-          associado.profession = dataNova.profession;
-        }
-      });
+
+      if (dataNova.name !== undefined) {
+        associados.map((associado) => {
+          if (associado.urlUser == urlUser) {
+            associado.name = dataNova.name;
+          }
+        });
+      }
+
+      if (dataNova.profissao !== undefined) {
+        associados.map((associado) => {
+          if (associado.urlUser == urlUser) {
+            associado.profissao = dataNova.profissao;
+          }
+        });
+      }
       setDataUser(prevDataUser => ({
         ...prevDataUser,
         ...dataNova
