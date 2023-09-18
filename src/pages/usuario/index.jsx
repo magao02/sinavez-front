@@ -37,7 +37,12 @@ import TrashIcon from "../../assets/trash.svg";
 import WomanExclamation from "../../assets/woman_exclamation.svg";
 import ManTrashCan from "../../assets/man_deleting_trash_can.svg";
 import AddPhotoIcon from "../../assets/add_photo.svg";
+import PlaceholderProfilePic from "../../assets/person_filled_gray.svg";
 
+function showDefaultProfilePic(url) {
+  if (!url) return PlaceholderProfilePic.src;
+  return url;
+}
 
 const BigConfirmPopup = ({ title, image, body, confirmText, cancelText, onConfirm, onCancel }) => {
   useEffect(() => {
@@ -240,7 +245,7 @@ const UserDataPopup = ({ value, onClose }) => {
           <header>
             <div className="perfil">
               <div className="img-container">
-                <img src={localImage ?? value.profilePic} />
+                <img src={localImage ?? showDefaultProfilePic(value.profilePic)} />
                 { editing && <UploadPhotoButton onClick={triggerImagePopup}><img src={AddPhotoIcon.src} /></UploadPhotoButton>}
               </div>
               <input type="file" accept="image/*" ref={fileInput} onChange={onImageInputChange} />
@@ -732,7 +737,7 @@ const UserData = () => {
             <Card>
               <Title2>Meus Dados</Title2>
               <div className="card">
-                <img src={value.profilePic} />
+                <img src={showDefaultProfilePic(value.profilePic)} />
                 <Subtitle1>{value.name}</Subtitle1>
                 <Tabs>
                   {

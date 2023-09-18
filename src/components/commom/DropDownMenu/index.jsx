@@ -10,6 +10,13 @@ import sign_out from "../../../assets/sign_out.svg"
 import Image from "next/image.js";
 import { useRouter } from "next/router.js";
 import { useAuth } from "../../../contexts/AuthContext.jsx";
+import { formatShortName } from "../../../utils/format.js";
+import PlaceholderProfilePic from "../../../assets/person_filled_gray.svg";
+
+function showDefaultProfilePic(url) {
+  if (!url) return PlaceholderProfilePic.src;
+  return url;
+}
 
 const DropDownMenu = ({ name, opened, onClickDo, image }) => {
     const authContext = useAuth();
@@ -28,8 +35,8 @@ const DropDownMenu = ({ name, opened, onClickDo, image }) => {
                 <Menu>
                     <MenuBox onClick={onClickDo}>
                         <Image src={caretUp} />
-                        Olá, {name}
-                        { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
+                        Olá, {formatShortName(name)}
+                        <img className="profile-pic" src={showDefaultProfilePic(image)} />
                     </MenuBox>
                     <OpenedMenuBox>
                         <Option onClick={() => router.push("/usuario")}>
@@ -48,8 +55,8 @@ const DropDownMenu = ({ name, opened, onClickDo, image }) => {
         return (
             <MenuBox onClick={onClickDo}>
                 <Image src={caretDown} />
-                Olá, {name}
-                { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
+                Olá, {formatShortName(name)}
+                <img className="profile-pic" src={showDefaultProfilePic(image)} />
             </MenuBox>
         )
     }
