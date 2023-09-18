@@ -54,7 +54,7 @@ const ambienteDados = () => {
     };
 
     const redirectToReservas = () => {
-      router.push(`/associadosReservar/urlAmbient=${url}`)
+      router.push(`/associadosReservar?urlAmbient=${url}&ambientType=${isApt ? "apto" : "recreationArea"}`)
     }
 
     const handlePagamento = ( id ) => {
