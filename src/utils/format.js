@@ -14,3 +14,14 @@ export function formatRG(rg) {
     const c = rg.substr(6);
     return `${a}.${b}.${c}`;
 }
+
+export function formatShortName(fullName) {
+    const split = fullName.toString().trim().split(/\s+/);
+    if (split.length >= 2) {
+        const firstTwo = `${split[0]} ${split[1]}`;
+        const disallow = ['de', 'da', 'das', 'dos'];
+        if (firstTwo.length < 20 && !disallow.includes(split[1].toLowerCase()))
+            return firstTwo;
+    }
+    return split[0];
+}

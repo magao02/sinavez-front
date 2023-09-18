@@ -10,6 +10,7 @@ import sign_out from "../../../assets/sign_out.svg"
 import Image from "next/image.js";
 import { useRouter } from "next/router.js";
 import { useAuth } from "../../../contexts/AuthContext.jsx";
+import { formatShortName } from "../../../utils/format.js";
 
 const DropDownMenu = ({ name, opened, onClickDo, image }) => {
     const authContext = useAuth();
@@ -28,7 +29,7 @@ const DropDownMenu = ({ name, opened, onClickDo, image }) => {
                 <Menu>
                     <MenuBox onClick={onClickDo}>
                         <Image src={caretUp} />
-                        Olá, {name}
+                        Olá, {formatShortName(name)}
                         { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
                     </MenuBox>
                     <OpenedMenuBox>
@@ -48,7 +49,7 @@ const DropDownMenu = ({ name, opened, onClickDo, image }) => {
         return (
             <MenuBox onClick={onClickDo}>
                 <Image src={caretDown} />
-                Olá, {name}
+                Olá, {formatShortName(name)}
                 { image ? <img className="profile-pic" src={image} /> : <div className="profile-pic" /> }
             </MenuBox>
         )
