@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 
-
 import Image from "next/image.js";
 
 import Pattern from "../../assets/login_pattern.svg";

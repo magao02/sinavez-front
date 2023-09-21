@@ -133,9 +133,9 @@ const Page = () => {
     setIsMakingRequest(true);
     try {
       if (router.query.area === "true") {
-        await reserveRecreationArea(authContext.token, router.query.id, authContext.urlUser, data);
+        await reserveRecreationArea(authContext.token, router.query.id, router.query.urlUser ?? authContext.urlUser, data);
       } else {
-        await reserveApartment(authContext.token, router.query.id, authContext.urlUser, data);
+        await reserveApartment(authContext.token, router.query.id, router.query.urlUser ?? authContext.urlUser, data);
       }
       setIsRequestDone(true);
       setHasReserved(true);
