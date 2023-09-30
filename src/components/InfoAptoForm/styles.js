@@ -72,6 +72,14 @@ export const AddBedButton = styled.button`
 
 export const Placeholder = styled.span`
     color: gray;
-    margin-top: -50px;
+    margin-top: -35px;
     margin-bottom: 10px;
+`
+
+export const Label = styled.label`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: text;
 `

@@ -7,7 +7,8 @@ import {
   CheckBoxInputs,
   InputBox,
   ErrorMsg,
-  Placeholder
+  Placeholder,
+  Label
 } from "./styles";
 import RadioInput from "../commom/RadioInput";
 import CamaInput from "../CamaInput";
@@ -104,12 +105,13 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
   const addRadioInfo = (item) => {
     setRadioInput({ ...radioInput, [item.title == "banheiro" ? "suite" : item.title ]: item.value });
   };
-  
+
   return (
     <Container>
-      <h3>{mainTitle ? mainTitle : "Informacoes do Apartamento"}</h3>
+      <h3>{mainTitle ? mainTitle : "Informações do Apartamento"}</h3>
       <InputContainer>
       <InputBox>
+        <Label>
           <Input
             variant="default"
             name="Título"
@@ -119,10 +121,12 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           />
           {
             title.length == 0 &&
-            <>
-              <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
               <Placeholder>Título do Apartamento<span style={{color: "red"}}>*</span></Placeholder>
-            </>
+          }
+          </Label>
+          {
+            title.length == 0 &&
+              <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
           }
          </InputBox>
         {camas ? 
@@ -144,14 +148,19 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
         </CamaInputContainer>
         :
         <InputBox>
-          <Input
-            variant="default"
-            name="Capacidade Máxima*"
-            type="number"
-            placeholder="Capacidade Máxima*"
-            value={capacity}
-            onChange={(e) => setCapacity(e.target.value)}
-          />
+          <Label>
+            <Input
+              variant="default"
+              name="Capacidade Máxima*"
+              type="number"
+              value={capacity == 0 ? "" : capacity}
+              onChange={(e) => setCapacity(e.target.value)}
+            />
+            {
+              !capacity && 
+              <Placeholder>Capacidade<span style={{color: "red"}}>*</span></Placeholder>
+            }
+          </Label>
           {
             capacity == 0 && 
             <ErrorMsg>Campo Obrigatorio</ErrorMsg>
@@ -159,18 +168,25 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
         </InputBox>
         }
         <InputBox>
-          <Input
-            variant="default"
-            name="Endereço"
-            type="text"
-            onChange={handleAddress}
-            value={address}
-          />
+        <Label>
+            <Input
+              variant="default"
+              name="Endereço"
+              type="text"
+              onChange={handleAddress}
+              value={address}
+            />
+            {
+              address.length == 0  &&
+              <>
+                <Placeholder>Endereço<span style={{color: "red"}}>*</span></Placeholder>
+              </>
+            }
+          </Label>
           {
             address.length == 0  &&
             <>
               <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
-              <Placeholder>Endereço<span style={{color: "red"}}>*</span></Placeholder>
             </>
           }
         </InputBox>

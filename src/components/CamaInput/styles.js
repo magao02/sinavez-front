@@ -52,3 +52,25 @@ export const Select = styled.select`
     padding: 5px;
     color: black;
 `
+
+
+export const Placeholder = styled.span`
+    color: gray;
+    position: absolute;
+
+`
+
+export const QntdInputContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+export const Label = styled.label`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: text;
+`

@@ -1,4 +1,4 @@
-import { Container, DeleteBedButton, ErrorMsg, InputBox, Select, } from "./styles"
+import { Container, DeleteBedButton, ErrorMsg, InputBox, Label, Placeholder, QntdInputContainer, Select, } from "./styles"
 import Input from "../commom/Input";
 import trash from "../../assets/trash.svg";
 import Image from "next/image";
@@ -18,18 +18,30 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
       <InputBox>
         <Container onChange={(e) => handleCama(id, e)}>
             <Select name="tipo" id="selectCama">
-                <option value="Tipo de Cama" disabled hidden selected={option == undefined}>{"Tipo de Cama"}</option>
+                <option value="Tipo de Cama" disabled hidden selected={option == undefined}></option>
                 <option value="Solteiro" selected={option == "Solteiro"}>Solteiro</option>
                 <option value="Casal" selected={option == "Casal"}>Casal</option>
             </Select>
-            <Input
-                variant="default"
-                name="Quantidade"
-                type="number"
-                placeholder={"Quantidade"}
-                value={value}
-                onChange={(e) => setInputValue(e.target.value)}
-            />
+            {
+              !option && 
+              <Placeholder>Tipo de Cama<span style={{color: "red"}}>*</span></Placeholder>
+            }
+            <QntdInputContainer>
+              <Label>
+                <Input
+                    variant="default"
+                    name="Quantidade"
+                    type="number"
+                    id={id}
+                    value={value}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                {
+                  !inputValue && !value &&
+                  <Placeholder>Quantidade<span style={{color: "red"}}>*</span></Placeholder>
+              }
+              </Label>
+            </QntdInputContainer>
             <DeleteBedButton onClick={() => setShowModal(!showModal)}><Image src={trash} alt="trashIcon" width={50} height={50}/></DeleteBedButton>
         </Container>
           {
