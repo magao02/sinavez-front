@@ -69,3 +69,9 @@ export const AddBedButton = styled.button`
         filter: brightness(80%);
       }
 `
+
+export const Placeholder = styled.span`
+    color: gray;
+    margin-top: -50px;
+    margin-bottom: 10px;
+`

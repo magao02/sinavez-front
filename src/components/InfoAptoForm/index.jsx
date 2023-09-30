@@ -6,10 +6,10 @@ import {
   InputContainer,
   CheckBoxInputs,
   InputBox,
-  ErrorMsg
+  ErrorMsg,
+  Placeholder
 } from "./styles";
 import RadioInput from "../commom/RadioInput";
-import { useEffect, useState } from "react";
 import CamaInput from "../CamaInput";
 import { v4 as uuid } from 'uuid';
 
@@ -114,13 +114,15 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             variant="default"
             name="Título"
             type="text"
-            placeholder="Título do apartamento"
             onChange={handleTitle}
             value={title}
           />
           {
             title.length == 0 &&
-            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+            <>
+              <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+              <Placeholder>Título do Apartamento<span style={{color: "red"}}>*</span></Placeholder>
+            </>
           }
          </InputBox>
         {camas ? 
@@ -161,13 +163,15 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
             variant="default"
             name="Endereço"
             type="text"
-            placeholder="Endereço"
             onChange={handleAddress}
             value={address}
           />
           {
             address.length == 0  &&
-            <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+            <>
+              <ErrorMsg>Campo Obrigatorio*</ErrorMsg>
+              <Placeholder>Endereço<span style={{color: "red"}}>*</span></Placeholder>
+            </>
           }
         </InputBox>
         <CheckBoxInputs>
