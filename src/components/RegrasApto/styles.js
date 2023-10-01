@@ -49,7 +49,7 @@ export const InputContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1vw;
+    gap: 2vw;
 `
 
 export const AddButton = styled.button`
@@ -77,4 +77,25 @@ export const AddButton = styled.button`
       &:hover {
         filter: brightness(80%);
       }
+`
+
+export const Label = styled.label`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`
+
+export const Placeholder = styled.span`
+    color: gray;
+    margin-top: -50px;
+
+    @media (max-width: 1206px){
+        font-size: 13px;
+        margin-top: -40px;
+    }
+
+    @media (max-width: 978px){
+        font-size: 11px;
+        margin-top: -40px;
+    }
 `

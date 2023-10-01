@@ -370,7 +370,8 @@ const editApartment = () => {
             </InfoBox>
             <InfoBox>
               <RegrasApto
-                title={"Regras de convivencia"}
+                title={"Regras de Convivência"}
+                type={"regras"}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
