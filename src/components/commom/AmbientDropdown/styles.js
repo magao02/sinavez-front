@@ -46,6 +46,15 @@ export const OpenedMenuBox = styled.div`
 export const Select = styled.div`
     position: absolute;
     width: 12vw;
+
+    @media (max-width: 1254px){
+        width: 14vw;
+    }
+
+    
+    @media (max-width: 1022px){
+        width: 17vw;
+    }
 `
 
 export const OptionContainer = styled.div`
