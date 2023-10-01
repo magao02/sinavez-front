@@ -523,11 +523,11 @@ const createApartment = () => {
             <InfoBox>
               <AptoTexts
                 title={"Descrição do apartamento"}
+                setText={setDescription}
+                text={description}
                 placeholder={
                   "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
                 }
-                setText={setDescription}
-                text={description}
                 required
               />
             </InfoBox>

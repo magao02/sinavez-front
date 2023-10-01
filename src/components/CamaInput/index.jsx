@@ -33,7 +33,7 @@ const CamaInput = ( {id, deleteCama, handleCama, option, value, disableButton}) 
                     name="Quantidade"
                     type="number"
                     id={id}
-                    value={value}
+                    value={value == 0 ? "" : value}
                     onChange={(e) => setInputValue(e.target.value)}
                 />
                 {

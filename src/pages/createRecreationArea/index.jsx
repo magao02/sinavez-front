@@ -220,7 +220,7 @@ const editApartment = () => {
       diaria: parseFloat(dailyRate),
       capacidadeMaxima: capacity,
       descricao: description,
-      itens: itens,
+      itens: areas,
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
