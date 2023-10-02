@@ -17,6 +17,7 @@ import {
   InfoBox,
   RedirectArea,
   CautionBox,
+  LoadingContainer,
 } from "../../styles/apartamentoStyles";
 import AptoTexts from "../../components/AptoTexts";
 import AptoItens from "../../components/AptoItens";
@@ -37,6 +38,7 @@ import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import { useRouter } from "next/router";
 import AlertModal from "../../components/commom/AlertModal";
 import isEqual from "lodash.isequal";
+import loading from "../../assets/loading_Apto.svg"
 
 const editApartment = () => {
   // INFORMACOES DO APTO
@@ -51,6 +53,7 @@ const editApartment = () => {
   const [fotos, setFotos] = useState([]);
   const [datas, setDatas] = useState([]);
   const [urlApto, setUrlApto] = useState("");
+  const [loadingData, setLoadingData] = useState(true)
 
   // State para funcao de cancelar alteracoes e salvar Alteracoes
   const [oldData, setOldData] = useState([]);
@@ -173,6 +176,7 @@ const editApartment = () => {
   const getApartmentInfo = async () => {
     var { data } = await service.getApartment(authContext.token, router.query.url);
     setUrlApto(router.query.url)
+    setLoadingData(false)
 
     modelData(data);
     setOldData(data);
@@ -306,212 +310,220 @@ const editApartment = () => {
     }
   }
 
-  return (
-    <Container>
-      <Header>
-        <Navigation variant={"admin"} />
-      </Header>
-      <Main>
-        <RedirectArea>
-          <Button
-            onClick={() => checkAlterations()}
-            variant={"image"}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "1vw",
-              alignItens: "center",
-            }}
-          >
-            <Image onClick={() => checkAlterations()} src={leftArrow} alt={"arrow"}></Image>
-            <a onClick={() => checkAlterations()}>Todos os Apartamentos </a>
-            <a>/</a>
-            <a onClick={() => routeToAmbientData()} >Dados do Apartamentos </a>
-            <a>/</a>
-            <a>Editar Apartamento </a>
-          </Button>
-        </RedirectArea>
-        <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
-        <FotosArea>
-          <h3>Adicionar Fotos do apartamento</h3>
-          <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
-        </FotosArea>
-        <InfoApto onClick={() => setShowCautionMsg(true)}>
-          <LeftSide>
-            <ButtonArea>
-                <CalendarButton datas={datas} setDatas={setDatas} />
-            </ButtonArea>
-            <InfoBox>
-              <InfoAptoForm
-                setAptoTitle={setAptoTitle}
-                setAddress={setAddress}
-                camaInfo={camas ? camas : []}
-                setCamaInfo={setCamas}
-                radioInput={radioInputs}
-                setRadioInput={setRadioInputs}
-                camas={true}
-                title={aptoTitle}
-                address={address}
-              />
-            </InfoBox>
-            <InfoBox>
-              <AptoTexts
-                title={"Descrição do apartamento"}
-                placeholder={
-                  "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
-                }
-                setText={setDescription}
-                text={description}
-                required
-              />
-            </InfoBox>
-            <InfoBox>
-              <AptoItens
-                title={"Itens do apartamento"}
-                itens={itensApto}
-                setItens={setItensApto}
-                cancelAll={cancelAll}
-                setCancelAll={setCancelAll}
-                setSaveAll={setSaveAll}
-                saveAll={saveAll}
-              />
-            </InfoBox>
-            <InfoBox>
-              <AptoTexts
-                title={"Adicione o Valor da Diária do Apartamento"}
-                placeholder={"Valor por Diária"}
-                type={"number"}
-                setText={setDailyRate}
-                text={dailyRate}
-              />
-            </InfoBox>
-          </LeftSide>
-          <RightSide>
-            <InfoBox>
-              <AptoItens
-                title={"Areas Comuns"}
-                itens={commumArea}
-                setItens={setCommunAreas}
-                cancelAll={cancelAll}
-                setCancelAll={setCancelAll}
-                setSaveAll={setSaveAll}
-                saveAll={saveAll}
-              />
-            </InfoBox>
-            <InfoBox>
-              <RegrasApto
-                title={"Regras de Convivência"}
-                type={"regras"}
-                cancelAll={cancelAll}
-                setCancelAll={setCancelAll}
-                setSaveAll={setSaveAll}
-                saveAll={saveAll}
-                inputsBase={regras}
-                setInputsBase={setRegras}
-              />
-            </InfoBox>
-            <InfoBox>
-              <RegrasApto
-                title={"Locais nos Arredores"}
-                cancelAll={cancelAll}
-                setCancelAll={setCancelAll}
-                setSaveAll={setSaveAll}
-                saveAll={saveAll}
-                inputsBase={locais}
-                setInputsBase={setLocais}
-              />
-            </InfoBox>
-          </RightSide>
-        </InfoApto>
-
-        {showCautionMsg && (
-          <CautionBox>
-            <h3 style={{ color: "#3C3E45" }}>
-              Cuidado - você tem alterações que não foram salvas!
-            </h3>
-            <ConfirmButtons
-              handleCancel={() => setShowCancelModal(true)}
-              save={() => {
-                handleSaveAll()
+  if(loadingData){
+    return (
+      <LoadingContainer>
+        <img src={loading.src}></img>
+      </LoadingContainer>
+    )
+  }else{
+    return (
+      <Container>
+        <Header>
+          <Navigation variant={"admin"} />
+        </Header>
+        <Main>
+          <RedirectArea>
+            <Button
+              onClick={() => checkAlterations()}
+              variant={"image"}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "1vw",
+                alignItens: "center",
               }}
-            ></ConfirmButtons>
-          </CautionBox>
-        )}
-
-        {showCancelModal && (
-          <Modal
-            title="Cancelar Alterações"
-            img={cancel_img.src}
-            asideText="Deseja realmente cancelar as alterações não salvas?"
-            ConfirmText="SALVAR ALTERAÇÕES"
-            ConfirmColor="Green"
-            CancelText="CANCELAR ALTERAÇÕES"
-            handleCancel={() => {
-              handleCancelAll()
-              setShowCancelModal(false)
-            }}
-            handleSave={() => {
-              handleSaveAll()
-              setShowCancelModal(false)
-              setShowSaveModal(true)
-            }}
-          />
-        )}
-
-        {showModalUnsaved && (
-          <Modal
-            title="Alterações Não Salvas"
-            img={unsaved.src}
-            asideText="Deseja sair sem salvar as alterações?"
-            ConfirmText="SIM"
-            ConfirmColor="Green"
-            CancelText="NÃO"
-            handleCancel={() => {
-              handleSaveAll()
-              setShowModalUnsaved(false)
-              setShowModalAlterations({boolean: true, text: "Alterações Salvas"})
-              setTimeout(() => {
-                router.push("/manageReservations")
-              ,[10000]})
-            }}
-            handleSave={() => {
-              handleCancelAll()
-              setShowModalUnsaved(false)
-              setShowModalAlterations({boolean: true, text: "Alterações não Salvas"})
-              setTimeout(() => {
-                router.push("/manageReservations")
-              ,[1000]})
-            }}
-          />
-        )}
-
-        {showModalAlterations.boolean && (
-            <AlertModal
-              title={showModalAlterations.text}
+            >
+              <Image onClick={() => checkAlterations()} src={leftArrow} alt={"arrow"}></Image>
+              <a onClick={() => checkAlterations()}>Todos os Apartamentos </a>
+              <a>/</a>
+              <a onClick={() => routeToAmbientData()} >Dados do Apartamentos </a>
+              <a>/</a>
+              <a>Editar Apartamento </a>
+            </Button>
+          </RedirectArea>
+          <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
+          <FotosArea>
+            <h3>Adicionar Fotos do apartamento</h3>
+            <GridFotos images={fotos} setImages={setFotos} onChange={() => setShowCautionMsg(true)} />
+          </FotosArea>
+          <InfoApto onClick={() => setShowCautionMsg(true)}>
+            <LeftSide>
+              <ButtonArea>
+                  <CalendarButton datas={datas} setDatas={setDatas} />
+              </ButtonArea>
+              <InfoBox>
+                <InfoAptoForm
+                  setAptoTitle={setAptoTitle}
+                  setAddress={setAddress}
+                  camaInfo={camas ? camas : []}
+                  setCamaInfo={setCamas}
+                  radioInput={radioInputs}
+                  setRadioInput={setRadioInputs}
+                  camas={true}
+                  title={aptoTitle}
+                  address={address}
+                />
+              </InfoBox>
+              <InfoBox>
+                <AptoTexts
+                  title={"Descrição do apartamento"}
+                  placeholder={
+                    "Coloque aqui mais informações sobre o apartamento, mais regras de convivência e detalhes adicionais"
+                  }
+                  setText={setDescription}
+                  text={description}
+                  required
+                />
+              </InfoBox>
+              <InfoBox>
+                <AptoItens
+                  title={"Itens do apartamento"}
+                  itens={itensApto}
+                  setItens={setItensApto}
+                  cancelAll={cancelAll}
+                  setCancelAll={setCancelAll}
+                  setSaveAll={setSaveAll}
+                  saveAll={saveAll}
+                />
+              </InfoBox>
+              <InfoBox>
+                <AptoTexts
+                  title={"Adicione o Valor da Diária do Apartamento"}
+                  placeholder={"Valor por Diária"}
+                  type={"number"}
+                  setText={setDailyRate}
+                  text={dailyRate}
+                />
+              </InfoBox>
+            </LeftSide>
+            <RightSide>
+              <InfoBox>
+                <AptoItens
+                  title={"Areas Comuns"}
+                  itens={commumArea}
+                  setItens={setCommunAreas}
+                  cancelAll={cancelAll}
+                  setCancelAll={setCancelAll}
+                  setSaveAll={setSaveAll}
+                  saveAll={saveAll}
+                />
+              </InfoBox>
+              <InfoBox>
+                <RegrasApto
+                  title={"Regras de Convivência"}
+                  type={"regras"}
+                  cancelAll={cancelAll}
+                  setCancelAll={setCancelAll}
+                  setSaveAll={setSaveAll}
+                  saveAll={saveAll}
+                  inputsBase={regras}
+                  setInputsBase={setRegras}
+                />
+              </InfoBox>
+              <InfoBox>
+                <RegrasApto
+                  title={"Locais nos Arredores"}
+                  cancelAll={cancelAll}
+                  setCancelAll={setCancelAll}
+                  setSaveAll={setSaveAll}
+                  saveAll={saveAll}
+                  inputsBase={locais}
+                  setInputsBase={setLocais}
+                />
+              </InfoBox>
+            </RightSide>
+          </InfoApto>
+  
+          {showCautionMsg && (
+            <CautionBox>
+              <h3 style={{ color: "#3C3E45" }}>
+                Cuidado - você tem alterações que não foram salvas!
+              </h3>
+              <ConfirmButtons
+                handleCancel={() => setShowCancelModal(true)}
+                save={() => {
+                  handleSaveAll()
+                }}
+              ></ConfirmButtons>
+            </CautionBox>
+          )}
+  
+          {showCancelModal && (
+            <Modal
+              title="Cancelar Alterações"
+              img={cancel_img.src}
+              asideText="Deseja realmente cancelar as alterações não salvas?"
+              ConfirmText="SALVAR ALTERAÇÕES"
+              ConfirmColor="Green"
+              CancelText="CANCELAR ALTERAÇÕES"
+              handleCancel={() => {
+                handleCancelAll()
+                setShowCancelModal(false)
+              }}
+              handleSave={() => {
+                handleSaveAll()
+                setShowCancelModal(false)
+                setShowSaveModal(true)
+              }}
             />
-        )}
-
-        {
-          isMakingRequest && <ModalOneButton
-            title="Aguarde"
-            asideText={isUploadingPhotos ? "Fazendo upload das fotos..." : "Guardando seus dados..."}
-            hideButton={true}
-            img={UserComputer.src}
-          />
-        }
-
-        {
-          (!isMakingRequest && showSaveModal) && (
-              <ModalOneButton
-                title={"SUCESSO"}
-                asideText={"Alterações salvas com sucesso!"}
-                img={sucess_img.src}>
-              </ModalOneButton>
-          )
-        }
-      </Main>
-    </Container>
-  );
+          )}
+  
+          {showModalUnsaved && (
+            <Modal
+              title="Alterações Não Salvas"
+              img={unsaved.src}
+              asideText="Deseja sair sem salvar as alterações?"
+              ConfirmText="SIM"
+              ConfirmColor="Green"
+              CancelText="NÃO"
+              handleCancel={() => {
+                handleSaveAll()
+                setShowModalUnsaved(false)
+                setShowModalAlterations({boolean: true, text: "Alterações Salvas"})
+                setTimeout(() => {
+                  router.push("/manageReservations")
+                ,[10000]})
+              }}
+              handleSave={() => {
+                handleCancelAll()
+                setShowModalUnsaved(false)
+                setShowModalAlterations({boolean: true, text: "Alterações não Salvas"})
+                setTimeout(() => {
+                  router.push("/manageReservations")
+                ,[1000]})
+              }}
+            />
+          )}
+  
+          {showModalAlterations.boolean && (
+              <AlertModal
+                title={showModalAlterations.text}
+              />
+          )}
+  
+          {
+            isMakingRequest && <ModalOneButton
+              title="Aguarde"
+              asideText={isUploadingPhotos ? "Fazendo upload das fotos..." : "Guardando seus dados..."}
+              hideButton={true}
+              img={UserComputer.src}
+            />
+          }
+  
+          {
+            (!isMakingRequest && showSaveModal) && (
+                <ModalOneButton
+                  title={"SUCESSO"}
+                  asideText={"Alterações salvas com sucesso!"}
+                  img={sucess_img.src}>
+                </ModalOneButton>
+            )
+          }
+        </Main>
+      </Container>
+    );
+  }
 };
 
 export default editApartment;
