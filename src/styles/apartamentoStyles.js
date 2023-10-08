@@ -131,3 +131,12 @@ export const CautionBox = styled.div`
     gap: 2vh;
     box-shadow: rgba(0, 0, 0, 0.60) 0px 5px 15px;
 `
+
+
+export const LoadingContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`

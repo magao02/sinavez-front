@@ -12,7 +12,8 @@ import {
   NoReservations,
   ButtonReserva,
   MsgArea,
-  ReservasInfo
+  ReservasInfo,
+  LoadingContainer
 } from "../../styles/AmbienteDadosStyles";
 import Navigation from "../../components/commom/Nav";
 import Button from "../../components/commom/Button";
@@ -29,6 +30,7 @@ import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
 import ReservaCard from "../../components/ReservaCard";
 import { dateFromDMY } from "../../utils/date";
+import loading from "../../assets/loading_Apto.svg"
 
 const ambienteDados = () => {
   
@@ -38,6 +40,7 @@ const ambienteDados = () => {
     const [ambientData, setAmbientData] = useState([]);
     const [reservas, setReservas] = useState([])
     const [url, setUrl] = useState("")
+    const [isMakingRequest, setIsMakingRequest] = useState(true)
 
     const isApt = !!ambientData.urlApt 
 
@@ -101,74 +104,83 @@ const ambienteDados = () => {
           setReservas(reqReservas.data)
           setUrl(router.query.url)
         }
+        setIsMakingRequest(false)
       }
     },[router.isReady]);
 
-
-  return (
-    <Container>
-      <Header>
-        <Navigation variant={"admin"}></Navigation>
-      </Header>
-      <MainContent>
-        <RedirectArea>
-          <Button
-            variant={"image"}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "1vw",
-              alignItens: "center",
-            }}
-          >
-            <Image src={leftArrow} alt={"arrow"} onClick={redirectPage}></Image>
-            <a onClick={redirectPage}>Todos os Ambientes</a>
-            <a>/</a>
-            <a>Detalhes de Reservas do ambiente</a>
-          </Button>
-        </RedirectArea>
-        <TitleArea>
-          <h2>Dados do ambiente</h2>
-        </TitleArea>
-        <AmbientWrapper>
-            <ApartmentCard obj={ambientData} url={url} showEditButton={true}></ApartmentCard>
-        </AmbientWrapper>
-        <ReservasArea>
+    if (isMakingRequest){
+      return (
+        <LoadingContainer>
+            <img src={loading.src}></img>
+        </LoadingContainer>
+      )
+    }else{
+      return (
+    
+        <Container>
+          <Header>
+            <Navigation variant={"admin"}></Navigation>
+          </Header>
+          <MainContent>
+            <RedirectArea>
+              <Button
+                variant={"image"}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "1vw",
+                  alignItens: "center",
+                }}
+              >
+                <Image src={leftArrow} alt={"arrow"} onClick={redirectPage}></Image>
+                <a onClick={redirectPage}>Todos os Ambientes</a>
+                <a>/</a>
+                <a>Detalhes de Reservas do ambiente</a>
+              </Button>
+            </RedirectArea>
             <TitleArea>
-              <h2>Reservas feitas para esse Ambiente</h2>
+              <h2>Dados do ambiente</h2>
             </TitleArea>
-            <DataArea>
-              <MonthsArea>
-                <MonthsOptions month={month} setMonth={setMonth}></MonthsOptions>
-              </MonthsArea>
-              <ReservasContent>
-                {
-                  reservasFiltered.length == 0 ?
-                    <NoReservations>
-                      <MsgArea>
-                        <h2>Ainda não há reservas</h2>
-                        <h2>nesse mês para esse ambiente!</h2>
-                      </MsgArea>
-                      <ButtonReserva onClick={redirectToReservas}>FAÇA UMA RESERVA</ButtonReserva>
-                      <img src={no_reservas.src}></img>
-                    </NoReservations>
-                  :
-                  <ReservasInfo>
+            <AmbientWrapper>
+                <ApartmentCard obj={ambientData} url={url} showEditButton={true}></ApartmentCard>
+            </AmbientWrapper>
+            <ReservasArea>
+                <TitleArea>
+                  <h2>Reservas feitas para esse Ambiente</h2>
+                </TitleArea>
+                <DataArea>
+                  <MonthsArea>
+                    <MonthsOptions month={month} setMonth={setMonth}></MonthsOptions>
+                  </MonthsArea>
+                  <ReservasContent>
                     {
-                      reservasFiltered.map(( reserva ) => {
-                        return (
-                          <ReservaCard obj={reserva} id={reserva.id} handlePagamento={handlePagamento} handleFile={handleFile} deleteFile={deleteFile}></ReservaCard>
-                        )
-                      })
+                      reservasFiltered.length == 0 ?
+                        <NoReservations>
+                          <MsgArea>
+                            <h2>Ainda não há reservas</h2>
+                            <h2>nesse mês para esse ambiente!</h2>
+                          </MsgArea>
+                          <ButtonReserva onClick={redirectToReservas}>FAÇA UMA RESERVA</ButtonReserva>
+                          <img src={no_reservas.src}></img>
+                        </NoReservations>
+                      :
+                      <ReservasInfo>
+                        {
+                          reservasFiltered.map(( reserva ) => {
+                            return (
+                              <ReservaCard obj={reserva} id={reserva.id} handlePagamento={handlePagamento} handleFile={handleFile} deleteFile={deleteFile}></ReservaCard>
+                            )
+                          })
+                        }
+                      </ReservasInfo>
                     }
-                  </ReservasInfo>
-                }
-              </ReservasContent>
-            </DataArea>
-        </ReservasArea>
-      </MainContent>
-    </Container>
-  );
+                  </ReservasContent>
+                </DataArea>
+            </ReservasArea>
+          </MainContent>
+        </Container>
+      );
+    }
 };
 
 export default ambienteDados;

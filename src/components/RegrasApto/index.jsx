@@ -6,6 +6,8 @@ import {
   InputContainer,
   DeleteButton,
   AddButton,
+  Label,
+  Placeholder,
 } from "./styles";
 
 import edit_pen from "../../assets/edit_pen.svg";
@@ -25,6 +27,7 @@ const RegrasApto = ({
   saveAll,
   inputsBase,
   setInputsBase,
+  type
 }) => {
   const [edit, setEdit] = useState(false);
   const [newRuleInput, setNewRuleInput] = useState("");
@@ -112,14 +115,20 @@ const RegrasApto = ({
                   <Image id={item.id} src={trash} alt={"trashIcon"} />
                 </DeleteButton>
               )}
-              <Input
-                variant="default"
-                type="text"
-                placeholder={item.placeholder}
-                onChange={handleChange}
-                id={item.id}
-                value={item.value}
-              ></Input>
+              <Label>
+                  <Input
+                    variant="default"
+                    type="text"
+                    //placeholder={item.placeholder}
+                    onChange={handleChange}
+                    id={item.id}
+                    value={item.value}
+                  ></Input>
+                  {
+                    !item.value && 
+                    <Placeholder>{item.placeholder}</Placeholder>
+                  }
+              </Label>
             </InputContainer>
           );
         })}
@@ -127,7 +136,7 @@ const RegrasApto = ({
       <Wrapper>
         <Input
           id="addInput"
-          placeholder="Nova Regra"
+          placeholder={type == "regras" ? "Nova Regra" : "Novo Local"}
           value={newRuleInput}
           onChange={(e) => setNewRuleInput(e.target.value)}
         ></Input>

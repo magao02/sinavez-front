@@ -220,7 +220,7 @@ const editApartment = () => {
       diaria: parseFloat(dailyRate),
       capacidadeMaxima: capacity,
       descricao: description,
-      itens: itens,
+      itens: areas,
       areasComuns: areas,
       locaisArredores: locaisValues,
       regrasConvivencia: regrasValues,
@@ -518,7 +518,8 @@ const editApartment = () => {
             </InfoBox>
             <InfoBox>
               <RegrasApto
-                title={"Regras de convivencia"}
+                title={"Regras de Convivência"}
+                type={"regras"}
                 cancelAll={cancelAll}
                 setCancelAll={setCancelAll}
                 setSaveAll={setSaveAll}
