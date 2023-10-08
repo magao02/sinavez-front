@@ -177,3 +177,13 @@ export const VerMaisButtons = styled.button`
     background-color: white;
     color: #0761BB;
 `
+
+export const LoadingContainer = styled.div`
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+`

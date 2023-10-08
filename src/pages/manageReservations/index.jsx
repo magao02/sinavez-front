@@ -15,7 +15,8 @@ import {
   LoadItens,
   VerMaisButtons,
   DropdownArea,
-  AddAmbienteArea
+  AddAmbienteArea,
+  LoadingContainer
 } from "../../styles/manageReservations";
 import Input from "../../components/commom/Input";
 import { useEffect, useState } from "react";
@@ -26,6 +27,7 @@ import { useRouter } from "next/router";
 import FilterDropdown from "../../components/commom/FilterDropdown";
 import AmbientDropdown from "../../components/commom/AmbientDropdown";
 import ApartmentCard from "../../components/commom/ApartmentCard";
+import loading from "../../assets/loading_Apto.svg";
 
 const ManageReserVations = () => {
 
@@ -36,6 +38,8 @@ const ManageReserVations = () => {
     const [searchValue, setSearchValue] = useState("")
     const [itensPerPage, setItensPerPage] = useState(3);
     const [filterReserva, setFilterReserva] = useState("")
+
+    const [isMakingRequest, setIsMakingRequest] = useState(true);
 
     const authContext = useAuth();
     const router = useRouter();
@@ -48,11 +52,13 @@ const ManageReserVations = () => {
     const getAptos = async () => {
         var {data} = await serviceApto.getAllApartments(authContext.token);
         setAptos(data)
+        setIsMakingRequest(false)
     }
 
     const getRecreationAreas = async () => {
         var {data} = await serviceArea.getAllRecreationAreas(authContext.token);
         setRecreationArea(data)
+        setIsMakingRequest(false)
     }
 
     const filterAmbients = ( ambient) => {
@@ -116,58 +122,70 @@ const ManageReserVations = () => {
                 <AmbienteTitle isSelected={!isSelected} onClick={handleSelect}>
                     <span>Áreas de lazer</span>
                 </AmbienteTitle>
-            </SelectAmbient>   
-            <AmbientsArea>
-                {toShow ?
-                    AptoFiltrado.map((data) => {
-                        return (
-                            <AmbientWrapper>
-                                <ApartmentCard obj={data} url={data.urlApt}></ApartmentCard>
-                            </AmbientWrapper>
-                        )
-                    })
-                    :
-                    RecreationAreaFiltrada.map((data) => {
-                        return (
-                            <AmbientWrapper>
-                               <ApartmentCard obj={data} url={data.urlRec}></ApartmentCard>
-                            </AmbientWrapper>
-                        )
-                    })
-                }
-            </AmbientsArea>
+            </SelectAmbient>
+
+            {
+              isMakingRequest ? 
+                <LoadingContainer>
+                    <img src={loading.src}></img>
+                </LoadingContainer>
+              :
+              
+              <AmbientsArea>
+                  {toShow ?
+                      AptoFiltrado.map((data) => {
+                          return (
+                              <AmbientWrapper>
+                                  <ApartmentCard obj={data} url={data.urlApt}></ApartmentCard>
+                              </AmbientWrapper>
+                          )
+                      })
+                      :
+                      RecreationAreaFiltrada.map((data) => {
+                          return (
+                              <AmbientWrapper>
+                                <ApartmentCard obj={data} url={data.urlRec}></ApartmentCard>
+                              </AmbientWrapper>
+                          )
+                      })
+                  }
+              </AmbientsArea>
+            }   
         </ToggleArea>
       </MainContent>
-      <LoadItens>
-        {
-          toShow ?
-          <>
-              {AptoFiltrado.length == aptos.length ?
-                <span>Não há mais resultados</span>
-                
-                :
-                <>
-                  <span>Exibindo {AptoFiltrado.length} itens de {aptos.length}</span>
-                  <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Apartamentos</VerMaisButtons>
-                </>
-              }
-          </>
-          :
-
-          <>
-            {RecreationAreaFiltrada.length == recreationArea.length ?
-              <span>Não há mais resultados</span>
-              
-              :
+      {
+        !isMakingRequest &&
+          <LoadItens>
+            {
+              toShow ?
               <>
-                <span>Exibindo {RecreationAreaFiltrada.length} itens de {recreationArea.length}</span>
-                <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Areas</VerMaisButtons>
+                  {AptoFiltrado.length == aptos.length ?
+                    <span>Não há mais resultados</span>
+                    
+                    :
+                    <>
+                      <span>Exibindo {AptoFiltrado.length} itens de {aptos.length}</span>
+                      <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Apartamentos</VerMaisButtons>
+                    </>
+                  }
               </>
-            }
-          </>
+              :
 
-        }
-      </LoadItens>
+              <>
+                {RecreationAreaFiltrada.length == recreationArea.length ?
+                  <span>Não há mais resultados</span>
+                  
+                  :
+                  <>
+                    <span>Exibindo {RecreationAreaFiltrada.length} itens de {recreationArea.length}</span>
+                    <VerMaisButtons onClick={() => setItensPerPage(itensPerPage + 3)}>Ver Mais Areas</VerMaisButtons>
+                  </>
+                }
+              </>
+
+            }
+          </LoadItens>
+      }
     </Container>
   );
 };
