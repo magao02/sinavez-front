@@ -92,12 +92,11 @@ const editApartment = () => {
 
   // REQUISICAO PUT
   const updateRequisicaoApto = async () => {
-    setIsMakingRequest(true);
-
     if(aptoTitle == "" || address == "" || !validaCamas){
       
     }else{
       setShowSaveModal(true)
+      setIsMakingRequest(true);
 
     var itens = [];
     itensApto.map((data) => {
@@ -339,7 +338,7 @@ const editApartment = () => {
               <a>/</a>
               <a onClick={() => routeToAmbientData()} >Dados do Apartamentos </a>
               <a>/</a>
-              <a>Editar Apartamento </a>
+              <a style={{"textDecoration": "underline"}}>Editar Apartamento </a>
             </Button>
           </RedirectArea>
           <h2 style={{ marginBottom: "3vh" }}>Editar o Apartamento</h2>
@@ -464,7 +463,6 @@ const editApartment = () => {
               handleSave={() => {
                 handleSaveAll()
                 setShowCancelModal(false)
-                setShowSaveModal(true)
               }}
             />
           )}
