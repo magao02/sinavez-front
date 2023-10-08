@@ -494,7 +494,7 @@ const createApartment = () => {
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos os Apartamentos </a>
             <a>/</a>
-            <a>Criar Apartamento </a>
+            <a style={{"textDecoration": "underline"}}>Criar Apartamento </a>
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Criar Apartamento</h2>
@@ -619,7 +619,6 @@ const createApartment = () => {
             handleSave={() => {
               handleSaveAll()
               setShowCancelModal(false)
-              setShowSaveModal(true)
             }}
           />
         )}

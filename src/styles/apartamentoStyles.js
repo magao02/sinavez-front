@@ -45,9 +45,7 @@ export const RedirectArea = styled.div`
         color: black;
     }
 
-    a:hover{
-        text-decoration: underline;
-    }
+
 `
 
 export const InfoApto = styled.div`

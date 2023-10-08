@@ -90,7 +90,7 @@ const editApartment = () => {
 
   // REQUISICAO POST
   const updateRequisicaoRA = async () => {
-    setIsMakingRequest(true);
+    
 
     var itens = [];
     itensApto.map((data) => {
@@ -121,6 +121,8 @@ const editApartment = () => {
     if(aptoTitle == "" || address == "" || capacity == 0){
       
     }else{
+
+    setIsMakingRequest(true);
 
     var req = {
       titulo: aptoTitle,
@@ -320,7 +322,7 @@ const editApartment = () => {
               <a>/</a>
               <a onClick={() => routeToAmbientData()}>Dados da Área de Lazer </a>
               <a>/</a>
-              <a>Editar Área de Lazer </a>
+              <a style={{"textDecoration": "underline"}}>Editar Área de Lazer </a>
             </Button>
           </RedirectArea>
           <h2 style={{ marginBottom: "3vh" }}>Editar a Área de Lazer</h2>
@@ -434,7 +436,7 @@ const editApartment = () => {
               handleSave={() => {
                 handleSaveAll()
                 setShowCancelModal(false)
-                setShowSaveModal(true)
+              
               }}
             />
           )}

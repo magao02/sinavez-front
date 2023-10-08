@@ -121,7 +121,7 @@ const InfoAptoForm = ({setAptoTitle, setAddress, camaInfo, setCamaInfo, radioInp
           />
           {
             title.length == 0 &&
-              <Placeholder>Título do Apartamento<span style={{color: "red"}}>*</span></Placeholder>
+              <Placeholder>{camas ? "Título do Apartamento" : "Título da Área de Lazer"}<span style={{color: "red"}}>*</span></Placeholder>
           }
           </Label>
           {

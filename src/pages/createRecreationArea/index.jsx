@@ -457,7 +457,7 @@ const editApartment = () => {
             <Image src={leftArrow} alt={"arrow"}></Image>
             <a>Todos as Áreas de Lazer </a>
             <a>/</a>
-            <a>Cria Área de Lazer</a>
+            <a style={{"textDecoration": "underline"}}>Cria Área de Lazer</a>
           </Button>
         </RedirectArea>
         <h2 style={{ marginBottom: "3vh" }}>Cria a Área de Lazer</h2>
@@ -571,7 +571,6 @@ const editApartment = () => {
             handleSave={() => {
               handleSaveAll()
               setShowCancelModal(false)
-              setShowSaveModal(true)
             }}
           />
         )}
