@@ -66,6 +66,10 @@ const Home = () => {
     }
   }, []);
 
+  const handleModal = () => {
+    setShowRegistrationModal(!showRegistrationModal)
+  }
+
   return (
     <>
       <Container>
@@ -112,7 +116,7 @@ const Home = () => {
                     Dedique apenas alguns minutos para completar seu cadastro. Contamos com sua participação para fortalecer nossa comunidade.
                   </TextRegistration>
                   <ButtonRegistrationContainer>
-                    <ButtonRegistraion onClick={() => setShowRegistrationModal(!showRegistrationModal)}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
+                    <ButtonRegistraion onClick={handleModal}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
                   </ButtonRegistrationContainer>
                 </CompleteRegistrationContainer>
               </MainRegistrationContent>
@@ -120,7 +124,7 @@ const Home = () => {
       
       {
         showRegistrationModal && 
-          <RegistrationModal></RegistrationModal>
+          <RegistrationModal handleModal={handleModal}></RegistrationModal>
       }
 
 
