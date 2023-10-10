@@ -16,12 +16,15 @@ import ProfileIcon from "../../assets/white_profile_icon.svg";
 import ConfigIcon from "../../assets/white_config_icon.svg";
 import BrawerIcon from "../../assets/white_brawer_icon.svg";
 import Pattern from "../../assets/home_pattern.svg"
+import registration_img from "../../assets/registration.svg"
+import right_arrow from "../../assets/right_arrow.svg"
 
 import Navigation from "../../components/commom/Nav";
 import Button from "../../components/commom/Button";
+import RegistrationModal from "../../components/RegistrationModal";
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistration, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration
 } from "../../styles/homeStyles";
 
 function InfoIcon({ children }) {
@@ -40,6 +43,9 @@ function InfoIcon({ children }) {
 }
 
 const Home = () => {
+
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
   const router = useRouter();
 
   const authContext = useAuth();
@@ -86,6 +92,37 @@ const Home = () => {
           </MainContent>
         </Main>
       </Container>
+
+   
+          <RegistrationContainer>
+              <MainRegistrationContent>
+                <ImageRegistrationWrapper>
+                  <img src={registration_img.src}></img>
+                </ImageRegistrationWrapper>
+                <CompleteRegistrationContainer>
+                  <TitleRegistration>
+                    <h1>Complete seu cadastro</h1>
+                    <BorderRegistration></BorderRegistration>
+                  </TitleRegistration>
+                  <TextRegistration>
+                    Manter seus dados atualizados no novo site do Sinavez é essencial para mantermos nossa comunicação eficaz e continuarmos a oferecer benefícios para você.
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    Dedique apenas alguns minutos para completar seu cadastro. Contamos com sua participação para fortalecer nossa comunidade.
+                  </TextRegistration>
+                  <ButtonRegistrationContainer>
+                    <ButtonRegistraion onClick={() => setShowRegistrationModal(!showRegistrationModal)}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
+                  </ButtonRegistrationContainer>
+                </CompleteRegistrationContainer>
+              </MainRegistrationContent>
+          </RegistrationContainer>
+      
+      {
+        showRegistrationModal && 
+          <RegistrationModal></RegistrationModal>
+      }
+
 
       <BottomCotainer>
         <BottonMainContent>

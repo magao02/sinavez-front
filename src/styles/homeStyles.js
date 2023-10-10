@@ -209,3 +209,81 @@ export const InfoToolTip = styled.div`
 
     animation: 0.1s linear 0s ${FadeIn};
 `;
+
+export const RegistrationContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #EDF6FF;
+    padding: 5vw;
+    padding-left: 10vw;
+    padding-right: 10vw;
+`
+
+export const MainRegistrationContent = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+`
+
+export const ImageRegistrationWrapper = styled.div`
+    width: 50%;
+
+    img{
+        height: 100%;
+    }
+`
+
+
+export const CompleteRegistrationContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 7.1vh;
+
+`
+
+export const TitleRegistration = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+`
+
+export const TextRegistration = styled.div`
+    display: flex;
+    align-items: center;
+    width: 70%;
+`
+
+export const BorderRegistration = styled.div`
+    border: 3px solid #0660BA;
+    width: 17%;
+`
+
+export const ButtonRegistrationContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+export const ButtonRegistraion = styled.button`
+    background-color: #0660BA;
+    border: none;
+    color: white;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    outline: none;
+
+    &:hover{
+        background-color: #0472e0;
+        transition: all .5s;
+    }
+`
