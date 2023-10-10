@@ -24,7 +24,7 @@ import Button from "../../components/commom/Button";
 import RegistrationModal from "../../components/RegistrationModal";
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistration, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 
@@ -112,10 +112,10 @@ const Home = () => {
                     <img src={registration_img.src}></img>
                   </ImageRegistrationWrapper>
                   <CompleteRegistrationContainer>
-                    <TitleRegistration>
+                    <TitleRegistrationArea>
                       <h1>Complete seu cadastro</h1>
                       <BorderRegistration></BorderRegistration>
-                    </TitleRegistration>
+                    </TitleRegistrationArea>
                     <TextRegistration>
                       Manter seus dados atualizados no novo site do Sinavez é essencial para mantermos nossa comunicação eficaz e continuarmos a oferecer benefícios para você.
                       <br></br>

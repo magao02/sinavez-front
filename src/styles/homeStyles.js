@@ -234,6 +234,13 @@ export const ImageRegistrationWrapper = styled.div`
     img{
         height: 100%;
     }
+
+    @media(max-width: 1063px){
+        img{
+            width: 90%
+        }
+    }
+    
 `
 
 
@@ -245,17 +252,20 @@ export const CompleteRegistrationContainer = styled.div`
 
 `
 
-export const TitleRegistration = styled.div`
+export const TitleRegistrationArea = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    
 `
 
 export const TextRegistration = styled.div`
     display: flex;
     align-items: center;
     width: 70%;
+
+    @media(max-width: 1063px){
+        font-size: 12px;
+    }
 `
 
 export const BorderRegistration = styled.div`
