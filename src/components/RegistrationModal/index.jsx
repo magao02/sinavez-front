@@ -5,8 +5,7 @@ import registration_img from "../../assets/registration.svg"
 import right_arrow from "../../assets/right_arrow.svg"
 import Image from "next/image";
 
-const RegistrationModal = ( {handleModal} ) => {
-
+const RegistrationModal = ( { handleModal } ) => {
 
     return (
         <Container>
