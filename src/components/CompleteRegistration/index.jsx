@@ -5,7 +5,7 @@ import { GenericForm, GenericFormValue } from "../GenericForm"
 import Button from "../commom/Button"
 import theme from "../../styles/theme"
 
-export const CompleteRegistration = () => {
+export const CompleteRegistration = ( { handleModal } ) => {
 
     const [currentStep, setCurrentStep] = useState(0)
 
@@ -20,6 +20,8 @@ export const CompleteRegistration = () => {
     const backStep = () => {
         if (currentStep !== 0) {
           setCurrentStep(currentStep - 1);
+        }else{
+            handleModal()
         }
       };
     
@@ -30,11 +32,10 @@ export const CompleteRegistration = () => {
         if (currentStep !== 3) {
           setCurrentStep(currentStep + 1);
         } else {
-          //await submitData();
+            handleModal()
+            //await submitData();
         }
       };
-
-    if(typeof document !== 'undefined') document.body.style.overflow="hidden"
 
     return (
         <Container>

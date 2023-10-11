@@ -26,14 +26,20 @@ export const AuthContextProvider = ({ children }) => {
   const [urlUser, setUrlUser] = useState(readFromLocalStorage("urlUser"));
   const [auth, setAuth] = useState(readFromLocalStorage("auth"));
   const [admin, setAdmin] = useState(toBool(readFromLocalStorage("admin")));
+  const [adminMaster, setAdminMaster] = useState(toBool(readFromLocalStorage("adminMaster")));
   const [dependent, setDependent] = useState();
+  const [isPendingSingUp, setIsPendingSignUp] = useState(readFromLocalStorage("isPendingSignup"));
 
   const handleLoginToken = (recivedData) => {
-    const { auth, token, urlUser, admin } = recivedData;
+    const { auth, token, urlUser, admin, isPendingSignup, adminMaster } = recivedData;
     saveToLocalStorage("token", token);
     saveToLocalStorage("urlUser", urlUser);
     saveToLocalStorage("auth", auth);
     saveToLocalStorage("admin", admin);
+    saveToLocalStorage("adminMaster", adminMaster);
+    saveToLocalStorage("isPendingSignup", isPendingSignup);
+    setIsPendingSignUp(isPendingSignup);
+    setAdminMaster(adminMaster);
     setToken(token);
     setUrlUser(urlUser);
     setAuth(auth);
@@ -45,6 +51,10 @@ export const AuthContextProvider = ({ children }) => {
     removeFromLocalStorage("urlUser");
     removeFromLocalStorage("auth");
     removeFromLocalStorage("admin");
+    removeFromLocalStorage("isPendingSignup")
+    removeFromLocalStorage("adminMaster")
+    setIsPendingSignUp(false);
+    setAdminMaster(false);
     setToken(undefined);
     setUrlUser(undefined);
     setAuth(false);
@@ -62,6 +72,8 @@ export const AuthContextProvider = ({ children }) => {
         cleanInfos,
         dependent,
         setDependent,
+        isPendingSingUp,
+        adminMaster
       }}
     >
       {children}

@@ -7,7 +7,6 @@ import Image from "next/image";
 
 const RegistrationModal = ( { handleModal } ) => {
 
-    if(typeof document !== 'undefined') document.body.style.overflow="hidden"
 
     return (
         <Container>
@@ -31,7 +30,7 @@ const RegistrationModal = ( { handleModal } ) => {
                         <ButtonTransparent onClick={handleModal}>
                             agora não
                         </ButtonTransparent>
-                        <ButtonRegistration onClick={handleModal}>
+                        <ButtonRegistration onClick={() => handleModal("complete")}>
                             COMPLETAR MEU CADASTRO <Image src={right_arrow}></Image>
                         </ButtonRegistration>
                     </ButtonArea>

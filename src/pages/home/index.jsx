@@ -48,6 +48,7 @@ const Home = () => {
 
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false)
+  const [showCompleteModal, setShowCompleteModal] = useState(false)
 
   const router = useRouter();
 
@@ -69,12 +70,23 @@ const Home = () => {
     }
   }, []);
 
-  const handleRegistrationModal = () => {
+  const handleRegistrationModal = ( action ) => {
+    if(action == 'complete'){
+      setShowCompleteModal(!showCompleteModal) 
+    }
     setShowRegistrationModal(!showRegistrationModal)
+    !showRegistrationModal ? document.body.style.overflowY="hidden" : document.body.style.overflowX="hidden", document.body.style.overflowY="auto"
   }
 
-  const handlePopUp = () => {
+  const handlePopUp = ( action ) => {
+    if(action == 'complete'){
+      setShowCompleteModal(!showCompleteModal) 
+    }
     setShowPopUp(!showPopUp)
+  }
+
+  const handleCompleteRegistration = () => {
+    setShowCompleteModal(!showCompleteModal)
   }
 
   return (
@@ -106,7 +118,7 @@ const Home = () => {
       
       <RegistrationWrapper>
         {
-          authContext.admin && (
+          !authContext.isPendingSignUp && (
             <>
               <RegistrationContainer>
                   <MainRegistrationContent>
@@ -141,13 +153,14 @@ const Home = () => {
       </RegistrationWrapper>
 
       {
-        showPopUp &&
+        !showPopUp && !authContext.isPendingSignUp &&
          <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
       }
 
-      <CompleteRegistration>
-        
-      </CompleteRegistration>
+      {
+          showCompleteModal && 
+            <CompleteRegistration handleModal={handleCompleteRegistration}/>
+      }
 
 
       <BottomCotainer>

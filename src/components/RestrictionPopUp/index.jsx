@@ -28,7 +28,7 @@ export const RestrictionPopUp = ( {handlePopUp}) => {
                             <ButtonTransparent onClick={handlePopUp}> 
                                 agora não
                             </ButtonTransparent>
-                            <ButtonRegistration onClick={handlePopUp}>
+                            <ButtonRegistration onClick={() => handlePopUp("complete") }>
                                 COMPLETAR MEU CADASTRO <Image src={right_arrow}></Image>
                             </ButtonRegistration>
                         </ButtonArea>
