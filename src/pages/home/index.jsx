@@ -27,6 +27,7 @@ import {
   Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
+import { CompleteRegistration } from "../../components/CompleteRegistration";
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
@@ -140,9 +141,13 @@ const Home = () => {
       </RegistrationWrapper>
 
       {
-        !showPopUp &&
+        showPopUp &&
          <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
       }
+
+      <CompleteRegistration>
+        
+      </CompleteRegistration>
 
 
       <BottomCotainer>

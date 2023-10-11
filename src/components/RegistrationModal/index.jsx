@@ -7,6 +7,8 @@ import Image from "next/image";
 
 const RegistrationModal = ( { handleModal } ) => {
 
+    if(typeof document !== 'undefined') document.body.style.overflow="hidden"
+
     return (
         <Container>
             <DarkBackground></DarkBackground>
