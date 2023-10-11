@@ -210,6 +210,10 @@ export const InfoToolTip = styled.div`
     animation: 0.1s linear 0s ${FadeIn};
 `;
 
+export const RegistrationWrapper = styled.div`
+    width: 100vw;
+`
+
 export const RegistrationContainer = styled.div`
     width: 100%;
     display: flex;

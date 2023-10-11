@@ -24,7 +24,7 @@ import Button from "../../components/commom/Button";
 import RegistrationModal from "../../components/RegistrationModal";
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 
@@ -102,45 +102,48 @@ const Home = () => {
           </MainContent>
         </Main>
       </Container>
+      
+      <RegistrationWrapper>
+        {
+          authContext.admin && (
+            <>
+              <RegistrationContainer>
+                  <MainRegistrationContent>
+                    <ImageRegistrationWrapper>
+                      <img src={registration_img.src}></img>
+                    </ImageRegistrationWrapper>
+                    <CompleteRegistrationContainer>
+                      <TitleRegistrationArea>
+                        <h1>Complete seu cadastro</h1>
+                        <BorderRegistration></BorderRegistration>
+                      </TitleRegistrationArea>
+                      <TextRegistration>
+                        Manter seus dados atualizados no novo site do Sinavez é essencial para mantermos nossa comunicação eficaz e continuarmos a oferecer benefícios para você.
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        Dedique apenas alguns minutos para completar seu cadastro. Contamos com sua participação para fortalecer nossa comunidade.
+                      </TextRegistration>
+                      <ButtonRegistrationContainer>
+                        <ButtonRegistraion onClick={handleRegistrationModal}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
+                      </ButtonRegistrationContainer>
+                    </CompleteRegistrationContainer>
+                  </MainRegistrationContent>
+              </RegistrationContainer>
+              {
+                showRegistrationModal && 
+                  <RegistrationModal handleModal={handleRegistrationModal}></RegistrationModal>
+              }
+            </>
+          )
+        }
+      </RegistrationWrapper>
 
       {
-        authContext.admin && (
-          <>
-            <RegistrationContainer>
-                <MainRegistrationContent>
-                  <ImageRegistrationWrapper>
-                    <img src={registration_img.src}></img>
-                  </ImageRegistrationWrapper>
-                  <CompleteRegistrationContainer>
-                    <TitleRegistrationArea>
-                      <h1>Complete seu cadastro</h1>
-                      <BorderRegistration></BorderRegistration>
-                    </TitleRegistrationArea>
-                    <TextRegistration>
-                      Manter seus dados atualizados no novo site do Sinavez é essencial para mantermos nossa comunicação eficaz e continuarmos a oferecer benefícios para você.
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      Dedique apenas alguns minutos para completar seu cadastro. Contamos com sua participação para fortalecer nossa comunidade.
-                    </TextRegistration>
-                    <ButtonRegistrationContainer>
-                      <ButtonRegistraion onClick={handleRegistrationModal}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
-                    </ButtonRegistrationContainer>
-                  </CompleteRegistrationContainer>
-                </MainRegistrationContent>
-            </RegistrationContainer>
-            {
-              showRegistrationModal && 
-                <RegistrationModal handleModal={handleRegistrationModal}></RegistrationModal>
-            }
-          </>
-        )
+        !showPopUp &&
+         <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
       }
 
-      {
-        showPopUp && 
-          <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
-      }
 
       <BottomCotainer>
         <BottonMainContent>
