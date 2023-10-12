@@ -104,7 +104,6 @@ function NavVariant({ variant, selectedPage }) {
             <>
               <UserFeaturesLeft>
                 <LogoSinavez>
-                  <Image src={SinavezLogo} />
                   <Image src={SinavezName} />
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
@@ -122,7 +121,7 @@ function NavVariant({ variant, selectedPage }) {
     case "signup": {
       return (
         <NavBar>
-          <Image src={SinavezLogo} />
+          <Image src={SinavezName} />
         </NavBar>
       );
     }
