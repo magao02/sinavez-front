@@ -208,7 +208,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
           </SubContainer>
           <SubContainer>
             <SubTitle>
-              Vínculo com a SINAVEZ
+              Vínculo com o SINAVEZ
             </SubTitle>
             <Input
               variant="default-optional"

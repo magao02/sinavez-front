@@ -27,7 +27,7 @@ const ChoicePage = () => {
 
     return (
         <Container>
-            <Title>Seja Bem Vindo a <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
+            <Title>Seja Bem Vindo ao <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
             <Buttons>
                 <Button onClick={redirectSindicato}>
                     <ButtonImage>
