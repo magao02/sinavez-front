@@ -67,9 +67,6 @@ export const MainContent = styled.div`
 `
 
 export const Title = styled.div`
-    width: 311px;
-    height: 72px;
-
     font-style: normal;
     font-weight: 700;
     font-size: 32px;
