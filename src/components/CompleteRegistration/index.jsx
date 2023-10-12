@@ -9,12 +9,16 @@ import * as validation from "../../utils/validation";
 import * as api from "../../services/accounts"
 import { useAuth } from "../../contexts/AuthContext"
 import {  useRouter } from "next/router"
+import * as services from "../../services/accounts"
+import { useCallback, useEffect } from "react"
 
 export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
 
     const authContext = useAuth();
 
     const router = useRouter();
+
+    const [userCpf, setUserCpf] = useState(null)
     
     // Inputs for the first step
     const nameRef = useRef(null);
@@ -54,6 +58,23 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
 
     const [currentStep, setCurrentStep] = useState(0);
 
+
+    const handleUserData = useCallback(async () => {
+        const responseData = await services.getUserData(
+          authContext.urlUser,
+          authContext.token
+        );
+        return responseData.data;
+      }, [authContext.token, authContext.urlUser]);
+
+    const getUserCpf = useCallback(async () => {
+        const {cpf} = await handleUserData();
+        setUserCpf(cpf);
+    })
+
+    useEffect(() => {
+         getUserCpf()
+    }, []);
 
     const Step = ({ active, number, children }) => {
         return (
@@ -377,7 +398,7 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
                                         variant="completeRegistration"
                                         type="password"
                                         ref={currPasswordRef}
-                                        validate={validation.testRequiredCpf}
+                                        validate={value => validation.isMatchingCpfRequired(userCpf, value)}
                                     />
                                     <GenericFormValue
                                         label="Nova Senha"

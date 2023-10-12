@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -30,6 +30,7 @@ import {
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
+import * as service from "../../services/accounts"
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
@@ -78,20 +79,22 @@ const Home = () => {
   // FUNCOES DE CONTROLE DOS MODAIS DE COMPLETAR CADASTRO
   const handleRegistrationModal = ( action ) => {
     if(action == 'complete'){
-      setShowCompleteModal(!showCompleteModal) 
+      handleCompleteRegistration() 
     }
     setShowRegistrationModal(!showRegistrationModal)
+    //!showRegistrationModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
 
   const handlePopUp = ( action ) => {
     if(action == 'complete'){
-      setShowCompleteModal(!showCompleteModal) 
+      handleCompleteRegistration()  
     }
     setShowPopUp(!showPopUp)
   }
 
   const handleCompleteRegistration = () => {
     setShowCompleteModal(!showCompleteModal)
+    !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
 
   return (
