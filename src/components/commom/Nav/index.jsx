@@ -13,7 +13,7 @@ import Button from "../Button";
 import LinkBox from "../LinkBox"
 import DropDownMenu from "../DropDownMenu";
 
-import SinavezName from "../../../assets/sinavez_logo_azul_texto.svg";
+import SinavezName from "../../../assets/sinavez_logo_text_blue.svg";
 
 import { NavBar, UserFeaturesLeft, UserFeaturesRight, LogoSinavez } from "./styles";
 

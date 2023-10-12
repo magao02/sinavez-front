@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import Image from "next/image.js";
 
 import Pattern from "../../assets/horizontal_pattern.png";
-import SinavezLogo from "../../assets/sinavez_logo_branco.svg";
-import SinavezText from "../../assets/text_sinavez_branco.svg";
+import SinavezLogo from "../../assets/sinavez_logo_white.svg";
+import SinavezText from "../../assets/sinavez_text_white.svg";
 import ImpostoLogo from "../../assets/multiple_files.svg";
 
 import {
