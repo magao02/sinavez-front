@@ -206,7 +206,7 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
 
                             <SubContainer gap={true} height={true}>
                                 <SubTitle>
-                                    Vínculo com a SINAVEZ
+                                    Vínculo com o SINAVEZ
                                 </SubTitle>
                                 <Input
                                     variant="default-optional"

@@ -102,7 +102,7 @@ const OnBoardingPage = () => {
                     <>
                         <DarkBackground pageHeight={'150vh'}/>
                         <ConfirmationScreen variant={"cancelOnBoarding"} buttonText={"PULAR TUTORIAL"} continue={() => setCanceling(false)}>
-                            Tem certeza que deseja pular o tutorial referente a nova plataforma da SINAVEZ?
+                            Tem certeza que deseja pular o tutorial referente a nova plataforma do SINAVEZ?
                         </ConfirmationScreen>
                     </>
                 )}
@@ -245,7 +245,7 @@ const OnBoardingPage = () => {
                    <>
                     <DarkBackground pageHeight={'150vh'}/>
                     <ConfirmationScreen variant={"cancelOnBoarding"} buttonText={"PULAR TUTORIAL"} continue={() => setCanceling(false)}>
-                        Tem certeza que deseja pular o tutorial referente a nova plataforma da SINAVEZ?
+                        Tem certeza que deseja pular o tutorial referente a nova plataforma do SINAVEZ?
                     </ConfirmationScreen>
                     </>
                 )}

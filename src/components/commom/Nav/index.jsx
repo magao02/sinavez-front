@@ -13,8 +13,7 @@ import Button from "../Button";
 import LinkBox from "../LinkBox"
 import DropDownMenu from "../DropDownMenu";
 
-import SinavezLogo from "../../../assets/logo_picture.svg";
-import SinavezName from "../../../assets/sinavez_name.svg";
+import SinavezName from "../../../assets/sinavez_logo_text_blue.svg";
 
 import { NavBar, UserFeaturesLeft, UserFeaturesRight, LogoSinavez } from "./styles";
 
@@ -84,7 +83,6 @@ function NavVariant({ variant, selectedPage }) {
             <>
               <UserFeaturesLeft>
                 <LogoSinavez>
-                  <Image src={SinavezLogo} />
                   <Image src={SinavezName} />
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
@@ -106,7 +104,6 @@ function NavVariant({ variant, selectedPage }) {
             <>
               <UserFeaturesLeft>
                 <LogoSinavez>
-                  <Image src={SinavezLogo} />
                   <Image src={SinavezName} />
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
@@ -124,7 +121,7 @@ function NavVariant({ variant, selectedPage }) {
     case "signup": {
       return (
         <NavBar>
-          <Image src={SinavezLogo} />
+          <Image src={SinavezName} />
         </NavBar>
       );
     }

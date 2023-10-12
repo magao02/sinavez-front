@@ -68,11 +68,11 @@ const Home = () => {
           <MainContent>
             <Texts>
               <Title>
-                Bem vindo à Sinavez
+                Bem vindo ao Sinavez<br/>
                 Sinta-se a vontade!
               </Title>
               <Text>
-                Agora a Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!
+                Agora o Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!<br/>
                 Com o Onboarding você pode descobrir como navegar com facilidade e tranquilidade e sem se estressar com o caminho!
               </Text>
               <Link href={"/onboarding"}>

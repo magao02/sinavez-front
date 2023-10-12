@@ -5,7 +5,7 @@ import Image from "next/image.js";
 
 import Pattern from "../../assets/login_pattern.svg";
 import Ilustration from "../../assets/form_illustration.svg";
-import LogoImage from "../../assets/sinavez_logo_azul_texto.svg";
+import LogoImage from "../../assets/sinavez_logo_text_blue.svg";
 
 import {
   Container,

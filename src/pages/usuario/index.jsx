@@ -473,7 +473,7 @@ const UserDataPopup = ({ value, onClose }) => {
               </Dados>
 
               <Dados>
-                <Subtitle2>Vínculo com a SINAVEZ</Subtitle2>
+                <Subtitle2>Vínculo com o SINAVEZ</Subtitle2>
                 <Input
                   label="Número de registro no conselho"
                   variant="default-optional"
