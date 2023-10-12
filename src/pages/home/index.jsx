@@ -44,14 +44,15 @@ function InfoIcon({ children }) {
   </>;
 }
 
-const Home = () => {
 
+const Home = () => {
+  
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-
+  
   const router = useRouter();
-
+  
   const authContext = useAuth();
 
   const checkNav = () => {
