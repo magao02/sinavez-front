@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import {  useState } from "react"
 import DarkBackground from "../commom/DarkBackground"
 import { Container, MainContentContainer, TitleArea, Steps, StepDivider, StepColor, StepNumber, FormContainer, ButtonContainer } from "./styles"
 import { GenericForm, GenericFormValue } from "../GenericForm"
@@ -7,10 +7,10 @@ import theme from "../../styles/theme"
 import { useRef } from "react"
 import * as validation from "../../utils/validation";
 import * as api from "../../services/accounts"
-import { AuthContext, useAuth } from "../../contexts/AuthContext"
-import { Router, useRouter } from "next/router"
+import { useAuth } from "../../contexts/AuthContext"
+import {  useRouter } from "next/router"
 
-export const CompleteRegistration = ( { handleModal } ) => {
+export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
 
     const authContext = useAuth();
 
@@ -52,7 +52,8 @@ export const CompleteRegistration = ( { handleModal } ) => {
     const passwordRef = useRef(null);
     const passwordConfRef = useRef(null);
 
-    const [currentStep, setCurrentStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(0);
+
 
     const Step = ({ active, number, children }) => {
         return (
@@ -69,7 +70,7 @@ export const CompleteRegistration = ( { handleModal } ) => {
             handleModal()
         }
       };
-    
+
 
     const nextStep = async () => {
         if (!await validate()) return;
@@ -78,7 +79,8 @@ export const CompleteRegistration = ( { handleModal } ) => {
           setCurrentStep(currentStep + 1);
         } else {
             handleModal()
-            await submitData();
+            handleSuccessModal(true)
+            //await submitData();
         }
       };
 
@@ -103,7 +105,6 @@ export const CompleteRegistration = ( { handleModal } ) => {
             regional: {
               municipio: cidadeRef.current.value
             },
-            // TODO: should these be added?
             numInscricao: subsNumRef.current.value ?? "",
             dataAfiliacao: dateAffiliationRef.current.value ?? "",
             formacaoSuperior: cursoRef.current.value ?? "",
@@ -122,7 +123,6 @@ export const CompleteRegistration = ( { handleModal } ) => {
             console.log(error?.response?.data?.message)
           }
       }
-
 
       const validate = async () => {
         let refs;
@@ -148,7 +148,7 @@ export const CompleteRegistration = ( { handleModal } ) => {
     return (
         <Container>
             <DarkBackground></DarkBackground>
-            <MainContentContainer>
+            <MainContentContainer>    
                 <TitleArea>
                     <h3>COMPLETE SEU CADASTRO</h3>
                 </TitleArea>

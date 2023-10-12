@@ -22,6 +22,8 @@ import right_arrow from "../../assets/right_arrow.svg"
 import Navigation from "../../components/commom/Nav";
 import Button from "../../components/commom/Button";
 import RegistrationModal from "../../components/RegistrationModal";
+import { ModalOneButton } from "../../components/commom/ModalOneButton";
+import success_img from "../../assets/sucess_img.svg"
 
 import {
   Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper
@@ -50,6 +52,7 @@ const Home = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
+  const [showSucessModal, setShowSuccessModal] = useState(false)
   
   const router = useRouter();
   
@@ -71,12 +74,13 @@ const Home = () => {
     }
   }, []);
 
+
+  // FUNCOES DE CONTROLE DOS MODAIS DE COMPLETAR CADASTRO
   const handleRegistrationModal = ( action ) => {
     if(action == 'complete'){
       setShowCompleteModal(!showCompleteModal) 
     }
     setShowRegistrationModal(!showRegistrationModal)
-    !showRegistrationModal ? document.body.style.overflowY="hidden" : document.body.style.overflowX="hidden", document.body.style.overflowY="auto"
   }
 
   const handlePopUp = ( action ) => {
@@ -117,10 +121,10 @@ const Home = () => {
         </Main>
       </Container>
       
-      <RegistrationWrapper>
         {
           !authContext.isPendingSignUp && (
-            <>
+            
+            <RegistrationWrapper>
               <RegistrationContainer>
                   <MainRegistrationContent>
                     <ImageRegistrationWrapper>
@@ -148,21 +152,34 @@ const Home = () => {
                 showRegistrationModal && 
                   <RegistrationModal handleModal={handleRegistrationModal}></RegistrationModal>
               }
-            </>
+              {
+                  showCompleteModal && !authContext.isPendingSignUp && 
+                    <CompleteRegistration handleModal={handleCompleteRegistration} handleSuccessModal={setShowSuccessModal}/>
+              }
+
+              {
+                showSucessModal && 
+                    <ModalOneButton
+                      title={"SUCESSO"}
+                      img={success_img.src}
+                      buttonFunction={() => setShowSuccessModal(false)}
+                      asideText={<div>
+                                  Cadastro completo! 
+                                  <br /> Você pode ver e editar seus dados  
+                                  <br /> clicando no seu perfil e em “Meus Dados”  
+                                  <br /> na barra superior.
+                                </div>
+                      }
+                    />
+              }
+            </RegistrationWrapper>
           )
         }
-      </RegistrationWrapper>
 
       {
         !showPopUp && !authContext.isPendingSignUp &&
          <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
       }
-
-      {
-          showCompleteModal && 
-            <CompleteRegistration handleModal={handleCompleteRegistration}/>
-      }
-
 
       <BottomCotainer>
         <BottonMainContent>
