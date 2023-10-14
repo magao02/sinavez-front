@@ -24,17 +24,11 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
   const birthdayRef = useRef(null);
   const rgRef = useRef(null);
   const dataEmissaoRef = useRef(null);
-  const ruaRef = useRef(null);
-  const bairroRef = useRef(null);
-  const numeroRef = useRef(null);
-  const municipioRef = useRef(null);
-  const estadoRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const telefoneRef = useRef(null);
-  const naturalidadeRef = useRef(null);
-  const nacionalidadeRef = useRef("Brasileiro");
   const fileInput = useRef(null);
+  const formacaoSuperiorRef = useRef();
+  const dataFormacaoRef = useRef();
+  const filiacaoRef = useRef();
+  const universidadeRef = useRef();
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
@@ -43,12 +37,6 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
       birthdayRef,
       rgRef,
       dataEmissaoRef,
-      emailRef,
-      passwordRef,
-      telefoneRef,
-      naturalidadeRef,
-      nacionalidadeRef,
-      
     ];
 
     const validationResults = await Promise.all(
@@ -70,16 +58,10 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
       nascimento,
       rg,
       emissao,
-      rua,
-      bairro,
-      numero,
-      municipio,
-      estado,
-      email,
-      password,
-      telefone,
-      naturalidade,
-      nacionalidade,
+      formacaoSuperior,
+      dataFormacao,
+      filiacao,
+      universidade,
      
     ] = [
       nameRef,
@@ -87,16 +69,10 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
       birthdayRef,
       rgRef,
       dataEmissaoRef,
-      ruaRef,
-      bairroRef,
-      numeroRef,
-      municipioRef,
-      estadoRef,
-      emailRef,
-      passwordRef,
-      telefoneRef,
-      naturalidadeRef,
-      nacionalidadeRef,
+      formacaoSuperiorRef,
+      dataFormacaoRef,
+      filiacaoRef,
+      universidadeRef,
       
     ].map((inputRef) => inputRef.current?.value);
 
@@ -106,12 +82,10 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
       nascimento,
       rg,
       emissao,
-      endereco: { rua, bairro, numero, municipio, estado },
-      email,
-      password,
-      telefone,
-      regional: { municipio, estado, naturalidade, nacionalidade },
-  
+      formacaoSuperior,
+      dataFormacao,
+      filiacao,
+      universidade,
     });
   });
 
@@ -205,7 +179,15 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
               initialValue={previousData.name}
               validate={validation.requiredTextField}
             />
-            <InputsContainer>
+            <Input
+                variant="default"
+                label={"Data de Nascimento"}
+                name={"nascimento"}
+                initialValue={previousData.nascimento}
+                ref={birthdayRef}
+                placeholder={"DD/MM/AAAA"}
+                validate={validation.requiredTextField}
+              />
               <Input
                 variant="default"
                 label={"CPF"}
@@ -214,15 +196,6 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
                 initialValue={previousData.cpf}
                 ref={cpfRef}
                 validate={validation.testRequiredCpf}
-              />
-              <Input
-                variant="default"
-                label={"Data de Nascimento"}
-                name={"nascimento"}
-                initialValue={previousData.nascimento}
-                ref={birthdayRef}
-                placeholder={"DD/MM/AAAA"}
-                validate={validation.requiredTextField}
               />
               <Input
                 variant="default"
@@ -242,6 +215,92 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
                 ref={dataEmissaoRef}
                 validate={validation.testDate}
               />
+              <Input
+              variant="default-optional"
+              label={"Filiação"}
+              name={"filiacao"}
+              placeholder={"Filiação"}
+              initialValue={previousData.filiacao}
+              ref={filiacaoRef}
+            />
+              <Input
+              variant="default-optional"
+              label={"Curso de Formação"}
+              name={"curso_de_formacao"}
+              placeholder={"Digite seu curso de formação"}
+              initialValue={previousData.formacaoSuperior}
+              ref={formacaoSuperiorRef}
+            />
+            <Input
+              variant="default-optional"
+              label={"Data de Formação"}
+              name={"data_de_formacao"}
+              placeholder={"DD/MM/AAAA"}
+              initialValue={previousData.dataFormacao}
+              ref={dataFormacaoRef}
+            />
+             <Input
+              variant="default-optional"
+              label={"Universiade"}
+              name={"universidade"}
+              placeholder={"Universidade"}
+              initialValue={previousData.universidade}
+              ref={universidadeRef}
+            />
+          </SubContainer>
+         
+        </Main>
+      </Body>
+      <Footer>
+        <Button variant={"text"} onClick={cancelForm}>
+          CANCELAR
+        </Button>
+        <Button variant={"light"} onClick={imageSave}>
+          CONTINUAR
+        </Button>
+      </Footer>
+      {globalMessage && <span style={{ color: 'red', fontWeight: 'bold' }}>{globalMessage}</span>}
+    </Container>
+  );
+};
+
+{/* <InputsContainer>
+              
+               <SubContainer>
+            <SubTitle>
+              Dados cadastrais
+            </SubTitle>
+            <Input
+              variant="default"
+              label={"E-mail"}
+              name={"E-mail"}
+              placeholder={"email@domínio.com"}
+              initialValue={previousData.email}
+              ref={emailRef}
+              validate={validation.testRequiredEmail}
+            />
+            <Input
+              variant="default"
+              label={"Senha"}
+              name={"senha"}
+              placeholder={"********"}
+              initialValue={previousData.password}
+              ref={passwordRef}
+              type="password"
+              validate={validation.testRequiredPassword}
+            />
+            <Input
+              variant="default"
+              label={"Telefone"}
+              name={"Telefone"}
+              placeholder={"(XX) YYYY-ZZZZ"}
+              initialValue={previousData.telefone}
+              ref={telefoneRef}
+              validate={validation.testRequiredPhone}
+            />
+          </SubContainer>
+              
+             
               <Input
                 variant="default-optional"
                 label={"Naturalidade"}
@@ -313,54 +372,6 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
                 ref={estadoRef}
                 validate={validation.TextField}
               />
-            </InputsContainer>
-          </SubContainer>
-          <SubContainer>
-            <SubTitle>
-              Dados cadastrais
-            </SubTitle>
-            <Input
-              variant="default"
-              label={"E-mail"}
-              name={"E-mail"}
-              placeholder={"email@domínio.com"}
-              initialValue={previousData.email}
-              ref={emailRef}
-              validate={validation.testRequiredEmail}
-            />
-            <Input
-              variant="default"
-              label={"Senha"}
-              name={"senha"}
-              placeholder={"********"}
-              initialValue={previousData.password}
-              ref={passwordRef}
-              type="password"
-              validate={validation.testRequiredPassword}
-            />
-            <Input
-              variant="default"
-              label={"Telefone"}
-              name={"Telefone"}
-              placeholder={"(XX) YYYY-ZZZZ"}
-              initialValue={previousData.telefone}
-              ref={telefoneRef}
-              validate={validation.testRequiredPhone}
-            />
-          </SubContainer>
-        </Main>
-      </Body>
-      <Footer>
-        <Button variant={"text"} onClick={cancelForm}>
-          CANCELAR
-        </Button>
-        <Button variant={"light"} onClick={imageSave}>
-          CONTINUAR
-        </Button>
-      </Footer>
-      {globalMessage && <span style={{ color: 'red', fontWeight: 'bold' }}>{globalMessage}</span>}
-    </Container>
-  );
-};
+            </InputsContainer> */}
 
 export default FirstStepForm;

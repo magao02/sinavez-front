@@ -135,7 +135,7 @@ const takeNewData = (data) => {
 
       <Body>
         <Description>
-          Passo 3 de 3
+          Passo 4 de 4
         </Description>
         <Main height={true}>
           <MainHead>

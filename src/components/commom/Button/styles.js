@@ -292,7 +292,7 @@ function getStyleByVariant(variant) {
     case "home": {
       return css`
         width: 39vw;
-        height: 25vh;
+        height: 27vh;
         padding: 34px;
         gap: 36px;
 
@@ -303,6 +303,24 @@ function getStyleByVariant(variant) {
 
         border-radius: 8px;
         background: var(--azul-0, ${theme.colors.blue.heavy});
+        box-shadow: 0px 4px 4px 0px rgba(7, 96, 186, 0.45);
+      `
+    }
+
+    case "pre-cad": {
+      return css`
+        width: 39vw;
+        height: 27vh;
+        padding: 34px;
+        gap: 36px;
+
+        grid-template-columns: 20% 80%;
+        display: grid;
+
+        border: none;
+
+        border-radius: 8px;
+        background: var(--Azul-1, #5D9BDA);
         box-shadow: 0px 4px 4px 0px rgba(7, 96, 186, 0.45);
       `
     }

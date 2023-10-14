@@ -101,7 +101,7 @@ export const ContainerTable = styled.div`
 `;
 
 export const ContainerData = styled.div`
-    height: 1000px;
+    height: 82%;
     display: flex;
     justify-content: center;
     align-items: center;
