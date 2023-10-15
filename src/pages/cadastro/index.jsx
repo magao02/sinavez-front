@@ -211,7 +211,6 @@ const CadastroPage = () => {
               />
               <GenericFormValue
                 label="Data de Emissão"
-                variant="default"
                 placeholder="00/00/0000"
                 description="Digite a data de emissão no campo acima."
                 ref={dataEmissaoRef}
@@ -260,14 +259,12 @@ const CadastroPage = () => {
               <FormRow>
                 <GenericFormValue
                   label="Rua"
-                  variant="default"
                   description="Digite o nome da rua da sua residência."
                   ref={ruaRef}
                   validate={validation.requiredTextField}
                 />
                 <GenericFormValue
                   label="Número de Residência"
-                  variant="default"
                   description="Digite o número de sua residência."
                   ref={numeroResRef}
                   validate={validation.requiredTextField}
@@ -275,7 +272,6 @@ const CadastroPage = () => {
               </FormRow>
               <GenericFormValue
                 label="Bairro"
-                variant="default"
                 description="Digite o bairro em que você reside."
                 ref={bairroRef}
                 validate={validation.requiredTextField}
@@ -289,14 +285,12 @@ const CadastroPage = () => {
               <FormRow>
                 <GenericFormValue
                   label="Cidade"
-                  variant="default"
                   description="Digite a cidade em que você reside."
                   ref={cidadeRef}
                   validate={validation.requiredTextField}
                 />
                 <GenericFormValue
                   label="Estado"
-                  variant="default"
                   description="Digite o Estado em que você reside."
                   ref={estadoRef}
                   validate={validation.requiredTextField}
@@ -315,7 +309,6 @@ const CadastroPage = () => {
               <GenericFormValue
                 label="Email"
                 placeholder="seuemail@dominio.com"
-                variant="default"
                 description="Digite o seu melhor email."
                 ref={emailRef}
                 validate={validation.testRequiredEmail}
