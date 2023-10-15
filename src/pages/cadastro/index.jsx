@@ -48,19 +48,27 @@ const CadastroPage = () => {
   const rgRef = useRef(null);
   const dataEmissaoRef = useRef(null);
   const filiacaoRef = useRef(null);
+  const cursoFormacaoRef = useRef(null);
+  const dataFormacaoRef = useRef(null);
+  const universidadeRef = useRef(null);
 
   // Inputs for the second step
   const profissaoRef = useRef(null);
+  const empresaRef = useRef(null);
   const phoneRef = useRef(null);
-  const telefoneFixoRef = useRef(null);
   const ruaRef = useRef(null);
   const bairroRef = useRef(null);
   const numeroResRef = useRef(null);
-  const complementoRef = useRef(null);
   const cidadeRef = useRef(null);
-  const estadoRef = useRef(null);
+  const salarioRef = useRef(null);
+  const cepRef = useRef(null);
 
-  // Inputs for the third step
+  const numRegistroRef = useRef(null);
+  const dataRegistroRef = useRef(null);
+  const numInscricaoRef = useRef(null);
+  const dataAfiliacaoRef = useRef(null);
+
+  // Inputs for the last step
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const passwordConfRef = useRef(null);
@@ -76,12 +84,15 @@ const CadastroPage = () => {
     let refs;
     switch (currentStep) {
       case 0:
-        refs = [nameRef, birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef];
+        refs = [nameRef, birthdayRef, cpfRef, rgRef, dataEmissaoRef, filiacaoRef, dataFormacaoRef];
         break;
       case 1:
-        refs = [profissaoRef, phoneRef, telefoneFixoRef, ruaRef, bairroRef, numeroResRef, complementoRef, cidadeRef, estadoRef];
+        refs = [profissaoRef, phoneRef, ruaRef, bairroRef, numeroResRef, cidadeRef, salarioRef, cepRef, empresaRef];
         break;
       case 2:
+        refs = [numRegistroRef, dataRegistroRef, numInscricaoRef, dataAfiliacaoRef];
+        break;
+      case 3:
         refs = [emailRef, passwordRef, passwordConfRef];
         break;
       default: return false;
@@ -95,7 +106,7 @@ const CadastroPage = () => {
   const nextStep = async () => {
     if (!await validate()) return;
 
-    if (currentStep !== 2) {
+    if (currentStep !== 3) {
       setCurrentStep(currentStep + 1);
       setShouldFlipAnimation(false);
     } else {
@@ -120,24 +131,23 @@ const CadastroPage = () => {
       endereco: {
         rua: ruaRef.current.value,
         bairro: bairroRef.current.value,
-        complemento: complementoRef.current.value,
         numero: numeroResRef.current.value,
       },
-      telefoneFixo: telefoneFixoRef.current.value,
       regional: {
         municipio: cidadeRef.current.value,
-        estado: estadoRef.current.value,
       },
-      // TODO: should these be added?
-      numInscricao: "",
-      dataAfiliacao: "",
-      formacaoSuperior: "",
+      formacaoSuperior: cursoFormacaoRef.current.value,
+      dataFormacao: dataFormacaoRef.current.value,
+      universidade: universidadeRef.current.value,
+      empresa: empresaRef.current.value,
+      salario: salarioRef.current.value,
+      numInscricao: numInscricaoRef.current.value,
+      dataAfiliacao: dataAfiliacaoRef.current.value,
+      numRegistroConselho: numRegistroRef.current.value,
+      dataRegistroConselho: dataRegistroRef.current.value,
+
+      // unused
       instituicaoSuperior: "",
-      dataFormacao: "",
-      numRegistroConselho: "",
-      dataRegistroConselho: "",
-      empresa: "",
-      salario: "",
     };
 
     setApiError("");
@@ -172,7 +182,9 @@ const CadastroPage = () => {
           <StepDivider />
           <Step active={currentStep === 1} number="2">Contatos</Step>
           <StepDivider />
-          <Step active={currentStep === 2} number="3">Senha</Step>
+          <Step active={currentStep === 2} number="3">Vínculo</Step>
+          <StepDivider />
+          <Step active={currentStep === 3} number="4">Senha</Step>
         </Steps>
 
         {currentStep === 0 && (
@@ -195,20 +207,22 @@ const CadastroPage = () => {
                 ref={birthdayRef}
                 validate={validation.testRequiredData}
               />
-              <GenericFormValue
-                label="CPF"
-                placeholder="000.000.000-00"
-                description="Digite o seu CPF no campo acima."
-                ref={cpfRef}
-                validate={validation.testRequiredCpf}
-              />
-              <GenericFormValue
-                label="RG"
-                placeholder="00.000.000"
-                description="Digite o seu RG no campo acima."
-                ref={rgRef}
-                validate={validation.testRequiredNumbers}
-              />
+              <FormRow>
+                <GenericFormValue
+                  label="CPF"
+                  placeholder="000.000.000-00"
+                  description="Digite o seu CPF no campo acima."
+                  ref={cpfRef}
+                  validate={validation.testRequiredCpf}
+                />
+                <GenericFormValue
+                  label="RG"
+                  placeholder="00.000.000"
+                  description="Digite o seu RG no campo acima."
+                  ref={rgRef}
+                  validate={validation.testRequiredNumbers}
+                />
+              </FormRow>
               <GenericFormValue
                 label="Data de Emissão"
                 placeholder="00/00/0000"
@@ -218,10 +232,36 @@ const CadastroPage = () => {
               />
               <GenericFormValue
                 label="Filiação"
+                variant="default-optional"
                 placeholder="Sua filiação"
                 description="Digite sua filiação no campo acima."
                 ref={filiacaoRef}
-                validate={validation.requiredTextField}
+              />
+              <FormRow>
+                <GenericFormValue
+                  label="Curso de formação"
+                  variant="default-optional"
+                  placeholder="Seu curso de formação"
+                  description="Digite seu curso de formação no campo acima."
+                  ref={cursoFormacaoRef}
+                  validate={validation.requiredTextField}
+                />
+                <GenericFormValue
+                  label="Data de formação"
+                  variant="default-optional"
+                  placeholder="DD/MM/AAAA"
+                  description="Digite a data de formação no campo acima."
+                  ref={dataFormacaoRef}
+                  validate={validation.testDate}
+                />
+              </FormRow>
+              <GenericFormValue
+                label="Universidade"
+                variant="default-optional"
+                placeholder="Universidade"
+                description="Digite sua universidade no campo acima."
+                ref={universidadeRef}
+                validate={validation.testDate}
               />
             </GenericForm>
           </FormBox>
@@ -241,21 +281,34 @@ const CadastroPage = () => {
               />
               <FormRow>
                 <GenericFormValue
-                  label="Celular"
-                  placeholder="(00) 00000-0000"
-                  description="Digite o número em uso do seu celular."
-                  ref={phoneRef}
-                  validate={validation.testRequiredPhone}
+                  label="Organização ou empresa que trabalha"
+                  variant="default-optional"
+                  placeholder="Digite onde você trabalha"
+                  description="Digite onde você trabalha."
+                  ref={empresaRef}
                 />
                 <GenericFormValue
-                  label="Telefone Fixo"
-                  placeholder="(00) 00000-0000"
+                  label="Salário"
                   variant="default-optional"
-                  description="Digite o número em uso do seu telefone fixo."
-                  ref={telefoneFixoRef}
-                  validate={validation.testPhone}
+                  placeholder="0"
+                  description="Digite seu salário."
+                  ref={salarioRef}
                 />
               </FormRow>
+              <GenericFormValue
+                label="Telefone"
+                placeholder="(00) 00000-0000"
+                description="Digite o número em uso do seu celular."
+                ref={phoneRef}
+                validate={validation.testRequiredPhone}
+              />
+              <GenericFormValue
+                label="CEP"
+                variant="default-optional"
+                placeholder="00000-000"
+                description="Digite o seu CEP no campo acima."
+                ref={cepRef}
+              />
               <FormRow>
                 <GenericFormValue
                   label="Rua"
@@ -270,29 +323,17 @@ const CadastroPage = () => {
                   validate={validation.requiredTextField}
                 />
               </FormRow>
-              <GenericFormValue
-                label="Bairro"
-                description="Digite o bairro em que você reside."
-                ref={bairroRef}
-                validate={validation.requiredTextField}
-              />
-              <GenericFormValue
-                label="Complemento"
-                variant="default-optional"
-                description="Digite o complemento de seu endereço."
-                ref={complementoRef}
-              />
               <FormRow>
+                <GenericFormValue
+                  label="Bairro"
+                  description="Digite o bairro em que você reside."
+                  ref={bairroRef}
+                  validate={validation.requiredTextField}
+                />
                 <GenericFormValue
                   label="Cidade"
                   description="Digite a cidade em que você reside."
                   ref={cidadeRef}
-                  validate={validation.requiredTextField}
-                />
-                <GenericFormValue
-                  label="Estado"
-                  description="Digite o Estado em que você reside."
-                  ref={estadoRef}
                   validate={validation.requiredTextField}
                 />
               </FormRow>
@@ -301,6 +342,46 @@ const CadastroPage = () => {
         )}
 
         {currentStep === 2 && (
+          <FormBox flipAnimation={shouldFlipAnimation}>
+            <Title>
+              Vínculo com o SINAVEZ
+            </Title>
+            <GenericForm>
+              <GenericFormValue
+                label="Número de registro no conselho"
+                variant="default-optional"
+                placeholder="Digite o seu número de registro no conselho"
+                description="Digite o seu número de registro no conselho."
+                ref={numRegistroRef}
+              />
+              <GenericFormValue
+                label="Data de registro no conselho"
+                variant="default-optional"
+                placeholder="DD/MM/AAAA"
+                description="Digite sua data de registro no conselho."
+                ref={dataRegistroRef}
+                validate={validation.testDate}
+              />
+              <GenericFormValue
+                label="Número de inscrição"
+                variant="default-optional"
+                placeholder="Número de inscrição"
+                description="Digite seu número de inscrição."
+                ref={numInscricaoRef}
+              />
+              <GenericFormValue
+                label="Data de afiliação"
+                variant="default-optional"
+                placeholder="DD/MM/AAAA"
+                description="Digite sua data de afiliação."
+                ref={dataAfiliacaoRef}
+                validate={validation.testDate}
+              />
+            </GenericForm>
+          </FormBox>
+        )}
+
+        {currentStep === 3 && (
           <FormBox flipAnimation={shouldFlipAnimation}>
             <Title>
               Finalização cadastral!
@@ -338,7 +419,7 @@ const CadastroPage = () => {
 
         <ButtonContainer>
           <Button onClick={backStep} variant="default">{currentStep === 0 ? "CANCELAR" : "VOLTAR"}</Button>
-          <Button onClick={nextStep} variant="default">{currentStep === 2 ? "FINALIZAR" : "PRÓXIMO"}</Button>
+          <Button onClick={nextStep} variant="default">{currentStep === 3 ? "FINALIZAR" : "PRÓXIMO"}</Button>
         </ButtonContainer>
       </RightContent>
       

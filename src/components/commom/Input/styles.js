@@ -30,9 +30,12 @@ function getStyleByVariant(variant) {
                     width: 100%;
                 }
 
+                &:focus-within label {
+                    color: ${theme.colors.blue.heavy};
+                }
+
                 div {
                     display: flex;
-                    flex-direction: column;
                     justify-items: center;
                     width: 100%;
 
@@ -93,7 +96,6 @@ function getStyleByVariant(variant) {
                 align-items: center;
                 width: 100%;
                 gap: 0.8rem;
-                }
 
                 label {
                     color: ${theme.colors.dark.heavy};
@@ -116,7 +118,6 @@ function getStyleByVariant(variant) {
                 align-items: center;
                 width: 100%;
                 gap: 0.8rem;
-                }
 
                 label {
                     color: ${theme.colors.dark.heavy};
