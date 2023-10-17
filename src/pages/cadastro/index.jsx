@@ -276,9 +276,9 @@ const CadastroPage = () => {
             <GenericForm>
               <GenericFormValue
                 label="Profissão"
-                variant="default-optional"
                 placeholder="Sua profissão"
                 ref={profissaoRef}
+                validate={validation.requiredTextField}
               />
               <FormRow>
                 <GenericFormValue

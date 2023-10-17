@@ -140,30 +140,27 @@ const UserDataPopup = ({ value, onClose }) => {
     nascimento: useRef(null),
     emissao: useRef(null),
     regional: {
-      naturalidade: useRef(null),
-      nacionalidade: useRef(null),
       municipio: useRef(null),
-      estado: useRef(null),
     },
     endereco: {
       rua: useRef(null),
       numero: useRef(null),
       bairro: useRef(null),
-      complemento: useRef(null),
+      cep: useRef(null),
     },
     telefone: useRef(null),
-    telefoneFixo: useRef(null),
     email: useRef(null),
     password: useRef(null),
     formacaoSuperior: useRef(null),
     dataFormacao: useRef(null),
     empresa: useRef(null),
-    instituicaoSuperior: useRef(null),
     salario: useRef(null),
     numRegistroConselho: useRef(null),
     dataRegistroConselho: useRef(null),
     dataAfiliacao: useRef(null),
     numInscricao: useRef(null),
+    universidade: useRef(null),
+    filiacao: useRef(null),
   };
 
   const authContext = useAuth();
@@ -261,7 +258,7 @@ const UserDataPopup = ({ value, onClose }) => {
           <div className="columns">
             <div className="column">
               <Dados>
-                <Subtitle2>Dados Pessoais</Subtitle2>
+                <Subtitle1>Dados Pessoais</Subtitle1>
                 <InputValue
                   label="Nome completo"
                   variant={variantRequired}
@@ -271,165 +268,49 @@ const UserDataPopup = ({ value, onClose }) => {
                   ref={refs.name}
                 />
                 <InputValue
-                  label="Profissão"
+                  label="Data de Nascimento"
                   variant={variantRequired}
-                  initialValue={value.profissao}
+                  initialValue={value.nascimento}
                   disabled={!editing}
-                  ref={refs.profissao}
+                  ref={refs.nascimento}
+                  validate={validation.testRequiredData}
+                  placeholder="00/00/0000"
                 />
-                <Row>
-                  <InputValue
-                    label="CPF"
-                    variant={variantRequired}
-                    initialValue={value.cpf}
-                    disabled={!editing}
-                    ref={refs.cpf}
-                    validate={validation.testRequiredCpf}
-                  />
-                  <InputValue
-                    label="Data de Nascimento"
-                    variant={variantRequired}
-                    initialValue={value.nascimento}
-                    disabled={!editing}
-                    ref={refs.nascimento}
-                    validate={validation.testRequiredData}
-                  />
-                </Row>
-                <Row>
-                  <InputValue
-                    label="Registro Geral (RG)"
-                    variant={variantRequired}
-                    initialValue={value.rg}
-                    disabled={!editing}
-                    ref={refs.rg}
-                    validate={validation.testRequiredNumbers}
-                  />
-                  <Input
-                    label="Data de Emissão"
-                    variant={variantRequired}
-                    initialValue={value.emissao}
-                    disabled={!editing}
-                    ref={refs.emissao}
-                    validate={validation.testRequiredData}
-                  />
-                </Row>
-                <Row>
-                  <Input
-                    label="Naturalidade"
-                    variant="default-optional"
-                    initialValue={value.regional.naturalidade}
-                    disabled={!editing}
-                    ref={refs.regional.naturalidade}
-                  />
-                  <Input
-                    label="Nacionalidade"
-                    variant="default-optional"
-                    initialValue={value.regional.nacionalidade}
-                    disabled={!editing}
-                    ref={refs.regional.nacionalidade}
-                  />
-                </Row>
-              </Dados>
-              <Dados>
-                <Subtitle2>Endereço</Subtitle2>
-                <Row>
-                  <Input
-                    label="Nome da Rua"
-                    variant={variantRequired}
-                    initialValue={value.endereco.rua}
-                    disabled={!editing}
-                    validate={validation.requiredTextField}
-                    ref={refs.endereco.rua}
-                  />
-                  <Input
-                    label="Número"
-                    variant={variantRequired}
-                    initialValue={value.endereco.numero}
-                    disabled={!editing}
-                    validate={validation.requiredTextField}
-                    ref={refs.endereco.numero}
-                  />
-                </Row>
-                <Row>
-                  <Input
-                    label="Bairro"
-                    variant={variantRequired}
-                    initialValue={value.endereco.bairro}
-                    disabled={!editing}
-                    validate={validation.requiredTextField}
-                    ref={refs.endereco.bairro}
-                  />
-                  <Input
-                    label="Complemento"
-                    variant="default-optional"
-                    initialValue={value.endereco.complemento}
-                    disabled={!editing}
-                    ref={refs.endereco.complemento}
-                  />
-                </Row>
-                <Row>
-                  <Input
-                    label="Cidade"
-                    variant={variantRequired}
-                    initialValue={value.regional.municipio}
-                    disabled={!editing}
-                    validate={validation.requiredTextField}
-                    ref={refs.regional.municipio}
-                  />
-                  <Input
-                    label="Estado"
-                    variant={variantRequired}
-                    initialValue={value.regional.estado}
-                    disabled={!editing}
-                    validate={validation.requiredTextField}
-                    ref={refs.regional.estado}
-                  />
-                </Row>
-              </Dados>
-              <Dados>
-                <Subtitle2>Dados cadastrais</Subtitle2>
-                <Row>
-                  <Input
-                    label="Celular"
-                    variant={variantRequired}
-                    initialValue={value.telefone}
-                    disabled={!editing}
-                    ref={refs.telefone}
-                    validate={validation.testRequiredPhone}
-                  />
-                  <Input
-                    label="Telefone Fixo"
-                    variant="default-optional"
-                    initialValue={value.telefoneFixo}
-                    ref={refs.telefoneFixo}
-                    validate={validation.testPhone}
-                    disabled={!editing}
-                  />
-                </Row>
-                <Row>
-                  <Input
-                    label="E-mail"
-                    variant={variantRequired}
-                    initialValue={value.email}
-                    disabled={!editing}
-                    ref={refs.email}
-                    validate={validation.testRequiredEmail}
-                  />
-                  <Input
-                    label="Senha"
-                    variant={variantRequired}
-                    initialValue={value.password}
-                    disabled={!editing}
-                    ref={refs.password}
-                    validate={validation.testRequiredPassword}
-                  />
-                </Row>
-              </Dados>
-            </div>
-
-            <div className="column">
-              <Dados>
-                <Subtitle2>Dados Acadêmicos</Subtitle2>
+                <InputValue
+                  label="CPF"
+                  variant={variantRequired}
+                  initialValue={value.cpf}
+                  disabled={!editing}
+                  ref={refs.cpf}
+                  validate={validation.testRequiredCpf}
+                  placeholder="000.000.000-00"
+                />
+                <InputValue
+                  label="Registro Geral (RG)"
+                  variant={variantRequired}
+                  initialValue={value.rg}
+                  disabled={!editing}
+                  ref={refs.rg}
+                  validate={validation.testRequiredNumbers}
+                  placeholder="00.000.000"
+                />
+                <Input
+                  label="Data de Emissão"
+                  variant={variantRequired}
+                  initialValue={value.emissao}
+                  disabled={!editing}
+                  ref={refs.emissao}
+                  validate={validation.testRequiredData}
+                  placeholder="00/00/0000"
+                />
+                <Input
+                  label="Filiação"
+                  variant="default-optional"
+                  initialValue={value.filiacao}
+                  disabled={!editing}
+                  ref={refs.filiacao}
+                  placeholder="Filiação"
+                />
                 <Input
                   label="Curso de Formação"
                   variant="default-optional"
@@ -444,42 +325,26 @@ const UserDataPopup = ({ value, onClose }) => {
                   disabled={!editing}
                   ref={refs.dataFormacao}
                   validate={validation.testDate}
+                  placeholder="00/00/0000"
+                />
+                <Input
+                  label="Universidade"
+                  variant="default-optional"
+                  initialValue={value.universidade}
+                  disabled={!editing}
+                  ref={refs.universidade}
+                  placeholder="Universidade"
                 />
               </Dados>
-
               <Dados>
-                <Subtitle2>Dados Empregatícios</Subtitle2>
-                <Input
-                  label="Organização ou empresa que trabalha"
-                  variant="default-optional"
-                  initialValue={value.empresa}
-                  disabled={!editing}
-                  ref={refs.empresa}
-                />
-                <Input
-                  label="Instituição"
-                  variant="default-optional"
-                  initialValue={value.instituicaoSuperior}
-                  disabled={!editing}
-                  ref={refs.instituicaoSuperior}
-                />
-                <Input
-                  label="Salário"
-                  variant="default-optional"
-                  initialValue={value.salario}
-                  disabled={!editing}
-                  ref={refs.salario}
-                />
-              </Dados>
-
-              <Dados>
-                <Subtitle2>Vínculo com o SINAVEZ</Subtitle2>
+                <Subtitle1>Vínculo com o SINAVEZ</Subtitle1>
                 <Input
                   label="Número de registro no conselho"
                   variant="default-optional"
                   initialValue={value.numRegistroConselho}
                   disabled={!editing}
                   ref={refs.numRegistroConselho}
+                  placeholder="Número de registro no conselho"
                 />
                 <Input
                   label="Data de registro no conselho"
@@ -488,6 +353,15 @@ const UserDataPopup = ({ value, onClose }) => {
                   disabled={!editing}
                   ref={refs.dataRegistroConselho}
                   validate={validation.testDate}
+                  placeholder="00/00/0000"
+                />
+                <Input
+                  label="Número de Inscrição"
+                  variant="default-optional"
+                  initialValue={value.numInscricao}
+                  disabled={!editing}
+                  ref={refs.numInscricao}
+                  placeholder="Número de Inscrição"
                 />
                 <Input
                   label="Data da afiliação"
@@ -496,13 +370,113 @@ const UserDataPopup = ({ value, onClose }) => {
                   disabled={!editing}
                   ref={refs.dataAfiliacao}
                   validate={validation.testDate}
+                  placeholder="00/00/0000"
+                />
+              </Dados>
+            </div>
+
+            <div className="column">
+              <Dados>
+                <Subtitle1>Contatos</Subtitle1>
+                <InputValue
+                  label="Profissão"
+                  variant={variantRequired}
+                  initialValue={value.profissao}
+                  disabled={!editing}
+                  ref={refs.profissao}
+                  validate={validation.requiredTextField}
+                  placeholder="Agrônomo"
                 />
                 <Input
-                  label="Número de Inscrição"
+                  label="Organização ou empresa que trabalha"
                   variant="default-optional"
-                  initialValue={value.numInscricao}
+                  initialValue={value.empresa}
                   disabled={!editing}
-                  ref={refs.numInscricao}
+                  ref={refs.empresa}
+                />
+                <Input
+                  label="Salário"
+                  variant="default-optional"
+                  initialValue={value.salario}
+                  disabled={!editing}
+                  ref={refs.salario}
+                  placeholder="0"
+                />
+                <Input
+                  label="Telefone"
+                  variant={variantRequired}
+                  initialValue={value.telefone}
+                  disabled={!editing}
+                  ref={refs.telefone}
+                  validate={validation.testRequiredPhone}
+                  placeholder="(00) 00000-0000"
+                />
+                <Input
+                  label="CEP"
+                  variant={variantRequired}
+                  initialValue={value.endereco.cep}
+                  disabled={!editing}
+                  validate={validation.testCEP}
+                  ref={refs.endereco.cep}
+                  placeholder="00000-000"
+                />
+                <Input
+                  label="Rua"
+                  variant={variantRequired}
+                  initialValue={value.endereco.rua}
+                  disabled={!editing}
+                  validate={validation.requiredTextField}
+                  ref={refs.endereco.rua}
+                  placeholder="Rua da residência"
+                />
+                <Input
+                  label="Bairro"
+                  variant={variantRequired}
+                  initialValue={value.endereco.bairro}
+                  disabled={!editing}
+                  validate={validation.requiredTextField}
+                  ref={refs.endereco.bairro}
+                  placeholder="Bairro da residência"
+                />
+                <Input
+                  label="Número de residência"
+                  variant={variantRequired}
+                  initialValue={value.endereco.numero}
+                  disabled={!editing}
+                  validate={validation.requiredTextField}
+                  ref={refs.endereco.numero}
+                  placeholder="000"
+                />
+                <Input
+                  label="Cidade"
+                  variant={variantRequired}
+                  initialValue={value.regional.municipio}
+                  disabled={!editing}
+                  validate={validation.requiredTextField}
+                  ref={refs.regional.municipio}
+                  placeholder="Cidade de residência"
+                />
+              </Dados>
+
+              <Dados>
+                <Subtitle1>Email e senha</Subtitle1>
+                <Input
+                  label="E-mail"
+                  variant={variantRequired}
+                  initialValue={value.email}
+                  disabled={!editing}
+                  ref={refs.email}
+                  validate={validation.testRequiredEmail}
+                  placeholder="fulano@dominio.com"
+                />
+                <Input
+                  label="Senha"
+                  variant={variantRequired}
+                  initialValue={value.password}
+                  disabled={!editing}
+                  ref={refs.password}
+                  validate={validation.testRequiredPassword}
+                  placeholder="***********"
                 />
               </Dados>
             </div>
