@@ -132,6 +132,7 @@ const CadastroPage = () => {
         rua: ruaRef.current.value,
         bairro: bairroRef.current.value,
         numero: numeroResRef.current.value,
+        cep: cepRef.current.value,
       },
       regional: {
         municipio: cidadeRef.current.value,
@@ -308,6 +309,7 @@ const CadastroPage = () => {
                 placeholder="00000-000"
                 description="Digite o seu CEP no campo acima."
                 ref={cepRef}
+                validate={validation.testCEP}
               />
               <FormRow>
                 <GenericFormValue

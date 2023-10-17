@@ -166,3 +166,16 @@ export async function testNumberImposto(numberValue) {
     .matches(/^\d+$ || [.]/, validationMessages.onlyNumbers)
     .validate(numberValue);
 }
+
+export async function testCEP(numberValue) {
+  if (numberValue == "") {
+    return yup
+      .string()
+      .validate(numberValue);
+  } else {
+    return yup
+      .string()
+      .matches(/^(?:\.|,|\-|[0-9]){8,10}$/, validationMessages.onlyNumbers)
+      .validate(numberValue);
+  }
+}
