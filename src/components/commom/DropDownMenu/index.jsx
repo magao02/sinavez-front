@@ -18,7 +18,7 @@ function showDefaultProfilePic(url) {
   return url;
 }
 
-const DropDownMenu = ({ name, opened, onClickDo, image }) => {
+const DropDownMenu = ({ name, opened, onClickDo, image, showPopUpSignUp }) => {
     const authContext = useAuth();
 
     const router = useRouter();
@@ -39,7 +39,7 @@ const DropDownMenu = ({ name, opened, onClickDo, image }) => {
                         <img className="profile-pic" src={showDefaultProfilePic(image)} />
                     </MenuBox>
                     <OpenedMenuBox>
-                        <Option onClick={() => router.push("/usuario")}>
+                        <Option onClick={() => authContext.isPendingSignUp ? showPopUpSignUp(true) : router.push("/usuario")}>
                             <Image src={user} />
                             Meus Dados
                         </Option>

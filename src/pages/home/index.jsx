@@ -93,13 +93,14 @@ const Home = () => {
 
   const handleCompleteRegistration = () => {
     setShowCompleteModal(!showCompleteModal)
+    setShowPopUp(false)
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
 
   return (
     <>
       <Container>
-        <Navigation selectedPage={"home"} variant={checkNav()} />
+        <Navigation selectedPage={"home"} variant={checkNav()} showPopUp={handlePopUp} />
         <Main>
           <MainContent>
             <Texts>
