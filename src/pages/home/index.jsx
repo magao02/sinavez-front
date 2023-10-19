@@ -97,6 +97,8 @@ const Home = () => {
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
 
+  console.log(authContext)
+
   return (
     <>
       <Container>
@@ -123,11 +125,11 @@ const Home = () => {
           </MainContent>
         </Main>
       </Container>
-      
+
+      <RegistrationWrapper>
         {
-          !authContext.isPendingSignUp && (
-            
-            <RegistrationWrapper>
+          authContext.isPendingSignUp && (
+            <>
               <RegistrationContainer>
                   <MainRegistrationContent>
                     <ImageRegistrationWrapper>
@@ -155,10 +157,6 @@ const Home = () => {
                 showRegistrationModal && 
                   <RegistrationModal handleModal={handleRegistrationModal}></RegistrationModal>
               }
-              {
-                  showCompleteModal && !authContext.isPendingSignUp && 
-                    <CompleteRegistration handleModal={handleCompleteRegistration} handleSuccessModal={setShowSuccessModal}/>
-              }
 
               {
                 showSucessModal && 
@@ -174,15 +172,20 @@ const Home = () => {
                                 </div>
                       }
                     />
-              }
-            </RegistrationWrapper>
-          )
-        }
+                  }
+                  {
+                      showCompleteModal && 
+                        <CompleteRegistration handleModal={handleCompleteRegistration} handleSuccessModal={setShowSuccessModal}/>
+                  }
+                  {
+                    showPopUp &&
+                    <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
+                  }
+                  </>
+                  )
+                }
+      </RegistrationWrapper>
 
-      {
-        !showPopUp && !authContext.isPendingSignUp &&
-         <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
-      }
 
       <BottomCotainer>
         <BottonMainContent>

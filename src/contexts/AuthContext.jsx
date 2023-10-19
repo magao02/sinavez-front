@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(toBool(readFromLocalStorage("admin")));
   const [adminMaster, setAdminMaster] = useState(toBool(readFromLocalStorage("adminMaster")));
   const [dependent, setDependent] = useState();
-  const [isPendingSingUp, setIsPendingSignUp] = useState(readFromLocalStorage("isPendingSignup"));
+  const [isPendingSignUp, setIsPendingSignUp] = useState(toBool(readFromLocalStorage("isPendingSignup")));
 
   const handleLoginToken = (recivedData) => {
     const { auth, token, urlUser, admin, isPendingSignup, adminMaster } = recivedData;
@@ -72,7 +72,7 @@ export const AuthContextProvider = ({ children }) => {
         cleanInfos,
         dependent,
         setDependent,
-        isPendingSingUp,
+        isPendingSignUp,
         adminMaster
       }}
     >
