@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Text, TextSelected, LinkBoxStyle, LinkBoxStyleSelected, LinkBoxDetailSelected } from './styles';
+import { useAuth } from "../../../contexts/AuthContext";
 
-const LinkBox = ({ selected, linkText, text }) => {
+const LinkBox = ({ selected, linkText, text, showPopUpSignUp }) => {
+    const authContext = useAuth()
+    
     if (selected) {
         return (
             <Link href={linkText}>
@@ -15,8 +18,8 @@ const LinkBox = ({ selected, linkText, text }) => {
         )
     } else {
         return (
-            <Link href={linkText}>
-                <LinkBoxStyle>
+            <Link href={authContext.isPendingSignUp ? "/home" : linkText}>
+                <LinkBoxStyle onClick={() => authContext.isPendingSignUp ? showPopUpSignUp(true) : "" }>
                     <Text>
                         {text}
                     </Text>

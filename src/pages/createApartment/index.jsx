@@ -475,6 +475,13 @@ const createApartment = () => {
     }
   }
 
+  useEffect(() => {
+    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+        router.push("/login");
+      return;
+    }
+},[authContext.auth])
+
   return (
     <Container>
       <Header>

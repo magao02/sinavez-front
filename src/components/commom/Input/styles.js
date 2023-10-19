@@ -141,6 +141,153 @@ function getStyleByVariant(variant) {
                 width: 100%;
             `
         }
+
+        case 'completeRegistration': {
+            return css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+
+                gap: 0.5vh;
+                margin-top: 1vh;
+                margin-bottom: 1vh;
+
+                label {
+                    color: ${theme.colors.blue.heavy};
+
+                    font-size: 12px;
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 12px;
+                    width: 100%;
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-items: center;
+                    width: 100%;
+
+                    span {
+                        width: 100%;
+                        font-weight: bold;
+                        color: ${theme.colors.red};
+                        font-size: 11px;
+                        text-align: end;
+                        margin-top: -10px;
+                    }
+                    span::after {
+                        content: '.';
+                    }
+                }
+
+                input {
+                    padding: 0;
+                    border-radius: 0;
+                    border: none;
+                    background: none;
+
+                    color: var(--text-secundary, ${theme.colors.gray.menu});
+                    font-size: 15px;
+                    font-family: Roboto;
+                    line-height: 20px;
+                    outline: none;
+                    
+                    border-bottom: 1px solid ${theme.colors.gray.menu};
+                    padding-bottom: 5px;
+                    width: 100%;
+                }
+
+                input:focus {
+                    outline: none;
+                    border-bottom: 2px solid ${theme.colors.blue.heavy};
+                }
+
+                input::placeholder {
+                    color: var(--text-secundary, ${theme.colors.gray.heavy});
+                }
+                
+                ${
+                    variant !== 'default-optional' ? css`
+                        label::after {
+                            content: '*';
+                            color: ${theme.colors.red};
+                        }
+                    ` : ""
+                }
+            `
+        }
+
+        case 'completeRegistration-optional': {
+            return css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+
+                gap: 0.5vh;
+                margin-top: 1vh;
+                margin-bottom: 1vh;
+
+                label {
+                    color: ${theme.colors.blue.heavy};
+
+                    font-size: 12px;
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 12px;
+                    width: 100%;
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-items: center;
+                    width: 100%;
+
+                    span {
+                        width: 100%;
+                        font-weight: bold;
+                        color: ${theme.colors.red};
+                        font-size: 11px;
+                        text-align: end;
+                        margin-top: -10px;
+                    }
+                    span::after {
+                        content: '.';
+                    }
+                }
+
+                input {
+                    padding: 0;
+                    border-radius: 0;
+                    border: none;
+                    background: none;
+
+                    color: var(--text-secundary, ${theme.colors.gray.menu});
+                    font-size: 15px;
+                    font-family: Roboto;
+                    line-height: 20px;
+                    outline: none;
+                    
+                    border-bottom: 1px solid ${theme.colors.gray.menu};
+                    padding-bottom: 5px;
+                    width: 100%;
+                }
+
+                input:focus {
+                    outline: none;
+                    border-bottom: 2px solid ${theme.colors.blue.heavy};
+                }
+
+                input::placeholder {
+                    color: var(--text-secundary, ${theme.colors.gray.heavy});
+                }
+            `
+        }
     }
 };
 

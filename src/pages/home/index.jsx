@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -16,13 +16,20 @@ import ProfileIcon from "../../assets/white_profile_icon.svg";
 import ConfigIcon from "../../assets/white_config_icon.svg";
 import BrawerIcon from "../../assets/white_brawer_icon.svg";
 import Pattern from "../../assets/home_pattern.svg"
+import registration_img from "../../assets/registration.svg"
+import right_arrow from "../../assets/right_arrow.svg"
 
 import Navigation from "../../components/commom/Nav";
 import Button from "../../components/commom/Button";
+import RegistrationModal from "../../components/RegistrationModal";
+import { ModalOneButton } from "../../components/commom/ModalOneButton";
+import success_img from "../../assets/sucess_img.svg"
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper
 } from "../../styles/homeStyles";
+import { RestrictionPopUp } from "../../components/RestrictionPopUp";
+import { CompleteRegistration } from "../../components/CompleteRegistration";
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
@@ -39,9 +46,16 @@ function InfoIcon({ children }) {
   </>;
 }
 
-const Home = () => {
-  const router = useRouter();
 
+const Home = () => {
+  
+  const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [showCompleteModal, setShowCompleteModal] = useState(false)
+  const [showSucessModal, setShowSuccessModal] = useState(false)
+  
+  const router = useRouter();
+  
   const authContext = useAuth();
 
   const checkNav = () => {
@@ -60,10 +74,33 @@ const Home = () => {
     }
   }, []);
 
+
+  // FUNCOES DE CONTROLE DOS MODAIS DE COMPLETAR CADASTRO
+  const handleRegistrationModal = ( action ) => {
+    if(action == 'complete'){
+      handleCompleteRegistration() 
+    }
+    setShowRegistrationModal(!showRegistrationModal)
+    //!showRegistrationModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
+  }
+
+  const handlePopUp = ( action ) => {
+    if(action == 'complete'){
+      handleCompleteRegistration()  
+    }
+    setShowPopUp(!showPopUp)
+  }
+
+  const handleCompleteRegistration = () => {
+    setShowCompleteModal(!showCompleteModal)
+    setShowPopUp(false)
+    !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
+  }
+
   return (
     <>
       <Container>
-        <Navigation selectedPage={"home"} variant={checkNav()} />
+        <Navigation selectedPage={"home"} variant={checkNav()} showPopUp={handlePopUp} />
         <Main>
           <MainContent>
             <Texts>
@@ -86,6 +123,70 @@ const Home = () => {
           </MainContent>
         </Main>
       </Container>
+
+      <RegistrationWrapper>
+        {
+          authContext.isPendingSignUp && (
+            <>
+              <RegistrationContainer>
+                  <MainRegistrationContent>
+                    <ImageRegistrationWrapper>
+                      <img src={registration_img.src}></img>
+                    </ImageRegistrationWrapper>
+                    <CompleteRegistrationContainer>
+                      <TitleRegistrationArea>
+                        <h1>Complete seu cadastro</h1>
+                        <BorderRegistration></BorderRegistration>
+                      </TitleRegistrationArea>
+                      <TextRegistration>
+                        Manter seus dados atualizados no novo site do Sinavez é essencial para mantermos nossa comunicação eficaz e continuarmos a oferecer benefícios para você.
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        Dedique apenas alguns minutos para completar seu cadastro. Contamos com sua participação para fortalecer nossa comunidade.
+                      </TextRegistration>
+                      <ButtonRegistrationContainer>
+                        <ButtonRegistraion onClick={handleRegistrationModal}>COMPLETAR MEU CADASTRO <Image style={{marginLeft: "0px"}} src={right_arrow}></Image></ButtonRegistraion>
+                      </ButtonRegistrationContainer>
+                    </CompleteRegistrationContainer>
+                  </MainRegistrationContent>
+              </RegistrationContainer>
+              {
+                showRegistrationModal && 
+                  <RegistrationModal handleModal={handleRegistrationModal}></RegistrationModal>
+              }
+
+              {
+                showSucessModal && 
+                    <ModalOneButton
+                      title={"SUCESSO"}
+                      img={success_img.src}
+                      buttonFunction={() => {
+                        setShowSuccessModal(false)
+                        window.location.reload()
+                      }}
+                      asideText={<div>
+                                  Cadastro completo! 
+                                  <br /> Você pode ver e editar seus dados  
+                                  <br /> clicando no seu perfil e em “Meus Dados”  
+                                  <br /> na barra superior.
+                                </div>
+                      }
+                    />
+                  }
+                  {
+                      showCompleteModal && 
+                        <CompleteRegistration handleModal={handleCompleteRegistration} handleSuccessModal={setShowSuccessModal}/>
+                  }
+                  {
+                    showPopUp &&
+                    <RestrictionPopUp handlePopUp={handlePopUp}></RestrictionPopUp>
+                  }
+                  </>
+                  )
+                }
+      </RegistrationWrapper>
+
 
       <BottomCotainer>
         <BottonMainContent>
