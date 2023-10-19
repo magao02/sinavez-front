@@ -36,6 +36,13 @@ const ambienteDados = () => {
   
     const authContext = useAuth();
     const router = useRouter();
+
+    useEffect(() => {
+      if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+          router.push("/login");
+        return;
+      }
+  },[authContext.auth])
     
     const [ambientData, setAmbientData] = useState([]);
     const [reservas, setReservas] = useState([])
