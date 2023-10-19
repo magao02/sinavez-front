@@ -161,7 +161,10 @@ const Home = () => {
                     <ModalOneButton
                       title={"SUCESSO"}
                       img={success_img.src}
-                      buttonFunction={() => setShowSuccessModal(false)}
+                      buttonFunction={() => {
+                        setShowSuccessModal(false)
+                        window.location.reload()
+                      }}
                       asideText={<div>
                                   Cadastro completo! 
                                   <br /> Você pode ver e editar seus dados  

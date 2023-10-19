@@ -106,7 +106,7 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
         } else {
             handleModal()
             handleSuccessModal(true)
-            //await submitData();
+            await submitData();
         }
       };
 
@@ -144,7 +144,7 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
 
           try{
             await api.finishIncompleteUser(authContext.urlUser, authContext.token, data);
-            router.push("/home")
+            authContext.updateIsPendingSignUp()
           }catch(error){
             console.log(error?.response?.data?.message)
           }

@@ -61,6 +61,12 @@ export const AuthContextProvider = ({ children }) => {
     setAdmin(false);
   };
 
+  const updateIsPendingSignUp = () => {
+    removeFromLocalStorage("isPendingSignup")
+    saveToLocalStorage("isPendingSignup", false);
+    setIsPendingSignUp(false);
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -73,7 +79,8 @@ export const AuthContextProvider = ({ children }) => {
         dependent,
         setDependent,
         isPendingSignUp,
-        adminMaster
+        adminMaster,
+        updateIsPendingSignUp
       }}
     >
       {children}

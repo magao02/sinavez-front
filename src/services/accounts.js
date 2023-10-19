@@ -193,7 +193,7 @@ export async function setPhoto(file, urlUser, token) {
 
 export async function finishIncompleteUser(userUrl, token, data) {
     const requisition = await api.put(
-        `/user/finishIncompleteUser/${userUrl}`,
+        `/user/finishIncomplete/${userUrl}`,
         data,
         { headers: { authorization: token } }
     );
