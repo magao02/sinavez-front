@@ -19,6 +19,9 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
     const router = useRouter();
 
     const [userCpf, setUserCpf] = useState(null)
+    const [userName, setUserName] = useState(null)
+    const [userEmail, setUserEmail] = useState(null)
+
     
     // Inputs for the first step
     const nameRef = useRef(null);
@@ -68,8 +71,10 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
       }, [authContext.token, authContext.urlUser]);
 
     const getUserCpf = useCallback(async () => {
-        const {cpf} = await handleUserData();
+        const {cpf, name, email} = await handleUserData();
         setUserCpf(cpf);
+        setUserName(name);
+        setUserEmail(email);
     })
 
     useEffect(() => {
@@ -138,7 +143,7 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
           };
 
           try{
-            await api.setUserData(authContext.urlUser, data, authContext.token);
+            await api.finishIncompleteUser(authContext.urlUser, authContext.token, data);
             router.push("/home")
           }catch(error){
             console.log(error?.response?.data?.message)

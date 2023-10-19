@@ -30,7 +30,6 @@ import {
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
-import * as service from "../../services/accounts"
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
@@ -96,8 +95,6 @@ const Home = () => {
     setShowCompleteModal(!showCompleteModal)
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
-
-  console.log(authContext)
 
   return (
     <>
