@@ -531,7 +531,57 @@ function getStyleByVariant(variant) {
           font-size: 1.6rem;
           color: ${theme.colors.white.default};
           box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-        `;
+        `}
+
+        case "finalizCad": {
+          return css`
+            
+          display: flex;
+          padding: 4px 10px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 155px;
+          height: 33px;
+          border: none;
+
+          color: var(--text-invertido, #FDFDFD);
+          /* desktop.body3 */
+          font-family: Roboto;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px; /* 128.571% */
+    
+          border-radius: 4px;
+          background: var(--Verde-da-marca, #0A645E);
+          /* elevation/2 */
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+          `;
       }
+
+      case "saveAlt": {
+        return css`
+          
+        display: flex;
+        padding: 8px 11px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        color: var(--text-invertido, #FDFDFD);
+        /* desktop.subtitle2 */
+        font-family: Jost;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        border: none;
+
+  
+        border-radius: 4px;
+        background: var(--verde-2, linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), #52B4AD);
+        `;
+    }
   }
 }

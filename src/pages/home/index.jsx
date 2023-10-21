@@ -28,7 +28,7 @@ import * as service from "../../services/accounts";
 
 
 import {
-  Container,BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, BottonMainCad, ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput
+  Container,BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, BottonMainCad, ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel
 } from "../../styles/homeStyles";
 import Input from "../../components/commom/Input";
 import { ButtonCancel, CancelBox, CancelOptions, ContainerCancel, TextCancel, TitleCancel } from "../../components/CancelForm/style";
@@ -57,9 +57,8 @@ const Home = () => {
 
   const checkNav = () => {
     if (authContext.admin == 'true' || authContext.admin == true) {
-      return "admin"
-    }
-    else {
+      return "admin";
+    } else {
       return "logged";
     }
   }
@@ -90,7 +89,26 @@ const Home = () => {
       setSpanError(false);
       preCadastro();
       setFinishCad(!finishCad);
+    } 
+  }
+
+ 
+
+  const oneChangeRadio = (value) => {
+    if (value) {
+      return () => {
+        setCollectedData({ ...collectedData, admin: true })
+      }
+    } else {
+      return () => {
+        setCollectedData({ ...collectedData, admin: false })
+      }
     }
+  }
+
+  const closeFinishCad = () => {
+    setFinishCad(false);
+    setToggle(false)
   }
 
   const takeName = (nome) => {
@@ -99,12 +117,13 @@ const Home = () => {
 
   const dataCollected = (data) => {
     setCollectedData(data);
-    console.log(collectedData);
   }
+
 
   useEffect(() => {
     dataCollected(collectedData);
   }, [collectedData]);
+
 
   const preCadastro = useCallback(async () => {
     try {
@@ -115,225 +134,412 @@ const Home = () => {
     }
   }, [collectedData]);
 
-  return (
-    <>
-      <Container>
-        <Navigation selectedPage={"home"} variant={checkNav()} />
-        <Main>
-          <MainContent>
+  if (authContext.adminMaster) {
+
+    return (
+      <>
+        <Container master={authContext.adminMaster}>
+          <Navigation selectedPage={"home"} variant={checkNav()} />
+     
+          <Main>
+            <MainContent master={true}>
+              <Texts>
+                <TitleMaster>
+                  Bem-vindo ao Sinavez
+                </TitleMaster>
+                <TextMaster>
+                  Você está na conta do <SpanMaster>ADMINISTRADOR MASTER</SpanMaster>!
+                </TextMaster> 
+              </Texts>
+            </MainContent>
+          </Main>
+        </Container>   
+          <BottomCotainer>
+          <BottonMainContent> 
             <Texts>
-              <Title>
-                Bem vindo à Sinavez
-                Sinta-se a vontade!
-              </Title>
-              <Text>
-                Agora a Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!
-                Com o Onboarding você pode descobrir como navegar com facilidade e tranquilidade e sem se estressar com o caminho!
-              </Text>
-              <Link href={"/onboarding"}>
-                <Button variant="white">
-                  <Image src={repeatTutorial} />
-                  REFAZER TUTORIAL
-                </Button>
-              </Link>
+              <BottonTitle>
+                Espaço Administrativo
+                <InfoIcon>
+                  Espaço destinado aos administradores. Aqui você terá acesso à página de gerenciamento de apartamentos e associados!<br/>
+                  Basta clicar no botão que você será redirecionado para a página desejada.
+                </InfoIcon>
+              </BottonTitle>
             </Texts>
-            <Image src={userComputer} />
-          </MainContent>
-        </Main>
-      </Container>
-
-      <BottomCotainer>
-        <BottonMainContent>
-          <Texts>
-            <BottonTitle>
-              Espaço Pessoal
-              <InfoIcon>
-                Espaço destinado aos associados. Aqui você terá acesso à página de apartamentos e ao seu perfil!<br/>
-                Basta clicar no botão que você será redirecionado para a página desejada.
-              </InfoIcon>
-            </BottonTitle>
-          </Texts>
-          <BottonMain>
-            <Link href={"/apartamentos"}>
-              <Button variant="home">
-                <Image src={BuildIcon} />
-                <TextsBottom>
-                  <TitleBottom>
-                    Reservar Apartamentos
-                  </TitleBottom>
-                  <TextBottom>
-                    Quer alugar um apartamento para passar um
-                    <br />
-                    tempo com a família fora? Acesse a página para 
-                    <br/>
-                    consultar a disponibilidade!
-                  </TextBottom>
-                  <LinkText>
-                    Veja mais
-                    <Sublime />
-                  </LinkText>
-                </TextsBottom>
-              </Button>
-            </Link>
-            <Link href={"/usuario"}>
-              <Button variant="home">
-                <Image src={ProfileIcon} />
-                <TextsBottom>
-                  <TitleBottom>
-                    Meu Perfil
-                  </TitleBottom>
-                  <TextBottom>
-                    No seu perfil, você poderá encontrar seus dados 
-                    <br />
-                    e dos seus dependentes. Acesse a página para 
-                    <br />
-                    vê-los e atualiza-los!
-                  </TextBottom>
-                  <LinkText>
-                    Veja mais
-                    <Sublime />
-                  </LinkText>
-                </TextsBottom>
-              </Button>
-            </Link>
-          </BottonMain>
-
-          <BottomDivider />
-
-          { authContext.admin && <>
-          <Texts>
-            <BottonTitle>
-              Espaço Administrativo
-              <InfoIcon>
-                Espaço destinado aos administradores. Aqui você terá acesso à página de gerenciamento de apartamentos e associados!<br/>
-                Basta clicar no botão que você será redirecionado para a página desejada.
-              </InfoIcon>
-            </BottonTitle>
-          </Texts>
-          <BottonMain>
-            <Link href={"/associados"}>
-              <Button variant="home">
-                <Image src={ConfigIcon} />
-                <TextsBottom>
-                  <TitleBottom>
-                    Gerenciar Associados
-                  </TitleBottom>
-                  <TextBottom>
-                    Está precisando alterar informações dos 
-                    <br />
-                    associados e seus dependentes? Essa página 
-                    <br />
-                    pode te ajudar com isso!
-                  </TextBottom>
-                  <LinkText>
-                    Veja mais
-                    <Sublime />
-                  </LinkText>
-                </TextsBottom>
-              </Button>
-            </Link>
-            <Link href={"/manageReservations"}>
-              <Button variant="home">
-                <Image src={BrawerIcon} />
-                <TextsBottom>
-                  <TitleBottom>
-                    Gerenciar Apartamentos
-                  </TitleBottom>
-                  <TextBottom>
-                    Está precisando alterar informações nos
-                    <br />
-                    apartamentos? Essa página pode te ajudar com
-                    <br />
-                    isso!
-                  </TextBottom>
-                  <LinkText>
-                    Veja mais
-                    <Sublime />
-                  </LinkText>
-                </TextsBottom>
-              </Button>
-            </Link>
-          </BottonMain>
-
-          <BottonMainCad>
-                <Button variant="pre-cad" onClick={showToggle}>
-                  <Image src={Vector} />
+            <BottonMain>
+              <Link href={"/associados"}>
+                <Button variant="home">
+                  <Image src={ConfigIcon} />
                   <TextsBottom>
                     <TitleBottom>
-                      Pré-cadastro de associados
+                      Gerenciar Associados
                     </TitleBottom>
                     <TextBottom>
-                      Faça o pré-cadastro de um associado!
+                      Está precisando alterar informações dos 
+                      <br />
+                      associados e seus dependentes? Essa página 
+                      <br />
+                      pode te ajudar com isso!
                     </TextBottom>
-                    <LinkText onClick={showToggle}>
-                      PRÉ-CADASTRAR
+                    <LinkText>
+                      Veja mais
                       <Sublime />
                     </LinkText>
                   </TextsBottom>
                 </Button>
-            </BottonMainCad>
-          </>}
+              </Link>
+              <Link href={"/manageReservations"}>
+                <Button variant="home">
+                  <Image src={BrawerIcon} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Gerenciar Apartamentos
+                    </TitleBottom>
+                    <TextBottom>
+                      Está precisando alterar informações nos
+                      <br />
+                      apartamentos? Essa página pode te ajudar com
+                      <br />
+                      isso!
+                    </TextBottom>
+                    <LinkText>
+                      Veja mais
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+              </Link>
 
-          {toggle &&
-            <>
-              <ToggleCard/>
-                <Card>
-                  <CardPreCadastro>
-                    <ContainerPreCadastro>
-                      <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
-                      <Input
-                        label="Nome"
-                        name="name"
-                        type="text"
-                        placeholder="Digite um nome"
-                        onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
-                      />
-                      <SpanInput span={spanError} >Digite um nome válido</SpanInput>
-                      <Input
-                        label="E-mail"
-                        name="email"
-                        type="text"
-                        placeholder="Digite um e-mail válido"
-                        onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
-                      />
-                      <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
-                      <Input
-                        label="Usuário"
-                        name="cpf"
-                        type="text"
-                        placeholder="000.000.000-00"
-                        onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
-                      />
-                      <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
-                      <Input
-                        label="Senha"
-                        name="password"
-                        type="text"
-                        placeholder="Digite uma senha "
-                        onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
-                      />
-                      <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
+              <Button variant="pre-cad" onClick={showToggle}>
+                    <Image src={Vector} />
+                    <TextsBottom>
+                      <TitleBottom>
+                        Pré-cadastro de associados
+                      </TitleBottom>
+                      <TextBottom>
+                        Faça o pré-cadastro de um associado!
+                      </TextBottom>
+                      <LinkText onClick={showToggle}>
+                        PRÉ-CADASTRAR
+                        <Sublime />
+                      </LinkText>
+                    </TextsBottom>
+                  </Button>
+            </BottonMain>
+  
+            {toggle &&
+              <>
+                <ToggleCard/>
+                  <Card alt={true}>
+                    <CardPreCadastro>
+                    <CloseDiv>
+                      <Image src={X} onClick={closeFinishCad}/>
+                    </CloseDiv>
+                      <ContainerPreCadastro>
+                        <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
+                        <Input
+                          label="Nome"
+                          name="name"
+                          type="text"
+                          placeholder="Digite um nome"
+                          onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite um nome válido</SpanInput>
+                        <Input
+                          label="E-mail"
+                          name="email"
+                          type="text"
+                          placeholder="Digite um e-mail válido"
+                          onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
+                        <Input
+                          label="Usuário"
+                          name="cpf"
+                          type="text"
+                          placeholder="000.000.000-00"
+                          onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
+                        <Input
+                          label="Senha"
+                          name="password"
+                          type="text"
+                          placeholder="Digite uma senha "
+                          onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
 
-                      <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
-                    </ContainerPreCadastro>
-                  </CardPreCadastro>
-                </Card>
-            </>
-          }
+                        <ContainerLabel>
+                          <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
+                          
+                          <ContainerInputLabel>
+                            <label for="sim"> 
+                              <input type="radio" id="sim" name="admin" value="true"  onChange={oneChangeRadio(true)} />
+                              <SpanLabel margin={true}>Sim</SpanLabel>
+                            </label>
 
-          {finishCad &&
-            <>
-              <SucessAdd showFinishCad={showFinishCad} name={collectedData.name}/>
-            </>
-          }
+                            <label for="sim"> 
+                              <input type="radio" id="nao" name="admin" value="true"  onChange={oneChangeRadio(false)}/>
+                              <SpanLabel margin={true}>Não</SpanLabel>
+                            </label>
+                          </ContainerInputLabel>
+                          </ContainerLabel>
+                        
+                        <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
+                      </ContainerPreCadastro>
+                    </CardPreCadastro>
+                  </Card>
+              </>
+            }
+  
+            {finishCad &&
+              <>
+                <SucessAdd showFinishCad={closeFinishCad} name={collectedData.name}/>
+              </>
+            }
+  
+          </BottonMainContent>
+        </BottomCotainer>
 
-        </BottonMainContent>
-      </BottomCotainer>
-      <BottonDetail>
-        <Image src={Pattern} height={275} width={2000} />
-      </BottonDetail>
-    </>
-  );
+        <BottonDetail>
+          <Image src={Pattern} height={275} width={2000} />
+        </BottonDetail>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Container>
+          <Navigation selectedPage={"home"} variant={checkNav()} />
+     
+          <Main>
+          {!authContext.adminMaster &&
+              <> 
+              <MainContent>
+                <Texts>
+                  <Title>
+                    Bem vindo à Sinavez
+                    Sinta-se a vontade!
+                  </Title>
+                  <Text>
+                    Agora a Sinavez está com site novo! E além de mais bonito, ele está mais fácil de se usar!
+                    Com o Onboarding você pode descobrir como navegar com facilidade e tranquilidade e sem se estressar com o caminho!
+                  </Text>
+                  <Link href={"/onboarding"}>
+                    <Button variant="white">
+                      <Image src={repeatTutorial} />
+                      REFAZER TUTORIAL
+                    </Button>
+                  </Link>
+                </Texts>
+                <Image src={userComputer} />
+              </MainContent>
+              </>
+            }
+          </Main>
+        </Container>
+  
+       
+          <BottomCotainer>
+            <BottonMainContent>
+            {!authContext.adminMaster &&
+              <>
+                <Texts>
+                  <BottonTitle>
+                    Espaço Pessoal
+                    <InfoIcon>
+                      Espaço destinado aos associados. Aqui você terá acesso à página de apartamentos e ao seu perfil!<br/>
+                      Basta clicar no botão que você será redirecionado para a página desejada.
+                    </InfoIcon>
+                  </BottonTitle>
+                </Texts>
+                <BottonMain>
+                  <Link href={"/apartamentos"}>
+                    <Button variant="home">
+                      <Image src={BuildIcon} />
+                      <TextsBottom>
+                        <TitleBottom>
+                          Reservar Apartamentos
+                        </TitleBottom>
+                        <TextBottom>
+                          Quer alugar um apartamento para passar um
+                          <br />
+                          tempo com a família fora? Acesse a página para 
+                          <br/>
+                          consultar a disponibilidade!
+                        </TextBottom>
+                        <LinkText>
+                          Veja mais
+                          <Sublime />
+                        </LinkText>
+                      </TextsBottom>
+                    </Button>
+                  </Link>
+                  <Link href={"/usuario"}>
+                    <Button variant="home">
+                      <Image src={ProfileIcon} />
+                      <TextsBottom>
+                        <TitleBottom>
+                          Meu Perfil
+                        </TitleBottom>
+                        <TextBottom>
+                          No seu perfil, você poderá encontrar seus dados 
+                          <br />
+                          e dos seus dependentes. Acesse a página para 
+                          <br />
+                          vê-los e atualiza-los!
+                        </TextBottom>
+                        <LinkText>
+                          Veja mais
+                          <Sublime />
+                        </LinkText>
+                      </TextsBottom>
+                    </Button>
+                  </Link>
+                </BottonMain>
+  
+                <BottomDivider />
+              </>
+            }
+            
+            { authContext.admin && <>
+            <Texts>
+              <BottonTitle>
+                Espaço Administrativo
+                <InfoIcon>
+                  Espaço destinado aos administradores. Aqui você terá acesso à página de gerenciamento de apartamentos e associados!<br/>
+                  Basta clicar no botão que você será redirecionado para a página desejada.
+                </InfoIcon>
+              </BottonTitle>
+            </Texts>
+            <BottonMain>
+              <Link href={"/associados"}>
+                <Button variant="home">
+                  <Image src={ConfigIcon} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Gerenciar Associados
+                    </TitleBottom>
+                    <TextBottom>
+                      Está precisando alterar informações dos 
+                      <br />
+                      associados e seus dependentes? Essa página 
+                      <br />
+                      pode te ajudar com isso!
+                    </TextBottom>
+                    <LinkText>
+                      Veja mais
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+              </Link>
+              <Link href={"/manageReservations"}>
+                <Button variant="home">
+                  <Image src={BrawerIcon} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Gerenciar Apartamentos
+                    </TitleBottom>
+                    <TextBottom>
+                      Está precisando alterar informações nos
+                      <br />
+                      apartamentos? Essa página pode te ajudar com
+                      <br />
+                      isso!
+                    </TextBottom>
+                    <LinkText>
+                      Veja mais
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+              </Link>
+            </BottonMain>
+  
+            <BottonMainCad>
+                  <Button variant="pre-cad" onClick={showToggle}>
+                    <Image src={Vector} />
+                    <TextsBottom>
+                      <TitleBottom>
+                        Pré-cadastro de associados
+                      </TitleBottom>
+                      <TextBottom>
+                        Faça o pré-cadastro de um associado!
+                      </TextBottom>
+                      <LinkText onClick={showToggle}>
+                        PRÉ-CADASTRAR
+                        <Sublime />
+                      </LinkText>
+                    </TextsBottom>
+                  </Button>
+              </BottonMainCad>
+            </>}
+  
+            {toggle &&
+              <>
+                <ToggleCard/>
+                  <Card>
+                    <CardPreCadastro>
+                    <CloseDiv>
+                      <Image src={X} onClick={closeFinishCad}/>
+                    </CloseDiv>
+                      <ContainerPreCadastro>
+                        <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
+                        <Input
+                          label="Nome"
+                          name="name"
+                          type="text"
+                          placeholder="Digite um nome"
+                          onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite um nome válido</SpanInput>
+                        <Input
+                          label="E-mail"
+                          name="email"
+                          type="text"
+                          placeholder="Digite um e-mail válido"
+                          onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
+                        <Input
+                          label="Usuário"
+                          name="cpf"
+                          type="text"
+                          placeholder="000.000.000-00"
+                          onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
+                        <Input
+                          label="Senha"
+                          name="password"
+                          type="text"
+                          placeholder="Digite uma senha "
+                          onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
+  
+                        <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
+                      </ContainerPreCadastro>
+                    </CardPreCadastro>
+                  </Card>
+              </>
+            }
+  
+            {finishCad &&
+              <>
+                <SucessAdd showFinishCad={closeFinishCad} name={collectedData.name}/>
+              </>
+            }
+  
+          </BottonMainContent>
+        </BottomCotainer>
+        <BottonDetail>
+          <Image src={Pattern} height={275} width={2000} />
+        </BottonDetail>
+      </>
+    );
+  }
 };
 
 export default Home;

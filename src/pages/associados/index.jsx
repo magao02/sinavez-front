@@ -39,6 +39,7 @@ import DataUser from "../../components/DataUser";
 import MiddleStep from "../../components/UserDataForm/MiddleStep";
 import { Card, ToggleCard } from "../../styles/homeStyles";
 import { ButtonCancel, CancelBox, CancelOptions, TextCancel, TitleCancel } from "../../components/CancelForm/style";
+import AdmStepForm from "../../components/UserDataForm/AdmStepForm";
 
 const Associados = () => {
   const [associados, setAssociados] = useState([]);
@@ -60,6 +61,7 @@ const Associados = () => {
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
+  const [filterAdm, setFilterAdm] = useState("")
 
   const [image, setImage] = useState(null);
   const file = useRef(null);
@@ -355,9 +357,14 @@ const Associados = () => {
             {currentStep == 3 && (
              <MiddleStep previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate}/>
             )}
-            {currentStep >= 4 && (
-               <ThirdStepForm  saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
+
+            {currentStep == 4 && (
+               <ThirdStepForm  takeImage={takeImage} admMaster={authContext.adminMaster} saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
             )}
+            {authContext.adminMaster && currentStep == 5 &&(
+              <AdmStepForm saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents}/>
+            )}
+
           </AddAssociateBox>
         </>
       )}
@@ -370,9 +377,12 @@ const Associados = () => {
             </Title>
             <MainHead>
               <SearchBar setSearch={setSearchTerm} placeHolder={"Procurar pelo nome"}></SearchBar>
+                {/* {authContext.adminMaster && (
+
+                )} */}
               <Button variant={"default"} onClick={toggleAddAssociate}>
                 <Image src={AddIcon} />
-                Adicionar Associado
+                {authContext.adminMaster ? "Adicionar Associado ou ADM" : "Adcionar Associado"}
               </Button>
             </MainHead>
             <Main>
@@ -416,8 +426,7 @@ const Associados = () => {
               <CancelOptions>
                     <Image src={Sucess} width={'357.377px'} height={'200px'}/>
                     <TextCancel>
-                      Pré-cadastro realizado com sucesso! <br/>
-                      {collectedData.name} agora está na lista de associados.
+                      Cadastro realizado com sucesso! <br/>
                     </TextCancel>
                     
                   </CancelOptions>

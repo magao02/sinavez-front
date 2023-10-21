@@ -26,18 +26,21 @@ export const AuthContextProvider = ({ children }) => {
   const [urlUser, setUrlUser] = useState(readFromLocalStorage("urlUser"));
   const [auth, setAuth] = useState(readFromLocalStorage("auth"));
   const [admin, setAdmin] = useState(toBool(readFromLocalStorage("admin")));
+  const [adminMaster, setAdminMaster] = useState(toBool(readFromLocalStorage("adminMaster")));
   const [dependent, setDependent] = useState();
 
   const handleLoginToken = (recivedData) => {
-    const { auth, token, urlUser, admin } = recivedData;
+    const { auth, token, urlUser, admin, adminMaster } = recivedData;
     saveToLocalStorage("token", token);
     saveToLocalStorage("urlUser", urlUser);
     saveToLocalStorage("auth", auth);
     saveToLocalStorage("admin", admin);
+    saveToLocalStorage("adminMaster", adminMaster);
     setToken(token);
     setUrlUser(urlUser);
     setAuth(auth);
     setAdmin(admin);
+    setAdminMaster(adminMaster);
   };
 
   const cleanInfos = () => {
@@ -45,10 +48,12 @@ export const AuthContextProvider = ({ children }) => {
     removeFromLocalStorage("urlUser");
     removeFromLocalStorage("auth");
     removeFromLocalStorage("admin");
+    removeFromLocalStorage("adminMaster");
     setToken(undefined);
     setUrlUser(undefined);
     setAuth(false);
     setAdmin(false);
+    setAdminMaster(false);
   };
 
   return (
@@ -59,6 +64,7 @@ export const AuthContextProvider = ({ children }) => {
         urlUser,
         auth,
         admin,
+        adminMaster,
         cleanInfos,
         dependent,
         setDependent,

@@ -91,6 +91,7 @@ export const Main = styled.div`
     gap: 52px;
     width: 100%;
     height: ${props => props.height ? '853px' : '100%'};
+    height: ${props => props.h ? '' : '100%'};
 
     border-radius: 8px;
     border: 1px solid var(--azul-1, ${theme.colors.blue.background});
@@ -147,8 +148,8 @@ export const ProfileArguments = styled.div`
     flex-direction: ${props => props.direction ? 'row' : 'column'};
     width: 374px;
     height: 114px;
-    padding: ${props => props.padding ? '12px 0px 8px 0px' : '0px 0px 0px 0px'};
-    gap: ${props => props.padding ? '18px' : '0px'};
+    padding: ${props => props.padding ? '5px 0px 8px 0px' : '0px 0px 0px 0px'};
+    gap: ${props => props.padding ? '5px' : '0px'};
     `
 
 export const ProfileAvatar = styled.div`
