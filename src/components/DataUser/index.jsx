@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AddDependent, AddDependentBox, BoxData, ContainerButtons, ContainerButtonsDependent, ContainerData, ContainerDataDependent, ContainerDataUser, ContainerImg, ContainerTable, ContainerWhite, Dependentes, DivAdm, LinkAtual, LinkPage, ProfileTitleUser, ProfileUser, TableAssociate, TextTable } from "./style";
+import { AddDependent, AddDependentBox, BoxData, ContainerButtons, ContainerButtonsDependent, ContainerData, ContainerDataDependent, ContainerDataUser, ContainerImg, ContainerTable, ContainerWhite, Dependentes, DivAdm, LinkAtual, LinkPage, ProfileTitleUser, ProfileUser, SpanPedding, TableAssociate, TextTable } from "./style";
 import Pattern from "../../assets/pattern.svg";
 import Arrow from "../../assets/arrow.svg";
 import Image from "next/image";
@@ -16,6 +16,7 @@ import DarkBackground from "../commom/DarkBackground";
 import DependentsForm from "../DependentsContainer";
 import * as service from "../../services/accounts";
 import DeleteDependente from "../CancelForm/DeleteDependente";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 
@@ -45,6 +46,8 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
 
     const fileInput = useRef(null);
     const [localImage, setLocalImage] = useState(null); 
+
+    const authContex = useAuth();
 
 
     const saveImage = useCallback(async(fileInput)  => {
@@ -274,6 +277,9 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
                                 <>
                                     <DivAdm>Administrador</DivAdm>
                                 </>
+                            )}
+                            {authContex.isPendingSignUp && (
+                            <SpanPedding>Esse usuário ainda não completou o cadastro de seus dados</SpanPedding>
                             )}
                         </ProfileArguments>
                     </ProfileUser>

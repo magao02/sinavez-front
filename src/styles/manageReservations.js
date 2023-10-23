@@ -42,8 +42,9 @@ export const FiltersArea = styled.div`
     flex-direction: row;
     align-items: center;
     width: 60%;
-    height: 40px;
+    height: ${props => props.alt ? "44px" : "40px"};
     gap: .5vw;
+    margin-left: ${props => props.alt ? "16px" : "0"};
 `
 
 export const AddAmbienteArea = styled.div`

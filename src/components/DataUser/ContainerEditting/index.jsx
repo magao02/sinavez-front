@@ -396,6 +396,13 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
                                     </TextCancel>
                                 )}
 
+                                {data.admin && dataNova.admin &&(
+                                    <TextCancel>
+                                        Salvar alterações nos dados de {data.name}?
+                                    </TextCancel>
+                                )}
+
+
                                 {!data.admin && dataNova.admin && (
                                     <TextCancel>
                                         Salvar alterações nos dados de {data.name} e promover a Administrador?

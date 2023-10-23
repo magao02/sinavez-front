@@ -310,3 +310,13 @@ export const Dark = styled.div`
     background-color: black;
     opacity: 50%;
 `;
+
+export const SpanPedding = styled.span`
+    color: var(--Azul-0, #0760BA);
+    /* desktop.body1 */
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 122.222% */
+`;

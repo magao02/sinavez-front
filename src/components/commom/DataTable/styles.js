@@ -8,6 +8,8 @@ export const Table = styled.div`
     width: 85vw;
 
     gap: 1.5vh;
+    position: absolute;
+    z-index: -1;
 `
 
 export const TableHead = styled.div`

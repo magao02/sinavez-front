@@ -28,14 +28,17 @@ export const AuthContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(toBool(readFromLocalStorage("admin")));
   const [adminMaster, setAdminMaster] = useState(toBool(readFromLocalStorage("adminMaster")));
   const [dependent, setDependent] = useState();
+  const [isPendingSignUp, setIsPendingSignUp] = useState(toBool(readFromLocalStorage("isPendingSignup")));
 
   const handleLoginToken = (recivedData) => {
-    const { auth, token, urlUser, admin, adminMaster } = recivedData;
+    const { auth, token, urlUser, admin, adminMaster, isPendingSignup } = recivedData;
     saveToLocalStorage("token", token);
     saveToLocalStorage("urlUser", urlUser);
     saveToLocalStorage("auth", auth);
     saveToLocalStorage("admin", admin);
     saveToLocalStorage("adminMaster", adminMaster);
+    saveToLocalStorage("isPendingSignup", isPendingSignup);
+    setIsPendingSignUp(isPendingSignup);
     setToken(token);
     setUrlUser(urlUser);
     setAuth(auth);
@@ -49,12 +52,20 @@ export const AuthContextProvider = ({ children }) => {
     removeFromLocalStorage("auth");
     removeFromLocalStorage("admin");
     removeFromLocalStorage("adminMaster");
+    removeFromLocalStorage("isPendingSignup")
+    setIsPendingSignUp(false);
     setToken(undefined);
     setUrlUser(undefined);
     setAuth(false);
     setAdmin(false);
     setAdminMaster(false);
   };
+
+  const updateIsPendingSignUp = () => {
+    removeFromLocalStorage("isPendingSignup")
+    saveToLocalStorage("isPendingSignup", false);
+    setIsPendingSignUp(false);
+  }
 
   return (
     <AuthContext.Provider
@@ -68,6 +79,8 @@ export const AuthContextProvider = ({ children }) => {
         cleanInfos,
         dependent,
         setDependent,
+        isPendingSignUp,
+        updateIsPendingSignUp
       }}
     >
       {children}
