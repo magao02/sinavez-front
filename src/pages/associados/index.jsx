@@ -392,7 +392,7 @@ const Associados = () => {
               </Button>
             </MainHead>
             <Main>
-              <DataTable filterAdm={filterAdm} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
+              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
             </Main>
 
           </MainContainer>
