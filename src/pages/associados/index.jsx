@@ -18,6 +18,9 @@ import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
 import DependentsContainer from "../../components/DependentsContainer";
 
+import X from "../../assets/x.svg";
+import Sucess from "../../assets/sucess.svg";
+
 import Pattern from "../../assets/pattern.svg"
 import AddIcon from "../../assets/add_icon.svg";
 
@@ -33,6 +36,9 @@ import {
 } from "../../styles/associadosStyles";
 import CancelForm from "../../components/CancelForm";
 import DataUser from "../../components/DataUser";
+import MiddleStep from "../../components/UserDataForm/MiddleStep";
+import { Card, ToggleCard } from "../../styles/homeStyles";
+import { ButtonCancel, CancelBox, CancelOptions, TextCancel, TitleCancel } from "../../components/CancelForm/style";
 
 const Associados = () => {
   const [associados, setAssociados] = useState([]);
@@ -59,6 +65,7 @@ const Associados = () => {
   const file = useRef(null);
 
   const [perfilImage, setPerfilImage] = useState(null);
+  const [toggleAdd, setToggleAdd] = useState(false);
   const router = useRouter();
 
   const authContext = useAuth();
@@ -79,6 +86,10 @@ const Associados = () => {
     setDataUserToggle((p) => !p);
 
   }, []);
+
+  const showFinishCad = useCallback(() => {
+    setToggleAdd((p) => !p);
+  });
 
   const yearsController = (data, yearVariant) => {
     setYears({ toggle: true });
@@ -148,6 +159,7 @@ const Associados = () => {
       toggleAddAssociate();
       setCollectedData({});
       setCurrentStep(1);
+      setToggleAdd((p) => !p);
 
     } catch (error) {
       setCurrentStep(1);
@@ -340,8 +352,11 @@ const Associados = () => {
             {currentStep == 2 && (
               <SecondStepForm previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
-            {currentStep >= 3 && (
-              <ThirdStepForm  saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
+            {currentStep == 3 && (
+             <MiddleStep previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate}/>
+            )}
+            {currentStep >= 4 && (
+               <ThirdStepForm  saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
             )}
           </AddAssociateBox>
         </>
@@ -390,6 +405,33 @@ const Associados = () => {
           )}
         </>
       )}
+
+    {toggleAdd && (
+      <>
+      <ToggleCard/>
+        <Card alt={true}>
+          <CancelBox>
+            <TitleCancel>Sucesso</TitleCancel>
+
+              <CancelOptions>
+                    <Image src={Sucess} width={'357.377px'} height={'200px'}/>
+                    <TextCancel>
+                      Pré-cadastro realizado com sucesso! <br/>
+                      {collectedData.name} agora está na lista de associados.
+                    </TextCancel>
+                    
+                  </CancelOptions>
+
+                  <ButtonCancel>
+                    <Button variant={'cancelRemove'} onClick={showFinishCad}>
+                       <Image src={X}/>
+                       SAIR
+                    </Button>
+                  </ButtonCancel>
+                </CancelBox>
+            </Card>
+      </>
+    )}
     </Container>
   );
 };

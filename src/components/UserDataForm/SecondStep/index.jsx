@@ -17,16 +17,15 @@ import Button from "../../commom/Button";
 import Image from 'next/image.js';
 
 const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstButton, globalMessage, cancelForm }) => {
-  const formacaoSuperiorRef = useRef();
-  const dataFormacaoRef = useRef();
   const empresaRef = useRef();
   const profissaoRef = useRef();
   const salarioRef = useRef();
-
-  const numRegistroConselhoRef = useRef();
-  const dataRegistroConselhoRef = useRef();
-  const numeroInscricaoRef = useRef();
-  const dataAfiliacaoRef = useRef();
+  const telefoneRef = useRef();
+  const ruaRef = useRef();
+  const bairroRef = useRef();
+  const numeroRef = useRef();
+  const municipioRef = useRef();
+  const cepRef = useRef();
 
   const [localImage1, setLocalImage1] = useState(image);
   const [localImage, setLocalImage] = useState(null);
@@ -36,10 +35,9 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
 
   const allFieldsAreValid = useCallback(async () => {
     const inputRefs = [
-      formacaoSuperiorRef, dataFormacaoRef, empresaRef,
-      profissaoRef, salarioRef, /* cidadeRef, estadoRef, */
-      numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef,
-      dataAfiliacaoRef
+      empresaRef,
+      profissaoRef, salarioRef, telefoneRef, ruaRef, bairroRef,
+      numeroRef, municipioRef,
     ];
 
     const validationResults = await Promise.all(
@@ -56,19 +54,22 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
 
     const salario = salarioRef.current?.value != undefined ? Number(salarioRef.current?.value) : 0.0;
 
-    const [formacaoSuperior, dataFormacao, empresa, profissao,
-      numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao,
-      /* municipio, estado */] =
-      [formacaoSuperiorRef, dataFormacaoRef, empresaRef, profissaoRef,
-        numRegistroConselhoRef, dataRegistroConselhoRef, numeroInscricaoRef, dataAfiliacaoRef,
-        /* cidadeRef, estadoRef */
+    const [empresa, profissao,
+      telefone, rua, bairro, numero, municipio, cep] =
+      [empresaRef, profissaoRef,
+        telefoneRef, ruaRef, bairroRef, numeroRef, municipioRef, cepRef
       ].map(
         (inputRef) => inputRef.current?.value,);
 
     dataCollector({
       /* regional: { municipio, estado, naturalidade, nacionalidade},*/ 
-      formacaoSuperior, dataFormacao, empresa, profissao, salario,
-      numRegistroConselho, dataRegistroConselho, numInscricao, dataAfiliacao
+      empresa, 
+      profissao, 
+      salario,
+      telefone, 
+      endereco: { rua, bairro, numero}, 
+      regional: { municipio, cep},
+
     })
   });
 
@@ -153,30 +154,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
         <Main>
           <SubContainer>
             <SubTitle>
-              Dados Acadêmicos
-            </SubTitle>
-            <Input
-              variant="default-optional"
-              label={"Curso de Formação"}
-              name={"curso_de_formacao"}
-              placeholder={"Digite seu curso de formação"}
-              initialValue={previousData.formacaoSuperior}
-              ref={formacaoSuperiorRef}
-              validate={validation.TextField}
-            />
-            <Input
-              variant="default-optional"
-              label={"Data de Formação"}
-              name={"data_de_formacao"}
-              placeholder={"DD/MM/AAAA"}
-              initialValue={previousData.dataFormacao}
-              ref={dataFormacaoRef}
-              validate={validation.testDate}
-            />
-          </SubContainer>
-          <SubContainer>
-            <SubTitle>
-              Dados Empregatícios
+              Contatos
             </SubTitle>
             <Input
               variant="default-optional"
@@ -211,43 +189,59 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               Vínculo com o SINAVEZ
             </SubTitle>
             <Input
+              variant="default"
+              label={"Telefone"}
+              name={"Telefone"}
+              placeholder={"(XX) YYYY-ZZZZ"}
+              initialValue={previousData.telefone}
+              ref={telefoneRef}
+              validate={validation.testRequiredPhone}
+            />
+             <Input
               variant="default-optional"
-              label={"Número de registro no conselho"}
-              name={"numero_de_registro"}
-              placeholder={"Digite o seu número de registro no conselho"}
-              initialValue={previousData.numRegistroConselho}
-              ref={numRegistroConselhoRef}
+              label={"CEP"}
+              name={"cep"}
+              placeholder={"00000-000"}
+              initialValue={previousData.cep ? previousData.regional.cep : ""}
+              ref={cepRef}
+            />
+            <Input
+              variant="default"
+              label={"Nome da rua"}
+              name={"Rua"}
+              placeholder={"Rua"}
+              initialValue={previousData.endereco ? previousData.endereco.rua : ""}
+              ref={ruaRef}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default"
+              label={"Bairro"}
+              name={"Bairro"}
+              placeholder={"Bairro"}
+              initialValue={previousData.endereco ? previousData.endereco.bairro : ""}
+              ref={bairroRef}
+              validate={validation.TextField}
+            />
+            <Input
+              variant="default"
+              label={"Número de Residência"}
+              name={"Número"}
+              placeholder={"Número"}
+              initialValue={previousData.endereco ? previousData.endereco.numero : ""}
+              ref={numeroRef}
               validate={validation.testNumbers}
             />
             <Input
-              variant="default-optional"
-              label={"Data de registro no conselho"}
-              name={"data_de_registro"}
-              placeholder={"DD/MM/AAAA"}
-              initialValue={previousData.dataRegistroConselho}
-              ref={dataRegistroConselhoRef}
-              validate={validation.testDate}
+              variant="default"
+              label={"Cidade"}
+              name={"Município"}
+              placeholder={"Cidade"}
+              initialValue={previousData.endereco ? previousData.regional.municipio : ""}
+              ref={municipioRef}
+              validate={validation.TextField}
             />
-            <InputsContainer>
-              <Input
-                variant="default-optional"
-                label={"Número de Inscrição"}
-                name={"numero_de_inscricao"}
-                placeholder={"Número de inscrição"}
-                initialValue={previousData.numInscricao}
-                ref={numeroInscricaoRef}
-                validate={validation.testNumbers}
-              />
-              <Input
-                variant="default-optional"
-                label={"Data de Afiliação"}
-                name={"data_de_afiliacao"}
-                placeholder={"DD/MM/AAAA"}
-                initialValue={previousData.dataAfiliacao}
-                ref={dataAfiliacaoRef}
-                validate={validation.testDate}
-              />
-            </InputsContainer>
+
           </SubContainer>
         </Main>
       </Body>

@@ -117,10 +117,12 @@ export const SubContainer = styled.div`
 `
 
 export const SubTitle = styled.h3`
-    color: var(--text-primary, ${theme.colors.gray.menu});
-    font-size: 18px;
+    color: var(--text-primary, #3D3F45);
+
+    font-family: Jost;
+    font-size: 22px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
 `
 

@@ -14,7 +14,9 @@ const ContainerDataUserPage = ({file, saveImage, data, edit, urlUser, authContex
     }
 
     const formataTelefone = (telefone) => {
-        return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+        if (telefone !== null && telefone !== undefined){
+            return telefone.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+        }
     };
 
     const formataData = (data) => {

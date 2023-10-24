@@ -16,6 +16,18 @@ import ProfileIcon from "../../assets/white_profile_icon.svg";
 import ConfigIcon from "../../assets/white_config_icon.svg";
 import BrawerIcon from "../../assets/white_brawer_icon.svg";
 import Pattern from "../../assets/home_pattern.svg"
+import Vector from "../../assets/Vector.svg"
+import Sucess from "../../assets/sucess.svg"
+import X from "../../assets/x.svg"
+
+import DarkBackground from "../../components/commom/DarkBackground"
+
+import Navigation from "../../components/commom/Nav";
+import Button from "../../components/commom/Button";
+import * as service from "../../services/accounts";
+
+import { ButtonCancel, CancelBox, CancelOptions, ContainerCancel, TextCancel, TitleCancel } from "../../components/CancelForm/style";
+import SucessAdd from "../../components/CancelForm/SucessAdd";
 import registration_img from "../../assets/registration.svg"
 import right_arrow from "../../assets/right_arrow.svg"
 
@@ -33,6 +45,7 @@ import { CompleteRegistration } from "../../components/CompleteRegistration";
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
+
 
   return <>
     <div
@@ -74,6 +87,49 @@ const Home = () => {
     }
   }, []);
 
+  const [toggle, setToggle] = useState(false);
+  const [finishCad, setFinishCad] = useState(false);
+  const [nameUser, setNameUser] = useState('');
+  const [collectedData, setCollectedData] = useState({});
+  const [spanError, setSpanError] = useState(false);
+
+  const showToggle = () => {
+    setToggle(!toggle);
+  }
+
+  const showFinishCad = () => {
+
+    if (collectedData.name == undefined || collectedData.name == '' || collectedData.cpf == undefined || collectedData.cpf == '' || collectedData.password == undefined || collectedData.password == '') {
+      setSpanError(true);
+    } else {
+      setToggle(false)
+      setSpanError(false);
+      preCadastro();
+      setFinishCad(!finishCad);
+    }
+  }
+
+  const takeName = (nome) => {
+    setNameUser(nome);
+  }
+
+  const dataCollected = (data) => {
+    setCollectedData(data);
+    console.log(collectedData);
+  }
+
+  useEffect(() => {
+    dataCollected(collectedData);
+  }, [collectedData]);
+
+  const preCadastro = useCallback(async () => {
+    try {
+      const response = await service.incompleteDataUser(collectedData, authContext.token);
+      console.log(response);
+    } catch (error) {
+      console.log("Deu erro");
+    }
+  }, [collectedData]);
 
   // FUNCOES DE CONTROLE DOS MODAIS DE COMPLETAR CADASTRO
   const handleRegistrationModal = ( action ) => {
@@ -96,7 +152,6 @@ const Home = () => {
     setShowPopUp(false)
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
-
   return (
     <>
       <Container>
@@ -300,7 +355,78 @@ const Home = () => {
               </Button>
             </Link>
           </BottonMain>
+
+          <BottonMainCad>
+                <Button variant="pre-cad" onClick={showToggle}>
+                  <Image src={Vector} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Pré-cadastro de associados
+                    </TitleBottom>
+                    <TextBottom>
+                      Faça o pré-cadastro de um associado!
+                    </TextBottom>
+                    <LinkText onClick={showToggle}>
+                      PRÉ-CADASTRAR
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+            </BottonMainCad>
           </>}
+
+          {toggle &&
+            <>
+              <ToggleCard/>
+                <Card>
+                  <CardPreCadastro>
+                    <ContainerPreCadastro>
+                      <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
+                      <Input
+                        label="Nome"
+                        name="name"
+                        type="text"
+                        placeholder="Digite um nome"
+                        onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
+                      />
+                      <SpanInput span={spanError} >Digite um nome válido</SpanInput>
+                      <Input
+                        label="E-mail"
+                        name="email"
+                        type="text"
+                        placeholder="Digite um e-mail válido"
+                        onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
+                      />
+                      <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
+                      <Input
+                        label="Usuário"
+                        name="cpf"
+                        type="text"
+                        placeholder="000.000.000-00"
+                        onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
+                      />
+                      <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
+                      <Input
+                        label="Senha"
+                        name="password"
+                        type="text"
+                        placeholder="Digite uma senha "
+                        onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
+                      />
+                      <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
+
+                      <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
+                    </ContainerPreCadastro>
+                  </CardPreCadastro>
+                </Card>
+            </>
+          }
+
+          {finishCad &&
+            <>
+              <SucessAdd showFinishCad={showFinishCad} name={collectedData.name}/>
+            </>
+          }
 
         </BottonMainContent>
       </BottomCotainer>

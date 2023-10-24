@@ -109,6 +109,14 @@ export async function createNewImpostoByYearDep(urlUser, ano, urlDep, token) {
 
 //User Routes:
 
+export async function incompleteDataUser(userValue, token) {
+    const requisition = await api.post(
+        "/user/createIncompleteUser", userValue, {
+        headers: { authorization: token },
+    });
+    return requisition;
+}
+
 export async function getUserData(urlUser, token) {
     const requisition = await handleUnauthorized(api.get(
         `/user/getUser/${urlUser}`, {

@@ -20,14 +20,14 @@ function getStyleByVariant(variant) {
                 margin-bottom: 1vh;
 
                 label {
-                    color: ${theme.colors.gray.default};
-
-                    font-size: 14px;
+                    color: var(--Azul-0, #0760BA);
+                 
+                    /* desktop.body1 */
                     font-family: Roboto;
+                    font-size: 18px;
                     font-style: normal;
                     font-weight: 400;
-                    line-height: 18px;
-                    width: 100%;
+                    line-height: 22px; /* 122.222% */
                 }
 
                 &:focus-within label {
@@ -295,6 +295,7 @@ function getStyleByVariant(variant) {
 export const BaseInput = styled.input`
     height: 100%;
     width: 100%;
+    
 `;
 
 
