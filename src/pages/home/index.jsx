@@ -22,8 +22,6 @@ import X from "../../assets/x.svg"
 
 import DarkBackground from "../../components/commom/DarkBackground"
 
-import Navigation from "../../components/commom/Nav";
-import Button from "../../components/commom/Button";
 import * as service from "../../services/accounts";
 
 import { ButtonCancel, CancelBox, CancelOptions, ContainerCancel, TextCancel, TitleCancel } from "../../components/CancelForm/style";
@@ -38,10 +36,12 @@ import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import success_img from "../../assets/sucess_img.svg"
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
+
+import Input from "../../components/commom/Input";
 
 function InfoIcon({ children }) {
   const [hovering, setHovering] = useState(false);
