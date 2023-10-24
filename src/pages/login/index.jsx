@@ -57,10 +57,16 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   
   useEffect(() => {
+    if (!authContext || !authContext.token) {
+      // se authContext é invalido, então não faz nada
+      removeFromLocalStorage("unauthorizedMsg");
+      setErrorMsg(null);
+      return;
+    }
     let x = readFromLocalStorage("unauthorizedMsg");
     if (x)
       setErrorMsg(x);
-  }, []);
+  }, [authContext]);
 
   const closeErrorMsg = () => {
     setErrorMsg(null);
