@@ -334,7 +334,7 @@ const Associados = () => {
 
   useEffect(() => {
     getAssociados();
-    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+    if (!authContext.auth || !authContext.admin) {
       router.push("/login");
     return;
   }

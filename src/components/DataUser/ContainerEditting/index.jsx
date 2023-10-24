@@ -216,37 +216,39 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
                             onChange={(event) => onChageData(event.target.value, "dataAfiliacao", "")}
                         />
                     </SubContainer>
+                    {authContext.adminMaster && (
+                        <SubContainer gap={true} height={true}>
+                            <ContainerLabel>
+                                <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
 
-                    <SubContainer gap={true} height={true}>
-                        <ContainerLabel>
-                            <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
+                                <ContainerInputLabel>
+                                    <label for="sim">
+                                        <input
+                                            type="radio"
+                                            id="sim"
+                                            name="admin"
+                                            value="true"
+                                            readOnly={false}
+                                            onChange={() => onChageData(true, "admin", "")} />
+                                        <SpanLabel margin={true}>Sim</SpanLabel>
+                                    </label>
 
-                            <ContainerInputLabel>
-                                <label for="sim">
-                                    <input
-                                        type="radio"
-                                        id="sim"
-                                        name="admin"
-                                        value="true"
-                                        readOnly={false}
-                                        onChange={() => onChageData(true, "admin", "")} />
-                                    <SpanLabel margin={true}>Sim</SpanLabel>
-                                </label>
+                                    <label for="sim">
+                                        <input
+                                            type="radio"
+                                            id="nao"
+                                            name="admin"
+                                            value="true"
+                                            readOnly={false}
+                                            onChange={() => onChageData(false, "admin", "")}
+                                        />
+                                        <SpanLabel margin={true}>Não</SpanLabel>
+                                    </label>
+                                </ContainerInputLabel>
+                            </ContainerLabel>
+                        </SubContainer>
+                    )}
 
-                                <label for="sim">
-                                    <input
-                                        type="radio"
-                                        id="nao"
-                                        name="admin"
-                                        value="true"
-                                        readOnly={false}
-                                        onChange={() => onChageData(false, "admin", "")}
-                                    />
-                                    <SpanLabel margin={true}>Não</SpanLabel>
-                                </label>
-                            </ContainerInputLabel>
-                        </ContainerLabel>
-                    </SubContainer>
 
                 </ContainerDataUser>
 
@@ -383,20 +385,20 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
 
             {save && (
                 <>
-                    <ToggleCard alt={true}/>
+                    <ToggleCard alt={true} />
                     <Card alt={true}>
                         <CancelBox>
                             <TitleCancel>Sucesso</TitleCancel>
 
                             <CancelOptions>
                                 <Image src={Sucess} width={'357.377px'} height={'200px'} />
-                                {!data.admin && !dataNova.admin &&(
+                                {!data.admin && !dataNova.admin && (
                                     <TextCancel>
                                         Salvar alterações nos dados de {data.name}?
                                     </TextCancel>
                                 )}
 
-                                {data.admin && dataNova.admin &&(
+                                {data.admin && dataNova.admin && (
                                     <TextCancel>
                                         Salvar alterações nos dados de {data.name}?
                                     </TextCancel>
@@ -414,7 +416,7 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
                                         Salvar alterações nos dados de {data.name} e remover da lista de Administradores?
                                     </TextCancel>
                                 )}
-                               
+
                             </CancelOptions>
 
                             <ButtonCancel>

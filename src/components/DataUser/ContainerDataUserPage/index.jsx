@@ -134,8 +134,8 @@ const ContainerDataUserPage = ({ file, saveImage, data, edit, urlUser, authConte
                                 value={formataData(data.dataAfiliacao)}
                             />
                         </SubContainer>
-
-                        <SubContainer gap={true} height={true}>
+                        {authContext.adminMaster && (
+                            <SubContainer gap={true} height={true}>
                             <ContainerLabel>
                                 <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
 
@@ -152,7 +152,7 @@ const ContainerDataUserPage = ({ file, saveImage, data, edit, urlUser, authConte
                                 </ContainerInputLabel>
                             </ContainerLabel>
                         </SubContainer>
-
+                        )}
                     </ContainerDataUser>
 
                     <ContainerDataUser>
