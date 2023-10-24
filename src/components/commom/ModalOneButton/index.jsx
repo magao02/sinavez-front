@@ -4,7 +4,7 @@ import { ButtonArea } from "./styles";
 import { useRouter } from "next/router";
 import DarkBackGround from "../DarkBackground";
 
-export const ModalOneButton = ({ title, asideText, id, img, hideButton }) => {
+export const ModalOneButton = ({ title, asideText, id, img, hideButton, buttonFunction }) => {
   const router = useRouter();
 
   const handlePage = () => {
@@ -23,7 +23,7 @@ export const ModalOneButton = ({ title, asideText, id, img, hideButton }) => {
             </TextAside>
           </Main>
           <ButtonArea>
-            { !hideButton && <Button onClick={handlePage}>
+            { !hideButton && <Button onClick={buttonFunction !== undefined ? buttonFunction : handlePage}>
               <img src={x.src} alt="X" />
               <span>SAIR</span>
             </Button> }

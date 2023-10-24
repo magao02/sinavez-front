@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import Image from "next/image.js";
 
 import Pattern from "../../assets/horizontal_pattern.png";
-import SinavezLogo from "../../assets/sinavez_logo_branco.svg";
-import SinavezText from "../../assets/text_sinavez_branco.svg";
+import SinavezLogo from "../../assets/sinavez_logo_white.svg";
+import SinavezText from "../../assets/sinavez_text_white.svg";
 import ImpostoLogo from "../../assets/multiple_files.svg";
 
 import {
@@ -25,18 +25,26 @@ const ChoicePage = () => {
         router.push("/usuario");
     };
 
+    const redirectImposto = () => {
+        if (typeof window !== 'undefined') {
+            // window.location.href = "https://google.com";
+        }
+    }
+
     return (
         <Container>
-            <Title>Seja Bem Vindo a <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
+            <Title>Seja Bem Vindo ao <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
             <Buttons>
                 <Button onClick={redirectSindicato}>
                     <ButtonImage>
                         <Image src={SinavezLogo} draggable={false} height="120" />
-                        <Image src={SinavezText} draggable={false} />
+                        <div style={{scale: "1.3"}}>
+                            <Image src={SinavezText} draggable={false} />
+                        </div>
                     </ButtonImage>
                     <span>Entrar na plataforma do <b>sindicato!</b></span>
                 </Button>
-                <Button>
+                <Button onClick={redirectImposto}>
                     <ButtonImage>
                         <Image src={ImpostoLogo} draggable={false} />
                         Imposto de renda

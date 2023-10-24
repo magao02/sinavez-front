@@ -177,6 +177,13 @@ const editApartment = () => {
   const authContext = useAuth();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+        router.push("/login");
+      return;
+    }
+},[authContext.auth])
+
   // REQUISICAO POST
   const postRequisicaoRA = async () => {
     var itens = [];

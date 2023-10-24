@@ -14,10 +14,10 @@ const OnBoardingScreen = ({ name, onClicked }) => {
                 <Title>
                     Olá {name}! Bem vindo a nova plataforma
                     <br />
-                    da SINAVEZ
+                    do SINAVEZ
                 </Title>
                 <Text>
-                    A SINAVEZ agora está de cara nova,
+                    O SINAVEZ agora está de cara nova,
                 </Text>
                 <Button variant={"default-adjustable-15%"} onClick={onClicked}>
                     ENTENDER A PLATAFORMA

@@ -34,12 +34,14 @@ export const RightContent = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    overflow: auto;
+
     margin-right: 10%;
     @media (max-height: 779px) {
-        scale: 90%;
+        scale: 80%;
     }
     @media (max-height: 676px) {
-        scale: 80%;
+        scale: 70%;
     }
 `
 
@@ -107,7 +109,7 @@ export const Steps = styled.div`
     display: flex;
     align-items: center;
 
-    width: 70%;
+    width: 90%;
     margin-bottom: 25px;
 `;
 

@@ -10,6 +10,7 @@ const validationMessages = {
   invalidPhone:
     "Formato Inválido (digite apenas os números do ddd + número do telefone)",
   onlyNumbers: "Apenas números são aceitos",
+  currPassword: "A sua senha atual é o seu cpf"
 };
 
 export async function requiredTextField(textValue) {
@@ -38,6 +39,14 @@ export async function testCpf(cpfValue) {
     .string()
     .matches(/^\d{3}\d{3}\d{3}\d{2}|\s*$/, validationMessages.invalidCPF)
     .validate(cpfValue);
+}
+
+export async function isMatchingCpfRequired(cpfValue, cpfToCheck) {
+  return yup
+    .string()
+    .required(validationMessages.requiredField)
+    .equals([cpfValue], validationMessages.currPassword)
+    .validate(cpfToCheck);
 }
 
 export async function testRequiredPassword(passwordValue) {
@@ -165,4 +174,17 @@ export async function testNumberImposto(numberValue) {
     .string()
     .matches(/^\d+$ || [.]/, validationMessages.onlyNumbers)
     .validate(numberValue);
+}
+
+export async function testCEP(numberValue) {
+  if (numberValue == "") {
+    return yup
+      .string()
+      .validate(numberValue);
+  } else {
+    return yup
+      .string()
+      .matches(/^(?:\.|,|\-|[0-9]){8,10}$/, validationMessages.onlyNumbers)
+      .validate(numberValue);
+  }
 }

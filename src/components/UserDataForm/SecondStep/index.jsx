@@ -183,6 +183,11 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               ref={salarioRef}
               validate={validation.testNumbers}
             />
+          </SubContainer>
+          <SubContainer>
+            <SubTitle>
+              Vínculo com o SINAVEZ
+            </SubTitle>
             <Input
               variant="default"
               label={"Telefone"}

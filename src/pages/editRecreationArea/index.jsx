@@ -80,10 +80,14 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+      router.push("/login");
+    return;
+    }
     if(router.isReady){
       getRecreationInfo();
     }
-  }, [router.isReady]);
+  }, [router.isReady, authContext.auth]);
 
   const [isMakingRequest, setIsMakingRequest] = useState(false);
   const [isUploadingPhotos, setIsUploadingPhotos] = useState(false);

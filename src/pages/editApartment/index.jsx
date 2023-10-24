@@ -80,10 +80,14 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+      router.push("/login");
+    return;
+    }
     if(router.isReady){
       getApartmentInfo();
     }
-  }, [router.isReady]);
+  }, [router.isReady, authContext.auth]);
 
   const validaCamas = () => camas.every((data) => data.Quantidade > 0)
 

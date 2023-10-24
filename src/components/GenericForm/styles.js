@@ -9,7 +9,7 @@ export const InputContainer = styled.form`
     align-items: center;
     flex-direction: column;
 
-    gap: 1.6rem;
+    gap: ${(props) => props.gap ? props.gap : "1.6rem"};
 
     padding-bottom: 0.8rem;
 
