@@ -8,14 +8,13 @@ export const Table = styled.div`
     width: 85vw;
 
     gap: 1.5vh;
-    position: absolute;
     z-index: -1;
 `
 
 export const TableHead = styled.div`
     display: flex;
     align-items: center;
-    gap: ${props => props.gap ? "45%" : "50%"}};
+    gap: ${props => props.gap ? "45%" : "50%"};
     margin-top: ${props => props.marginTop ? "10px" : "0"};
     padding: ${props => props.padding ? "7px 8px" : "0"};
 
