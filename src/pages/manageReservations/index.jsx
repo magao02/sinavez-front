@@ -81,7 +81,7 @@ const ManageReserVations = () => {
         getAptos()
         getRecreationAreas()
 
-        if (!authContext.auth || !authContext.admin || !authContext.admin) {
+        if (!authContext.auth || !authContext.admin) {
             router.push("/login");
           return;
         }
