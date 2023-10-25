@@ -80,7 +80,7 @@ const editApartment = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!authContext.auth || !authContext.admin || !authContext.adminMaster) {
+    if (!authContext.auth || !authContext.admin) {
       router.push("/login");
     return;
     }
