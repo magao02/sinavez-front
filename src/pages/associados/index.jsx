@@ -49,7 +49,7 @@ import FilterAssociate from "../../components/FilterAssociate";
 const Associados = () => {
   const [associados, setAssociados] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [admToggle, setAdmToggle] = useState(false);
+  const [admToggle, setAdmToggle] = useState();
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [userDependents, setUserDependents] = useState([]);
@@ -205,7 +205,6 @@ const Associados = () => {
     }
   });
 
-
   // editando dados do usuário
   const handleEditUser = useCallback(async (dataNova, urlUser) => {
     try {
@@ -321,7 +320,7 @@ const Associados = () => {
     }
   };
 
-
+console.log(associados)
 
   const nextStepAddAssociate = useCallback(() => {
     setCurrentStep((p) => ++p);
@@ -381,7 +380,7 @@ const Associados = () => {
                 <>
                   <FiltersArea alt={true}>
                     <DropdownArea>
-                      <FilterAssociate filterUser={setSearchTerm} />
+                      <FilterAssociate filterUser={setFilterAdm} />
                     </DropdownArea>
                   </FiltersArea>
                 </>
@@ -392,7 +391,7 @@ const Associados = () => {
               </Button>
             </MainHead>
             <Main>
-              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
+              <DataTable collectedData={collectedData} filterAdm={filterAdm} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
             </Main>
 
           </MainContainer>

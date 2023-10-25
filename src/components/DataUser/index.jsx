@@ -47,8 +47,7 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
     const fileInput = useRef(null);
     const [localImage, setLocalImage] = useState(null); 
 
-    const authContex = useAuth();
-
+    const authContext1 = useAuth();
 
     const saveImage = useCallback(async(fileInput)  => {
         if (fileInput && fileInput.current && fileInput.current.files.length > 0) {
@@ -278,8 +277,8 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
                                     <DivAdm>Administrador</DivAdm>
                                 </>
                             )}
-                            {authContex.isPendingSignUp && (
-                            <SpanPedding>Esse usuário ainda não completou o cadastro de seus dados</SpanPedding>
+                            {data.isPendingSignup && (
+                                <SpanPedding>Esse usuário ainda não completou o cadastro de seus dados</SpanPedding>
                             )}
                         </ProfileArguments>
                     </ProfileUser>

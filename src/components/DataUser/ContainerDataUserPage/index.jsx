@@ -141,12 +141,12 @@ const ContainerDataUserPage = ({ file, saveImage, data, edit, urlUser, authConte
 
                                 <ContainerInputLabel>
                                     <label for="sim">
-                                        <input type="radio" id="sim" name="admin" value="true" checked={data.admin} readOnly={true} />
+                                        <input type="radio" id="sim" name="admin" value={data.admin} checked={data.admin} readOnly={true} />
                                         <SpanLabel margin={true}>Sim</SpanLabel>
                                     </label>
 
                                     <label for="sim">
-                                        <input type="radio" id="nao" name="admin" value="true" checked={!data.admin} readOnly={true} />
+                                        <input type="radio" id="nao" name="admin" value={data.admin} checked={!data.admin} readOnly={true} />
                                         <SpanLabel margin={true}>Não</SpanLabel>
                                     </label>
                                 </ContainerInputLabel>

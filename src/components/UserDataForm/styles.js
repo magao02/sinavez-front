@@ -146,7 +146,7 @@ export const ProfileContainerImage = styled.div`
 export const ProfileArguments = styled.div`
     display: flex;
     flex-direction: ${props => props.direction ? 'row' : 'column'};
-    width: 374px;
+    width: 50%;
     height: 114px;
     padding: ${props => props.padding ? '5px 0px 8px 0px' : '0px 0px 0px 0px'};
     gap: ${props => props.padding ? '5px' : '0px'};

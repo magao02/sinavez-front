@@ -23,8 +23,8 @@ const FilterAssociate = ( {filterUser}) => {
                 </ContainerSelect>
                 <OpenedMenuBox>
                     <OptionContainer>
-                        <Option onClick={() => handleClick("Associados", "associados" )}> Associados</Option>
-                        <Option onClick={() => handleClick("Administradores", "admin")}> Administradores</Option>
+                        <Option onClick={() => handleClick("Associados", false )}> Associados</Option>
+                        <Option onClick={() => handleClick("Administradores", true)}> Administradores</Option>
                         <Option onClick={() => handleClick("Filtrar Buscas", "")} style={{justifyContent:"end", color: "#2473C3"}}>Limpar Filtro</Option>
                     </OptionContainer>
                 </OpenedMenuBox>

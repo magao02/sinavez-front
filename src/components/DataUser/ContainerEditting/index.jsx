@@ -227,7 +227,7 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
                                             type="radio"
                                             id="sim"
                                             name="admin"
-                                            value="true"
+                                            value={dataNova.admin}
                                             readOnly={false}
                                             onChange={() => onChageData(true, "admin", "")} />
                                         <SpanLabel margin={true}>Sim</SpanLabel>
@@ -238,7 +238,7 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
                                             type="radio"
                                             id="nao"
                                             name="admin"
-                                            value="true"
+                                            value={dataNova.admin}
                                             readOnly={false}
                                             onChange={() => onChageData(false, "admin", "")}
                                         />

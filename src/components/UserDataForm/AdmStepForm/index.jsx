@@ -81,7 +81,7 @@ const [on, setOn] = useState(false);
   }
 
   useEffect(() => {
-   
+
   }, [on]);
 
   return (
@@ -143,12 +143,12 @@ const [on, setOn] = useState(false);
                           
                     <ContainerInputLabel>
                         <label for="sim"> 
-                        <input type="radio" id="sim" name="admin" value="true"  onChange={oneChangeRadio(true)} />
+                        <input type="radio" id="sim" name="admin" value={previousData.admin}  onChange={oneChangeRadio(true)} />
                         <SpanLabel margin={true}>Sim</SpanLabel>
                         </label>
 
                         <label for="nao"> 
-                            <input type="radio" id="nao" name="admin" value="true"  onChange={oneChangeRadio(false)}/>
+                            <input type="radio" id="nao" name="admin" value={previousData.admin}  onChange={oneChangeRadio(false)}/>
                               <SpanLabel margin={true}>Não</SpanLabel>
                             </label>
                     </ContainerInputLabel>
