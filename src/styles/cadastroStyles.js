@@ -34,14 +34,13 @@ export const RightContent = styled.div`
     flex-direction: column;
     justify-content: center;
 
-    overflow: auto;
-
     margin-right: 10%;
+    scale: 85%;
     @media (max-height: 779px) {
-        scale: 80%;
+        scale: 70%;
     }
     @media (max-height: 676px) {
-        scale: 70%;
+        scale: 60%;
     }
 `
 
