@@ -44,6 +44,7 @@ export const OpenedMenuBox = styled.div`
     width: 100%;
     background-color: white;
     border-radius: 0px 0px 8px 8px;
+    z-index: 99;
 `
 
 export const Select = styled.div`
