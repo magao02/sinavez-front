@@ -180,7 +180,7 @@ const ContainerEditting = ({ file, saveImage, data, urlUser, authContext, cancel
 
                     <SubContainer gap={true} height={true}>
                         <SubTitle>
-                            Vínculo com a SINAVEZ
+                            Vínculo com o SINAVEZ
                         </SubTitle>
                         <Input
                             variant="default-optional"

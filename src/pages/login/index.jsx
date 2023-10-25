@@ -9,8 +9,8 @@ import * as service from "../../services/accounts";
 
 import Pattern from "../../assets/login_pattern.svg";
 import Ilustration from "../../assets/login_ilustration.svg";
-import SinavezLogo from "../../assets/logo_sinavez_blue.svg";
-import SinavezText from "../../assets/text_sinavez_blue.svg";
+import SinavezLogo from "../../assets/sinavez_logo_blue.svg";
+import SinavezText from "../../assets/sinavez_text_blue.svg";
 
 import {
   WhiteContainer,
@@ -57,10 +57,16 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   
   useEffect(() => {
+    if (!authContext || !authContext.token) {
+      // se authContext é invalido, então não faz nada
+      removeFromLocalStorage("unauthorizedMsg");
+      setErrorMsg(null);
+      return;
+    }
     let x = readFromLocalStorage("unauthorizedMsg");
     if (x)
       setErrorMsg(x);
-  }, []);
+  }, [authContext]);
 
   const closeErrorMsg = () => {
     setErrorMsg(null);

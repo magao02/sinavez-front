@@ -582,6 +582,37 @@ function getStyleByVariant(variant) {
         border-radius: 4px;
         background: var(--verde-2, linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), #52B4AD);
         `;
-    }
+      }
+      case "registrationComplete": {
+        return css`
+          display: flex;
+          padding: 12px 22px;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          align-self: stretch;
+          gap: 0.7vw;
+  
+          height: 4vh;
+          width: 100%;
+          
+  
+          border-radius: 4px;
+          border: none;
+          background: ${(props) => props.backgroundColor};
+  
+          box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.20), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+          
+          color: var(--primary-contrast, ${theme.colors.white.default});
+          font-size: 18px;
+          font-weight: 500;
+          margin-top: ${props => props.marginTop};
+  
+          &:hover {
+            filter: brightness(80%);
+          }
+        `;
+      }
+      
   }
 }

@@ -3,9 +3,9 @@ import { InputContainer, Description, InputBox } from "./styles";
 import Input from "../commom/Input";
 import { forwardRef, useRef, useImperativeHandle, useEffect } from "react";
 
-export const GenericForm = ({ children }) => {
+export const GenericForm = ({ children, gap }) => {
   return (
-    <InputContainer>
+    <InputContainer gap={gap}>
       {children}
     </InputContainer>
   );

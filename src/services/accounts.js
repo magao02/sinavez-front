@@ -198,3 +198,12 @@ export async function setPhoto(file, urlUser, token) {
         { headers: { authorization: token } }
     );
 }
+
+export async function finishIncompleteUser(userUrl, token, data) {
+    const requisition = await api.put(
+        `/user/finishIncomplete/${userUrl}`,
+        data,
+        { headers: { authorization: token } }
+    );
+    return requisition;
+}

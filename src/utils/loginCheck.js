@@ -9,7 +9,7 @@ export async function handleUnauthorized(promise) {
     try {
         return await promise;
     } catch (err) {
-        if (err.isAxiosError && err.response.status === 401) {
+        if (err.isAxiosError && (err.response.status === 401 || err.response.status === 404)) {
             saveToLocalStorage("unauthorizedMsg", "Sua sessão expirou, por favor faça login novamente.");
             document.location = "/login";
         }

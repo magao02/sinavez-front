@@ -13,14 +13,13 @@ import Button from "../Button";
 import LinkBox from "../LinkBox"
 import DropDownMenu from "../DropDownMenu";
 
-import SinavezLogo from "../../../assets/logo_picture.svg";
-import SinavezName from "../../../assets/sinavez_name.svg";
+import SinavezName from "../../../assets/sinavez_logo_text_blue.svg";
 
 import { NavBar, UserFeaturesLeft, UserFeaturesRight, LogoSinavez } from "./styles";
 
 const Navigation = (props) => NavVariant(props);
 
-function NavVariant({ variant, selectedPage }) {
+function NavVariant({ variant, selectedPage, showPopUp}) {
   const [selectedHome, setSelectedHome] = useState(false);
   const [selectedAssociados, setSelectedAssociados] = useState(false);
   const [selectedApartamentos, setSelectedApartamentos] = useState(false);
@@ -35,18 +34,18 @@ function NavVariant({ variant, selectedPage }) {
   const router = useRouter();
 
   const handleSelectPage = useCallback(async () => {
-    switch (selectedPage) {
-      case "home":
-        setSelectedHome(true);
-        break;
-      case "associados":
-        setSelectedAssociados(true);
-        break;
-      case "apartamentos":
-        setSelectedApartamentos(true);
-        break;
-    }
-    setIsLoaded(true);
+      switch (selectedPage) {
+        case "home":
+          setSelectedHome(true);
+          break;
+        case "associados":
+          setSelectedAssociados(true);
+          break;
+        case "apartamentos":
+          setSelectedApartamentos(true);
+          break;
+      }
+      setIsLoaded(true);
   })
 
   const getUserData = useCallback(async () => {
@@ -84,7 +83,6 @@ function NavVariant({ variant, selectedPage }) {
             <>
               <UserFeaturesLeft>
                 <LogoSinavez>
-                  <Image src={SinavezLogo} />
                   <Image src={SinavezName} />
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
@@ -106,25 +104,25 @@ function NavVariant({ variant, selectedPage }) {
             <>
               <UserFeaturesLeft>
                 <LogoSinavez>
-                  <Image src={SinavezLogo} />
                   <Image src={SinavezName} />
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
-                <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
+                <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"} showPopUpSignUp={showPopUp}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
-                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
+                <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()} showPopUpSignUp={showPopUp}/>
               </UserFeaturesRight>
             </>
           )}
         </NavBar>
+        
       );
     }
 
     case "signup": {
       return (
         <NavBar>
-          <Image src={SinavezLogo} />
+          <Image src={SinavezName} />
         </NavBar>
       );
     }

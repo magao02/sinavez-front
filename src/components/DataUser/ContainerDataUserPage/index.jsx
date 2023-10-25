@@ -240,7 +240,41 @@ const ContainerDataUserPage = ({ file, saveImage, data, edit, urlUser, authConte
 
                         </SubContainer>
 
-
+                        <SubContainer gap={true} height={true}>
+                            <SubTitle>
+                                Vínculo com o SINAVEZ
+                            </SubTitle>
+                            <Input
+                                variant="default-optional"
+                                label={"Número de registro no conselho"}
+                                name={"numero_de_registro"}
+                                readOnly={true}
+                                value={data.numRegistroConselho}
+                            />
+                            <Input
+                                variant="default-optional"
+                                label={"Data de registro no conselho"}
+                                name={"data_de_registro"}
+                                readOnly={true}
+                                value={formataData(data.dataRegistroConselho)}
+                            />
+                            <InputsContainer>
+                                <Input
+                                    variant="default-optional"
+                                    label={"Número de Inscrição"}
+                                    name={"numero_de_inscricao"}
+                                    readOnly={true}
+                                    value={data.numInscricao}
+                                />
+                                <Input
+                                    variant="default-optional"
+                                    label={"Data de Afiliação"}
+                                    name={"data_de_afiliacao"}
+                                    readOnly={true}
+                                    value={formataData(data.dataAfiliacao)}
+                                />
+                            </InputsContainer>
+                        </SubContainer>
                     </ContainerDataUser>
                 </ContainerData>
 

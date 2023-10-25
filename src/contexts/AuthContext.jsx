@@ -51,9 +51,10 @@ export const AuthContextProvider = ({ children }) => {
     removeFromLocalStorage("urlUser");
     removeFromLocalStorage("auth");
     removeFromLocalStorage("admin");
-    removeFromLocalStorage("adminMaster");
     removeFromLocalStorage("isPendingSignup")
+    removeFromLocalStorage("adminMaster")
     setIsPendingSignUp(false);
+    setAdminMaster(false);
     setToken(undefined);
     setUrlUser(undefined);
     setAuth(false);
