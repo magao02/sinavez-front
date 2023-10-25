@@ -101,7 +101,7 @@ export const ContainerTable = styled.div`
 `;
 
 export const ContainerData = styled.div`
-    height: 82%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +115,8 @@ export const ContainerData = styled.div`
 
 export const ContainerDataUser = styled.div`
     display: flex;
-    height: 866px;
+    height: 90%;
+    width: 420px;
     flex-direction: column;
     align-items: flex-start;
     gap: 48px;
@@ -176,7 +177,7 @@ export const ContainerButtonCancel = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 1310px;
+    bottom: -356px;
     background: #FAFBFF;
 `;
 
@@ -285,4 +286,37 @@ export const Dependent = styled.div`
     padding: 1.5vh;
 
     background: ${props => props.color == "white" ? `var(--background, ${theme.colors.white.default})` : `var(--background, ${theme.colors.blue.light})`};
+`;
+
+export const DivAdm = styled.div`
+    width: 155px;
+    display: flex;
+    padding: 8px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    background: var(--verde-2, linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%), #52B4AD);
+    color: var(--white, ${theme.colors.white.default});
+`;
+
+export const Dark = styled.div`
+    z-index: 100;
+
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    background-color: black;
+    opacity: 50%;
+`;
+
+export const SpanPedding = styled.span`
+    color: var(--Azul-0, #0760BA);
+    /* desktop.body1 */
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 122.222% */
 `;

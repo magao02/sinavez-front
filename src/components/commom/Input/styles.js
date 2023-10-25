@@ -104,7 +104,7 @@ function getStyleByVariant(variant) {
                     }
 
                 label::after {
-                    content: '*';
+                    content: ' *';
                     color: ${theme.colors.red};
                 }
             `;

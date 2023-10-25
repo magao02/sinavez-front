@@ -3,7 +3,7 @@ import theme from './theme';
 
 export const Container = styled.div`
     width: 100vw;
-    height: 100vh;
+    height:  ${props => props.master ? "60%" : "100%"};
     background-color: ${theme.colors.white.default};
 
     display: flex;
@@ -46,7 +46,8 @@ export const BottonMain = styled.div`
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    flex-wrap: wrap;
     gap: 2vw;
 `
 
@@ -76,6 +77,7 @@ export const MainContent = styled.div`
     margin-left: 10%;
     display: grid;
     grid-template-columns: 50% 50%;
+    padding-bottom: ${props => props.master ? "50px" : "0"};
 `
 
 export const Title = styled.div`
@@ -220,10 +222,10 @@ export const InfoToolTip = styled.div`
 `;
 
 export const ToggleCard = styled.div`
-    width: 100%;
+    width: ${props => props.alt ? "250%" : "100%"};
     height: 240vh;
-    top: 0;
-    left: 0;
+    top: ${props => props.alt ? "-20%" : "0"};
+    left: ${props => props.alt ? "-80%" : "0"};
     background-color: black;
     position: absolute;
     opacity: 0.5;
@@ -249,7 +251,8 @@ export const CardPreCadastro = styled.div`
     border-radius: 16px;
     background: var(--Azul-3, #EDF6FF);
     width: 592px;
-    height: 612px;
+    height: 712px;
+    position: relative;
 `;
 
 export const ContainerPreCadastro = styled.div`
@@ -277,6 +280,67 @@ export const SpanInput = styled.span`
     font-size: 12px;
 `;
 
+export const CloseDiv = styled.div` 
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    z-index: 100;
+    right: 35px;
+    top: 22px;
+    cursor: pointer;
+`;
+
+export const TitleMaster = styled.h2`
+    color: var(--text-invertido, #FDFDFD);
+    font-family: Jost;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px; /* 125% */
+`;
+
+export const TextMaster = styled.p`
+    color: var(--text-invertido, #FDFDFD);
+    font-family: Jost;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38.5px; /* 160.417% */
+`;
+
+export const SpanMaster = styled.span`
+    color: var(--laranja-2, #FFAD72);
+    font-family: Jost;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 38.5px;
+`;
+
+export const ContainerLabel = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+`;  
+
+export const Label = styled.label`
+    color: #3D3F45;
+    font-size: 16px;
+`;
+
+export const SpanLabel = styled.span`
+    color: ${props => props.color ? "red": "" };
+    margin-left: ${props => props.margin ? "8px": "" };
+`;
+
+export const ContainerInputLabel = styled.div`
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    width: 196px;
+`;
 export const RegistrationWrapper = styled.div`
     width: 100vw;
 `

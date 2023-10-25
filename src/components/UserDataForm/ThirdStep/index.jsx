@@ -19,7 +19,7 @@ import Button from "../../commom/Button";
 import Image from 'next/image.js';
 import DependentsForm from '../../DependentsContainer';
 
-const ThirdStep = ({file, saveImage, image, previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
+const ThirdStep = ({admMaster, takeImage, file, saveImage, image, previousData, dataCollector, firstButton, globalMessage, cancelForm, handleAddAssociate }) => {
 
   const [dataDependent, setDataDependent] = useState([]);
 
@@ -38,6 +38,15 @@ const ThirdStep = ({file, saveImage, image, previousData, dataCollector, firstBu
 const takeNewData = (data) => {
   setNewData(data);
 }; 
+
+const imageSave = () => {
+  if (localImage1){
+    takeImage(localImage1);
+  } else if (localImage){
+    takeImage(localImage);
+    console.log("enviou")
+  }
+};
 
 
   const handleSubmit = useCallback(async (event) => {
@@ -182,9 +191,17 @@ const takeNewData = (data) => {
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"default"} onClick={() => {handleAddAssociate(verificaFile())}}>
+        {!admMaster && (
+          <Button variant={"default"} onClick={() => {handleAddAssociate(verificaFile())}}>
           Finalizar cadastro
-        </Button>
+          </Button>
+        )}
+        {admMaster && (
+          <Button variant={"light"} onClick={imageSave}>
+            CONTINUAR
+          </Button> 
+        )}
+        
       </Footer>
       {globalMessage && <span style={{ color: 'red', fontWeight: 'bold' }}>{globalMessage}</span>}
     </Container >

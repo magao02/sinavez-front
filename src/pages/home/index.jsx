@@ -36,7 +36,7 @@ import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import success_img from "../../assets/sucess_img.svg"
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
@@ -73,9 +73,8 @@ const Home = () => {
 
   const checkNav = () => {
     if (authContext.admin == 'true' || authContext.admin == true) {
-      return "admin"
-    }
-    else {
+      return "admin";
+    } else {
       return "logged";
     }
   }
@@ -106,7 +105,26 @@ const Home = () => {
       setSpanError(false);
       preCadastro();
       setFinishCad(!finishCad);
+    } 
+  }
+
+ 
+
+  const oneChangeRadio = (value) => {
+    if (value) {
+      return () => {
+        setCollectedData({ ...collectedData, admin: true })
+      }
+    } else {
+      return () => {
+        setCollectedData({ ...collectedData, admin: false })
+      }
     }
+  }
+
+  const closeFinishCad = () => {
+    setFinishCad(false);
+    setToggle(false)
   }
 
   const takeName = (nome) => {
@@ -115,12 +133,13 @@ const Home = () => {
 
   const dataCollected = (data) => {
     setCollectedData(data);
-    console.log(collectedData);
   }
+
 
   useEffect(() => {
     dataCollected(collectedData);
   }, [collectedData]);
+
 
   const preCadastro = useCallback(async () => {
     try {
@@ -152,6 +171,180 @@ const Home = () => {
     setShowPopUp(false)
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
   }
+
+  if (authContext.adminMaster) {
+    return (
+      <>
+        <Container master={authContext.adminMaster}>
+          <Navigation selectedPage={"home"} variant={checkNav()} />
+     
+          <Main>
+            <MainContent master={true}>
+              <Texts>
+                <TitleMaster>
+                  Bem-vindo ao Sinavez
+                </TitleMaster>
+                <TextMaster>
+                  Você está na conta do <SpanMaster>ADMINISTRADOR MASTER</SpanMaster>!
+                </TextMaster> 
+              </Texts>
+            </MainContent>
+          </Main>
+        </Container>   
+          <BottomCotainer>
+          <BottonMainContent> 
+            <Texts>
+              <BottonTitle>
+                Espaço Administrativo
+                <InfoIcon>
+                  Espaço destinado aos administradores. Aqui você terá acesso à página de gerenciamento de apartamentos e associados!<br/>
+                  Basta clicar no botão que você será redirecionado para a página desejada.
+                </InfoIcon>
+              </BottonTitle>
+            </Texts>
+            <BottonMain>
+              <Link href={"/associados"}>
+                <Button variant="home">
+                  <Image src={ConfigIcon} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Gerenciar Associados
+                    </TitleBottom>
+                    <TextBottom>
+                      Está precisando alterar informações dos 
+                      <br />
+                      associados e seus dependentes? Essa página 
+                      <br />
+                      pode te ajudar com isso!
+                    </TextBottom>
+                    <LinkText>
+                      Veja mais
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+              </Link>
+              <Link href={"/manageReservations"}>
+                <Button variant="home">
+                  <Image src={BrawerIcon} />
+                  <TextsBottom>
+                    <TitleBottom>
+                      Gerenciar Apartamentos
+                    </TitleBottom>
+                    <TextBottom>
+                      Está precisando alterar informações nos
+                      <br />
+                      apartamentos? Essa página pode te ajudar com
+                      <br />
+                      isso!
+                    </TextBottom>
+                    <LinkText>
+                      Veja mais
+                      <Sublime />
+                    </LinkText>
+                  </TextsBottom>
+                </Button>
+              </Link>
+
+              <Button variant="pre-cad" onClick={showToggle}>
+                    <Image src={Vector} />
+                    <TextsBottom>
+                      <TitleBottom>
+                        Pré-cadastro de associados
+                      </TitleBottom>
+                      <TextBottom>
+                        Faça o pré-cadastro de um associado!
+                      </TextBottom>
+                      <LinkText onClick={showToggle}>
+                        PRÉ-CADASTRAR
+                        <Sublime />
+                      </LinkText>
+                    </TextsBottom>
+                  </Button>
+            </BottonMain>
+  
+            {toggle &&
+              <>
+                <ToggleCard/>
+                  <Card alt={true}>
+                    <CardPreCadastro>
+                    <CloseDiv>
+                      <Image src={X} onClick={closeFinishCad}/>
+                    </CloseDiv>
+                      <ContainerPreCadastro>
+                        <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
+                        <Input
+                          label="Nome"
+                          name="name"
+                          type="text"
+                          placeholder="Digite um nome"
+                          onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite um nome válido</SpanInput>
+                        <Input
+                          label="E-mail"
+                          name="email"
+                          type="text"
+                          placeholder="Digite um e-mail válido"
+                          onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
+                        <Input
+                          label="Usuário"
+                          name="cpf"
+                          type="text"
+                          placeholder="000.000.000-00"
+                          onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
+                        <Input
+                          label="Senha"
+                          name="password"
+                          type="text"
+                          placeholder="Digite uma senha "
+                          onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
+
+                        <ContainerLabel>
+                          <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
+                          
+                          <ContainerInputLabel>
+                            <label for="sim"> 
+                              <input type="radio" id="sim" name="admin" value="true"  onChange={oneChangeRadio(true)} />
+                              <SpanLabel margin={true}>Sim</SpanLabel>
+                            </label>
+
+                            <label for="sim"> 
+                              <input type="radio" id="nao" name="admin" value="true"  onChange={oneChangeRadio(false)}/>
+                              <SpanLabel margin={true}>Não</SpanLabel>
+                            </label>
+                          </ContainerInputLabel>
+                          </ContainerLabel>
+                        
+                        <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
+                      </ContainerPreCadastro>
+                    </CardPreCadastro>
+                  </Card>
+              </>
+            }
+  
+            {finishCad &&
+              <>
+                <SucessAdd showFinishCad={closeFinishCad} name={collectedData.name}/>
+              </>
+            }
+  
+          </BottonMainContent>
+        </BottomCotainer>
+
+        <BottonDetail>
+          <Image src={Pattern} height={275} width={2000} />
+        </BottonDetail>
+      </>
+    );
+  }
+
   return (
     <>
       <Container>

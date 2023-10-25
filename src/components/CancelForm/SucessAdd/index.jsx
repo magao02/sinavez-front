@@ -11,7 +11,7 @@ const SucessAdd = ({showFinishCad, name}) => {
     return (
         <>
             <ToggleCard/>
-              <Card>
+              <Card alt={true}>
                 <CancelBox>
                   <TitleCancel>Sucesso</TitleCancel>
 

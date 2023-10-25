@@ -9,30 +9,7 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
-    /*     <DataTable nextAssociates={() => currentIndexes[0] + 20 <= associados.length ? changeAssociates(true) : undefined} previousAssociates={() => currentIndexes[0] > 0 ? changeAssociates(false) : undefined} currentIndex={currentIndexes[0]} totalQuantity={associados.length} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={currentAssociados.map((associado) => [associado[1].name, associado[1].profissao, associado[1].cpf])} totalData={associados.map((associado) => [associado.name, associado.profissao, associado.cpf])} paginate={paginate} />
-    
-
-        const paginate = useCallback((page) => {
-            setCurrentIndexes(prev => [prev[0] + page * 20, prev[0] + page * 20]);
-            sliceData();
-        }, [])
-    
-        const sliceData = () => {
-            setCurrentAssociados(Object.entries(associados).slice(currentIndexes[0], currentIndexes[1]));
-        };
-    
-        const changeAssociates = (next) => {
-            if (next) {
-                setCurrentIndexes(prev => [prev[0] + 20, prev[1] + 20]);
-            } else {
-                setCurrentIndexes(prev => [prev[0] - 20, prev[1] - 20]);
-            }
-            sliceData();
-        };
-    
-        const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
-        */
+const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeData, takeDataUser}) => {
     const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
     const [currentAssociates, setCurrentAssociates] = useState(data.slice(currentIndexes[0], currentIndexes[1]));
     useEffect(() => {
@@ -50,7 +27,90 @@ const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
         setCurrentAssociates(data.slice(currentIndexes[0], currentIndexes[1]));
     }, [currentAssociates, currentIndexes]);
 
+    
 
+ if (filterAdm !== undefined && filterAdm !== null && filterAdm !== "") {
+    if (filterAdm){
+        return (
+            <Table>
+            <TableHead>
+                {headers.map((h) => <th>{h}</th>)}
+            </TableHead>
+            <TableBody>
+                {data.filter((associate) => {
+                  return associate.admin === true;
+                }).map((d, i) => {
+                    if (i % 2 == 0) {
+                        return (
+                            <Associate color={"blue"} key={d.cpf}>
+                                <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
+                                <Profession>{d.profissao}</Profession>
+                                <Buttons>
+                                    <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                    <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                </Buttons>
+                            </Associate>
+                        )
+                    }
+                    else {
+                        return (
+                            <Associate color={"white"} key={d.cpf}>
+                                <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
+                                <Profession>{d.profissao}</Profession>
+                                <Buttons>
+                                    <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                    <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                </Buttons>
+                            </Associate>
+                        )
+                    }
+                }
+                )}
+            </TableBody>
+        </Table>
+        )
+    } else {
+        return (
+            <Table>
+            <TableHead>
+                {headers.map((h) => <th>{h}</th>)}
+            </TableHead>
+            <TableBody>
+                {data.filter((associate) => {
+                  return associate.admin === false;
+                }).map((d, i) => {
+                    if (i % 2 == 0) {
+                        return (
+                            <Associate color={"blue"} key={d.cpf}>
+                                <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
+                                <Profession>{d.profissao}</Profession>
+                                <Buttons>
+                                    <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                    <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                </Buttons>
+                            </Associate>
+                        )
+                    }
+                    else {
+                        return (
+                            <Associate color={"white"} key={d.cpf}>
+                                <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
+                                <Profession>{d.profissao}</Profession>
+                                <Buttons>
+                                    <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
+                                    <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                </Buttons>
+                            </Associate>
+                        )
+                    }
+                }
+                )}
+            </TableBody>
+        </Table>
+        )
+    }
+    
+ } else {
     if (searchTerm == "") {
         return (
             <Table>
@@ -94,7 +154,8 @@ const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
                 </TableFooter>
             </Table>
         )
-    } else {
+    } 
+    else {
         return (
             <Table>
                 <TableHead>
@@ -140,6 +201,7 @@ const DataTable = ({ searchTerm, headers, data, takeData, takeDataUser}) => {
             </Table>
         )
     }
+}
 }
 
 export default DataTable;

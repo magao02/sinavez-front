@@ -213,10 +213,11 @@ const MiddleStep = ({file, takeImage, image, previousData, dataCollector, firstB
                 <Input
                 variant="default"
                 label={"Confirme senha"}
-                name={"password_confirmation"}
+                name={"senha"}
                 placeholder={"********"}
                 initialValue={previousData.password}
                 ref={passwordRef}
+                validate={validation.testRequiredPassword}
                 />
           </SubContainer>
 

@@ -17,9 +17,11 @@ import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
 import DependentsContainer from "../../components/DependentsContainer";
+import FilterDropdown from "../../components/commom/FilterDropdown";
 
 import X from "../../assets/x.svg";
 import Sucess from "../../assets/sucess.svg";
+import lupa from "../../assets/lupa.svg";
 
 import Pattern from "../../assets/pattern.svg"
 import AddIcon from "../../assets/add_icon.svg";
@@ -39,11 +41,15 @@ import DataUser from "../../components/DataUser";
 import MiddleStep from "../../components/UserDataForm/MiddleStep";
 import { Card, ToggleCard } from "../../styles/homeStyles";
 import { ButtonCancel, CancelBox, CancelOptions, TextCancel, TitleCancel } from "../../components/CancelForm/style";
+import AdmStepForm from "../../components/UserDataForm/AdmStepForm";
+import { DropdownArea, FiltersArea, InputArea } from "../../styles/manageReservations";
+import Input from "../../components/commom/Input";
+import FilterAssociate from "../../components/FilterAssociate";
 
 const Associados = () => {
   const [associados, setAssociados] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [admToggle, setAdmToggle] = useState(false);
+  const [admToggle, setAdmToggle] = useState();
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [userDependents, setUserDependents] = useState([]);
@@ -60,6 +66,7 @@ const Associados = () => {
 
   const [globalMessage, setGlobalMessage] = useState();
   const [collectedData, setCollectedData] = useState({});
+  const [filterAdm, setFilterAdm] = useState();
 
   const [image, setImage] = useState(null);
   const file = useRef(null);
@@ -107,8 +114,8 @@ const Associados = () => {
   const saveImage = useCallback(async (fileInput, urlUser) => {
     try {
       const temporaryFile = dataURLtoFile(fileInput, "temp_image.png");
-    
-    // Chama a função de serviço com o arquivo temporário
+
+      // Chama a função de serviço com o arquivo temporário
       await service.setPhoto(temporaryFile, urlUser, authContext.token);
     } catch (error) {
       console.log(error)
@@ -123,14 +130,14 @@ const Associados = () => {
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-  
+
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-  
+
     return new File([u8arr], filename, { type: mime });
   }
-  
+
 
   const takeImage = (localImage) => {
     setImage(localImage);
@@ -143,7 +150,7 @@ const Associados = () => {
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
       const url = addAssociateResponse.data.user.urlUser;
       console.log(collectedData);
-      
+
       if (collectedData.dependentes != undefined && collectedData.dependentes.length !== 0) {
         console.log(collectedData.dependentes)
         collectedData.dependentes.map((data) => {
@@ -164,13 +171,13 @@ const Associados = () => {
     } catch (error) {
       setCurrentStep(1);
       console.log(error)
-      
+
       //setGlobalMessage(error.response.data.message);
-      
+
       console.log("deu erro")
     }
   }, [associados, collectedData]);
-  
+
 
   // pega dos dados do usuário
   const takeData = useCallback((data) => {
@@ -197,7 +204,6 @@ const Associados = () => {
       console.log(error.response.data.message);
     }
   });
-
 
   // editando dados do usuário
   const handleEditUser = useCallback(async (dataNova, urlUser) => {
@@ -314,7 +320,7 @@ const Associados = () => {
     }
   };
 
-
+console.log(associados)
 
   const nextStepAddAssociate = useCallback(() => {
     setCurrentStep((p) => ++p);
@@ -327,16 +333,11 @@ const Associados = () => {
 
   useEffect(() => {
     getAssociados();
-    if (!authContext.auth) {
+    if (!authContext.auth || !authContext.admin) {
       router.push("/login");
-      return;
-    } else if (!authContext.admin) {
-      router.push("/login");
-      return;
-    } else if (associados !== undefined) {
-      return;
-    }
-  }, []);
+    return;
+  }
+  }, [authContext.auth]);
 
 
   return (
@@ -350,14 +351,19 @@ const Associados = () => {
               <FirstStepForm previousData={collectedData} takeImage={takeImage} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} />
             )}
             {currentStep == 2 && (
-              <SecondStepForm previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
+              <SecondStepForm previousData={collectedData} file={file} takeImage={takeImage} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
             {currentStep == 3 && (
-             <MiddleStep previousData={collectedData} file={file} takeImage={takeImage} image={image}globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate}/>
+              <MiddleStep previousData={collectedData} file={file} takeImage={takeImage} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} />
             )}
-            {currentStep >= 4 && (
-               <ThirdStepForm  saveImage={saveImage}previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
+
+            {currentStep == 4 && (
+              <ThirdStepForm takeImage={takeImage} admMaster={authContext.adminMaster} saveImage={saveImage} previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
             )}
+            {authContext.adminMaster && currentStep == 5 && (
+              <AdmStepForm saveImage={saveImage} previousData={collectedData} file={file} image={image} globalMessage={globalMessage} title={"Adicionar Associado"} dataCollector={dataCollector} cancelForm={toggleAddAssociate} firstButton={previousStepAddAssociate} handleAddAssociate={handleAddAssociate} dataDependents={dataDependents} />
+            )}
+
           </AddAssociateBox>
         </>
       )}
@@ -370,13 +376,22 @@ const Associados = () => {
             </Title>
             <MainHead>
               <SearchBar setSearch={setSearchTerm} placeHolder={"Procurar pelo nome"}></SearchBar>
+              {authContext.adminMaster && (
+                <>
+                  <FiltersArea alt={true}>
+                    <DropdownArea>
+                      <FilterAssociate filterUser={setFilterAdm} />
+                    </DropdownArea>
+                  </FiltersArea>
+                </>
+              )}
               <Button variant={"default"} onClick={toggleAddAssociate}>
                 <Image src={AddIcon} />
-                Adicionar Associado
+                {authContext.adminMaster ? "Adicionar Associado ou ADM" : "Adcionar Associado"}
               </Button>
             </MainHead>
             <Main>
-              <DataTable searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
+              <DataTable collectedData={collectedData} filterAdm={filterAdm} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
             </Main>
 
           </MainContainer>
@@ -406,32 +421,31 @@ const Associados = () => {
         </>
       )}
 
-    {toggleAdd && (
-      <>
-      <ToggleCard/>
-        <Card alt={true}>
-          <CancelBox>
-            <TitleCancel>Sucesso</TitleCancel>
+      {toggleAdd && (
+        <>
+          <ToggleCard />
+          <Card alt={true}>
+            <CancelBox>
+              <TitleCancel>Sucesso</TitleCancel>
 
               <CancelOptions>
-                    <Image src={Sucess} width={'357.377px'} height={'200px'}/>
-                    <TextCancel>
-                      Pré-cadastro realizado com sucesso! <br/>
-                      {collectedData.name} agora está na lista de associados.
-                    </TextCancel>
-                    
-                  </CancelOptions>
+                <Image src={Sucess} width={'357.377px'} height={'200px'} />
+                <TextCancel>
+                  Cadastro realizado com sucesso! <br />
+                </TextCancel>
 
-                  <ButtonCancel>
-                    <Button variant={'cancelRemove'} onClick={showFinishCad}>
-                       <Image src={X}/>
-                       SAIR
-                    </Button>
-                  </ButtonCancel>
-                </CancelBox>
-            </Card>
-      </>
-    )}
+              </CancelOptions>
+
+              <ButtonCancel>
+                <Button variant={'cancelRemove'} onClick={showFinishCad}>
+                  <Image src={X} />
+                  SAIR
+                </Button>
+              </ButtonCancel>
+            </CancelBox>
+          </Card>
+        </>
+      )}
     </Container>
   );
 };

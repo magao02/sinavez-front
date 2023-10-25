@@ -36,7 +36,10 @@ export const MainContainer = styled.div`
 
 export const MainHead = styled.div`
     display: flex;
-    gap: 46vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 84vw;
 `
 
 export const AddAssociateBox = styled.div`
