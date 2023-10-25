@@ -178,10 +178,10 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
         editDependente(dadosOnlyDependent.urlDep, updatedData);
         closeEditDependents();
     }, [newData]);
- // akeitar pois não está editando nada
+ 
     useEffect(() => {
         getDependents();
-      }, [getDependents]);
+    }, []);
 
     const takeDataRemoveDependents = (urlDependent, nome) => {
         setNomeDependente(nome);
