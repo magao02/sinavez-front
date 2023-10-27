@@ -27,6 +27,10 @@ export const PhotoArea = styled.div`
     border-radius: 10px;
     overflow: hidden;
     margin-right: 7px;
+
+    @media (max-height: 846px){
+        height: 227px;
+    }
 `
 
 export const PhotoAreaSmaller = styled.div`
@@ -67,4 +71,10 @@ export const TextArea = styled.div`
     align-items: flex-start;
     flex: 1;
     gap: 1vh;
+
+
+    
+    @media (max-height: 820px){
+        margin-bottom: 15px;
+    }
 `
