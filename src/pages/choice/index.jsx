@@ -27,7 +27,7 @@ const ChoicePage = () => {
 
     const redirectImposto = () => {
         if (typeof window !== 'undefined') {
-            // window.location.href = "https://google.com";
+            window.location.href = "https://sinavez-front-producao.herokuapp.com/login";
         }
     }
 
