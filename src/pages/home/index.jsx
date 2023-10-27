@@ -448,7 +448,7 @@ const Home = () => {
             </BottonTitle>
           </Texts>
           <BottonMain>
-            <Link href={"/apartamentos"}>
+            <Link href={authContext.isPendingSignUp ? "/home" : "/apartamentos"}>
               <Button variant="home">
                 <Image src={BuildIcon} />
                 <TextsBottom>
@@ -469,7 +469,7 @@ const Home = () => {
                 </TextsBottom>
               </Button>
             </Link>
-            <Link href={"/usuario"}>
+            <Link href={authContext.isPendingSignUp ? "/home" : "/usuario"}>
               <Button variant="home">
                 <Image src={ProfileIcon} />
                 <TextsBottom>
