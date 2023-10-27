@@ -27,7 +27,7 @@ export const FotoArea = styled.div`
 export const FotoBox = styled.div`
     height: 40%;
     width: 60%;
-    background-color: blue;
+    background-color: ${theme.colors.gray.border};
     height: 90%;
     border-radius: 50%;
 
@@ -40,7 +40,7 @@ export const FotoBox = styled.div`
 
 export const InfoArea = styled.div`
     width: 65%;
-    height: 88%;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
