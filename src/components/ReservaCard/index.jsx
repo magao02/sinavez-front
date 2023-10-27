@@ -198,7 +198,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
                     </label>
                 </InputComprovanteArea>
                 <LoadFileArea>
-                    <Link href={file[file?.length - 1]?.url}><span>{file[file?.length - 1]?.name}</span></Link>
+                    <Link href={file[file?.length - 1]?.url ?? ""}><span>{file[file?.length - 1]?.name}</span></Link>
                     {
                       file && file?.length > 0 &&
                       <img src={excluir_comprovante.src} onClick={() => {
