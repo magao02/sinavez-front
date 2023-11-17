@@ -107,6 +107,7 @@ const Associados = () => {
 
   //  coletando dados do usuário
   const dataCollector = (data) => {
+    console.log("Dados coletados:", data);
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
@@ -150,6 +151,7 @@ const Associados = () => {
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
       const url = addAssociateResponse.data.user.urlUser;
       console.log(collectedData);
+      console.log(addAssociateResponse.data.user);
 
       if (collectedData.dependentes != undefined && collectedData.dependentes.length !== 0) {
         console.log(collectedData.dependentes)
@@ -320,7 +322,7 @@ const Associados = () => {
     }
   };
 
-console.log(associados)
+//console.log(collectedData)
 
   const nextStepAddAssociate = useCallback(() => {
     setCurrentStep((p) => ++p);

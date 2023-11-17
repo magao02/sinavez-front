@@ -223,7 +223,7 @@ export const InfoToolTip = styled.div`
 
 export const ToggleCard = styled.div`
     width: ${props => props.alt ? "250%" : "100%"};
-    height: 240vh;
+    height: 300vh;
     top: ${props => props.alt ? "-20%" : "0"};
     left: ${props => props.alt ? "-80%" : "0"};
     background-color: black;
