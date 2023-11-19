@@ -280,6 +280,13 @@ export const SpanInput = styled.span`
     font-size: 12px;
 `;
 
+export const SpanCpf = styled.span`
+    display: ${props => props.span ? "block": "none" };
+    color: red;
+    font-size: 12px;
+    margin-bottom: 5px;
+`;
+
 export const CloseDiv = styled.div` 
     position: absolute;
     width: 24px;

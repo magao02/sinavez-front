@@ -24,20 +24,21 @@ const AdmStepForm = ({file, saveImage, image, previousData, dataCollector, first
 
 const [localImage1, setLocalImage1] = useState(image);
 const [localImage, setLocalImage] = useState(null);
-const [on, setOn] = useState();
+const [on, setOn] = useState(false);
 const admRef = useRef();
+
+useEffect(() => {
+}, [on]);
+
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-
-   console.log("valor de on: ", on);
     const [adm] = [admRef].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
       admin: on
     });
-
-  });
+  }, [on]);
 
   // imagem do perfil
   const fileInput = useRef(null);
@@ -76,9 +77,6 @@ const admRef = useRef();
     setOn(value);
   }
 
-  useEffect(() => {
-    console.log(on);
-  }, [on]);
 
   return (
 
@@ -167,7 +165,7 @@ const admRef = useRef();
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"finalizCad"} onClick={() => {handleAddAssociate(verificaFile())}}>
+        <Button variant={"finalizCad"} onClick={() => {handleAddAssociate(verificaFile(), on)}}>
           Finalizar cadastro
         </Button>
       </Footer>

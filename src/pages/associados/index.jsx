@@ -107,7 +107,6 @@ const Associados = () => {
 
   //  coletando dados do usuário
   const dataCollector = (data) => {
-    console.log("Dados coletados:", data);
     setCollectedData({ ...collectedData, ...data });
     nextStepAddAssociate();
   };
@@ -145,14 +144,16 @@ const Associados = () => {
   };
 
   // adicionando usuário
-  const handleAddAssociate = useCallback(async (image) => {
+  const handleAddAssociate = useCallback(async (image, admin) => {
     try {
+      if (admin){
+        collectedData.admin = admin;
+      }
+      console.log(collectedData)
       const addAssociateResponse = await service.signUp(collectedData);
       setAssociados((p) => [...p, addAssociateResponse.data.user]);
+      //console.log(addAssociateResponse.data.user);
       const url = addAssociateResponse.data.user.urlUser;
-      console.log(collectedData);
-      console.log(addAssociateResponse.data.user);
-
       if (collectedData.dependentes != undefined && collectedData.dependentes.length !== 0) {
         console.log(collectedData.dependentes)
         collectedData.dependentes.map((data) => {
