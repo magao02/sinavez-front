@@ -36,7 +36,7 @@ import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import success_img from "../../assets/sucess_img.svg"
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel
+  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel, SpanCpf
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
@@ -91,21 +91,36 @@ const Home = () => {
   const [nameUser, setNameUser] = useState('');
   const [collectedData, setCollectedData] = useState({});
   const [spanError, setSpanError] = useState(false);
+  const [cpfError, setCpfError] = useState(false);
 
   const showToggle = () => {
     setToggle(!toggle);
   }
 
   const showFinishCad = () => {
-
+    setSpanError(false);
+    setCpfError(false);
     if (collectedData.name == undefined || collectedData.name == '' || collectedData.cpf == undefined || collectedData.cpf == '' || collectedData.password == undefined || collectedData.password == '') {
       setSpanError(true);
-    } else {
+      setCpfError(false);
+    } else if (isValidCPF(collectedData.cpf)) {
       setToggle(false)
       setSpanError(false);
+      setCpfError(false);
       preCadastro();
+      setCollectedData({});
       setFinishCad(!finishCad);
-    } 
+    } else {
+      setSpanError(false);
+      setCpfError(true);
+    }
+  }
+
+  const isValidCPF = (cpf) => {
+    if (cpf.length != 11) {
+      return false;
+    }
+    return true;
   }
 
  
@@ -296,6 +311,7 @@ const Home = () => {
                           placeholder="000.000.000-00"
                           onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
                         />
+                        <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
                         <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
                         <Input
                           label="Senha"
@@ -573,6 +589,9 @@ const Home = () => {
               <ToggleCard/>
                 <Card>
                   <CardPreCadastro>
+                  <CloseDiv>
+                      <Image src={X} onClick={closeFinishCad}/>
+                    </CloseDiv>
                     <ContainerPreCadastro>
                       <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
                       <Input
@@ -598,6 +617,7 @@ const Home = () => {
                         placeholder="000.000.000-00"
                         onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
                       />
+                      <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
                       <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
                       <Input
                         label="Senha"
@@ -617,7 +637,7 @@ const Home = () => {
 
           {finishCad &&
             <>
-              <SucessAdd showFinishCad={showFinishCad} name={collectedData.name}/>
+              <SucessAdd showFinishCad={closeFinishCad} name={collectedData.name}/>
             </>
           }
 

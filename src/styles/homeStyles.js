@@ -223,7 +223,7 @@ export const InfoToolTip = styled.div`
 
 export const ToggleCard = styled.div`
     width: ${props => props.alt ? "250%" : "100%"};
-    height: 240vh;
+    height: 300vh;
     top: ${props => props.alt ? "-20%" : "0"};
     left: ${props => props.alt ? "-80%" : "0"};
     background-color: black;
@@ -278,6 +278,13 @@ export const SpanInput = styled.span`
     position: relative;
     color: ${props => props.span ? "red": "#747880" };
     font-size: 12px;
+`;
+
+export const SpanCpf = styled.span`
+    display: ${props => props.span ? "block": "none" };
+    color: red;
+    font-size: 12px;
+    margin-bottom: 5px;
 `;
 
 export const CloseDiv = styled.div` 

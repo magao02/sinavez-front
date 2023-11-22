@@ -25,15 +25,20 @@ const AdmStepForm = ({file, saveImage, image, previousData, dataCollector, first
 const [localImage1, setLocalImage1] = useState(image);
 const [localImage, setLocalImage] = useState(null);
 const [on, setOn] = useState(false);
+const admRef = useRef();
+
+useEffect(() => {
+}, [on]);
+
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
+    const [adm] = [admRef].map((inputRef) => inputRef.current?.value);
 
     dataCollector({
       admin: on
     });
-
-  });
+  }, [on]);
 
   // imagem do perfil
   const fileInput = useRef(null);
@@ -69,20 +74,9 @@ const [on, setOn] = useState(false);
   }    
 
   const oneChangeRadio = (value) => {
-    if (value) {
-      return () => {
-       setOn(true);
-      }
-    } else {
-      return () => {
-        setOn(false);
-      }
-    }
+    setOn(value);
   }
 
-  useEffect(() => {
-
-  }, [on]);
 
   return (
 
@@ -142,13 +136,23 @@ const [on, setOn] = useState(false);
                 <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
                           
                     <ContainerInputLabel>
-                        <label for="sim"> 
-                        <input type="radio" id="sim" name="admin" value={previousData.admin}  onChange={oneChangeRadio(true)} />
+                        <label htmlFor="sim"> 
+                        <input 
+                          type="radio" 
+                          id="sim" 
+                          name="admin" 
+                          value="sim" 
+                          onChange={() => oneChangeRadio(true)} />
                         <SpanLabel margin={true}>Sim</SpanLabel>
                         </label>
 
-                        <label for="nao"> 
-                            <input type="radio" id="nao" name="admin" value={previousData.admin}  onChange={oneChangeRadio(false)}/>
+                        <label htmlFor="nao"> 
+                            <input
+                              type="radio" 
+                              id="nao" 
+                              name="admin" 
+                              value="nao" 
+                              onChange={() => oneChangeRadio(false)}/>
                               <SpanLabel margin={true}>Não</SpanLabel>
                             </label>
                     </ContainerInputLabel>
@@ -161,7 +165,7 @@ const [on, setOn] = useState(false);
           <Image src={LeftIcon} />
           VOLTAR
         </Button>
-        <Button variant={"finalizCad"} onClick={() => {handleAddAssociate(verificaFile())}}>
+        <Button variant={"finalizCad"} onClick={() => {handleAddAssociate(verificaFile(), on)}}>
           Finalizar cadastro
         </Button>
       </Footer>
