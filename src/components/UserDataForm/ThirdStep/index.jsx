@@ -192,7 +192,7 @@ const imageSave = () => {
           VOLTAR
         </Button>
         {!admMaster && (
-          <Button variant={"default"} onClick={() => {handleAddAssociate(verificaFile())}}>
+          <Button variant={"default"} onClick={() => {handleAddAssociate(verificaFile(), false)}}>
           Finalizar cadastro
           </Button>
         )}

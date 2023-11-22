@@ -63,7 +63,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
 
     dataCollector({
       /* regional: { municipio, estado, naturalidade, nacionalidade},*/ 
-      empresa, 
+      empresa,  
       profissao, 
       salario,
       telefone, 
