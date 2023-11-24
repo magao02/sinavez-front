@@ -92,6 +92,7 @@ const Home = () => {
   const [collectedData, setCollectedData] = useState({});
   const [spanError, setSpanError] = useState(false);
   const [cpfError, setCpfError] = useState(false);
+  const [associados, setAssociados] = useState([]);
 
   const showToggle = () => {
     setToggle(!toggle);
@@ -100,7 +101,7 @@ const Home = () => {
   const showFinishCad = () => {
     setSpanError(false);
     setCpfError(false);
-    if (collectedData.name == undefined || collectedData.name == '' || collectedData.cpf == undefined || collectedData.cpf == '' || collectedData.password == undefined || collectedData.password == '') {
+    if (collectedData.name == undefined || collectedData.name == '' || collectedData.cpf == undefined || collectedData.cpf == '') {
       setSpanError(true);
       setCpfError(false);
     } else if (isValidCPF(collectedData.cpf)) {
@@ -116,14 +117,22 @@ const Home = () => {
     }
   }
 
-  const isValidCPF = (cpf) => {
-    if (cpf.length != 11) {
-      return false;
-    }
-    return true;
-  }
+  useEffect(() => {
+    getAssociados();
+  }, [associados]);
 
- 
+  const getAssociados = useCallback(async () => {
+    try {
+      const response = await service.getAssociados(authContext.token);
+      setAssociados(response.data);
+    } catch (error) {
+      console.log("Deu erro");
+    }
+  });
+
+  const isValidCPF = (cpf) => {
+    return cpf.length === 11 && !associados.some((associado) => associado.cpf === cpf);
+  }
 
   const oneChangeRadio = (value) => {
     if (value) {
@@ -160,10 +169,12 @@ const Home = () => {
     try {
       const response = await service.incompleteDataUser(collectedData, authContext.token);
       console.log(response);
+      getAssociados();
+      setAssociados((prevAssociados) => [...prevAssociados, response.data.user]);
     } catch (error) {
       console.log("Deu erro");
     }
-  }, [collectedData]);
+  }, [collectedData, associados]);
 
   // FUNCOES DE CONTROLE DOS MODAIS DE COMPLETAR CADASTRO
   const handleRegistrationModal = ( action ) => {
@@ -297,6 +308,7 @@ const Home = () => {
                         />
                         <SpanInput span={spanError} >Digite um nome válido</SpanInput>
                         <Input
+                          variant="default-optional"
                           label="E-mail"
                           name="email"
                           type="text"
@@ -313,14 +325,6 @@ const Home = () => {
                         />
                         <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
                         <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
-                        <Input
-                          label="Senha"
-                          name="password"
-                          type="text"
-                          placeholder="Digite uma senha "
-                          onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
-                        />
-                        <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
 
                         <ContainerLabel>
                           <Label>Esse usuário é um Administrador?<SpanLabel color={true}>*</SpanLabel></Label>
@@ -603,6 +607,7 @@ const Home = () => {
                       />
                       <SpanInput span={spanError} >Digite um nome válido</SpanInput>
                       <Input
+                        variant="default-optional"
                         label="E-mail"
                         name="email"
                         type="text"
@@ -619,14 +624,6 @@ const Home = () => {
                       />
                       <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
                       <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
-                      <Input
-                        label="Senha"
-                        name="password"
-                        type="text"
-                        placeholder="Digite uma senha "
-                        onChange={(e) => dataCollected({ ...collectedData, password: e.target.value })}
-                      />
-                      <SpanInput span={spanError}>Repita o CPF inserido anteriormente</SpanInput>
 
                       <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
                     </ContainerPreCadastro>
