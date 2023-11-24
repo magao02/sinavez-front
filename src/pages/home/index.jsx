@@ -118,8 +118,10 @@ const Home = () => {
   }
 
   useEffect(() => {
-    getAssociados();
-  }, [associados]);
+    if (authContext.admin && !authContext.isPendingSignUp) {
+      getAssociados();
+    }
+  }, []);
 
   const getAssociados = useCallback(async () => {
     try {
@@ -568,7 +570,6 @@ const Home = () => {
               </Button>
             </Link>
           </BottonMain>
-
           <BottonMainCad>
                 <Button variant="pre-cad" onClick={showToggle}>
                   <Image src={Vector} />
@@ -588,50 +589,50 @@ const Home = () => {
             </BottonMainCad>
           </>}
 
-          {toggle &&
-            <>
-              <ToggleCard/>
-                <Card>
-                  <CardPreCadastro>
-                  <CloseDiv>
-                      <Image src={X} onClick={closeFinishCad}/>
-                    </CloseDiv>
-                    <ContainerPreCadastro>
-                      <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
-                      <Input
-                        label="Nome"
-                        name="name"
-                        type="text"
-                        placeholder="Digite um nome"
-                        onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
-                      />
-                      <SpanInput span={spanError} >Digite um nome válido</SpanInput>
-                      <Input
-                        variant="default-optional"
-                        label="E-mail"
-                        name="email"
-                        type="text"
-                        placeholder="Digite um e-mail válido"
-                        onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
-                      />
-                      <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
-                      <Input
-                        label="Usuário"
-                        name="cpf"
-                        type="text"
-                        placeholder="000.000.000-00"
-                        onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
-                      />
-                      <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
-                      <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
-
-                      <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
-                    </ContainerPreCadastro>
-                  </CardPreCadastro>
-                </Card>
-            </>
-          }
-
+          {!authContext.isPendingSignUp &&
+             toggle &&
+              <>
+                <ToggleCard/>
+                  <Card>
+                    <CardPreCadastro>
+                    <CloseDiv>
+                        <Image src={X} onClick={closeFinishCad}/>
+                      </CloseDiv>
+                      <ContainerPreCadastro>
+                        <TitlePreCadastro>PRÉ-CADASTRO DO ASSOCIADO</TitlePreCadastro>
+                        <Input
+                          label="Nome"
+                          name="name"
+                          type="text"
+                          placeholder="Digite um nome"
+                          onChange={(e) => dataCollected({ ...collectedData, name: e.target.value })}
+                        />
+                        <SpanInput span={spanError} >Digite um nome válido</SpanInput>
+                        <Input
+                          variant="default-optional"
+                          label="E-mail"
+                          name="email"
+                          type="text"
+                          placeholder="Digite um e-mail válido"
+                          onChange={(e) => dataCollected({ ...collectedData, email: e.target.value })}
+                        />
+                        <SpanInput span={spanError}>Digite um e-mail válido</SpanInput>
+                        <Input
+                          label="Usuário"
+                          name="cpf"
+                          type="text"
+                          placeholder="000.000.000-00"
+                          onChange={(e) => dataCollected({ ...collectedData, cpf: e.target.value })}
+                        />
+                        <SpanCpf span={cpfError}>CPF inválido</SpanCpf>
+                        <SpanInput span={spanError} >Digite o CPF do associado no campo a cima (apenas números)</SpanInput>
+  
+                        <Button variant="default" onClick={showFinishCad}>CONCLUIR</Button>
+                      </ContainerPreCadastro>
+                    </CardPreCadastro>
+                  </Card>
+              </>
+            }
           {finishCad &&
             <>
               <SucessAdd showFinishCad={closeFinishCad} name={collectedData.name}/>
