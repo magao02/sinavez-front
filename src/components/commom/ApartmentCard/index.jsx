@@ -21,6 +21,11 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { Body1, Body2, Title2 } from "../../../styles/commonStyles";
 import Placeholder from "../../../assets/apartamento/placeholder.png";
+import { useState } from "react";
+import { Modal } from "../Modal/index.jsx";
+import modal_img from "../../../assets/delete_cama_modal_img.svg"
+import { useAuth } from "../../../contexts/AuthContext.jsx";
+import * as service from "../../../services/apartments.js";
 
 const Feature = ({ type }) => {
   let image = IconWifi;
@@ -48,6 +53,10 @@ const Feature = ({ type }) => {
 };
 
 const ApartmentCard = ({ obj, url, showEditButton }) => {
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
+
+  const authContext = useAuth();
+
   const isReservado = !!obj.reservado;
 
   const image = (obj.pictures ?? [])[0] ?? Placeholder.src;
@@ -74,38 +83,62 @@ const ApartmentCard = ({ obj, url, showEditButton }) => {
     router.push(url)
   }
 
+  const handleRemove = async () => {
+    const urlApto = router.query.url;
+
+    await service.deleteApartment(authContext.token, urlApto);
+
+    router.push("/manageReservations")
+  }
+
   return (
-    <Card>
-      <CardImage reservado={isReservado}>
-        <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
-        <img src={image} alt="Imagem do apartamento" />
-      </CardImage>
+    <>
+      <Card>
+        <CardImage reservado={isReservado}>
+          <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
+          <img src={image} alt="Imagem do apartamento" />
+        </CardImage>
 
-      <CardInner>
-        <Details>
-          <Title2>{obj.titulo}</Title2>
-          <Body1>Reserva mais proxima: {obj.closestReserva ? `De ${obj.closestReserva.chegada} até ${obj.closestReserva.saida}` : "Nenhuma"}</Body1>
-          <Body2>Proxima reserva: {obj.nextClosestReserva ? `De ${obj.nextClosestReserva.chegada} até ${obj.nextClosestReserva.saida}` : "Nenhuma"}</Body2>
-          <Features>
-            {features.map(f => (
-              <Feature type={f} key={f} />
-            ))}
-          </Features>
-        </Details>
-        
+        <CardInner>
+          <Details>
+            <Title2>{obj.titulo}</Title2>
+            <Body1>Reserva mais proxima: {obj.closestReserva ? `De ${obj.closestReserva.chegada} até ${obj.closestReserva.saida}` : "Nenhuma"}</Body1>
+            <Body2>Proxima reserva: {obj.nextClosestReserva ? `De ${obj.nextClosestReserva.chegada} até ${obj.nextClosestReserva.saida}` : "Nenhuma"}</Body2>
+            <Features>
+              {features.map(f => (
+                <Feature type={f} key={f} />
+              ))}
+            </Features>
+          </Details>
+          
 
-        {
-          !showEditButton ?
+          {
+            !showEditButton ?
+              <ButtonContainer>
+                  <Button onClick={handleRedirectVerMais}>VER MAIS</Button>
+              </ButtonContainer>
+            :
             <ButtonContainer>
-                <Button onClick={handleRedirectVerMais}>VER MAIS</Button>
+              <Button onClick={handleRedirectEdit}>EDITAR DADOS</Button>
+              <br/>
+              <Button onClick={() => setShowRemoveModal(true)} variant="remove">EXCLUIR</Button>
             </ButtonContainer>
-          :
-          <ButtonContainer>
-            <Button onClick={handleRedirectEdit}>EDITAR DADOS</Button>
-          </ButtonContainer>
-        }
-      </CardInner>
-    </Card>
+          }
+        </CardInner>
+      </Card>
+      {showRemoveModal &&
+        <Modal
+          title="Excluir Apartamento"
+          asideText="Deseja excluir este apartamento?"
+          handleCancel={() => setShowRemoveModal(!showRemoveModal)}
+          handleSave={async () => {
+            await handleRemove();
+            setShowRemoveModal(!showRemoveModal)
+          }}
+          img={modal_img.src}
+        />
+      }
+    </>
   );
 };
 

@@ -55,6 +55,14 @@ export async function updateApartment(token, data, urlApt){
     ));
 }
 
+export async function deleteApartment(token, urlApt){
+    return await api.delete(
+        `/apartment/deleteApartment/${urlApt}`,
+        {
+            headers: { authorization: token },
+        }
+    );
+}
 
 export async function updatePayment(token, urlApt, reservaId, pagoValue){
     return await api.put(
