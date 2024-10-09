@@ -56,6 +56,7 @@ const ChoicePage = () => {
             </Buttons>*/}
             {/* Couldn't get it to work with next's Image unfortunately */}
             <PatternContainer src={Pattern.src} />
+            
         </Container>
     );
 };
