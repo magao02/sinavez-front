@@ -29,6 +29,7 @@ import {
   RadioInputWrapper,
   ProgressBar
 } from "./styles";
+import { StyledButton, ButtonContainer } from "../../styles/userReservasStyles";
 import arrow_down from "../../assets/arrow_down_blue.svg";
 import { useState } from "react";
 import upload_cloud from "../../assets/upload_cloud.svg"
@@ -88,6 +89,9 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
     }else{
       return `${horario} noite`
     }
+  }
+  const cancelarReserva = () => {
+    alert("Reserva cancelada com sucesso!")
   }
 
 
@@ -180,6 +184,10 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
               </DataCollumContainer>
             </GeralDataContainer>
           </DataMainInfo>
+         <ButtonContainer style={{marginTop:10}}>
+                  <StyledButton onClick={()=> cancelarReserva()} >Cancelar Reserva</StyledButton>
+
+              </ButtonContainer>
         </DataDiv>
         <Border></Border>
         <NotaFiscalContainer>

@@ -73,7 +73,7 @@ const Apartamento = ({ obj, queryData }) => {
   }, [obj]);
 
   return (
-    <Card>
+    <Card  onClick={redirect}>
       <CardImage reservado={isReservado}>
         <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
         <img src={image} alt="Imagem do apartamento" />
@@ -91,9 +91,7 @@ const Apartamento = ({ obj, queryData }) => {
           </Features>
         </Details>
         
-        <ButtonContainer>
-          <Button onClick={redirect}>VER MAIS</Button>
-        </ButtonContainer>
+       
       </CardInner>
     </Card>
   );

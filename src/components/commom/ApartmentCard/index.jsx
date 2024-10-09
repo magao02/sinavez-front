@@ -93,7 +93,7 @@ const ApartmentCard = ({ obj, url, showEditButton }) => {
 
   return (
     <>
-      <Card>
+      <Card onClick={handleRedirectVerMais}>
         <CardImage reservado={isReservado}>
           <p>{isReservado ? "Reservado agora" : "Livre agora"}</p>
           <img src={image} alt="Imagem do apartamento" />
@@ -114,9 +114,9 @@ const ApartmentCard = ({ obj, url, showEditButton }) => {
 
           {
             !showEditButton ?
-              <ButtonContainer>
-                  <Button onClick={handleRedirectVerMais}>VER MAIS</Button>
-              </ButtonContainer>
+            <ButtonContainer>
+                
+            </ButtonContainer>
             :
             <ButtonContainer>
               <Button onClick={handleRedirectEdit}>EDITAR DADOS</Button>

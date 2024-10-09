@@ -23,6 +23,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
   const [selectedHome, setSelectedHome] = useState(false);
   const [selectedAssociados, setSelectedAssociados] = useState(false);
   const [selectedApartamentos, setSelectedApartamentos] = useState(false);
+  const [selectedReservas, setSelectedReservas] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pdfData, setPdfData] = useState({});
   const [admin, setAdmin] = useState();
@@ -43,6 +44,9 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
           break;
         case "apartamentos":
           setSelectedApartamentos(true);
+          break;
+        case "reservas":
+          setSelectedReservas(true);
           break;
       }
       setIsLoaded(true);
@@ -108,6 +112,8 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"} showPopUpSignUp={showPopUp}></LinkBox>
+                <LinkBox linkText={"/reservas"} selected={selectedReservas} text={"reservas"} showPopUpSignUp={showPopUp}></LinkBox>
+                
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()} showPopUpSignUp={showPopUp}/>

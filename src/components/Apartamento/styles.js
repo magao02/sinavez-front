@@ -17,6 +17,7 @@ export const Card = styled.div`
   border: 1px solid var(--azul-2, #C5DBF2);
 
   overflow: hidden;
+  cursor: pointer;
 `;
 
 export const CardInner = styled.div`

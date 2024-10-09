@@ -1,23 +1,14 @@
 import styled from "styled-components";
-import theme from "../../../styles/theme";
-
-export const FeatureContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  font-size: 16px;
-  color: #777;
-`;
+import theme from "./theme";
 
 export const Card = styled.div`
   display: flex;
 
   border-radius: 8px;
   border: 1px solid var(--azul-2, #C5DBF2);
-  cursor: pointer;
 
   overflow: hidden;
+  cursor: pointer;
 `;
 
 export const CardInner = styled.div`
@@ -51,7 +42,6 @@ export const CardImage = styled.div`
     user-select: none;
   }
 `;
-
 export const ButtonContainer = styled.div`
   margin-left: auto;
 `;
@@ -67,3 +57,18 @@ export const Features = styled.div`
   display: flex;
   gap: 16px;
 `;
+export const StyledButton = styled.button`
+  background-color: #e63946;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d62839; /* Cor mais escura ao passar o mouse */
+  }
+`;
+

@@ -33,6 +33,17 @@ export async function getReservations(token, urlApt){
     ));
 }
 
+export async function getReservationsByUser(token, urlUser) {
+    const apartments = await handleUnauthorized(api.get(
+        `/apartment/getReservationsByUser/${urlUser}`,
+        {headers: {
+            authorization: token
+        }}
+    ));
+    return apartments.data;
+}
+
+
 export async function createApartament(data, token){
     return await handleUnauthorized(api.post(
         `/apartment/createApartment`,
