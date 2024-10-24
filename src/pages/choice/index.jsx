@@ -34,9 +34,9 @@ const ChoicePage = () => {
     return (
         <Container>
             <Title>Seja Bem Vindo ao <TitleOrange>SINAVEZ 2.0</TitleOrange></Title>
-            <Title>Nosso site está em manutenção para melhor atendê-los</Title>
-            <h3>Qualquer dúvida entre em contato com o sindicato</h3>
-            {/*<Buttons>
+            {/* <Title>Nosso site está em manutenção para melhor atendê-los</Title> */}
+            {/* <h3>Qualquer dúvida entre em contato com o sindicato</h3> */}
+            <Buttons>
                 <Button onClick={redirectSindicato}>
                     <ButtonImage>
                         <Image src={SinavezLogo} draggable={false} height="120" />
@@ -53,7 +53,7 @@ const ChoicePage = () => {
                     </ButtonImage>
                     <span>Entrar na plataforma de Imposto de Renda!</span>
                 </Button>
-            </Buttons>*/}
+            </Buttons>
             {/* Couldn't get it to work with next's Image unfortunately */}
             <PatternContainer src={Pattern.src} />
             

@@ -206,7 +206,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               ref={cepRef}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Nome da rua"}
               name={"Rua"}
               placeholder={"Rua"}
@@ -215,7 +215,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               validate={validation.TextField}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Bairro"}
               name={"Bairro"}
               placeholder={"Bairro"}
@@ -224,7 +224,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               validate={validation.TextField}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Número de Residência"}
               name={"Número"}
               placeholder={"Número"}
@@ -233,7 +233,7 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               validate={validation.testNumbers}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Cidade"}
               name={"Município"}
               placeholder={"Cidade"}

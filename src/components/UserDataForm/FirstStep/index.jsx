@@ -180,13 +180,13 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
               validate={validation.requiredTextField}
             />
             <Input
-                variant="default"
+                variant="default-optional"
                 label={"Data de Nascimento"}
                 name={"nascimento"}
                 initialValue={previousData.nascimento}
                 ref={birthdayRef}
                 placeholder={"DD/MM/AAAA"}
-                validate={validation.requiredTextField}
+                validate={validation.testDate}
               />
               <Input
                 variant="default"
@@ -198,16 +198,16 @@ const FirstStepForm = ({takeImage, previousData, dataCollector, globalMessage, c
                 validate={validation.testRequiredCpf}
               />
               <Input
-                variant="default"
+                variant="default-optional"
                 label={"Registro Geral (RG)"}
                 name={"rg"}
                 placeholder={"Digite o seu RG"}
                 initialValue={previousData.rg}
                 ref={rgRef}
-                validate={validation.requiredTextField}
+                
               />
               <Input
-                variant="default"
+                variant="default-optional"
                 label={"Data de Emissão"}
                 name={"data_de_emissão"}
                 placeholder={"DD/MM/AAAA"}
