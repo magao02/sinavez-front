@@ -188,7 +188,7 @@ const Page = () => {
               <Subtitle1>Sua viagem</Subtitle1>
               <div className="row">
                 <SearchInput label="Chegada" innerLabel="Data" type="date" variant="light-blue" disabled initialValue={router.query.chegadaDate} />
-                <SearchInput label="Chegada" innerLabel="Data" type="date" variant="light-blue" disabled initialValue={router.query.saidaDate} />
+                <SearchInput label="Saída" innerLabel="Data" type="date" variant="light-blue" disabled initialValue={router.query.saidaDate} />
               </div>
               <div>
                 <Subtitle2 className="pad-bottom">Horários</Subtitle2>

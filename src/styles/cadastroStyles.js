@@ -8,6 +8,7 @@ export const Container = styled.div`
     display: flex;
     position: fixed;
     justify-content: space-between;
+    z-index: 1;
 `
 
 export const LeftContent = styled.div`
@@ -25,6 +26,10 @@ export const LeftContent = styled.div`
     img {
         max-height: 70vh;
     }
+
+    @media (max-width: 425px) {
+        display: none;
+    }
 `;
 
 export const RightContent = styled.div`
@@ -36,11 +41,12 @@ export const RightContent = styled.div`
 
     margin-right: 10%;
     scale: 85%;
-    @media (max-height: 779px) {
-        scale: 70%;
-    }
-    @media (max-height: 676px) {
-        scale: 60%;
+    
+    @media (max-width: 425px) {
+        width: 100%;
+        height: 95%;
+        margin: 0;
+        scale: 55%;
     }
 `
 

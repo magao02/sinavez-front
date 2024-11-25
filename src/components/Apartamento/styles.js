@@ -18,6 +18,10 @@ export const Card = styled.div`
 
   overflow: hidden;
   cursor: pointer;
+  @media (max-width: 426px) {
+    flex-direction: column;
+    width: 140%;
+  }
 `;
 
 export const CardInner = styled.div`
@@ -50,6 +54,9 @@ export const CardImage = styled.div`
     color: ${theme.colors.white.light};
     user-select: none;
   }
+    @media (max-width: 426px) {
+      width: 100%;
+    }
 `;
 
 export const ButtonContainer = styled.div`

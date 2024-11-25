@@ -11,6 +11,11 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    @media (max-width: 425px) {
+     top: 20px;
+    left: 100px;
+    height:150vh;
+    }
 `
 
 export const MainContentContainer = styled.div`
@@ -25,6 +30,11 @@ export const MainContentContainer = styled.div`
     overflow-y: hidden;
     gap: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    @media (max-width: 425px) {
+        width: 95%;
+        padding: 20px;
+        height: 130vh;
+    }
 `
 
 export const TitleArea = styled.div`
@@ -76,6 +86,7 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    
 `
 
 export const ButtonContainer = styled.div`

@@ -36,7 +36,7 @@ import { ModalOneButton } from "../../components/commom/ModalOneButton";
 import success_img from "../../assets/sucess_img.svg"
 
 import {
-  Container, BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel, SpanCpf
+  Container,ContainerDad, ImageMobile,BottomCotainer, MainContent, Title, Text, Texts, Main, BottonTitle, BottonMainContent, BottonMain, BottonDetail, TitleBottom, TextBottom, TextsBottom, BottomDivider, LinkText, Sublime, InfoToolTip, RegistrationContainer, CompleteRegistrationContainer, MainRegistrationContent, ImageRegistrationWrapper, TitleRegistrationArea, TextRegistration, ButtonRegistrationContainer, ButtonRegistraion, BorderRegistration, RegistrationWrapper, BottonMainCad,  ToggleCard, CardPreCadastro, Card, ContainerPreCadastro, TitlePreCadastro, SpanInput, CloseDiv, TitleMaster, TextMaster, SpanMaster, ContainerLabel, Label, SpanLabel, ContainerInputLabel, SpanCpf
 } from "../../styles/homeStyles";
 import { RestrictionPopUp } from "../../components/RestrictionPopUp";
 import { CompleteRegistration } from "../../components/CompleteRegistration";
@@ -198,6 +198,24 @@ const Home = () => {
     setShowCompleteModal(!showCompleteModal)
     setShowPopUp(false)
     !showCompleteModal ? document.body.style.overflowY="hidden" :  document.body.style.overflowY="auto"
+  }
+
+  const verifyRegistrationApartment = async () => {
+    if (authContext.isPendingSignUp) {
+      console.log("entrou")
+      handlePopUp()
+    } else {
+      router.push('/apartamentos');
+    }
+  }
+
+  const verifyRegistrationAssociate = async () => {
+    if (authContext.isPendingSignUp) {
+      console.log("entrou")
+      handlePopUp()
+    } else {
+      router.push('/associados');
+    }
   }
 
   if (authContext.adminMaster) {
@@ -368,7 +386,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <ContainerDad>
       <Container>
         <Navigation selectedPage={"home"} variant={checkNav()} showPopUp={handlePopUp} />
         <Main>
@@ -389,7 +407,10 @@ const Home = () => {
                 </Button>
               </Link>
             </Texts>
-            <Image src={userComputer} />
+            <ImageMobile>
+              <Image  src={userComputer} />
+            </ImageMobile>
+            
           </MainContent>
         </Main>
       </Container>
@@ -399,10 +420,12 @@ const Home = () => {
           authContext.isPendingSignUp && (
             <>
               <RegistrationContainer>
-                  <MainRegistrationContent>
+                <MainRegistrationContent>
+                    <ImageMobile>
                     <ImageRegistrationWrapper>
                       <img src={registration_img.src}></img>
                     </ImageRegistrationWrapper>
+                    </ImageMobile>
                     <CompleteRegistrationContainer>
                       <TitleRegistrationArea>
                         <h1>Complete seu cadastro</h1>
@@ -470,8 +493,8 @@ const Home = () => {
             </BottonTitle>
           </Texts>
           <BottonMain>
-            <Link href={authContext.isPendingSignUp ? "/home" : "/apartamentos"}>
-              <Button variant="home">
+            
+              <Button onClick={verifyRegistrationApartment} variant="home">
                 <Image src={BuildIcon} />
                 <TextsBottom>
                   <TitleBottom>
@@ -490,9 +513,8 @@ const Home = () => {
                   </LinkText>
                 </TextsBottom>
               </Button>
-            </Link>
-            <Link href={authContext.isPendingSignUp ? "/home" : "/usuario"}>
-              <Button variant="home">
+            
+              <Button onClick={verifyRegistrationAssociate} variant="home">
                 <Image src={ProfileIcon} />
                 <TextsBottom>
                   <TitleBottom>
@@ -511,7 +533,7 @@ const Home = () => {
                   </LinkText>
                 </TextsBottom>
               </Button>
-            </Link>
+
           </BottonMain>
 
           <BottomDivider />
@@ -528,7 +550,7 @@ const Home = () => {
           </Texts>
           <BottonMain>
             <Link href={"/associados"}>
-              <Button variant="home">
+              <Button  variant="home">
                 <Image src={ConfigIcon} />
                 <TextsBottom>
                   <TitleBottom>
@@ -644,7 +666,7 @@ const Home = () => {
       <BottonDetail>
         <Image src={Pattern} height={275} width={2000} />
       </BottonDetail>
-    </>
+    </ContainerDad>
   );
 };
 

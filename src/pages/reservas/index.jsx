@@ -20,7 +20,7 @@ import {
 } from "../../styles/userReservasStyles";
 import { Button } from "../../components/commom/Button";
 import { useEffect, useState } from "react";
-import { getReservationsByUser } from "../../services/apartments";
+import { getReservationsByUser, cancelReservation } from "../../services/apartments";
 
 import Navigation from "../../components/commom/Nav";
 const Reservas = () => {
@@ -37,8 +37,16 @@ const Reservas = () => {
   };
 
   const layouReserva = (apt, dado) => {
-    const status = () =>{
-      if (dado.status == 'Cancelado') {
+    const cancelarReserva = async () => {
+      console.log(apt.urlApt, dado._id)
+      const req = await cancelReservation(authContext.token, apt.urlApt, dado._id);
+      if (req.status == 200) {
+        getReservas();
+      }
+    }
+    const status = () => {
+      console.log(dado)
+      if (dado.cancelled) {
         return "Reserva cancelada"
       } else if (dado.status != 'Cancelado' && new Date(dado.dataChegada) > new Date()) {
         return "Reservado"
@@ -76,9 +84,7 @@ const Reservas = () => {
     </Card>
   );
   }
-  const cancelarReserva = () => {
-    alert("Reserva cancelada com sucesso")
-  }
+
   return (
     <div>
       <Navigation selectedPage="reservas" variant={authContext?.admin ? "admin" : "logged"} />

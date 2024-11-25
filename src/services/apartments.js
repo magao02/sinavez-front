@@ -43,6 +43,16 @@ export async function getReservationsByUser(token, urlUser) {
     return apartments.data;
 }
 
+export async function cancelReservation(token, urlApt, urlReserva) {
+    console.log(urlApt, urlReserva);
+    const retorn = await api.delete(
+        `/apartment/cancelReservation/${urlApt}/${urlReserva}`,
+        { headers: { authorization: token } }
+    );
+    console.log(retorn);
+    return retorn;
+ }
+
 
 export async function createApartament(data, token){
     return await handleUnauthorized(api.post(

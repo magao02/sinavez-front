@@ -21,7 +21,11 @@ export const LogoSinavez = styled.div`
     margin-left: 113px;
     display: flex;
     gap: 2px;
+    @media (max-width: 425px) {
+    display: none;
+  }
 `
+
 
 export const UserFeaturesLeft = styled.div`
     width: 100%;

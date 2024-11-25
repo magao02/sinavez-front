@@ -21,6 +21,11 @@ export const Details = styled.div`
   gap: 24px;
   margin: 32px 0;
   justify-content: space-between;
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    width: 140%;
+  }
 `;
 
 export const Column = styled.div`
@@ -106,6 +111,8 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  @media (max-width: 425px) {
+    width: 150%;}
 `;
 
 export const BlueBackgroundCard = styled.div`

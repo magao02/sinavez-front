@@ -218,6 +218,16 @@ function getStyleByVariant(variant) {
                         }
                     ` : ""
                 }
+
+                @media (max-width: 425px) {
+                    input {
+                        font-size: 23px;
+                    }
+                         label {
+                            font-size: 23px;
+                            line-height: 23px;
+                         }
+                }
             `
         }
 
@@ -286,6 +296,15 @@ function getStyleByVariant(variant) {
 
                 input::placeholder {
                     color: var(--text-secundary, ${theme.colors.gray.heavy});
+                }
+                    @media (max-width: 425px) {
+                    input {
+                        font-size: 23px;
+                    }
+                         label {
+                            font-size: 23px;
+                            line-height: 23px;
+                         }
                 }
             `
         }

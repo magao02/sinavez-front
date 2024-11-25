@@ -304,6 +304,11 @@ function getStyleByVariant(variant) {
         border-radius: 8px;
         background: var(--azul-0, ${theme.colors.blue.heavy});
         box-shadow: 0px 4px 4px 0px rgba(7, 96, 186, 0.45);
+
+        @media (max-width: 425px) {
+        width: 130vw;
+
+    }
       `
     }
 

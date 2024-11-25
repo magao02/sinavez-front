@@ -9,6 +9,11 @@ export const Container = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+     @media(max-width: 425px){
+        top: 50% ;
+        left: 50%;
+        height:10vh;
+    }
 `
 
 export const MainContentContainer = styled.div`
@@ -27,8 +32,11 @@ export const MainContentContainer = styled.div`
     margin-bottom: 6px;
 
     @media(max-width: 1026px){
-        width: 45vw;
+        width: 90vw;
+        height: 40vh;
     }
+
+   
 `
 
 export const CloseButtonContainer = styled.div`
@@ -64,6 +72,12 @@ export const ImageArea = styled.div`
             width: 150px;
         }
     }
+    @media(max-width: 425px){
+        display: none;
+        img{
+        display: none;
+    }
+    }
 `
 
 export const InfoContent = styled.div`
@@ -78,6 +92,9 @@ export const TitleArea = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    @media(max-width: 425px){
+        font-size: 25px;
+    }
 `
 
 export const Border= styled.div`
@@ -92,6 +109,9 @@ export const TextArea = styled.div`
 
     @media(max-width: 1236px){
         font-size: 11px;
+    }
+        @media(max-width: 426px){
+        font-size: 20px;
     }
 `
 
@@ -119,6 +139,11 @@ export const ButtonTransparent = styled.button`
 
     @media(max-width: 1236px){
         font-size: 10px;
+    }
+         @media(max-width: 426px){
+        font-size: 16px;
+        padding: 10px 5px;
+
     }
     
 `
@@ -149,5 +174,10 @@ export const ButtonRegistration = styled.button`
 
     @media(max-width: 1106px){
         font-size: 8px;
+    }
+        @media(max-width: 426px){
+        font-size: 16px;
+        padding: 10px 5px;
+
     }
 `

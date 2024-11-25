@@ -19,6 +19,7 @@ export const WhiteContainer = styled.div`
     display: flex;
     position: fixed;
     justify-content: space-between;
+    z-index: 1;
 `
 
 export const Details = styled.div`
@@ -33,6 +34,9 @@ export const Details = styled.div`
     flex-wrap: nowrap;
 
     max-width: 33vw;
+    @media (max-width: 425px) {
+    display: none;
+  }
 `
 
 export const RightContent = styled.div`
@@ -45,6 +49,15 @@ export const RightContent = styled.div`
 
     margin-right: 10%;
     margin-bottom: 4%;
+    @media (max-width: 425px) {
+        width: 100%;
+        height: 95%;
+        margin: 0;
+        padding: 120px 0;
+        gap: 2vh;
+        z-index: 999;
+
+    }
 `
 
 export const PatternBox = styled.div`
@@ -60,15 +73,17 @@ export const LoginBox = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10%;
-    @media (max-height: 720px) {
-        padding: 5vh;
-    }
+    
     align-items: flex-start;
     gap: 3vh;
 
     border-radius: 16px;
     border: 1px solid var(--azul-2, ${theme.colors.blue.border});
     background: var(--azul-3, ${theme.colors.blue.light});
+
+    @media (max-width: 425px) {
+        width: 90%;   
+    }
 `
 
 export const MenuBox = styled.div`

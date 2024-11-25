@@ -1,14 +1,36 @@
 import styled, { keyframes } from 'styled-components';
-import theme from './theme';
 
+
+import theme from './theme';
+export const ContainerDad = styled.div`
+    width: 100%;
+
+`
 export const Container = styled.div`
-    width: 100vw;
+    width: 100%;
     height:  ${props => props.master ? "60%" : "100%"};
     background-color: ${theme.colors.white.default};
 
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 425px) {
+        height: 100%;
+        width: 150vw;
+    }
+    
+       
+    
 `;
+
+export const ImageMobile = styled.div`
+
+     @media (max-width: 425px) {
+        display: none;
+    
+  }
+
+`
 
 export const BottomCotainer = styled.div`
     display: flex;
@@ -36,6 +58,11 @@ export const BottonMainContent = styled.div`
     display: flex;
     z-index: 1;
     flex-direction: column;
+
+    @media (max-width: 425px) {
+        margin-top: 5vh;
+        width: 150%;
+    }
 `
 
 export const BottonMain = styled.div`
@@ -49,6 +76,7 @@ export const BottonMain = styled.div`
     justify-content: start;
     flex-wrap: wrap;
     gap: 2vw;
+
 `
 
 export const BottonMainCad = styled.div`
@@ -66,10 +94,16 @@ export const BottonMainCad = styled.div`
 export const Main = styled.div`
     width: 100%;
     height: 100%;
-    left: 0px;
-    top: 75px;
+    
+    
 
     background: linear-gradient(180deg, #032E58 3.3%, #0760BA 55.05%, #5D9BDA 105.74%);
+    @media (max-width: 425px) {
+        height: 52vh;
+        width: 150vw;
+        margin-top: 75px;
+    
+  }
 `;
 
 export const MainContent = styled.div`
@@ -78,6 +112,9 @@ export const MainContent = styled.div`
     display: grid;
     grid-template-columns: 50% 50%;
     padding-bottom: ${props => props.master ? "50px" : "0"};
+    @media (max-width: 425px) {
+        wids: 100%;
+    }
 `
 
 export const Title = styled.div`
@@ -159,6 +196,11 @@ export const TextBottom = styled.p`
     line-height: 20px;
 
     text-align: start;
+
+    @media (max-width: 425px) {
+        width: 100%;
+        font-size: 20px;
+    }
 `
 
 export const BottomDivider = styled.div`
@@ -350,6 +392,10 @@ export const ContainerInputLabel = styled.div`
 `;
 export const RegistrationWrapper = styled.div`
     width: 100vw;
+    @media(max-width: 425px){
+        width: 150%;
+        padding-top: 2vh;
+    }
 `
 
 export const RegistrationContainer = styled.div`
@@ -367,7 +413,7 @@ export const MainRegistrationContent = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    gap: 10px;
+    
 `
 
 export const ImageRegistrationWrapper = styled.div`
@@ -391,6 +437,9 @@ export const CompleteRegistrationContainer = styled.div`
     flex-direction: column;
     width: 50%;
     gap: 7.1vh;
+     @media(max-width: 425px){
+        width: 100%;
+     }
 
 `
 
@@ -403,10 +452,14 @@ export const TitleRegistrationArea = styled.div`
 export const TextRegistration = styled.div`
     display: flex;
     align-items: center;
-    width: 70%;
+    width: 90%;
 
     @media(max-width: 1063px){
         font-size: 12px;
+    }
+
+    @media(max-width: 425px){
+        font-size: 20px;
     }
 `
 

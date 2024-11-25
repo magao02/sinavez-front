@@ -16,6 +16,11 @@ export const InputContainer = styled.form`
     @media (max-width: 320px) {
         padding-bottom: 1.5rem;
     };
+
+    @media (max-width: 425px) {
+        padding-bottom: 1.5rem;
+        font-size: 20px;
+    };
 `;
 
 export const InputBox = styled.div`
@@ -37,4 +42,7 @@ export const Description = styled.div`
 
     font-size: 13px;
     line-height: 14px;
+    @media (max-width: 425px) {
+        font-size: 18px;
+    }
 `

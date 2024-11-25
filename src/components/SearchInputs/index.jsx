@@ -83,9 +83,21 @@ export const SearchInput = ({ label, innerLabel, type, placeholder, variant, dis
     return value;
   }
   const update = (ev) => {
-    setValue(ev.target.value);
+    const date = new Date(ev.target.value);
+    date.setDate(date.getDate() + 1);
+    console.log(date)
+    if (type === 'date' && isSaturday(date) && label==="Chegada") {
+      console.log("sabado")
+
+    } else {
+      setValue(ev.target.value);
+     }
+    
     if (onChange)
       onChange(ev);
+  }
+  const isSaturday = (date) => {
+    return date.getDay() === 6;
   }
   return (
     <Label variant={variant}>

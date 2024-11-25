@@ -45,6 +45,24 @@ import { dateToYMD } from "../../utils/date";
 import { Body3, Subtitle2, Title1, Title2 } from "../../styles/commonStyles";
 
 const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate, setSaidaDate, adultos, setAdultos, criancas, setCriancas, bebes, setBebes, animais, setAnimais, chegadaTime, setChegadaTime, saidaTime, setSaidaTime, setEspacoType, numPessoas, setNumPessoas, setAptType, onSearch }) => {
+  const [dataError, setDataError] = useState(false);
+  const onChangeStart = (ev) => {
+    
+    const newDate = ev.target.valueAsDate;
+    newDate.setDate(newDate.getDate() + 1);
+    if (isSaturday(newDate)) {
+      console.log("Sábado não é permitido");
+      ev.target.setCustomValidity("Sábado não é permitido");
+      setDataError(true);
+      setChegadaDate(chegadaDate);
+    } else {
+
+      setChegadaDate(ev.target.valueAsDate);
+      setDataError(false);
+    }
+    
+  };
+  const isSaturday = (date) => date.getDay() === 6;
   return (
     <ColumnContent>
       <Card>
@@ -58,8 +76,12 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
 
         <Row>
           <div className="column">
-            <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => setChegadaDate(ev.target.valueAsDate)} />
+            <SearchInput innerLabel="Data" label="Chegada" type="date" initialValue={chegadaDate} onChange={ev => onChangeStart(ev)} />
+            {dataError && <Body3 style={{ color: "red", fontSize:'15px'}}>Não é permitido iniciar uma estadia aos sábados</Body3>}
+
+            
             <SearchInput innerLabel="Horário" type="time" initialValue={chegadaTime} onChange={ev => setChegadaTime(ev.target.value)} />
+            
           </div>
           <div className="column">
             <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />

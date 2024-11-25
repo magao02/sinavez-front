@@ -59,6 +59,8 @@ export const Blue = styled.div`
 
   border-radius: 0px 0px 16px 16px;
   background: ${theme.colors.blue.background};
+  @media (max-width: 425px) {
+   width: 150%;
 `;
 
 export const SearchHelpContainer = styled.div`
@@ -82,6 +84,10 @@ export const SearchHelpContainer = styled.div`
     font-weight: 500;
     line-height: 18px;
     margin-bottom: 10px;
+  }
+
+  @media (max-width: 426px) {
+    display: none;
   }
 `;
 

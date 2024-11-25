@@ -9,4 +9,6 @@ export const Container = styled.div`
 
   background-color: black;
   opacity: 50%;
+
+    
 `
