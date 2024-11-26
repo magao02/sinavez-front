@@ -257,7 +257,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
               {
                 model.animais && <BlueFeatureCard>
                   <Image src={IconPets} />
-                  Aceita pets
+                  Não aceita pets
                 </BlueFeatureCard>
               }
             </BlueFeatures> }

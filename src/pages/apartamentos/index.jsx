@@ -94,7 +94,6 @@ const Search = ({ tabIndex, setTabIndex, chegadaDate, setChegadaDate, saidaDate,
             <CounterInput min={0} value={adultos} onChange={setAdultos} label="Adultos" />
             <CounterInput min={0} value={criancas} onChange={setCriancas} label="Crianças" />
             <CounterInput min={0} value={bebes} onChange={setBebes} label="Bebês" />
-            <CounterInput min={0} value={animais} onChange={setAnimais} label="Pets" />
           </Row>
         }
         
@@ -149,7 +148,7 @@ const ApartmentSearchHelp = () => {
         text="Escolha as datas da sua chegada e saída usando o teclado ou o calendário, o qual poderá ver os dias livres" /> }
       
       { pageIndex === 1 && <SearchHelpPage previous={previous} next={next}
-        text="Informe a quantidade de pessoas e animais de estimação que acompanharão você em sua estadia. " /> }
+        text="Informe a quantidade de pessoas que acompanharão você em sua estadia. " /> }
       
       { pageIndex === 2 && <SearchHelpPage previous={previous} next={next} last={true}
         text="Caso tenha necessidade de um quarto adaptado, selecione o tipo do apartamento “PCD”, do contrário selecione “Comum”." /> }

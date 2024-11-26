@@ -34,7 +34,7 @@ const Feature = ({ type }) => {
       image = IconWifi;
       break;
     case "animais":
-      text = "Aceita pets";
+      text = "Não aceita pets";
       image = IconPet;
       break;
   }
