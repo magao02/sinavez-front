@@ -37,7 +37,7 @@ import excluir_comprovante from "../../assets/excluir_comprovante.svg"
 import { dateFromDMY } from "../../utils/date";
 import Link from "next/link";
 
-const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
+const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartment,token, onChange}) => {
 
   const [showInfo, setShowInfo] = useState(false);
   const [file, setFile] = useState(obj.pagamento.files);
@@ -90,8 +90,10 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
       return `${horario} noite`
     }
   }
-  const cancelarReserva = () => {
-    alert("Reserva cancelada com sucesso!")
+  const cancelarReserva = async () => {
+    console.log(obj)
+    onChange(obj.id)
+
   }
 
 
@@ -117,10 +119,13 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
               </p>
             </ReservaInfoArea>
           </InfoArea>
-          <PagamentoArea>
-            <PagamentoInfo pagamento={obj.pagamento.pago}>
+          <PagamentoArea>{
+            obj.cancelled !== true ?
+            (<PagamentoInfo pagamento={obj.pagamento.pago}>
               Pagamento {obj.pagamento.pago ? "efetuado" : "pendente"}
-            </PagamentoInfo>
+            </PagamentoInfo>): <PagamentoInfo> Reserva Cancelada </PagamentoInfo>
+          }
+            
             <Button onClick={() => setShowInfo(!showInfo)}>
               VER DADOS DA RESERVA <img src={arrow_down.src} alt="arrow" />
             </Button>
@@ -161,7 +166,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
                 <DataContentWrapper>
                   <DataSecondArea>
                     <span>{obj.hospedes.bebes} bebês;</span>
-                    <span>{obj.hospedes.animais} animais;</span>
+                    
                   </DataSecondArea>
                 </DataContentWrapper>
               </DataRowContainer>
@@ -184,10 +189,10 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile}) => {
               </DataCollumContainer>
             </GeralDataContainer>
           </DataMainInfo>
-         <ButtonContainer style={{marginTop:10}}>
+        { obj.cancelled !== true ? (<ButtonContainer style={{marginTop:10}}>
                   <StyledButton onClick={()=> cancelarReserva()} >Cancelar Reserva</StyledButton>
 
-              </ButtonContainer>
+              </ButtonContainer>) : null}
         </DataDiv>
         <Border></Border>
         <NotaFiscalContainer>

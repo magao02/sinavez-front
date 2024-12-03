@@ -30,6 +30,7 @@ import MonthsOptions from "../../components/MonthsOptions";
 import no_reservas from "../../assets/no_reservas.svg"
 import ReservaCard from "../../components/ReservaCard";
 import { dateFromDMY } from "../../utils/date";
+import {  cancelReservation } from "../../services/apartments";
 import loading from "../../assets/loading_Apto.svg"
 
 const ambienteDados = () => {
@@ -93,6 +94,28 @@ const ambienteDados = () => {
         setReservas(copy)
         isApt ? serviceApto.deletePayment(authContext.token, ambientData.urlApt, id, file.url) : serviceArea.deletePayment(authContext.token, ambientData.urlApt, id, file.url)
     }
+  
+  const cancelarReserva = async (id) => {
+    const req = await cancelReservation(authContext.token, router.query.url, id);
+      if (req.status == 200) {
+        if(router.query.ambientType == "apto") {
+          var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
+          const reqReservas = await serviceApto.getReservations(authContext.token, router.query.url)
+          setAmbientData(data)
+          setReservas(reqReservas.data)
+          setUrl(router.query.url)
+        }else{
+          const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
+          const reqReservas = await serviceArea.getReservations(authContext.token, router.query.url)
+          setAmbientData(data)
+          setReservas(reqReservas.data)
+          setUrl(router.query.url)
+        }
+        setIsMakingRequest(false)
+      }
+    alert("Reserva cancelada com sucesso!")
+  }
+
 
     var reservasFiltered = reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : []
     
@@ -175,7 +198,7 @@ const ambienteDados = () => {
                         {
                           reservasFiltered.map(( reserva ) => {
                             return (
-                              <ReservaCard obj={reserva} id={reserva.id} handlePagamento={handlePagamento} handleFile={handleFile} deleteFile={deleteFile}></ReservaCard>
+                              <ReservaCard onChange={cancelarReserva} token={authContext.token} apartment={router.query.url} obj={reserva} id={reserva.id} handlePagamento={handlePagamento} handleFile={handleFile} deleteFile={deleteFile}></ReservaCard>
                             )
                           })
                         }
