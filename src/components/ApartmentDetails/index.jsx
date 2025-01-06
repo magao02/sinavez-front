@@ -141,7 +141,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
       animais: query.animais ?? 0,
       pessoas: query.pessoas ?? 4,
       chegadaTime: query.chegadaTime ?? '11:00',
-      saidaTime: query.saidaTime ?? '11:00',
+      saidaTime:  '12:00',
     };
   }, [query]);
   

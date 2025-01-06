@@ -81,13 +81,13 @@ const associadosservar = () => {
   const [associadoSelecionado, setAssociadoSelecionado] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
   const [chegadaDate, setChegadaDate] = useState(new Date());
-  const [chegadaTime, setChegadaTime] = useState('11:00');
+  const [chegadaTime, setChegadaTime] = useState('12:00');
   const [saidaDate, setSaidaDate] = useState((() => {
     let now = new Date();
     now.setDate(now.getDate() + 7);
     return now;
   })());
-  const [saidaTime, setSaidaTime] = useState('18:00');
+  const [saidaTime, setSaidaTime] = useState('12:00');
 
   const handleCheckboxChange = (item) => {
     setAssociadoSelecionado(item);
@@ -129,7 +129,6 @@ const associadosservar = () => {
             </div>
             <div className="column">
               <SearchInput innerLabel="Data" label="Saída" type="date" initialValue={saidaDate} onChange={ev => setSaidaDate(ev.target.valueAsDate)} />
-              <SearchInput innerLabel="Horário" type="time" initialValue={saidaTime} onChange={ev => setSaidaTime(ev.target.value)} />
             </div>
           </Row>
         </Card>
