@@ -118,7 +118,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"} showPopUpSignUp={showPopUp}></LinkBox>
                 <LinkBox linkText={"/reservas"} selected={selectedReservas} text={"reservas"} showPopUpSignUp={showPopUp}></LinkBox>
-                
+                 <LinkBox linkText={"/lancamentosAssociados"} selected={selectedancamentos} text={"Lançamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()} showPopUpSignUp={showPopUp}/>

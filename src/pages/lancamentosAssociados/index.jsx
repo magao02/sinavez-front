@@ -141,7 +141,7 @@ const Reservas = () => {
       <Content>
         <div className={styles.lancamentoHeader}>
           <h1>Lançamentos</h1> 
-          <Button variant='editButton' onClick={onOpen}> Novo lançamento</Button>
+         
             
         </div>
         
@@ -178,14 +178,11 @@ const Reservas = () => {
   ) : (
     'Sem comprovante'
   )}</td>
-                <td><FaRegTrashAlt style={{ color: 'red', cursor: 'pointer' }} onClick={() => handleDelete(item)}></FaRegTrashAlt></td>
             </tr>
           ))}
         </tbody>
         </table>
-        {isOpen && (
-        <Modal onClose={onClose} handleSave={handleSave} />
-      )}
+       
        
 
       </Content>
