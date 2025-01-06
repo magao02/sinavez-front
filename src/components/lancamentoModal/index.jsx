@@ -22,8 +22,19 @@ export const Modal = ({ onClose, handleSave }) => {
     console.log(e.target.value);
     setData(e.target.value);
   }
+  function parseCurrencyToFloat(value) {
+  if (!value) return 0;
+
+  // Remove o símbolo da moeda, os pontos de milhar e substitui a vírgula pelo ponto decimal
+  const numericValue = value
+    .replace(/[^\d,-]/g, "") // Remove caracteres não numéricos (exceto vírgula e hífen)
+    .replace(",", "."); // Substitui vírgula por ponto
+
+  // Converte para float e limita a 2 casas decimais
+  return parseFloat(numericValue).toFixed(2);
+}
   const onSave = () => {
-    const valor = Number(valorRef.current.value);
+    const valor = parseCurrencyToFloat(valorRef.current.value);
     let urlComprovante = ''
     if (file == null) { 
       urlComprovante= ''
@@ -89,9 +100,10 @@ export const Modal = ({ onClose, handleSave }) => {
                 <Input
               variant="default-optional"
               label={"Valor"}
-              name={"valor"}
+              name={"valorLancamento"}
               placeholder={"R$ 00,00"}
-              initialValue={''}
+                  initialValue={''}
+            
               ref={valorRef}
               
             />         

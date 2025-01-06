@@ -32,7 +32,20 @@ const Input = ({ variant, label, name, validate, onChange, initialValue, ...rest
     )
 
     const handleChange = useCallback((event) => {
-        setValue(event.target.value);
+        const { name, type, value } = event.target;
+
+        let newValue = value;
+
+    // Verifica se o campo é "valor" e o tipo é "number" para formatar como dinheiro
+    if (name === "valorLancamento") {
+      const numericValue = parseFloat(value.replace(/[^0-9]/g, "") || 0) / 100;
+      newValue = numericValue.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    }
+
+    setValue(newValue);
         onChange?.(event);
     },
     [onChange],
@@ -51,7 +64,7 @@ const Input = ({ variant, label, name, validate, onChange, initialValue, ...rest
         value={value}
         onChange={handleChange}
         ref={ref}
-        error={alertMessage}
+                error={alertMessage}
         {...rest} 
         />
     </Container>
