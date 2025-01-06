@@ -1,0 +1,29 @@
+.divContent{
+   display: flex;
+    justify-Content: center;
+     padding: 20px
+}
+.lancamentoHeader{
+  width: 100%;
+  display: flex;
+  justify-Content: space-between;
+  padding: 20px;
+}
+.tableClass{
+  width: 80%;
+  border-Collapse: collapse;
+  text-Align: center;
+  box-Shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  border-radius: 20px;
+}
+.tableClass tr{
+  margin: 20px;
+}
+.tabcleClassHeader{
+  background-color: hsl(240 4.76% 95.88% / 1);
+  color: hsl(240 4.76% 20.59% / 1);
+  font-Weight: bold;
+  
+
+}

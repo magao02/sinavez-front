@@ -22,6 +22,7 @@ const Navigation = (props) => NavVariant(props);
 function NavVariant({ variant, selectedPage, showPopUp}) {
   const [selectedHome, setSelectedHome] = useState(false);
   const [selectedAssociados, setSelectedAssociados] = useState(false);
+  const [selectedancamentos, setSelectedancamentos] = useState(false);
   const [selectedApartamentos, setSelectedApartamentos] = useState(false);
   const [selectedReservas, setSelectedReservas] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,6 +48,9 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
           break;
         case "reservas":
           setSelectedReservas(true);
+          break;
+        case "lancamentosAdmin":
+          setSelectedancamentos(true);
           break;
       }
       setIsLoaded(true);
@@ -92,6 +96,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
                 <LinkBox linkText={"/associados"} selected={selectedAssociados} text={"Associados"}></LinkBox>
                 <LinkBox linkText={"/manageReservations"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
+                <LinkBox linkText={"/lancamentosAdmin"} selected={selectedancamentos} text={"Lançamentos"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>
