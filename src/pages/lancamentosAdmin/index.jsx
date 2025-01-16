@@ -34,8 +34,9 @@ const cellStyle = {
   border: 'none',  // Removendo a borda
   lineHeight: '1.8', // Aumentando o espaçamento entre as linhas
 };
+import Input from "../../components/commom/Input";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { cancelReservation } from "../../services/apartments";
 import styles from './style.module.css';
 import Navigation from "../../components/commom/Nav";
@@ -43,10 +44,11 @@ import { Modal } from "../../components/lancamentoModal";
 import { addLanCamento, getLancamentos, deleteLancamento } from "../../services/lancamentos";
 import { SearchInput } from "../../components/SearchInputs";
 const Reservas = () => {
-  const [apts, setApts] = useState([]);
   const [lancamentos, setLancamentos] = useState([]);
   const [lancamentosFiltro, setLancamentosFiltro] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const nameRef = useRef(null);
+  const [descricao, setDescricao] = useState('');
     const today = new Date();
   const [dataInicio, setDataInicio] = useState(startOfMonth(today));
   const [dataFim, setDataFim] = useState(endOfMonth(today));
@@ -79,18 +81,16 @@ const Reservas = () => {
     const lancamentosFiltrados = lancamentos.filter((lancamento) => {
       console.log(lancamento.data)
       const data = new Date(lancamento.data);
-      if (dataInicio == null || dataFim == null) {
-        console.log("data nula")
-      }
-      if (data >= new Date(dataInicio) && data <= new Date(dataFim)) {
-        console.log("data no intervalo")
-      } else {
-        console.log("fora do intervalo")
-        console.log(dataInicio)
-        console.log(dataFim)
-       }
 
-      return data >= new Date(dataInicio) && data <= new Date(dataFim);
+      var descricaoValida = true
+      if (descricao !== '') {
+        descricaoValida = lancamento.descricao
+        .toLowerCase()
+        .includes(descricao.toLowerCase());
+        
+      }
+
+      return data >= new Date(dataInicio) && data <= new Date(dataFim) && descricaoValida;
     });
     console.log(lancamentosFiltrados)
     setLancamentosFiltro(lancamentosFiltrados);
@@ -99,7 +99,7 @@ const Reservas = () => {
   useEffect(() => {
       filterLancamentosDate();
 
-  }, [dataInicio, dataFim, lancamentos]);
+  }, [dataInicio, dataFim, lancamentos, descricao]);
   
   const handleSave = async (dados) => {
     console.log(dados)
@@ -134,7 +134,9 @@ const Reservas = () => {
     setDataFim(data);
     filterLancamentosDate();
   }
-
+  const handleChange = (e) => {
+    setDescricao(e.target.value);
+  }
 
   return (
     <div>
@@ -143,7 +145,18 @@ const Reservas = () => {
       <Content>
         <div className={styles.lancamentoHeader}>
           <h2>Lançamentos</h2> 
-          <div style={{width: '350px', display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+          <div style={{ width: '600px', display: 'flex', justifyContent: 'space-between', gap: '15px' }}>
+            <Input
+              variant="default-optional"
+              label={"Descrição"}
+              name={"descricao"}
+              placeholder={"Digite a descrição"}
+              ref={nameRef}
+              initialValue={''}
+              onChange={handleChange}
+                  
+              
+            />
             <SearchInput style={{ width: '150px !important' }} label="Data ínicio" type="date" innerLabel="Data" initialValue={startOfMonth(today)} onChange={setandodataInicio} />
             <SearchInput style={{ maxWidth: '150px' }} label="Data fim" type="date" innerLabel="Data"  initialValue={endOfMonth(today)} onChange={setandoDataFim}/>
           </div>
