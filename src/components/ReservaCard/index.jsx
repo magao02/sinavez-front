@@ -36,6 +36,7 @@ import upload_cloud from "../../assets/upload_cloud.svg"
 import excluir_comprovante from "../../assets/excluir_comprovante.svg"
 import { dateFromDMY } from "../../utils/date";
 import Link from "next/link";
+import { useMemo } from "react";
 
 const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartment,token, onChange}) => {
 
@@ -183,7 +184,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartme
                 <DataContentWrapper>
                   <h4>Quantidade de diárias: </h4>
                   <DataSecondArea>
-                    <span>{obj.dias} dias</span>
+                    <span>{(obj.dias - 1)} dias</span>
                   </DataSecondArea>
                 </DataContentWrapper>
               </DataCollumContainer>

@@ -189,13 +189,13 @@ const SecondStep = ({file, takeImage, image, previousData, dataCollector, firstB
               Vínculo com o SINAVEZ
             </SubTitle>
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Telefone"}
               name={"Telefone"}
               placeholder={"(XX) YYYY-ZZZZ"}
               initialValue={previousData.telefone}
               ref={telefoneRef}
-              validate={validation.testRequiredPhone}
+              validate={validation.testPhone}
             />
              <Input
               variant="default-optional"

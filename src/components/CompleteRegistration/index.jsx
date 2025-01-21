@@ -301,7 +301,7 @@ export const CompleteRegistration = ( { handleModal, handleSuccessModal } ) => {
                                         description="Digite o número em uso do seu celular."
                                         variant="completeRegistration"
                                         ref={phoneRef}
-                                        validate={validation.testRequiredPhone}
+                                        validate={validation.testPhone}
                                     />
                                     <GenericFormValue
                                         label="CEP"

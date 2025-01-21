@@ -130,6 +130,7 @@ export async function testDate(dateValue) {
 export async function testRequiredPhone(phoneValue) {
   return yup
     .string()
+    .nullable()
     
     .matches(/^[0-9]{2}([0-9]{8}|[0-9]{9})$/, validationMessages.invalidPhone)
     .validate(phoneValue);

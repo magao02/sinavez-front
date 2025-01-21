@@ -106,11 +106,16 @@ const Page = () => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return Math.max(1, dayDifference(new Date(router.query.saidaDate), new Date(router.query.chegadaDate)) + 1);
+    const startDate = new Date(router.query.saidaDate);
+    const endDate = new Date(router.query.chegadaDate);
+    const differenceInTime = endDate - startDate;
+
+  return Math.max(1, Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)));
   }, [model, router]);
 
   const totalDiarias = useMemo(() => {
-    return formatPrice((model.diaria ?? 0) * numDiarias);
+    if(numDiarias === 1) return valorDiaria;
+    return formatPrice((model.diaria ?? 0) * (numDiarias-1));
   }, [valorDiaria, numDiarias]);
 
   const [isMakingRequest, setIsMakingRequest] = useState(false);

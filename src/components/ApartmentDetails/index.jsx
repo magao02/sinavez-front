@@ -150,11 +150,15 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    return dayDifference(new Date(defaultedQuery.saidaDate), new Date(defaultedQuery.chegadaDate)) + 1;
+    const startDate = new Date(defaultedQuery.saidaDate);
+    const endDate = new Date(defaultedQuery.chegadaDate);
+    const differenceInTime = endDate - startDate;
+
+  return Math.max(1, Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)));
   }, [model, defaultedQuery]);
 
   const totalDiarias = useMemo(() => {
-    return formatPrice((model.diaria ?? 0) * numDiarias);
+    return formatPrice((model.diaria ?? 0) * (numDiarias - 1));
   }, [valorDiaria, numDiarias]);
 
   const goToReservationPage = () => {
