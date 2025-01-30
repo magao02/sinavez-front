@@ -1,5 +1,5 @@
 import { useAuth } from "../../contexts/AuthContext";
-import { format,startOfMonth, endOfMonth } from 'date-fns';
+import { format,startOfMonth, endOfMonth,addDays } from 'date-fns';
 import { FaRegTrashAlt } from "react-icons/fa";
 import {
 
@@ -9,18 +9,7 @@ import {
 
 } from "../../styles/apartamentosStyles";
 import { Body1, Body2, Title2 } from "../../styles/commonStyles";
-import Button from "../../components/commom/Button"
-import {
-  FeatureContent,
-  Card,
-  CardInner,
-  CardImage,
-  StyledButton,
-  ButtonContainer,
-  Details,
-  
-  Features,
-} from "../../styles/userReservasStyles";
+
 const pillStyle = {
   display: 'inline-block',
   padding: '5px 10px',
@@ -77,9 +66,9 @@ const Reservas = () => {
   }
 
   const filterLancamentosDate = () => {
-    console.log(lancamentos)
+
     const lancamentosFiltrados = lancamentos.filter((lancamento) => {
-      console.log(lancamento.data)
+     
       const data = new Date(lancamento.data);
 
       var descricaoValida = true
@@ -92,7 +81,7 @@ const Reservas = () => {
 
       return data >= new Date(dataInicio) && data <= new Date(dataFim) && descricaoValida;
     });
-    console.log(lancamentosFiltrados)
+
     setLancamentosFiltro(lancamentosFiltrados);
   }
   
@@ -108,14 +97,11 @@ const Reservas = () => {
     if (req.status == 200) {
       getLancamentoss();
     }
-    console.log("salvar")
     onClose()
   }
 
   const handleDelete = async (item) => {
-    console.log(item._id)
     const req = await deleteLancamento(item._id , authContext.token);
-    console.log(req)
     if (req.status == 200) {
       getLancamentoss();
     }
@@ -180,7 +166,7 @@ const Reservas = () => {
           {lancamentosFiltro.map((item, index) => (
             <tr key={index}>
               <td style={{...cellStyle}} >{item.descricao}</td>
-              <td style={{...cellStyle}}>{format(new Date(item.data), 'dd/MM/yyyy')}</td>
+              <td style={{...cellStyle}}>{format(addDays(new Date(item.data), 1), 'dd/MM/yyyy')}</td>
               <td style={{...cellStyle}}>{item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
               <td style={{...cellStyle}}><span
                   style={{

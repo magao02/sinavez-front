@@ -1,5 +1,5 @@
 import { useAuth } from "../../contexts/AuthContext";
-import { format,startOfMonth, endOfMonth } from 'date-fns';
+import { format,startOfMonth, endOfMonth,addDays } from 'date-fns';
 import { FaRegTrashAlt } from "react-icons/fa";
 import {
 
@@ -79,8 +79,8 @@ const Reservas = () => {
   const filterLancamentosDate = () => {
     console.log(lancamentos)
     const lancamentosFiltrados = lancamentos.filter((lancamento) => {
-      console.log(lancamento.data)
       const data = new Date(lancamento.data);
+      
 
       var descricaoValida = true
       if (descricao !== '') {
@@ -180,7 +180,7 @@ const Reservas = () => {
           {lancamentosFiltro.map((item, index) => (
             <tr key={index}>
               <td style={{...cellStyle}} >{item.descricao}</td>
-              <td style={{...cellStyle}}>{format(new Date(item.data), 'dd/MM/yyyy')}</td>
+              <td style={{...cellStyle}}>{format(addDays(new Date(item.data), 1), 'dd/MM/yyyy')}</td>
               <td style={{...cellStyle}}>{item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
               <td style={{...cellStyle}}><span
                   style={{
