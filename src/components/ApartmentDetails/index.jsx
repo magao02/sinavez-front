@@ -158,7 +158,7 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [model, defaultedQuery]);
 
   const totalDiarias = useMemo(() => {
-    return formatPrice((model.diaria ?? 0) * (numDiarias - 1));
+    return formatPrice((model.diaria ?? 0) * (numDiarias));
   }, [valorDiaria, numDiarias]);
 
   const goToReservationPage = () => {

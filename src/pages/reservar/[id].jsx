@@ -115,7 +115,7 @@ const Page = () => {
 
   const totalDiarias = useMemo(() => {
     if(numDiarias === 1) return valorDiaria;
-    return formatPrice((model.diaria ?? 0) * (numDiarias-1));
+    return formatPrice((model.diaria ?? 0) * (numDiarias));
   }, [valorDiaria, numDiarias]);
 
   const [isMakingRequest, setIsMakingRequest] = useState(false);
