@@ -106,8 +106,8 @@ const Page = () => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    const startDate = new Date(router.query.saidaDate);
-    const endDate = new Date(router.query.chegadaDate);
+    const startDate = new Date(router.query.chegadaDate);
+    const endDate = new Date(router.query.saidaDate);
     const differenceInTime = endDate - startDate;
 
   return Math.max(1, Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)));

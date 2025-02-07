@@ -150,8 +150,8 @@ const ApartmentDetails = ({ area, objectUrl, query }) => {
   }, [model]);
 
   const numDiarias = useMemo(() => {
-    const startDate = new Date(defaultedQuery.saidaDate);
-    const endDate = new Date(defaultedQuery.chegadaDate);
+    const startDate = new Date(defaultedQuery.chegadaDate);
+    const endDate = new Date(defaultedQuery.saidaDate);
     const differenceInTime = endDate - startDate;
 
   return Math.max(1, Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)));
