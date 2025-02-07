@@ -195,6 +195,7 @@ const ambienteDados = () => {
                         </NoReservations>
                       :
                       <ReservasInfo>
+                        <ButtonReserva onClick={redirectToReservas}>FAÇA UMA RESERVA</ButtonReserva>
                         {
                           reservasFiltered.map(( reserva ) => {
                             return (
