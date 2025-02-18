@@ -32,6 +32,15 @@ export async function getReservations(token, urlApt){
         }}
     ));
 }
+export async function getReservationsByDate(token, urlApt) {
+    debugger;
+    return await handleUnauthorized(api.get(
+        `/apartment/getReservationsByDate/${urlApt}`,
+        {headers: {
+            authorization: token
+        }}
+    ));
+}
 
 export async function getReservationsByUser(token, urlUser) {
     const apartments = await handleUnauthorized(api.get(
