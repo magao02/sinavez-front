@@ -95,7 +95,7 @@ const ambienteDados = () => {
         isApt ? serviceApto.deletePayment(authContext.token, ambientData.urlApt, id, file.url) : serviceArea.deletePayment(authContext.token, ambientData.urlApt, id, file.url)
     }
   
-  const cancelarReserva = async (id) => {
+  const cancelarReserva = async (apt,id) => {
     const req = await cancelReservation(authContext.token, router.query.url, id);
       if (req.status == 200) {
         if(router.query.ambientType == "apto") {

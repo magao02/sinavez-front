@@ -93,7 +93,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartme
   }
   const cancelarReserva = async () => {
     console.log(obj)
-    onChange(obj.id)
+    onChange(obj.apt,obj.id)
 
   }
 
@@ -261,10 +261,12 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartme
             </p>
           </ReservaInfoArea>
         </InfoArea>
-        <PagamentoArea>
-          <PagamentoInfo pagamento={obj.pagamento.pago}>
-            Pagamento {obj.pagamento.pago ? "efetuado" : "pendente"}
-          </PagamentoInfo>
+        <PagamentoArea>{
+            obj.cancelled !== true ?
+            (<PagamentoInfo pagamento={obj.pagamento.pago}>
+              Pagamento {obj.pagamento.pago ? "efetuado" : "pendente"}
+            </PagamentoInfo>): <PagamentoInfo> Reserva Cancelada </PagamentoInfo>
+          }
           <Button onClick={() => setShowInfo(!showInfo)}>
             VER DADOS DA RESERVA <img src={arrow_down.src} alt="arrow" />
           </Button>

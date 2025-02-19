@@ -50,6 +50,7 @@ const ambienteDados = () => {
     const [reservas, setReservas] = useState([])
     const [url, setUrl] = useState("")
   const [isMakingRequest, setIsMakingRequest] = useState(true)
+  const [reservasFiltered, setReservasFiltered] = useState([])
   const [date, setDate] = useState(new Date());
 
     const isApt = true
@@ -95,13 +96,15 @@ const ambienteDados = () => {
     const data = e.target.value;
     setDate(data);
     const reqReservas = await serviceApto.getReservationsByDate(authContext.token, date)
+          console.log(reqReservas)
           
-          
-          setReservas(reqReservas.data)
+      setReservas(reqReservas.data)
+      setReservasFiltered(reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : [])
 
   }
   
-  const cancelarReserva = async (apt,id) => {
+  const cancelarReserva = async (apt, id) => {
+    console.log(apt)
     const req = await cancelReservation(authContext.token, apt, id);
       if (req.status == 200) {
         if(router.query.ambientType == "apto") {
@@ -112,7 +115,7 @@ const ambienteDados = () => {
           setReservas(reqReservas.data)
           setUrl(router.query.url)
         }else{
-          const reqReservas = await serviceArea.getReservationsByDate(authContext.token, date)
+          const reqReservas = await serviceApto.getReservationsByDate(authContext.token, date)
           setReservas(reqReservas.data)
           setUrl(router.query.url)
         }
@@ -122,22 +125,27 @@ const ambienteDados = () => {
   }
 
 
-    var reservasFiltered = reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : []
+   
     
     useEffect(async () => {
       if(router.isReady){
         if(router.query.ambientType == "apto") {
           var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
-          const reqReservas = await serviceApto.getReservationsByDate(authContext.token, date)
+          debugger
+          const yesterday = new Date(new Date().setDate(new Date().getDate() - 2))
+          const reqReservas = await serviceApto.getReservationsByDate(authContext.token, yesterday)
           console.log(reqReservas)
           
           setReservas(reqReservas.data)
+          console.log(reservas)
+           setReservasFiltered(reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : [])
           setUrl(router.query.url)
         }else{
           const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
           const reqReservas = await serviceArea.getReservations(authContext.token, router.query.url)
           setAmbientData(data)
           setReservas(reqReservas.data)
+           setReservasFiltered(reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : [])
           setUrl(router.query.url)
         }
         setIsMakingRequest(false)
