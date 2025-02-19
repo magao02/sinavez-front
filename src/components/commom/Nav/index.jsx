@@ -51,6 +51,8 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
           break;
         case "lancamentosAdmin":
           setSelectedancamentos(true);
+        case "lancamentosAssociados":
+          setSelectedancamentos(true);
           break;
       }
       setIsLoaded(true);
@@ -97,7 +99,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 <LinkBox linkText={"/associados"} selected={selectedAssociados} text={"Associados"}></LinkBox>
                 <LinkBox linkText={"/manageReservations"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
                 <LinkBox linkText={"/lancamentosAdmin"} selected={selectedancamentos} text={"Lançamentos"}></LinkBox>
-                <LinkBox linkText={"/reservasAdmin?url=apartamento-01&ambientType=apto"} selected={selectedancamentos} text={"reservas"}></LinkBox>
+                <LinkBox linkText={"/reservasAdmin?url=apartamento-01&ambientType=apto"} selected={selectedApartamentos} text={"reservas"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()}/>

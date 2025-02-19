@@ -126,7 +126,7 @@ const Reservas = () => {
 
   return (
     <div>
-      <Navigation selectedPage="reservas" variant={authContext?.admin ? "admin" : "logged"} />
+      <Navigation selectedPage="lancamentosAssociados" variant={authContext?.admin ? "admin" : "logged"} />
       <NavSpacing />
       <Content>
         <div className={styles.lancamentoHeader}>
