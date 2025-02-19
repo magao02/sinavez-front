@@ -134,6 +134,7 @@ const CadastroPage = () => {
         numero: numeroResRef.current.value,
         cep: cepRef.current.value,
       },
+      isPendingSignUp: false,
       regional: {
         municipio: cidadeRef.current.value,
       },
