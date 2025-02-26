@@ -64,8 +64,8 @@ const Reservas = () => {
       <CardInner>
         <Details>
           <Title2>{apt.nome}</Title2>
-          <Body1>Data de Chegada: {new Date(dado.dataChegada).toLocaleDateString()}</Body1>
-             <Body2>Data de Saída: {new Date(dado.dataSaida).toLocaleDateString()} </Body2>
+          <Body1>Data de Chegada: {new Date(dado.dataChegada).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}</Body1>
+             <Body2>Data de Saída: {new Date(dado.dataSaida).toLocaleDateString('pt-BR', { timeZone: 'UTC' })} </Body2>
              <Body2>Diária: R$ {dado.diaria},00</Body2>
               <Body2>Dias: {dado.dias}</Body2>
              <Body2>Hóspedes (Adultos): {dado.hospedes.adultos}</Body2>
