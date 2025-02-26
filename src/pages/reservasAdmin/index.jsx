@@ -95,11 +95,12 @@ const ambienteDados = () => {
 
     const data = e.target.value;
     setDate(data);
+    
     const reqReservas = await serviceApto.getReservationsByDate(authContext.token, date)
           console.log(reqReservas)
           
       setReservas(reqReservas.data)
-      setReservasFiltered(reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : [])
+      setReservasFiltered(reqReservas != undefined ? reqReservas.data : [])
 
   }
   
@@ -131,14 +132,13 @@ const ambienteDados = () => {
       if(router.isReady){
         if(router.query.ambientType == "apto") {
           var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
-          debugger
-          const yesterday = new Date(new Date().setDate(new Date().getDate() - 2))
+          const yesterday = new Date(new Date().setDate(new Date().getDate()))
           const reqReservas = await serviceApto.getReservationsByDate(authContext.token, yesterday)
-          console.log(reqReservas)
+
           
           setReservas(reqReservas.data)
-          console.log(reservas)
-           setReservasFiltered(reservas != undefined ? reservas.filter(( reserva ) => getMonth(reserva.dataChegada) == month) : [])
+          console.log('rapaz: ',reservas)
+           setReservasFiltered(reqReservas.data != undefined ? reqReservas.data  : [])
           setUrl(router.query.url)
         }else{
           const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
