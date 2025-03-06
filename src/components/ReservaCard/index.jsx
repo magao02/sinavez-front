@@ -175,6 +175,15 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartme
             <GeralDataContainer border={"none"}>
               <DataTitleArea>Valores</DataTitleArea>
               <DataCollumContainer>
+                {obj.apt && (
+  <DataContentWrapper>
+    <h4>Apartamento: </h4>
+    <DataSecondArea>
+      <span>{obj.apt}</span>
+    </DataSecondArea>
+  </DataContentWrapper>
+)}
+
                 <DataContentWrapper>
                   <h4>Valor da diária: </h4>
                   <DataSecondArea>
@@ -222,7 +231,7 @@ const ReservaCard = ({ obj, id, handlePagamento, handleFile, deleteFile, apartme
                       }}></img>
                     }
                 </LoadFileArea>
-                <ProgressBar width={progress + "%"}></ProgressBar>
+                
                 <RadioInputArea>
                     <span>Atualize a situação do pagamento</span>
                         <RadioInputsContainer onChange={() => handlePagamento(id)}>

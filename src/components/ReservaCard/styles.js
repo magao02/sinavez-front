@@ -154,7 +154,7 @@ export const GeralDataContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-right: ${ (props) => props.border == "none" ? "none" : "1px solid #5D9BDA"};
-    gap: 30px;
+    gap: 15px;
 `
 
 export const DataRowContainer = styled.div`
@@ -169,7 +169,7 @@ export const DataCollumContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 `
 
 export const DataTitleArea = styled.div`
@@ -198,7 +198,7 @@ export const NotaFiscalContainer = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 5px;
 `
 
 export const InfoNotaFiscal = styled.div`

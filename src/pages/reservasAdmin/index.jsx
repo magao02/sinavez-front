@@ -91,16 +91,22 @@ const ambienteDados = () => {
         isApt ? serviceApto.deletePayment(authContext.token, ambientData.urlApt, id, file.url) : serviceArea.deletePayment(authContext.token, ambientData.urlApt, id, file.url)
     }
   
-    const setandodataInicio = async (e) => {
+  const setandodataInicio = async (e) => {
+      setIsMakingRequest(true)
 
     const data = e.target.value;
+    const  dataComparacao = new Date(data + 'T00:00:00');
     setDate(data);
     
-    const reqReservas = await serviceApto.getReservationsByDate(authContext.token, date)
-          console.log(reqReservas)
-          
-      setReservas(reqReservas.data)
-      setReservasFiltered(reqReservas != undefined ? reqReservas.data : [])
+    const reqReservas = reservas
+    const reservasFiltradas = reqReservas.filter(reserva => {
+              const dataChegada = new Date(reserva.dataChegada.split('/').reverse().join('-')); // "DD/MM/YYYY" -> "YYYY-MM-DD"
+              const dataSaida = new Date(reserva.dataSaida.split('/').reverse().join('-'));
+              return dataComparacao >= dataChegada && dataComparacao <= dataSaida;
+    });
+    console.log(reservasFiltradas)
+    setReservasFiltered(reqReservas != undefined ? reservasFiltradas : [])
+    setIsMakingRequest(false)
 
   }
   
@@ -131,14 +137,20 @@ const ambienteDados = () => {
     useEffect(async () => {
       if(router.isReady){
         if(router.query.ambientType == "apto") {
-          var { data } = await serviceApto.getApartment(authContext.token, router.query.url)
           const yesterday = new Date(new Date().setDate(new Date().getDate()))
-          const reqReservas = await serviceApto.getReservationsByDate(authContext.token, yesterday)
+          const today = new Date()
 
+          const reqReservas = await serviceApto.getReservationsByDate(authContext.token, yesterday)
+          const reservasFiltradas = reqReservas.data.filter(reserva => {
+
+              const dataChegada = new Date(reserva.dataChegada.split('/').reverse().join('-')); // "DD/MM/YYYY" -> "YYYY-MM-DD"
+              const dataSaida = new Date(reserva.dataSaida.split('/').reverse().join('-'));
+
+              return today >= dataChegada && today <= dataSaida;
+          });
           
           setReservas(reqReservas.data)
-          console.log('rapaz: ',reservas)
-           setReservasFiltered(reqReservas.data != undefined ? reqReservas.data  : [])
+           setReservasFiltered(reqReservas.data != undefined ? reservasFiltradas  : [])
           setUrl(router.query.url)
         }else{
           const { data } = await serviceArea.getRecreationArea(authContext.token, router.query.url)
