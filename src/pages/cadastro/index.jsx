@@ -204,10 +204,11 @@ const CadastroPage = () => {
               />
               <GenericFormValue
                 label="Data de nascimento"
+                variant="default-optional"
                 placeholder="00/00/0000"
                 description="Digite a sua data de nascimento no campo acima."
                 ref={birthdayRef}
-                validate={validation.testRequiredData}
+                validate={validation.testDate}
               />
               <FormRow>
                 <GenericFormValue
@@ -219,18 +220,20 @@ const CadastroPage = () => {
                 />
                 <GenericFormValue
                   label="RG"
+                  variant="default-optional"
                   placeholder="00.000.000"
                   description="Digite o seu RG no campo acima."
                   ref={rgRef}
-                  validate={validation.testRequiredNumbers}
+                  validate={validation.testNumbers}
                 />
               </FormRow>
               <GenericFormValue
                 label="Data de Emissão"
                 placeholder="00/00/0000"
+                variant="default-optional"
                 description="Digite a data de emissão no campo acima."
                 ref={dataEmissaoRef}
-                validate={validation.testRequiredData}
+                validate={validation.testDate}
               />
               <GenericFormValue
                 label="Filiação"
@@ -277,9 +280,10 @@ const CadastroPage = () => {
             <GenericForm>
               <GenericFormValue
                 label="Profissão"
+                variant="default-optional"
                 placeholder="Sua profissão"
                 ref={profissaoRef}
-                validate={validation.requiredTextField}
+                validate={validation.TextField}
               />
               <FormRow>
                 <GenericFormValue
@@ -299,10 +303,11 @@ const CadastroPage = () => {
               </FormRow>
               <GenericFormValue
                 label="Telefone"
+                variant="default-optional"
                 placeholder="(00) 00000-0000"
                 description="Digite o número em uso do seu celular."
                 ref={phoneRef}
-                validate={validation.testRequiredPhone}
+                validate={validation.testPhone}
               />
               <GenericFormValue
                 label="CEP"
@@ -315,29 +320,33 @@ const CadastroPage = () => {
               <FormRow>
                 <GenericFormValue
                   label="Rua"
+                  variant="default-optional"
                   description="Digite o nome da rua da sua residência."
                   ref={ruaRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
                 <GenericFormValue
+                  variant="default-optional"
                   label="Número de Residência"
                   description="Digite o número de sua residência."
                   ref={numeroResRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
               </FormRow>
               <FormRow>
                 <GenericFormValue
                   label="Bairro"
+                  variant="default-optional"
                   description="Digite o bairro em que você reside."
                   ref={bairroRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
                 <GenericFormValue
                   label="Cidade"
+                  variant="default-optional"
                   description="Digite a cidade em que você reside."
                   ref={cidadeRef}
-                  validate={validation.requiredTextField}
+                  validate={validation.TextField}
                 />
               </FormRow>
             </GenericForm>
