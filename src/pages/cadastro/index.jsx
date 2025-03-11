@@ -303,11 +303,10 @@ const CadastroPage = () => {
               </FormRow>
               <GenericFormValue
                 label="Telefone"
-                variant="default-optional"
                 placeholder="(00) 00000-0000"
                 description="Digite o número em uso do seu celular."
                 ref={phoneRef}
-                validate={validation.testPhone}
+                validate={validation.testRequiredPhone}
               />
               <GenericFormValue
                 label="CEP"
