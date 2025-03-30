@@ -2,6 +2,7 @@ import { Table, TableHead, TableBody, Associate, Name, Profession, Buttons, Tabl
 
 import EditIcon from "../../../assets/edit.svg";
 import TrashIcon from "../../../assets/trash.svg";
+import pdfIcon from "../../../assets/pdf_icon.svg";
 
 import Image from "next/image.js";
 
@@ -27,6 +28,12 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
         setCurrentAssociates(data.slice(currentIndexes[0], currentIndexes[1]));
     }, [currentAssociates, currentIndexes]);
 
+    const downloadYears = () => {
+        localStorage.setItem('urlAssociado', d.urlUser);
+        yearsController(data, "download");
+        //aquieixe
+      };
+
     
 
  if (filterAdm !== undefined && filterAdm !== null && filterAdm !== "") {
@@ -48,6 +55,16 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Buttons>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                    <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+                                    <Button variant="associado" onClick={editDependente}>
+            Editar Dependentes
+          </Button>
+          <Button variant="image" onClick={editYears}>
+            <p>Editar Impostos</p>
+          </Button>
+          <Button variant="image" onClick={downloadYears}>
+            <Image src={pdfIcon} alt="botão para baixar pdf" />
+          </Button>
                                 </Buttons>
                             </Associate>
                         )
