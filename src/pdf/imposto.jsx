@@ -5,7 +5,7 @@ const impostoPDF = (data) => {
   if (data == undefined) {
     return(alert(`Sem imposto de renda de ${(new Date()).getFullYear()}.`))
   } else {
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    //pdfMake.vfs = pdfFonts.pdfMake.vfs;
   
     function prepareHeaders() {
       const nameArray = [data.name];
