@@ -7,7 +7,7 @@ export const Text = styled.p`
     justify-content: center;
     align-items: center;
 
-    width: 150px;
+    width: 100px;
     height: 7.5vh;
 
         text-decoration: none;
@@ -24,14 +24,14 @@ export const Text = styled.p`
 `
 
 export const LinkBoxStyle = styled.p`
-    width: 150px;
+    width: 100px;
     height: 7.5vh;
 
     cursor: pointer;
 `
 
 export const LinkBoxStyleSelected = styled.p`
-    width: 150px;
+    width: 100px;
     height: 7.5vh;
 
     cursor: pointer;
@@ -41,7 +41,7 @@ export const LinkBoxStyleSelected = styled.p`
 `
 
 export const TextSelected = styled.p`
-    width: 150px;
+    width: 100px;
     height: 7.5vh;
 
     display: flex;

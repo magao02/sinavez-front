@@ -12,6 +12,7 @@ export const Container = styled.div`
 
 export const ContentContainer = styled.div`
     width: 100%;
+    margin-top: 4rem;
     height: 100%;
 
     display: flex;

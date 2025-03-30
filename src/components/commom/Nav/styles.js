@@ -18,7 +18,7 @@ export const LogoSinavez = styled.div`
     width: 8.18vw;
     height: 7.5vh;
 
-    margin-left: 113px;
+    margin-left: 13px;
     display: flex;
     gap: 2px;
     @media (max-width: 425px) {

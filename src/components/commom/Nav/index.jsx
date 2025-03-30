@@ -23,6 +23,8 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
   const [selectedHome, setSelectedHome] = useState(false);
   const [selectedAssociados, setSelectedAssociados] = useState(false);
   const [selectedancamentos, setSelectedancamentos] = useState(false);
+  const [selectedImpostos, setSelectedImpostos] = useState(false);
+  const [selectedDependents, setSelectedDependents] = useState(false);
   const [selectedApartamentos, setSelectedApartamentos] = useState(false);
   const [selectedReservas, setSelectedReservas] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -53,6 +55,12 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
           setSelectedancamentos(true);
         case "lancamentosAssociados":
           setSelectedancamentos(true);
+          break;
+        case "impostos":
+          setSelectedImpostos(true);
+          break;
+        case "dependentes":
+          setSelectedDependents(true);
           break;
       }
       setIsLoaded(true);
@@ -120,8 +128,11 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 </LogoSinavez>
                 <LinkBox linkText={"/home"} selected={selectedHome} text={"Página Inicial"}></LinkBox>
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"} showPopUpSignUp={showPopUp}></LinkBox>
-                <LinkBox linkText={"/reservas"} selected={selectedReservas} text={"reservas"} showPopUpSignUp={showPopUp}></LinkBox>
-                 <LinkBox linkText={"/lancamentosAssociados"} selected={selectedancamentos} showPopUpSignUp={showPopUp} text={"Lançamentos"}></LinkBox>
+                <LinkBox linkText={"/reservas"} selected={selectedReservas} text={"Reservas"} showPopUpSignUp={showPopUp}></LinkBox>
+                <LinkBox linkText={"/lancamentosAssociados"} selected={selectedancamentos} showPopUpSignUp={showPopUp} text={"Lançamentos"}></LinkBox>
+                <LinkBox linkText={"/impostos"} selected={selectedImpostos} showPopUpSignUp={showPopUp} text={"Imposto de renda"}></LinkBox>
+                <LinkBox linkText={"/dependentes"} selected={selectedDependents} showPopUpSignUp={showPopUp} text={"Dependentes"}></LinkBox>
+
               </UserFeaturesLeft>
               <UserFeaturesRight>
                 <DropDownMenu name={name} image={profilePic} opened={openedMenu} onClickDo={() => handleChangeMenu()} showPopUpSignUp={showPopUp}/>
