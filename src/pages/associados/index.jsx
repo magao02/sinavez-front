@@ -102,11 +102,13 @@ const Associados = () => {
   const [dataToSubmit, setDataToSubmit] = useState(initialYears);
   const [yearVariant, setYearVariant] = useState();
   const [year, setYear] = useState();
+  const [impostoToggle, setImpostoToggle] = useState(false);
 
   const yearsController = (data, yearVariant) => {
     setYears({ toggle: true });
     setYearVariant(yearVariant);
     setDataToSubmit(data);
+    setImpostoToggle(true)
   }
 
 
@@ -409,6 +411,10 @@ const Associados = () => {
               <CancelForm cancelForm={toggleRemoveAssociate} associadoName={associadoName} userRemove={userRemove} urlAssociado={urlUser} toggleDataUser={closer} />
             </>
           )}
+
+          {impostoToggle && (
+        <ImpostosPage dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
+      )}
 
           {dataUserToggle && (
             <>
