@@ -10,7 +10,7 @@ import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
 
-const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeData, takeDataUser}) => {
+const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeData, takeDataUser, yearsController}) => {
     const [currentIndexes, setCurrentIndexes] = useState([0, 20]);
     const [currentAssociates, setCurrentAssociates] = useState(data.slice(currentIndexes[0], currentIndexes[1]));
     useEffect(() => {
@@ -28,9 +28,9 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
         setCurrentAssociates(data.slice(currentIndexes[0], currentIndexes[1]));
     }, [currentAssociates, currentIndexes]);
 
-    const downloadYears = () => {
+    const downloadYears = (d) => {
         localStorage.setItem('urlAssociado', d.urlUser);
-        yearsController(data, "download");
+        yearsController(d, "download");
         //aquieixe
       };
 

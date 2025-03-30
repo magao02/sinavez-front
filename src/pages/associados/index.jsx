@@ -98,6 +98,11 @@ const Associados = () => {
     setToggleAdd((p) => !p);
   });
 
+  const [years, setYears] = useState(initialYears);
+  const [dataToSubmit, setDataToSubmit] = useState(initialYears);
+  const [yearVariant, setYearVariant] = useState();
+  const [year, setYear] = useState();
+
   const yearsController = (data, yearVariant) => {
     setYears({ toggle: true });
     setYearVariant(yearVariant);
@@ -394,7 +399,7 @@ const Associados = () => {
               </Button>
             </MainHead>
             <Main>
-              <DataTable collectedData={collectedData} filterAdm={filterAdm} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
+              <DataTable collectedData={collectedData} filterAdm={filterAdm} yearsController={yearsController} searchTerm={searchTerm} headers={["Associado", "Profissão"]} data={associados} takeData={takeData} takeDataUser={takeDataUser} />
             </Main>
 
           </MainContainer>
