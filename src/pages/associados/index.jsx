@@ -54,29 +54,7 @@ const Associados = () => {
     toggle: false,
     type: { pdf: false, dependente: false },
   };
-  const [form, setForm] = useState(initialForm);
-
-  const formController = (type, data, year) => {
-    setYear(year)
-    if (type === "pdf") {
-      setForm({
-        toggle: true,
-        type: { pdf: true, dependente: false },
-      });
-      adminContext.setAssociado(data);
-    } else if (type == "dependente") {
-      adminContext.setAssociado(data);
-      setUrlUserEdit(data.urlUser);
-      setForm({
-        toggle: true,
-        type: { pdf: false, dependente: true },
-      });
-    } else if (type === "initialForm") {
-      setForm(initialForm);
-    } else {
-      setForm(initialForm);
-    }
-  };
+  
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [userDependents, setUserDependents] = useState([]);
@@ -104,6 +82,8 @@ const Associados = () => {
 
   const authContext = useAuth();
   const adminContext = useAdmin();
+
+  
 
   // Toggle para abrir e fechar o modal de adicionar associado
   const toggleAddAssociate = useCallback(() => {
@@ -144,6 +124,31 @@ const Associados = () => {
   const closeImposto = useCallback(() => {
     setImpostoToggle(false);
   });
+
+  const [form, setForm] = useState(initialForm);
+
+  const formController = (type, data, year) => {
+    console.log(data)
+    setYear(year)
+    if (type === "pdf") {
+      setForm({
+        toggle: true,
+        type: { pdf: true, dependente: false },
+      });
+      adminContext.setAssociado(data);
+    } else if (type == "dependente") {
+      adminContext.setAssociado(data);
+      setUrlUserEdit(data.urlUser);
+      setForm({
+        toggle: true,
+        type: { pdf: false, dependente: true },
+      });
+    } else if (type === "initialForm") {
+      setForm(initialForm);
+    } else {
+      setForm(initialForm);
+    }
+  };
 
 
   //  coletando dados do usuário
