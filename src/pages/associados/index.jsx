@@ -18,7 +18,7 @@ import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
 import DependentsContainer from "../../components/DependentsContainer";
 import FilterDropdown from "../../components/commom/FilterDropdown";
-
+import ImpostosPage from "../../components/ImpostosPage";
 import X from "../../assets/x.svg";
 import Sucess from "../../assets/sucess.svg";
 import lupa from "../../assets/lupa.svg";
@@ -50,6 +50,33 @@ const Associados = () => {
   const [associados, setAssociados] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [admToggle, setAdmToggle] = useState();
+  const initialForm = {
+    toggle: false,
+    type: { pdf: false, dependente: false },
+  };
+  const [form, setForm] = useState(initialForm);
+
+  const formController = (type, data, year) => {
+    setYear(year)
+    if (type === "pdf") {
+      setForm({
+        toggle: true,
+        type: { pdf: true, dependente: false },
+      });
+      adminContext.setAssociado(data);
+    } else if (type == "dependente") {
+      adminContext.setAssociado(data);
+      setUrlUserEdit(data.urlUser);
+      setForm({
+        toggle: true,
+        type: { pdf: false, dependente: true },
+      });
+    } else if (type === "initialForm") {
+      setForm(initialForm);
+    } else {
+      setForm(initialForm);
+    }
+  };
   const [addAssociateToggle, setAddAssociateToggle] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [userDependents, setUserDependents] = useState([]);
@@ -98,6 +125,9 @@ const Associados = () => {
     setToggleAdd((p) => !p);
   });
 
+  const initialYears = {
+    toggle: false,
+  };
   const [years, setYears] = useState(initialYears);
   const [dataToSubmit, setDataToSubmit] = useState(initialYears);
   const [yearVariant, setYearVariant] = useState();
@@ -110,6 +140,10 @@ const Associados = () => {
     setDataToSubmit(data);
     setImpostoToggle(true)
   }
+
+  const closeImposto = useCallback(() => {
+    setImpostoToggle(false);
+  });
 
 
   //  coletando dados do usuário
@@ -377,7 +411,7 @@ const Associados = () => {
           </AddAssociateBox>
         </>
       )}
-      {associados && (
+      {associados && !impostoToggle && (
         <>
 
           <MainContainer>
@@ -412,9 +446,7 @@ const Associados = () => {
             </>
           )}
 
-          {impostoToggle && (
-        <ImpostosPage dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
-      )}
+         
 
           {dataUserToggle && (
             <>
@@ -458,6 +490,13 @@ const Associados = () => {
               </ButtonCancel>
             </CancelBox>
           </Card>
+        </>
+      )}
+
+      {impostoToggle && (
+        <>
+
+        <ImpostosPage closeToggle={closeImposto} dataToSubmit={dataToSubmit} data={associados} variant={'download'} setYears={setYears} setForm={formController} />
         </>
       )}
     </Container>

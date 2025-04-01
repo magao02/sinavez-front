@@ -77,6 +77,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Buttons>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                    <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                 </Buttons>
                             </Associate>
                         )
@@ -104,6 +105,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Buttons>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                    <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                 </Buttons>
                             </Associate>
                         )
@@ -116,6 +118,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Buttons>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                    <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                 </Buttons>
                             </Associate>
                         )
@@ -144,6 +147,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Buttons>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                        <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                     </Buttons>
                                 </Associate>
                             )
@@ -155,7 +159,8 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
-                                        <Image src={TrashIcon} onClick={() => takeData(d)}  />
+                                        <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                        <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                     </Buttons>
                                 </Associate>
                             )
@@ -196,6 +201,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Buttons>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                        <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                     </Buttons>
                                 </Associate>
                             )
@@ -208,6 +214,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Buttons>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
+                                        <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                     </Buttons>
                                 </Associate>
                             )

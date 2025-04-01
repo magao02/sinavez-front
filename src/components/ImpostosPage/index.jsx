@@ -20,7 +20,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useAdmin } from "../../contexts/AdminContext";
 import * as service from "../../services/accounts";
 
-const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
+const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit,closeToggle }) => {
     const authContext = useAuth();
     const adminContext = useAdmin();
 
@@ -35,6 +35,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
 
     const handleStopYears = () => {
         setYears("initialYears");
+        closeToggle();
     };
 
     const getYears = useCallback(async () => {
@@ -103,6 +104,7 @@ const ImpostosPage = ({ variant, setYears, setForm, data, dataToSubmit }) => {
         createNewYearDep(dep.data);
         alert(`Imposto de ${yearRef.current.value} criado, reinicie a página.`)
     });
+
 
     switch (variant) {
         case "edit": {
