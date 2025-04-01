@@ -16,6 +16,7 @@ import DarkBackground from "../../components/commom/DarkBackground"
 import FirstStepForm from "../../components/UserDataForm/FirstStep";
 import SecondStepForm from "../../components/UserDataForm/SecondStep";
 import ThirdStepForm from "../../components/UserDataForm/ThirdStep";
+import PdfPage from "../../components/PdfPage";
 import DependentsContainer from "../../components/DependentsContainer";
 import FilterDropdown from "../../components/commom/FilterDropdown";
 import ImpostosPage from "../../components/ImpostosPage";
@@ -498,11 +499,15 @@ const Associados = () => {
         </>
       )}
 
-      {impostoToggle && (
+      {impostoToggle && !form.toggle && (
         <>
 
         <ImpostosPage closeToggle={closeImposto} dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
         </>
+      )}
+
+      {form.toggle && form.type.pdf  && (
+        <PdfPage setForm={formController} outsideForm={formController} ano={year} />
       )}
     </Container>
   );

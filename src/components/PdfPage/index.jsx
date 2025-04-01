@@ -40,8 +40,9 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
 
   const getDependents = useCallback(async () => {
     try {
+      debugger
       const dependentsReponse = await service.getDependents(
-        associado.urlUser,
+        localStorage.getItem("urlAssociado"),
         authContext.token
       );
       if (dependentsReponse.data !== []) {
@@ -109,7 +110,7 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
     setAssociadoUrl(queue[currentPerson].urlUser);
     try {
       const associadoResponse = await service.setImpostoAssociado(
-        queue[currentPerson].urlUser,
+        localStorage.getItem("urlAssociado"),
         data.impostoDeRenda,
         ano,
         authContext.token
