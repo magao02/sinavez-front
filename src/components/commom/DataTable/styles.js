@@ -82,9 +82,10 @@ export const Profession = styled.div`
 export const Buttons = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 1vw;
+    min-width: 500px;
+    margin-left: -150px;
+    gap: 10px;
 
-    gap: 0.25vw;
 `
 
 export const TableFooter = styled.div`

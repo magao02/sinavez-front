@@ -496,7 +496,7 @@ const Associados = () => {
       {impostoToggle && (
         <>
 
-        <ImpostosPage closeToggle={closeImposto} dataToSubmit={dataToSubmit} data={associados} variant={'download'} setYears={setYears} setForm={formController} />
+        <ImpostosPage closeToggle={closeImposto} dataToSubmit={dataToSubmit} data={associados} variant={yearVariant} setYears={setYears} setForm={formController} />
         </>
       )}
     </Container>

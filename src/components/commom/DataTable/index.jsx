@@ -5,7 +5,7 @@ import TrashIcon from "../../../assets/trash.svg";
 import pdfIcon from "../../../assets/pdf_icon.svg";
 
 import Image from "next/image.js";
-
+import Button from "../Button";
 import Paginator from "../Paginator";
 
 import { useCallback, useEffect, useState } from "react";
@@ -34,8 +34,8 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
         //aquieixe
     };
     
-    const editYears = () => {
-        localStorage.setItem('urlAssociado', data.urlUser);
+    const editYears = (d) => {
+        localStorage.setItem('urlAssociado', d.urlUser);
         yearsController(data, "edit");
       };
 
@@ -58,18 +58,14 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
+                                     <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
                                     <Button variant="associado" onClick={editDependente}>
             Editar Dependentes
           </Button>
-          <Button variant="image" onClick={editYears}>
-            <p>Editar Impostos</p>
-          </Button>
-          <Button variant="image" onClick={downloadYears}>
-            <Image src={pdfIcon} alt="botão para baixar pdf" />
-          </Button>
+  
                                 </Buttons>
                             </Associate>
                         )
@@ -80,9 +76,11 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
+                                     <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+                                    
                                 </Buttons>
                             </Associate>
                         )
@@ -108,9 +106,11 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
+                                     <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+
                                 </Buttons>
                             </Associate>
                         )
@@ -121,9 +121,12 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
+                                     <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+                                    
+
                                 </Buttons>
                             </Associate>
                         )
@@ -150,9 +153,12 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
+                                       <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                         <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+                                       
+
                                     </Buttons>
                                 </Associate>
                             )
@@ -163,9 +169,11 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
+                                        <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                         <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
+                                        
                                     </Buttons>
                                 </Associate>
                             )
@@ -204,6 +212,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
+                                         <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                         <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
@@ -217,6 +226,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                     <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                     <Profession>{d.profissao}</Profession>
                                     <Buttons>
+                                         <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
                                         <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                         <Image src={TrashIcon} onClick={() => takeData(d)} />
                                         <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
