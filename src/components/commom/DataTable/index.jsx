@@ -32,6 +32,11 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
         localStorage.setItem('urlAssociado', d.urlUser);
         yearsController(d, "download");
         //aquieixe
+    };
+    
+    const editYears = () => {
+        localStorage.setItem('urlAssociado', data.urlUser);
+        yearsController(data, "edit");
       };
 
     
