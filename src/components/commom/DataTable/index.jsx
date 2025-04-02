@@ -58,13 +58,12 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Name onClick={() => takeDataUser(d)}>{d.name}</Name>
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
-                                     <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Impostos </p>
+                                    <p style={{ cursor: 'pointer' }} onClick={() => editYears(d)}>Editar Impostos </p>
+                                    <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Dependentes </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
-                                    <Button variant="associado" onClick={editDependente}>
-            Editar Dependentes
-          </Button>
+                                    
   
                                 </Buttons>
                             </Associate>
