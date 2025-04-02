@@ -37,7 +37,11 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
     const editYears = (d) => {
         localStorage.setItem('urlAssociado', d.urlUser);
         yearsController(data, "edit");
-      };
+    };
+    
+     const editDependente = (d) => {
+        dependente(d.urlUser, d.name)
+      }
 
     
 
@@ -59,7 +63,7 @@ const DataTable = ({ collectedData, filterAdm, searchTerm, headers, data, takeDa
                                 <Profession>{d.profissao}</Profession>
                                 <Buttons>
                                     <p style={{ cursor: 'pointer' }} onClick={() => editYears(d)}>Editar Impostos </p>
-                                    <p style={{cursor:'pointer'}} onClick={() =>editYears(d)}>Editar Dependentes </p>
+                                    <p style={{cursor:'pointer'}} onClick={() =>editDependente(d)}>Editar Dependentes </p>
                                     <Image src={EditIcon} onClick={() => takeDataUser(d)}/>
                                     <Image src={TrashIcon} onClick={() => takeData(d)} />
                                     <Image src={pdfIcon} onClick={() => downloadYears(d)} alt="botão para baixar pdf" />
