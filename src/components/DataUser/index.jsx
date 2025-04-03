@@ -137,14 +137,22 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
         setRemoveDependents(true);
     };
 
-    const handleFinish = () => {
-        addDependente(dataD, urlUser);  
+    const handleFinish = async () => {
+
+        await addDependente(dataD, urlUser);
+        getDependents();
         toggleDark();
     };
+
+    const handledelete = async (urlDependent) => {
+        await removeDependente(urlDependent);
+        getDependents();
+     }
 
     const editting = (data) => {
         setEditDependents(!editDependents);
         setDadosOnlyDependent(data);
+
     };
 
     const closeEditDependents = () => {
@@ -177,6 +185,7 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
           };
         editDependente(dadosOnlyDependent.urlDep, updatedData);
         closeEditDependents();
+        getDependents();
     }, [newData]);
  
     useEffect(() => {
@@ -316,7 +325,7 @@ const DataUser = ({perfilImage, back, data, cancelForm, urlUser, authContext, ha
             {removeDependents && (
                 <>
                     <DarkBackground pageHeight={"180vh"} zIndex={true}/>
-                    <DeleteDependente cancelForm={cancelToggle} associadoName={data.name} dependenteNome={nomeDependente} urlDependente={urlDependente} userRemove={removeDependente}/>
+                    <DeleteDependente cancelForm={cancelToggle} associadoName={data.name} dependenteNome={nomeDependente} urlDependente={urlDependente} userRemove={handledelete}/>
                 </>
             )}
 

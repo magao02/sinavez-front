@@ -50,7 +50,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
 
 
   const enviarDados = (data) => {
-    if (data.name != undefined && data.cpf != undefined && data.nascimento != undefined && data.rg != undefined && data.emissao != undefined && data.parentesco != undefined){
+    if (data.name != undefined ){
       takeDataDependents({
         name: data.name,
         cpf: data.cpf,
@@ -128,7 +128,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
               validate={validation.requiredTextField}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Data de nascimento"}
               name={"nascimento"}
               placeholder={"DD/MM/AAAA"}
@@ -137,7 +137,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
               validate={validation.testDate}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"CPF"}
               name={"cpf"}
               placeholder={"000.000.000-0"}
@@ -146,7 +146,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
               validate={validation.testCpf}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"RG"}
               name={"rg"}
               placeholder={"Digite o RG do dependente"}
@@ -155,7 +155,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
               validate={validation.TextField}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Data de emissão"}
               name={"emissao"}
               placeholder={"DD/MM/AAAA"}
@@ -164,7 +164,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
               validate={validation.testDate}
             />
             <Input
-              variant="default"
+              variant="default-optional"
               label={"Parentesco"}
               name={"parentesco"}
               placeholder={"Filho/Filha/Neto/etc"}
@@ -190,7 +190,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           validate={validation.requiredTextField}
         />
         <Input
-          variant="default"
+          variant="default-optional"
           label={"Data de nascimento"}
           name={"nascimento"}
           placeholder={"DD/MM/AAAA"}
@@ -200,7 +200,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           validate={validation.testDate}
         />
         <Input
-          variant="default"
+          variant="default-optional"
           label={"CPF"}
           name={"cpf"}
           placeholder={"000.000.000-0"}
@@ -210,7 +210,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           validate={validation.testCpf}
         />
         <Input
-          variant="default"
+         variant="default-optional"
           label={"RG"}
           name={"rg"}
           placeholder={"Digite o RG do dependente"}
@@ -220,7 +220,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           validate={validation.TextField}
         />
         <Input
-          variant="default"
+          variant="default-optional"
           label={"Data de emissão"}
           name={"emissao"}
           placeholder={"DD/MM/AAAA"}
@@ -230,7 +230,7 @@ const DependentsForm = ({takeNewData, submitForm, pad, url, token, number, margi
           validate={validation.testDate}
         />
         <Input
-          variant="default"
+          variant="default-optional"
           label={"Parentesco"}
           name={"parentesco"}
           placeholder={"Filho/Filha/Neto/etc"}
