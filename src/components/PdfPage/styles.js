@@ -4,6 +4,7 @@ import theme from "../../styles/theme";
 export const Container = styled.div`
   width: 100vw;
   height: 100%;
+  margin-top: 75px;
 
   display: grid;
   grid-template-columns: 1fr;
