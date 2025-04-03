@@ -107,7 +107,7 @@ const PdfPage = ({ setForm, outsideForm, ano }) => {
   };
 
   const associadoSubmit = useCallback(async (data) => {
-    setAssociadoUrl(queue[currentPerson].urlUser);
+    setAssociadoUrl(localStorage.getItem("urlAssociado"));
     try {
       const associadoResponse = await service.setImpostoAssociado(
         localStorage.getItem("urlAssociado"),
