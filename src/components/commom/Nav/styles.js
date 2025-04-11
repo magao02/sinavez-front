@@ -45,4 +45,7 @@ export const UserFeaturesRight = styled.div`
     align-items: center;
 
     margin-right: 81px;
+    @media (max-width: 425px) {
+    display: none;
+  }
 `;
