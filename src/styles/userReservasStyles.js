@@ -9,6 +9,12 @@ export const Card = styled.div`
 
   overflow: hidden;
   cursor: pointer;
+
+   @media (max-width: 425px) {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+   }
 `;
 
 export const CardInner = styled.div`
