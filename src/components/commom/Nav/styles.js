@@ -15,6 +15,7 @@ export const NavBar = styled.nav`
     @media (max-width: 425px) {
     box-shadow: none;  
     margin-bottom: 20px;
+    max-width: 100%;
   }
 
 `;
