@@ -25,6 +25,9 @@ export const ListContainerYears = styled.div`
     align-items: center;
 
     padding: 0 6.2rem;
+    @media (max-width: 425px) {
+        padding: 0 1rem;
+  }
 
     gap: 1.6rem;
 `;

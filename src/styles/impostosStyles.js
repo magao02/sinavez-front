@@ -12,6 +12,9 @@ export const GreetingsContainer = styled.div`
 export const Title = styled.h1`
   margin-top: 2%;
   font-size: 2.8rem;
+  @media (max-width: 425px) {
+    margin-top: 50px
+  }
 `;
 
 export const SubTitle = styled.h2`

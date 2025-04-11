@@ -13,7 +13,8 @@ export const NavBar = styled.nav`
     box-shadow: 0px 4px 4px rgba(7, 96, 186, 0.44);
     background-color: ${theme.colors.white.default};
     @media (max-width: 425px) {
-    display: none;
+    box-shadow: none;  
+    margin-bottom: 20px;
   }
 
 `;
