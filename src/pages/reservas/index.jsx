@@ -58,7 +58,7 @@ const Reservas = () => {
     <Card  >
       <CardImage reservado={true}>
        
-        <img src={apt.fotos[0].url} alt="Imagem do apartamento" />
+        <img src={apt?.fotos[0]?.url} alt="Imagem do apartamento" />
       </CardImage>
 
       <CardInner>
