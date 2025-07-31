@@ -745,7 +745,7 @@ const UserData = () => {
                     <Input
                       label="Registro Geral (RG)"
                       variant="default-optional"
-                      initialValue={formatRG(value.rg)}
+                      initialValue={formatRG(value.rg || "")}
                       disabled
                     />
                     <Input
