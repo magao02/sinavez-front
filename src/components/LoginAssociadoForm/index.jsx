@@ -74,9 +74,6 @@ const LoginAssociadoForm = ({ onValidSubmit, globalMessage, makingRequest }) => 
         </Description>
       </InputBox>
 
-      <LinkBox>
-        Novo por aqui? <Link href="/cadastro">Criar conta</Link>
-      </LinkBox>
       <Link href="/loginAdmin">Login Administrador</Link>
       <ButtonContainer>
         {globalMessage && <a>{globalMessage}</a>}
