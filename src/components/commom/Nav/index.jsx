@@ -23,6 +23,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
   const [selectedHome, setSelectedHome] = useState(false);
   const [selectedAssociados, setSelectedAssociados] = useState(false);
   const [selectedancamentos, setSelectedancamentos] = useState(false);
+  const [selectedLivroCaixa, setSelectedLivroCaixa] = useState(false);
   const [selectedImpostos, setSelectedImpostos] = useState(false);
   const [selectedDependents, setSelectedDependents] = useState(false);
   const [selectedApartamentos, setSelectedApartamentos] = useState(false);
@@ -53,8 +54,12 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
           break;
         case "lancamentosAdmin":
           setSelectedancamentos(true);
+          break;
         case "lancamentosAssociados":
           setSelectedancamentos(true);
+          break;
+        case "livroCaixa":
+          setSelectedLivroCaixa(true);
           break;
         case "impostos":
           setSelectedImpostos(true);
@@ -107,6 +112,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 <LinkBox linkText={"/associados"} selected={selectedAssociados} text={"Associados"}></LinkBox>
                 <LinkBox linkText={"/manageReservations"} selected={selectedApartamentos} text={"Apartamentos"}></LinkBox>
                 <LinkBox linkText={"/lancamentosAdmin"} selected={selectedancamentos} text={"Lançamentos"}></LinkBox>
+                <LinkBox linkText={"/livroCaixa"} selected={selectedLivroCaixa} text={"Livro Caixa"}></LinkBox>
                 <LinkBox linkText={"/reservasAdmin?url=apartamento-01&ambientType=apto"} selected={selectedApartamentos} text={"reservas"}></LinkBox>
               </UserFeaturesLeft>
               <UserFeaturesRight>
