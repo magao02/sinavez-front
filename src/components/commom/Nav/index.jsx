@@ -136,6 +136,7 @@ function NavVariant({ variant, selectedPage, showPopUp}) {
                 <LinkBox linkText={"/apartamentos"} selected={selectedApartamentos} text={"Apartamentos"} showPopUpSignUp={showPopUp}></LinkBox>
                 <LinkBox linkText={"/reservas"} selected={selectedReservas} text={"Reservas"} showPopUpSignUp={showPopUp}></LinkBox>
                 <LinkBox linkText={"/lancamentosAssociados"} selected={selectedancamentos} showPopUpSignUp={showPopUp} text={"Lançamentos"}></LinkBox>
+                <LinkBox linkText={"/livroCaixa"} selected={selectedLivroCaixa} showPopUpSignUp={showPopUp} text={"Livro Caixa"}></LinkBox>
                 <LinkBox linkText={"/impostos"} selected={selectedImpostos} showPopUpSignUp={showPopUp} text={"Imposto de renda"}></LinkBox>
                 <LinkBox linkText={"/dependentes"} selected={selectedDependents} showPopUpSignUp={showPopUp} text={"Dependentes"}></LinkBox>
 

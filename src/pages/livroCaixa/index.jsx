@@ -28,6 +28,7 @@ const LivroCaixaPage = () => {
   const [anoFiltro, setAnoFiltro] = useState(String(currentDate.getFullYear()));
 
   const authContext = useAuth();
+  const isAdmin = authContext?.admin === true || authContext?.admin === 'true';
 
   useEffect(() => {
     fetchLivroCaixas();
@@ -53,6 +54,10 @@ const LivroCaixaPage = () => {
   };
 
   const handleSave = async (dados) => {
+    if (!isAdmin) {
+      return;
+    }
+
     const req = await addLivroCaixa(dados, authContext.token);
     if (req.status === 200) {
       fetchLivroCaixas();
@@ -61,6 +66,10 @@ const LivroCaixaPage = () => {
   };
 
   const handleDelete = async (item) => {
+    if (!isAdmin) {
+      return;
+    }
+
     const req = await deleteLivroCaixa(item._id, authContext.token);
     if (req.status === 200) {
       fetchLivroCaixas();
@@ -92,7 +101,9 @@ const LivroCaixaPage = () => {
               </select>
             </div>
           </div>
-          <Button variant="editButton" onClick={() => setIsOpen(true)}>Novo Livro Caixa</Button>
+          {isAdmin && (
+            <Button variant="editButton" onClick={() => setIsOpen(true)}>Novo Livro Caixa</Button>
+          )}
         </div>
 
         <table className={styles.tableClass} style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -101,7 +112,7 @@ const LivroCaixaPage = () => {
               <th style={{ padding: '10px' }}>Mês</th>
               <th style={{ padding: '10px' }}>Ano</th>
               <th style={{ padding: '10px' }}>Arquivo</th>
-              <th style={{ padding: '10px' }}></th>
+              {isAdmin && <th style={{ padding: '10px' }}></th>}
             </tr>
           </thead>
           <tbody>
@@ -116,18 +127,20 @@ const LivroCaixaPage = () => {
                     'Sem arquivo'
                   )}
                 </td>
-                <td>
-                  <FaRegTrashAlt
-                    style={{ color: 'red', cursor: 'pointer' }}
-                    onClick={() => handleDelete(item)}
-                  />
-                </td>
+                {isAdmin && (
+                  <td>
+                    <FaRegTrashAlt
+                      style={{ color: 'red', cursor: 'pointer' }}
+                      onClick={() => handleDelete(item)}
+                    />
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
 
-        {isOpen && (
+        {isAdmin && isOpen && (
           <LivroCaixaModal onClose={() => setIsOpen(false)} handleSave={handleSave} />
         )}
       </Content>
