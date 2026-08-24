@@ -4,6 +4,7 @@ export async function addLivroCaixa(dados, token) {
   const data = new FormData();
   data.append('mes', dados.mes);
   data.append('ano', dados.ano);
+  data.append('tipo', dados.tipo);
   if (dados.file instanceof File) {
     data.append('file', dados.file);
   }

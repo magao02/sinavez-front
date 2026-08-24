@@ -17,10 +17,17 @@ const MESES = [
   { value: '12', label: 'Dezembro' },
 ];
 
+const TIPOS = [
+  { value: 'livro razão', label: 'Livro razão' },
+  { value: 'livro diário', label: 'Livro diário' },
+  { value: 'outros', label: 'Outros' },
+];
+
 export const LivroCaixaModal = ({ onClose, handleSave }) => {
   const currentDate = new Date();
   const [mes, setMes] = useState(String(currentDate.getMonth() + 1));
   const [ano, setAno] = useState(String(currentDate.getFullYear()));
+  const [tipo, setTipo] = useState('livro razão');
   const [file, setFile] = useState(null);
 
   const handleCloseClick = (e) => {
@@ -37,6 +44,7 @@ export const LivroCaixaModal = ({ onClose, handleSave }) => {
     const dados = {
       mes,
       ano,
+      tipo,
       file,
     };
     handleSave(dados);
@@ -79,6 +87,20 @@ export const LivroCaixaModal = ({ onClose, handleSave }) => {
                   >
                     {years.map((y) => (
                       <option key={y} value={String(y)}>{y}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label>Tipo:</label>
+                <div className={styles.selectContainer}>
+                  <select
+                    className={styles.styledSelect}
+                    value={tipo}
+                    onChange={(e) => setTipo(e.target.value)}
+                  >
+                    {TIPOS.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
                     ))}
                   </select>
                 </div>

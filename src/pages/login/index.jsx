@@ -49,6 +49,8 @@ const LoginPage = () => {
       await loginAccount({ cpf, password });
       router.push("/home");
     } catch (error) {
+      debugger;
+      console.error("Login error:", error);
       setGlobalMessage(error.response.data.message);
     }
     setIsMakingRequest(false);

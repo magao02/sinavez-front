@@ -111,6 +111,7 @@ const LivroCaixaPage = () => {
             <tr>
               <th style={{ padding: '10px' }}>Mês</th>
               <th style={{ padding: '10px' }}>Ano</th>
+              <th style={{ padding: '10px' }}>Tipo</th>
               <th style={{ padding: '10px' }}>Arquivo</th>
               {isAdmin && <th style={{ padding: '10px' }}></th>}
             </tr>
@@ -120,6 +121,7 @@ const LivroCaixaPage = () => {
               <tr key={index}>
                 <td style={{ ...cellStyle }}>{MESES[Number(item.mes)] || item.mes}</td>
                 <td style={{ ...cellStyle }}>{item.ano}</td>
+                <td style={{ ...cellStyle }}>{item.tipo || '-'}</td>
                 <td style={{ ...cellStyle }}>
                   {(item.urlImagem || item.url) ? (
                     <a href={item.urlImagem || item.url} target="_blank" rel="noreferrer">Baixar arquivo</a>
